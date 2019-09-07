@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
   	"start": "node server/server.js",
-    "server": "nodemon server/server.js",
-    "lint": "eslint **/*.js"
+    "dev": "nodemon server/server.js"
   },
   "author": "Nick Lobaton",
   "license": "ISC",
