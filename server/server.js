@@ -23,7 +23,8 @@ if (process.env.NODE_ENV === 'production') {
   app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
 }
 
-const PORT = 5000;
+// eslint-disable-next-line no-undef
+const PORT = process.env.PORT || 5000;
 
 // eslint-disable-next-line no-console
 app.listen(PORT, () => console.log(`Server started at ${PORT}`));
