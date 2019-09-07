@@ -4,7 +4,9 @@ import Home from '@/views/Home'
 import HomeAdmin from '@/views/HomeAdmin'
 import PageNotFound from '@/components/PageNotFound'
 import store from '@/store/'
-import DashboardBookkeeper from '@/views/DashboardBookkeeper'
+
+import dashboard from './dashboard'
+import charts from './charts'
 
 Vue.use(Router)
 
@@ -36,14 +38,8 @@ export default new Router({
       },
       component: HomeAdmin
     },
-    {
-      path: '/dashboard/bookkeeper',
-      name: 'dashboard',
-      component: DashboardBookkeeper,
-      meta: {
-        title: 'Dashboard'
-      }
-    },
+    ...dashboard,
+    ...charts,
     {
       path: '*',
       name: 'notFound',

@@ -1,7 +1,7 @@
 <template>
   <nav>
     <v-app-bar flat app class="grey lighten-3">
-      <v-toolbar-title v-if="!isAuth" class="toolbar-title" @click="$router.push('/')">
+      <v-toolbar-title v-if="!isAuth" class="toolbar-title">
         <span class="title grey--text text--darken-2">DARBMUPCO</span>
         <span class="font-weight-light title grey--text text--darken-2">Bookkeeping System</span>
       </v-toolbar-title>
@@ -14,7 +14,11 @@
           <template v-slot:activator="{ on }">
             <v-btn text class="font-weight-light" v-on="on">Login</v-btn>
           </template>
-          <LoginDialog @close-dialog="close('login')" @submit-login="login" />
+          <LoginDialog
+            @close-dialog="close('login')"
+            @submit-login="login"
+            @submit-loginAdmin="adminLogin"
+            @goto-admin="gotoAdmin"/>
         </v-dialog>
       </v-toolbar-items>
       <v-toolbar-items v-else>
@@ -93,7 +97,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('auth', ['registerUser', 'loginUser', 'logoutUser']),
+    ...mapActions('auth', ['registerUser', 'loginUser', 'loginAdmin', 'logoutUser']),
     close (val) {
       if (val === 'register') {
         this.registerDialog = false
@@ -108,6 +112,14 @@ export default {
     login (user) {
       this.loginUser(user)
       this.close('login')
+    },
+    adminLogin (user) {
+      this.loginAdmin(user)
+      this.close('login')
+    },
+    gotoAdmin () {
+      this.$router.push('/admin')
+      this.loginDialog = true
     },
     logout () {
       this.logoutUser()

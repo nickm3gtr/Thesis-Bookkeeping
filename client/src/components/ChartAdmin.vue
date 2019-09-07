@@ -1,12 +1,13 @@
 <template>
-  <div>
-    <h1></h1>
-  </div>
+  <div></div>
 </template>
 
 <script>
-
 export default {
-  name: 'Home'
+  name: 'ChartAdmin'
 }
 </script>
+
+<style scoped>
+
+</style>

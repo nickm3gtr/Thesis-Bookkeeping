@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from '@/router/'
+// import state from '@/store/'
 
 export default {
   registerUser: ({ commit, dispatch }, payload) => {
@@ -38,25 +39,55 @@ export default {
     axios.post('http://localhost:5000/bookkeepers/login', user, config)
       .then(response => {
         commit('AUTH_USER', response.data)
-        router.push('/dashboard/bookkeeper')
+        router.push('/bookkeeper/dashboard')
       })
       .catch(err => {
         commit('LOGOUT_USER')
         dispatch('errors/getError', err.response.data, { root: true })
       })
   },
-  loadUser: ({ commit }) => {
+  loginAdmin: ({ commit, dispatch }, payload) => {
+    commit('USER_LOADING')
+    const { userName, password } = payload
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    const user = JSON.stringify({
+      userName,
+      password
+    })
+    axios.post('http://localhost:5000/admin/login', user, config)
+      .then(response => {
+        commit('AUTH_USER', response.data)
+        router.push('/admin/dashboard')
+      })
+      .catch(err => {
+        commit('LOGOUT_USER')
+        dispatch('errors/getError', err.response.data, { root: true })
+      })
+  },
+  loadUser: ({ commit, state }) => {
     commit('USER_LOADING')
     const config = {
       headers: {
         Authorization: localStorage.getItem('token')
       }
     }
-    axios.get('http://localhost:5000/bookkeepers', config)
-      .then(response => {
-        commit('USER_LOADED', response.data)
-        // eslint-disable-next-line handle-callback-err
-      }).catch(err => commit('LOGOUT_USER'))
+    if (state.user.account === 'bookkeeper') {
+      axios.get('http://localhost:5000/bookkeepers', config)
+        .then(response => {
+          commit('USER_LOADED', response.data)
+          // eslint-disable-next-line handle-callback-err
+        }).catch(err => commit('LOGOUT_USER'))
+    } else {
+      axios.get('http://localhost:5000/admin', config)
+        .then(response => {
+          commit('USER_LOADED', response.data)
+          // eslint-disable-next-line handle-callback-err
+        }).catch(err => commit('LOGOUT_USER'))
+    }
   },
   logoutUser: ({ commit }) => {
     commit('LOGOUT_USER')
