@@ -10,9 +10,18 @@ app.use(cors());
 app.use(morgan("combined"));
 
 // ROUTES
-app.get("/", (req, res) => res.send("Hello"));
-app.use("/bookkeepers", require("./routes/bookkeeper"));
-app.use("/admin", require("./routes/admin"));
+app.use("/api/bookkeepers", require("./routes/bookkeeper"));
+app.use("/api/admin", require("./routes/admin"));
+
+// PRODUCTION
+// eslint-disable-next-line no-undef
+if (process.env.NODE_ENV === 'production') {
+  // eslint-disable-next-line no-undef
+  app.use(express.static(__dirname + '/public/'))
+
+  // eslint-disable-next-line no-undef
+  app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
+}
 
 const PORT = 5000;
 

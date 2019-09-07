@@ -17,7 +17,7 @@ export default {
       password
     })
 
-    axios.post('http://localhost:5000/bookkeepers', newUser, config)
+    axios.post('/api/bookkeepers', newUser, config)
       .then(response => commit('AUTH_USER', response.data))
       .catch(err => {
         commit('LOGOUT_USER')
@@ -36,7 +36,7 @@ export default {
       userName,
       password
     })
-    axios.post('http://localhost:5000/bookkeepers/login', user, config)
+    axios.post('/api/bookkeepers/login', user, config)
       .then(response => {
         commit('AUTH_USER', response.data)
         router.push('/bookkeeper/dashboard')
@@ -58,7 +58,7 @@ export default {
       userName,
       password
     })
-    axios.post('http://localhost:5000/admin/login', user, config)
+    axios.post('/api/admin/login', user, config)
       .then(response => {
         commit('AUTH_USER', response.data)
         router.push('/admin/dashboard')
@@ -76,13 +76,13 @@ export default {
       }
     }
     if (state.user.account === 'bookkeeper') {
-      axios.get('http://localhost:5000/bookkeepers', config)
+      axios.get('/api/bookkeepers', config)
         .then(response => {
           commit('USER_LOADED', response.data)
           // eslint-disable-next-line handle-callback-err
         }).catch(err => commit('LOGOUT_USER'))
     } else {
-      axios.get('http://localhost:5000/admin', config)
+      axios.get('/api/admin', config)
         .then(response => {
           commit('USER_LOADED', response.data)
           // eslint-disable-next-line handle-callback-err
