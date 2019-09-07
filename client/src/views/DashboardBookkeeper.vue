@@ -1,10 +1,10 @@
 <template>
     <div class="dashboard">
-      <div v-if="auth.isAuthenticated !== true">
+      <div v-if="auth.isAuthenticated !== true && auth.isLoading === false">
         <RestrictedResource />
       </div>
      <div v-else>
-       Dashboard
+       <h1></h1>
      </div>
     </div>
 </template>
@@ -14,7 +14,7 @@ import RestrictedResource from '@/components/RestrictedResource'
 import { mapState } from 'vuex'
 
 export default {
-  name: 'Dashboard',
+  name: 'DashboardBookkeeper',
   components: { RestrictedResource },
   computed: {
     ...mapState(['auth'])

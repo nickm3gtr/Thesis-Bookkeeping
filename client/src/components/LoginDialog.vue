@@ -5,7 +5,7 @@
     </v-toolbar>
     <v-form @submit.prevent="handleSubmit">
       <v-card-text>
-        <v-text-field v-model="user.email" label="Email" name="email" type="email"></v-text-field>
+        <v-text-field v-model="user.userName" label="Username" name="username" type="text"></v-text-field>
         <v-text-field v-model="user.password" label="Password" name="password" type="password"></v-text-field>
       </v-card-text>
       <v-card-actions>
@@ -27,7 +27,7 @@ export default {
   data () {
     return {
       user: {
-        email: '',
+        userName: '',
         password: ''
       }
     }
@@ -35,7 +35,7 @@ export default {
   methods: {
     submit (user) {
       this.$emit('submit-login', user)
-      this.user.email = ''
+      this.user.userName = ''
       this.user.password = ''
     }
   }

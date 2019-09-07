@@ -12,6 +12,7 @@ app.use(morgan("combined"));
 // ROUTES
 app.get("/", (req, res) => res.send("Hello"));
 app.use("/bookkeepers", require("./routes/bookkeeper"));
+app.use("/admin", require("./routes/admin"));
 
 const PORT = 5000;
 

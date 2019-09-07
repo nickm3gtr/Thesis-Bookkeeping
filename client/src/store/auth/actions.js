@@ -1,4 +1,6 @@
 import axios from 'axios'
+import router from '@/router/'
+
 export default {
   registerUser: ({ commit, dispatch }, payload) => {
     const { firstName, lastName, email, password } = payload
@@ -22,18 +24,22 @@ export default {
       })
   },
   loginUser: ({ commit, dispatch }, payload) => {
-    const { email, password } = payload
+    commit('USER_LOADING')
+    const { userName, password } = payload
     const config = {
       headers: {
         'Content-Type': 'application/json'
       }
     }
     const user = JSON.stringify({
-      email,
+      userName,
       password
     })
     axios.post('http://localhost:5000/bookkeepers/login', user, config)
-      .then(response => commit('AUTH_USER', response.data))
+      .then(response => {
+        commit('AUTH_USER', response.data)
+        router.push('/dashboard/bookkeeper')
+      })
       .catch(err => {
         commit('LOGOUT_USER')
         dispatch('errors/getError', err.response.data, { root: true })

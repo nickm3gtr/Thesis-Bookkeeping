@@ -1,13 +1,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Bookkeeper = sequelize.define('Bookkeeper', {
+  const Admin = sequelize.define('Admin', {
     userName: DataTypes.STRING,
     password: DataTypes.STRING,
     account: DataTypes.STRING
   }, {});
   // eslint-disable-next-line no-unused-vars
-  Bookkeeper.associate = function(models) {
-    Bookkeeper.belongsTo(models.Branch, { foreignKey: 'BranchId' })
+  Admin.associate = function(models) {
+    // associations can be defined here
   };
-  return Bookkeeper;
+  return Admin;
 };

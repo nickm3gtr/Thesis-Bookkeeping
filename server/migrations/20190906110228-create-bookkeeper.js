@@ -1,29 +1,33 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Clients', {
+    return queryInterface.createTable('Bookkeepers', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
+      userName: {
         type: Sequelize.STRING,
+        unique: true,
         allowNull: false
-      },
-      lastName: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
       },
       password: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      account: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      BranchId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Branches',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -37,6 +41,6 @@ module.exports = {
   },
   // eslint-disable-next-line no-unused-vars
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Clients');
+    return queryInterface.dropTable('Bookkeepers');
   }
 };

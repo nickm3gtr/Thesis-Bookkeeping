@@ -22,5 +22,10 @@ export default {
     clearError: ({ commit }) => {
       commit('clearError')
     }
+  },
+  getters: {
+    errorMsg: state => {
+      return state.msg
+    }
   }
 }

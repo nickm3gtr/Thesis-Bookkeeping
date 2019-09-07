@@ -9,11 +9,11 @@ const loginMiddleware = require('../middleware/loginMiddleware')
 
 // Register Bookkeeper
 router.post("/", (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { userName, password, BranchId } = req.body;
 
-  Bookkeeper.findOne({ where: { email: email } })
+  Bookkeeper.findOne({ where: { userName: userName } })
     .then(user => {
-      if (user) return res.status(400).json({ msg: "Email already exists." });
+      if (user) return res.status(400).json({ msg: "username already exists." });
     })
     .catch(
       bcrypt.genSalt(10, (err, salt) => {
@@ -24,22 +24,21 @@ router.post("/", (req, res) => {
           if (err) console.log(err);
           const newPassword = hash;
           const newUser = {
-            firstName,
-            lastName,
-            email,
-            password: newPassword
+            userName,
+            password: newPassword,
+            BranchId
           };
           try {
             const user = await Bookkeeper.create(newUser);
             jwt.sign(
-              { email: user.email },
+              { userName: user.userName },
               jwtSecret,
               { expiresIn: 3600 },
               (err, token) => res.json({ token, user })
             );
           } catch (e) {
             res.status(400).json({
-              msg: "Email already in use."
+              msg: "username already in use."
             });
           }
         });
@@ -49,16 +48,16 @@ router.post("/", (req, res) => {
 
 // Login Bookkeeper
 router.post("/login", loginMiddleware, async (req, res) => {
-  const { email, password } = req.body;
+  const { userName, password } = req.body;
   try {
-    const user = await Bookkeeper.findOne({ where: { email: email } });
+    const user = await Bookkeeper.findOne({ where: { userName } });
 
     bcrypt.compare(password, user.password, (err, response) => {
       if (err) throw err;
 
       if (response) {
         jwt.sign(
-          { email: user.email },
+          { userName: user.userName },
           jwtSecret,
           { expiresIn: 3600 },
           (err, token) => res.json({ token, user })
@@ -68,14 +67,14 @@ router.post("/login", loginMiddleware, async (req, res) => {
       }
     });
   } catch (e) {
-    res.status(400).json({ msg: "Invalid email." });
+    res.status(400).json({ msg: "Invalid username." });
   }
 })
 
 // Authorize Bookkeeper
 router.get("/", auth, async (req, res) => {
   try {
-    const user = await Bookkeeper.findOne({ where: { email: req.user.email } });
+    const user = await Bookkeeper.findOne({ where: { userName: req.user.userName } });
     if(!user) return res.status(401).json({ msg: "Unauthorized." });
     res.json(user);
   } catch (e) {

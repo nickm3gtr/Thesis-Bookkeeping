@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home.vue'
+import Home from '@/views/Home'
+import HomeAdmin from '@/views/HomeAdmin'
 import PageNotFound from '@/components/PageNotFound'
-import Dashboard from '@/views/Dashboard'
+import store from '@/store/'
+import DashboardBookkeeper from '@/views/DashboardBookkeeper'
 
 Vue.use(Router)
 
@@ -13,26 +15,31 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      // beforeEnter (to, from, next) {
-      //   if (store.getters['auth/isLogged']) {
-      //     next('/dashboard')
-      //   } else {
-      //     next()
-      //   }
-      // },
+      beforeEnter (to, from, next) {
+        if (store.getters['auth/isLogged']) {
+          next('/dashboard/bookkeeper')
+        } else {
+          next()
+        }
+      },
       component: Home
     },
     {
-      path: '/dashboard',
+      path: '/admin',
+      name: 'homeAdmin',
+      beforeEnter (to, from, next) {
+        if (store.getters['auth/isLogged']) {
+          next('/dashboard/bookkeeper')
+        } else {
+          next()
+        }
+      },
+      component: HomeAdmin
+    },
+    {
+      path: '/dashboard/bookkeeper',
       name: 'dashboard',
-      // beforeEnter (to, from, next) {
-      //   if (store.getters['auth/isLogged']) {
-      //     next()
-      //   } else {
-      //     next('/')
-      //   }
-      // },
-      component: Dashboard,
+      component: DashboardBookkeeper,
       meta: {
         title: 'Dashboard'
       }

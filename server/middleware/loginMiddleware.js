@@ -3,21 +3,21 @@ const Joi = require('@hapi/joi')
 function loginMiddleware (req, res, next) {
 
   const schema = Joi.object().keys({
-    email: Joi.string().email({ minDomainSegments: 2 }),
-    password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/)
-  }).with('email', 'password');
+    userName: Joi.string().min(1).required(),
+    password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required()
+  }).with('userName', 'password');
 
   const { error } = schema.validate(req.body)
   if (error) {
     switch (error.details[0].context.key) {
-      case 'email':
+      case 'userName':
         res.status(400).json({
-          msg: 'You must provide a valid email address'
+          msg: 'You must provide a valid username'
         })
         break
       case 'password':
         res.status(400).json({
-          msg: `The password provided failed to match the following rules: 1. It must contain ONLY the following characters: lower case, upper case, numerics. 2. It must be at least 8 characters in length and not greater than 32 characters in length. `
+          msg: `The password must be at least 5 characters`
         })
         break
       default:
