@@ -12,6 +12,7 @@ app.use(morgan("combined"));
 // ROUTES
 app.use("/api/bookkeepers", require("./routes/bookkeeper"));
 app.use("/api/admin", require("./routes/admin"));
+app.use("/api/charts", require("./routes/charts"));
 
 // PRODUCTION
 // eslint-disable-next-line no-undef

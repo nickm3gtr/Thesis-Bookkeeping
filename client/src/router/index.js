@@ -19,7 +19,7 @@ export default new Router({
       name: 'home',
       beforeEnter (to, from, next) {
         if (store.getters['auth/isLogged']) {
-          next('/dashboard/bookkeeper')
+          next('/bookkeeper/dashboard')
         } else {
           next()
         }
@@ -31,7 +31,7 @@ export default new Router({
       name: 'homeAdmin',
       beforeEnter (to, from, next) {
         if (store.getters['auth/isLogged']) {
-          next('/dashboard/bookkeeper')
+          next('/bookkeeper/dashboard')
         } else {
           next()
         }

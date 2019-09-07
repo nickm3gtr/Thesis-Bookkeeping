@@ -1,10 +1,17 @@
 <template>
-  <h1></h1>
+  <div>
+    <ChartOfAccount />
+  </div>
 </template>
 
 <script>
+import ChartOfAccount from '@/components/ChartOfAccount'
+
 export default {
-  name: 'ChartofAccountBookkeeper'
+  name: 'ChartofAccountBookkeeper',
+  components: {
+    ChartOfAccount
+  }
 }
 </script>
 
