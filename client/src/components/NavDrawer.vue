@@ -8,28 +8,60 @@
       </v-list-item>
     <v-divider></v-divider>
     <div v-if="auth.user.account === 'bookkeeper'">
-      <v-list-item v-for="(link, i) in links" :key="i" router :to="link.route" class="my-2">
-        <v-list-item-icon>
-          <v-icon>
-            {{ link.icon }}
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title class="subtitle-2 font-weight-light">{{ link.text }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <v-list-group
+        color="white"
+        v-for="item in bookkeeperItems"
+        :key="item.title"
+        :disabled="item.disabled"
+        v-model="item.active"
+        :prepend-icon="item.action"
+        :append-icon="!item.items ? '' : undefined"
+        no-action
+        @click="$router.push(item.route)"
+      >
+        <template v-slot:activator>
+          <v-list-item-content>
+            <v-list-item-title class="subtitle-2 font-weight-light" v-text="item.title"></v-list-item-title>
+          </v-list-item-content>
+        </template>
+
+        <v-list-item
+          v-for="subItem in item.items"
+          :key="subItem.title"
+        >
+          <v-list-item-content>
+            <v-list-item-title class="subtitle-2 font-weight-light" v-text="subItem.title"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-group>
     </div>
     <div v-else>
-      <v-list-item v-for="(link, i) in adminLinks" :key="i" router :to="link.route" class="my-2">
-        <v-list-item-icon>
-          <v-icon>
-            {{ link.icon }}
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title class="subtitle-2 font-weight-light">{{ link.text }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <v-list-group
+        color="white"
+        v-for="item in adminItems"
+        :key="item.title"
+        :disabled="item.disabled"
+        v-model="item.active"
+        :prepend-icon="item.action"
+        :append-icon="!item.items ? '' : undefined"
+        no-action
+        @click="$router.push(item.route)"
+      >
+        <template v-slot:activator>
+          <v-list-item-content>
+            <v-list-item-title class="subtitle-2 font-weight-light" v-text="item.title"></v-list-item-title>
+          </v-list-item-content>
+        </template>
+
+        <v-list-item
+          v-for="subItem in item.items"
+          :key="subItem.title"
+        >
+          <v-list-item-content>
+            <v-list-item-title class="subtitle-2 font-weight-light" v-text="subItem.title"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-group>
     </div>
   </v-list-item-group>
 </template>
@@ -41,42 +73,56 @@ export default {
   name: 'BookkeeperNavDrawer',
   data () {
     return {
-      links: [
+      bookkeeperItems: [
         {
-          icon: 'dashboard',
-          text: 'Dashboard',
+          action: 'dashboard',
+          title: 'Dashboard',
           route: '/bookkeeper/dashboard'
         },
         {
-          icon: 'event_note',
-          text: 'Chart of Accounts',
+          action: 'event_note',
+          title: 'Chart of Accounts',
           route: '/bookkeeper/chart_of_account'
         },
         {
-          icon: 'chrome_reader_mode',
-          text: 'Journals',
-          route: '/journal/bookkeeper'
+          action: 'local_offer',
+          title: 'Transactions',
+          items: [
+            { title: 'General Journal' },
+            { title: 'Cash Receipt Book' },
+            { title: 'Cash Disbursement Book' },
+            { title: 'Sales Book' },
+            { title: 'Purchase Book' }
+          ]
         }
       ],
-      adminLinks: [
+      adminItems: [
         {
-          icon: 'dashboard',
-          text: 'Dashboard',
+          action: 'dashboard',
+          title: 'Dashboard',
           route: '/admin/dashboard'
         },
         {
-          icon: 'event_note',
-          text: 'Chart of Accounts',
+          action: 'event_note',
+          title: 'Chart of Accounts',
           route: '/admin/chart_of_account'
+        },
+        {
+          action: 'local_offer',
+          title: 'Transactions',
+          items: [
+            { title: 'General Journal' },
+            { title: 'Cash Receipt Book' },
+            { title: 'Cash Disbursement Book' },
+            { title: 'Sales Book' },
+            { title: 'Purchase Book' }
+          ]
         }
       ]
     }
   },
   computed: {
-    ...mapState(['auth']),
-    sidebarOverlayGradiant () {
-      return `'rgba(27, 27, 27, 0.74)', 'rgba(27, 27, 27, 0.74)'`
-    }
+    ...mapState(['auth'])
   }
 }
 </script>

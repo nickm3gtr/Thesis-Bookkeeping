@@ -179,4 +179,69 @@ module.exports = [
     name: "14290-Other Property, Plant and Equipment",
     SubTypeId: 14000
   },
+  {
+    id: 15100,
+    name: "15100-Biological Assets-Animals",
+    SubTypeId: 15000
+  },
+  {
+    id: 15110,
+    name: "15110-Accumulated-Depreciation-Biological Assets-Animals",
+    SubTypeId: 15000
+  },
+  {
+    id: 15200,
+    name: "15200-Biological Assets-Plants",
+    SubTypeId: 15000
+  },
+  {
+    id: 15210,
+    name: "15210-Accumulated Depreciation-Biological Assets-Plants",
+    SubTypeId: 15000
+  },
+  {
+    id: 16100,
+    name: "16100-Franchise",
+    SubTypeId: 16000
+  },
+  {
+    id: 16200,
+    name: "16200-Franchise Cost",
+    SubTypeId: 16000
+  },
+  {
+    id: 16300,
+    name: "16300-Copyright",
+    SubTypeId: 16000
+  },
+  {
+    id: 16400,
+    name: "16400-Patent",
+    SubTypeId: 16000
+  },
+  {
+    id: 17100,
+    name: "17100-Computerization Cost",
+    SubTypeId: 17000
+  },
+  {
+    id: 17200,
+    name: "17200-Other Funds and Deposits",
+    SubTypeId: 17000
+  },
+  {
+    id: 17300,
+    name: "17300-Due from Head Office/Branch/Satellites",
+    SubTypeId: 17000
+  },
+  {
+    id: 17400,
+    name: "17400-Deposit on Returnable Containers",
+    SubTypeId: 17000
+  },
+  {
+    id: 17900,
+    name: "17900-Miscellaneous Assets",
+    SubTypeId: 17000
+  }
 ]

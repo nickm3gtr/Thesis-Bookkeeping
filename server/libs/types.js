@@ -17,7 +17,7 @@ module.exports = [
   },
   {
     id: 30100,
-    name: "Member's Equity"
+    name: "Equity"
   },
   {
     id: 40000,

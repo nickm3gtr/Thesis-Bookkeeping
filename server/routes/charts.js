@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
-//const auth = require("../middleware/auth")
+const auth = require("../middleware/auth")
 
 // Get Chart of Accounts
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
   db.Account.findAll({
     include: [{
       model: db.SubType,

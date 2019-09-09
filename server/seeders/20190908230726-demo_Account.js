@@ -1,5 +1,11 @@
 const currentAssets = require('../libs/currentAssets')
 const nonCurrentAssets = require('../libs/nonCurrentAssets')
+const currentLiabilities = require('../libs/currentLiabilities')
+const nonCurrentLiabilities = require('../libs/nonCurrentLiabilities')
+const revenue = require('../libs/revenue')
+const costOfGoods = require('../libs/costOfGoods')
+const costOfServices = require('../libs/costOfServices')
+const expenses = require('../libs/expenses')
 
 'use strict';
 
@@ -8,7 +14,13 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
       return queryInterface.bulkInsert('Accounts', [
         ...currentAssets,
-        ...nonCurrentAssets
+        ...nonCurrentAssets,
+        ...currentLiabilities,
+        ...nonCurrentLiabilities,
+        ...revenue,
+        ...costOfGoods,
+        ...costOfServices,
+        ...expenses
       ], {})
   },
 

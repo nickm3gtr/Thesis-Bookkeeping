@@ -1,10 +1,17 @@
 <template>
-  <h1></h1>
+  <div>
+    <div class="not-authenticated" v-if="$store.state.auth.isAuthenticated == false || $store.state.auth.user.account === 'bookkeeper'">
+      <RestrictedResource />
+    </div>
+  </div>
 </template>
 
 <script>
+import RestrictedResource from '@/components/RestrictedResource'
+
 export default {
-  name: 'DashboardAdmin'
+  name: 'DashboardAdmin',
+  components: { RestrictedResource }
 }
 </script>
 

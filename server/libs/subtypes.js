@@ -100,6 +100,27 @@ module.exports = [
     TypeId: 22000
   },
   {
+    id: 22200,
+    name: "Discounts on Loans Payable",
+    TypeId: 22000
+  },
+  {
+    id: 22300,
+    name: "Revolving Capital Payable",
+    TypeId: 22000
+  },
+  {
+    id: 22400,
+    name: "Retirement Payable",
+    TypeId: 22000
+  },
+  {
+    id: 22500,
+    name: "Finance Lease Payable-Long Term",
+    TypeId: 22000
+  },
+
+  {
     id: 23000,
     name: "Other Non-Current Liabilities",
     TypeId: 22000
@@ -192,6 +213,11 @@ module.exports = [
   {
     id: 72000,
     name: "Selling/Marketing Cost",
+    TypeId: 70000
+  },
+  {
+    id: 73000,
+    name: "Administrative Cost",
     TypeId: 70000
   },
   {

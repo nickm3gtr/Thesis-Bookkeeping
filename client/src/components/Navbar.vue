@@ -1,6 +1,7 @@
 <template>
   <nav>
     <v-app-bar flat app class="grey lighten-3">
+      <v-app-bar-nav-icon class="hidden-md-and-up" @click="toggleDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title v-if="!isAuth" class="toolbar-title">
         <span class="title grey--text text--darken-2">DARBMUPCO</span>
         <span class="font-weight-light title grey--text text--darken-2">Bookkeeping System</span>
@@ -98,6 +99,9 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['registerUser', 'loginUser', 'loginAdmin', 'logoutUser']),
+    toggleDrawer () {
+      this.drawer = true
+    },
     close (val) {
       if (val === 'register') {
         this.registerDialog = false

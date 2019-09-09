@@ -1,12 +1,12 @@
 <template>
-    <div class="dashboard">
-      <div v-if="auth.isAuthenticated !== true && auth.isLoading === false">
-        <RestrictedResource />
-      </div>
-     <div v-else>
-       <h1></h1>
-     </div>
+  <div class="dashboard">
+    <div v-if="auth.isAuthenticated == false || auth.user.account !== 'bookkeeper'">
+      <RestrictedResource />
     </div>
+    <div v-else>
+      <h1></h1>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -22,6 +22,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

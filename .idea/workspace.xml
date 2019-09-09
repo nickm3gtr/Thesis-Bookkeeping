@@ -5,26 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f74612c7-0b76-4efb-9329-bce768567bd1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/server/libs/subtypes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/ChartOfAccount.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ChartOfAccount.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/libs/accounts.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/migrations/20190906105640-create-admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/migrations/20190906105640-create-admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/migrations/20190906105834-create-branch.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/migrations/20190906105834-create-branch.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/migrations/20190906110228-create-bookkeeper.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/migrations/20190906110228-create-bookkeeper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/migrations/20190907112013-create-type.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/migrations/20190907112719-create-account.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/Account.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/Admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/Bookkeeper.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/Bookkeeper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/Branch.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/Branch.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/Type.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/NavDrawer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/NavDrawer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Navbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/views/ChartofAccountAdmin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/views/ChartofAccountAdmin.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/views/ChartofAccountBookkeeper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/views/ChartofAccountBookkeeper.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/views/DashboardAdmin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/views/DashboardAdmin.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/views/DashboardBookkeeper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/views/DashboardBookkeeper.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/libs/nonCurrentAssets.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/libs/nonCurrentAssets.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/libs/subtypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/libs/subtypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/libs/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/libs/types.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routes/charts.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/charts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/seeders/20190906112958-demo-Branch.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/seeders/20190906112958-demo-Branch.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/seeders/20190906113634-demo-Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/seeders/20190906113634-demo-Admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/seeders/20190906125014-demo-Bookkeeper.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/seeders/20190906125014-demo-Bookkeeper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/seeders/20190907113351-demo-Type.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/seeders/20190907120913-demo-Account.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/seeders/20190908230726-demo_Account.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/seeders/20190908230726-demo_Account.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -36,17 +28,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/src/components/ChartOfAccount.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -62,18 +44,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/src/App.vue" />
-        <option value="$PROJECT_DIR$/server/package.json" />
-        <option value="$PROJECT_DIR$/client/vue.config.js" />
-        <option value="$PROJECT_DIR$/server/public/js/app.2564f3ea.js" />
-        <option value="$PROJECT_DIR$/client/src/store/auth/actions.js" />
-        <option value="$PROJECT_DIR$/server/public/js/app.7675004c.js" />
-        <option value="$PROJECT_DIR$/server/public/js/chunk-vendors.468bf942.js" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/server/config/config.json" />
-        <option value="$PROJECT_DIR$/client/src/router/index.js" />
-        <option value="$PROJECT_DIR$/server/migrations/20190907112013-create-type.js" />
         <option value="$PROJECT_DIR$/server/migrations/20190907112312-create-sub-type.js" />
         <option value="$PROJECT_DIR$/server/seeders/20190907113351-demo-Type.js" />
         <option value="$PROJECT_DIR$/server/libs/subTypes.js" />
@@ -81,9 +51,7 @@
         <option value="$PROJECT_DIR$/server/seeders/20190907120913-demo-Account.js" />
         <option value="$PROJECT_DIR$/server/server.js" />
         <option value="$PROJECT_DIR$/client/src/components/ChartAdmin.vue" />
-        <option value="$PROJECT_DIR$/client/src/views/ChartofAccountBookkeeper.vue" />
         <option value="$PROJECT_DIR$/client/src/components/ChartofAccount.vue" />
-        <option value="$PROJECT_DIR$/client/src/views/ChartofAccountAdmin.vue" />
         <option value="$PROJECT_DIR$/server/migrations/20190907112719-create-subtype.js" />
         <option value="$PROJECT_DIR$/server/seeders/20190907120913-demo-SubType.js" />
         <option value="$PROJECT_DIR$/server/libs/accounts.js" />
@@ -102,17 +70,31 @@
         <option value="$PROJECT_DIR$/server/seeders/20190908092945-demo-MainType.js" />
         <option value="$PROJECT_DIR$/server/models/Type.js" />
         <option value="$PROJECT_DIR$/server/migrations/20190908091835-create-type.js" />
-        <option value="$PROJECT_DIR$/server/libs/types.js" />
         <option value="$PROJECT_DIR$/server/seeders/20190908100159-demo-Type.js" />
         <option value="$PROJECT_DIR$/server/seeders/20190908102834-demo-SubType.js" />
         <option value="$PROJECT_DIR$/server/libs/currentAssets.js" />
-        <option value="$PROJECT_DIR$/server/seeders/20190908230726-demo_Account.js" />
-        <option value="$PROJECT_DIR$/server/libs/nonCurrentAssets.js" />
-        <option value="$PROJECT_DIR$/server/libs/subtypes.js" />
         <option value="$PROJECT_DIR$/server/models/Account.js" />
         <option value="$PROJECT_DIR$/server/models/SubType.js" />
-        <option value="$PROJECT_DIR$/server/routes/charts.js" />
         <option value="$PROJECT_DIR$/client/src/components/ChartOfAccount.vue" />
+        <option value="$PROJECT_DIR$/server/libs/nonCurrentAssets.js" />
+        <option value="$PROJECT_DIR$/server/libs/currentLiabilities.js" />
+        <option value="$PROJECT_DIR$/server/libs/nonCurrentLiabilities.js" />
+        <option value="$PROJECT_DIR$/server/libs/types.js" />
+        <option value="$PROJECT_DIR$/server/libs/equity.js" />
+        <option value="$PROJECT_DIR$/server/libs/revenue.js" />
+        <option value="$PROJECT_DIR$/server/libs/costOfGoods.js" />
+        <option value="$PROJECT_DIR$/server/libs/costOfServices.js" />
+        <option value="$PROJECT_DIR$/server/libs/subtypes.js" />
+        <option value="$PROJECT_DIR$/server/seeders/20190908230726-demo_Account.js" />
+        <option value="$PROJECT_DIR$/server/libs/expenses.js" />
+        <option value="$PROJECT_DIR$/client/src/views/HomeAdmin.vue" />
+        <option value="$PROJECT_DIR$/server/routes/charts.js" />
+        <option value="$PROJECT_DIR$/client/src/components/Navbar.vue" />
+        <option value="$PROJECT_DIR$/client/src/components/NavDrawer.vue" />
+        <option value="$PROJECT_DIR$/client/src/views/DashboardBookkeeper.vue" />
+        <option value="$PROJECT_DIR$/client/src/views/ChartofAccountBookkeeper.vue" />
+        <option value="$PROJECT_DIR$/client/src/views/ChartofAccountAdmin.vue" />
+        <option value="$PROJECT_DIR$/client/src/views/DashboardAdmin.vue" />
       </list>
     </option>
   </component>
@@ -130,6 +112,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -155,11 +138,17 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="bookkeeping_system" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bookkeeping_system" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -213,16 +202,16 @@
       <workItem from="1567904639373" duration="8131000" />
       <workItem from="1567933329429" duration="6452000" />
       <workItem from="1567979050095" duration="5865000" />
-      <workItem from="1567985570800" duration="3325000" />
+      <workItem from="1567985570800" duration="6168000" />
+      <workItem from="1568035172733" duration="11850000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="102399000" />
+    <option name="totallyTimeSpent" value="117092000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24981412" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -271,82 +260,9 @@
     </ignored-roots>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/server/public/js/chunk-vendors.468bf942.js" />
-    <entry file="file://$PROJECT_DIR$/server/public/js/app.7675004c.js" />
-    <entry file="file://$PROJECT_DIR$/client/src/store/auth/actions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="15" column="12" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/.gitignore" />
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="6" selection-start-column="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/vue.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/config/config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/router/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="3" column="41" lean-forward="true" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/seeders/20190906125014-demo-Bookkeeper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="9" column="18" lean-forward="true" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/migrations/20190907112312-create-sub-type.js" />
     <entry file="file://$PROJECT_DIR$/server/migrations/20190907112013-create-type.js" />
     <entry file="file://$PROJECT_DIR$/server/seeders/20190907113351-demo-Type.js" />
     <entry file="file://$PROJECT_DIR$/client/src/components/ChartBookkeeper.vue" />
-    <entry file="file://$PROJECT_DIR$/client/src/views/DashboardBookkeeper.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-          <folding>
-            <element signature="e#240#304#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/views/DashboardAdmin.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
@@ -354,24 +270,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/views/ChartofAccountBookkeeper.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/routes/bookkeeper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="6" column="42" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/views/ChartofAccountAdmin.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="11" column="32" lean-forward="true" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -449,20 +351,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/libs/types.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="33" column="14" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/seeders/20190908230726-demo_Account.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="6" column="44" lean-forward="true" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/libs/currentAssets.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-890">
@@ -474,20 +362,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="502">
           <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/libs/nonCurrentAssets.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="53">
-          <caret line="4" column="13" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/libs/subtypes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="258" column="36" lean-forward="true" selection-start-line="258" selection-start-column="36" selection-end-line="258" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -512,20 +386,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/models/Account.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/routes/charts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="8" column="15" lean-forward="true" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/models/SubType.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -535,8 +395,160 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/ChartOfAccount.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
+        <state relative-caret-position="-480">
+          <caret line="16" column="30" lean-forward="true" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/libs/nonCurrentAssets.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="792">
+          <caret line="242" column="14" lean-forward="true" selection-start-line="242" selection-start-column="14" selection-end-line="242" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/libs/currentLiabilities.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="120" column="3" selection-start-line="120" selection-start-column="3" selection-end-line="120" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/libs/types.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/libs/equity.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="85" column="3" lean-forward="true" selection-start-line="85" selection-start-column="3" selection-end-line="85" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/libs/nonCurrentLiabilities.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-600">
+          <caret line="10" column="4" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/libs/revenue.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="75" column="3" lean-forward="true" selection-start-line="75" selection-start-column="3" selection-end-line="75" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/libs/costOfGoods.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="40" column="3" lean-forward="true" selection-start-line="40" selection-start-column="3" selection-end-line="40" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/models/Account.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/libs/subtypes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="219" column="30" selection-start-line="219" selection-start-column="30" selection-end-line="219" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/seeders/20190908230726-demo_Account.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="13" column="38" lean-forward="true" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/libs/expenses.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="11" column="3" lean-forward="true" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/libs/costOfServices.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="155" column="3" lean-forward="true" selection-start-line="155" selection-start-column="3" selection-end-line="155" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/routes/charts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/views/HomeAdmin.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/Navbar.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2376">
+          <caret line="102" column="24" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/RestrictedResource.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/NavDrawer.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2856">
+          <caret line="119" column="9" lean-forward="true" selection-start-line="119" selection-start-column="9" selection-end-line="119" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/views/ChartofAccountBookkeeper.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="2" column="87" lean-forward="true" selection-start-line="2" selection-start-column="87" selection-end-line="2" selection-end-column="100" />
+          <folding>
+            <element signature="e#224#288#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/views/ChartofAccountAdmin.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="2" column="100" selection-start-line="2" selection-start-column="100" selection-end-line="2" selection-end-column="100" />
+          <folding>
+            <element signature="e#231#295#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/views/DashboardBookkeeper.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="2" column="82" selection-start-line="2" selection-start-column="45" selection-end-line="2" selection-end-column="82" />
+          <folding>
+            <element signature="e#199#263#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/views/DashboardAdmin.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="11" column="16" lean-forward="true" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
         </state>
       </provider>
     </entry>
