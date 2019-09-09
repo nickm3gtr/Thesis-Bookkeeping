@@ -1,10 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Account = sequelize.define('Account', {
-    name: DataTypes.STRING
-  }, {});
+    name: DataTypes.STRING,
+    subAccount: DataTypes.JSONB
+  }, { timestamps: false });
   Account.associate = function(models) {
-    Account.belongsTo(models.Type, { foreignKey: 'TypeId' })
+    Account.belongsTo(models.SubType, { foreignKey: 'SubTypeId' })
   };
   return Account;
 };

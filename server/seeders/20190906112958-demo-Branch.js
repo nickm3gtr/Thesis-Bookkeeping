@@ -5,29 +5,19 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Branches', [
       {
-        branchName: 'DARBMUPCO-A',
-        createdAt: new Date(),
-        updatedAt: new Date()
+        branchName: 'DARBMUPCO-A'
       },
       {
-        branchName: 'DARBMUPCO-B',
-        createdAt: new Date(),
-        updatedAt: new Date()
+        branchName: 'DARBMUPCO-B'
       },
       {
-        branchName: 'DARBMUPCO-C',
-        createdAt: new Date(),
-        updatedAt: new Date()
+        branchName: 'DARBMUPCO-C'
       },
       {
-        branchName: 'DARBMUPCO-D',
-        createdAt: new Date(),
-        updatedAt: new Date()
+        branchName: 'DARBMUPCO-D'
       },
       {
-        branchName: 'DARBMUPCO-E',
-        createdAt: new Date(),
-        updatedAt: new Date()
+        branchName: 'DARBMUPCO-E'
       }
     ], {});
   },

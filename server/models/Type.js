@@ -2,10 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
   const Type = sequelize.define('Type', {
     name: DataTypes.STRING
-  }, {});
-  // eslint-disable-next-line no-unused-vars
+  }, { timestamps: false });
   Type.associate = function(models) {
-    Type.hasMany(models.Account)
+    Type.hasMany(models.SubType)
   };
   return Type;
 };

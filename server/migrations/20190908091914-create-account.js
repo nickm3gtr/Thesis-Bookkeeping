@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Types', {
+    return queryInterface.createTable('Accounts', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -10,18 +10,21 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+      subAccount: {
+        type: Sequelize.JSONB
       },
-      updatedAt: {
+      SubTypeId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.DATE
+        references: {
+          model: 'SubTypes',
+          key: 'id'
+        }
       }
     });
   },
   // eslint-disable-next-line no-unused-vars
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Types');
+    return queryInterface.dropTable('Accounts');
   }
 };

@@ -1,20 +1,19 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Branches', {
+    return queryInterface.createTable('Types', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      branchName: {
+      name: {
         type: Sequelize.STRING
       }
     });
   },
   // eslint-disable-next-line no-unused-vars
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Branches');
+    return queryInterface.dropTable('Types');
   }
 };

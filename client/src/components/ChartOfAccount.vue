@@ -2,7 +2,7 @@
   <div class="chart-of-account">
     <v-layout>
       <v-flex md10 offset-md1>
-        <v-card class="mt-6">
+        <v-card>
           <v-card-title>
             <v-col cols="6" md="6">
             </v-col>
@@ -11,7 +11,7 @@
                 solo
                 v-model="search"
                 append-icon="search"
-                label="Search"
+                label="Filter accounts"
                 single-line
                 hide-details
               ></v-text-field>
@@ -19,10 +19,11 @@
           </v-card-title>
           <v-card-text>
             <v-data-table
+              dense
               item-key="code"
               :headers="headers"
               :items="accounts"
-              :items-per-page="10"
+              :items-per-page="15"
               :search="search"
               :loading="loading"
               loading-text="Loading..."
@@ -46,9 +47,9 @@ export default {
       accounts: [],
       loading: false,
       headers: [
-        { text: 'Account Code', value: 'id' },
-        { text: 'Account Title', value: 'name' },
-        { text: 'Account Type', value: 'Type.name' }
+        { text: 'Account Name', value: 'name' },
+        { text: 'Account Subtype', value: 'SubType.name' },
+        { text: 'Account Type', value: 'SubType.Type.name' }
       ]
     }
   },

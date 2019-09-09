@@ -7,9 +7,7 @@ module.exports = {
       userName: 'DARBMUPCO-A',
       password: '$2a$10$e3jxrDRbzZh4bd2fEMKiW.FJK24h80hwrGKgF4OOOnXwTdY7xoHZK',
       account: 'bookkeeper',
-      BranchId: 1,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      BranchId: 1
     }], {});
   },
 
