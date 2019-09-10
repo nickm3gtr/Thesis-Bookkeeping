@@ -17,7 +17,7 @@
         :prepend-icon="item.action"
         :append-icon="!item.items ? '' : undefined"
         no-action
-        @click="$router.push(item.route)"
+        @click="$router.push(item.route).catch(err => {})"
       >
         <template v-slot:activator>
           <v-list-item-content>
@@ -28,6 +28,7 @@
         <v-list-item
           v-for="subItem in item.items"
           :key="subItem.title"
+          :to="subItem.route"
         >
           <v-list-item-content>
             <v-list-item-title class="subtitle-2 font-weight-light" v-text="subItem.title"></v-list-item-title>
@@ -45,7 +46,7 @@
         :prepend-icon="item.action"
         :append-icon="!item.items ? '' : undefined"
         no-action
-        @click="$router.push(item.route)"
+        @click="$router.push(item.route).catch(err => {})"
       >
         <template v-slot:activator>
           <v-list-item-content>
@@ -87,12 +88,13 @@ export default {
         {
           action: 'local_offer',
           title: 'Transactions',
+          route: '#',
           items: [
-            { title: 'General Journal' },
-            { title: 'Cash Receipt Book' },
-            { title: 'Cash Disbursement Book' },
-            { title: 'Sales Book' },
-            { title: 'Purchase Book' }
+            { title: 'General Journal', route: '/bookkeeper/general-journal' },
+            { title: 'Cash Receipt Book', route: '#' },
+            { title: 'Cash Disbursement Book', route: '#' },
+            { title: 'Sales Book', route: '#' },
+            { title: 'Purchase Book', route: '#' }
           ]
         }
       ],
@@ -110,6 +112,7 @@ export default {
         {
           action: 'local_offer',
           title: 'Transactions',
+          route: '#',
           items: [
             { title: 'General Journal' },
             { title: 'Cash Receipt Book' },

@@ -1,7 +1,7 @@
 <template>
   <div class="chart-of-account">
     <v-layout>
-      <v-flex md10 offset-md1>
+      <v-flex sm12 md10 offset-md1>
         <v-card>
           <v-card-title>
             <v-col cols="6" md="6">
