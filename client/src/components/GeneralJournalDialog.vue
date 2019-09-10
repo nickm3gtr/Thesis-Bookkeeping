@@ -44,7 +44,7 @@
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn color="blue darken-1" @click="$emit('close-dialog')" text>Close</v-btn>
-          <v-btn color="blue darken-1" text @click="add">Add</v-btn>
+          <v-btn color="blue darken-1" text @click="add" :disabled="isIncomplete">Add</v-btn>
         </v-card-actions>
       </v-form>
     </v-card>
@@ -53,10 +53,11 @@
 
 <script>
 import axios from 'axios'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'GeneralJournalDialog',
+  props: [ 'transId', 'memo' ],
   data () {
     return {
       loading: false,
@@ -70,12 +71,19 @@ export default {
     ...mapActions('errors', ['getError']),
     add () {
       const transaction = {
+        BookkeeperId: this.auth.user.id,
+        TransId: this.transId,
         AccountId: this.selected.id,
+        memo: this.memo,
         AccountName: this.selected.name,
-        debit: this.debit,
-        credit: this.credit
+        debit: parseInt(this.debit),
+        credit: parseInt(this.credit)
       }
       this.$emit('add-transaction', transaction)
+      this.$emit('close-dialog')
+      this.selected = ''
+      this.debit = ''
+      this.credit = ''
     }
   },
   async mounted () {
@@ -90,11 +98,15 @@ export default {
     }
   },
   computed: {
+    ...mapState(['auth']),
     creditNotNull () {
       return this.credit.length > 0
     },
     debitNotNull () {
       return this.debit.length > 0
+    },
+    isIncomplete () {
+      return this.selected === '' || (this.debit === '' && this.credit === '')
     }
   }
 }
