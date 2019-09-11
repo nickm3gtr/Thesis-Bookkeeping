@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const db = require('../models')
+const auth = require('../middleware/auth')
 
-router.post('/', (req, res) => {
+router.post('/', auth, (req, res) => {
   let { data } = req.body
   const mapData = data.map(data => {
     if (data.debit.length < 1) {

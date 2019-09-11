@@ -61,6 +61,15 @@
               no-data-text="Add General Journal transactions"
               class="elevation-3"
             >
+              <template v-slot:body.append="{ headers }">
+                <tr>
+                  <td>
+                    Total:
+                  </td>
+                  <td><span :class="{ 'red--text': isNotTheSame }">{{ sumDebit }}</span></td>
+                  <td><span :class="{ 'red--text': isNotTheSame }">{{ sumCredit }}</span></td>
+                </tr>
+              </template>
             </v-data-table>
           </v-card-text>
         </v-card>
@@ -114,7 +123,6 @@ export default {
     ...mapActions('errors', ['getError']),
     add (transaction) {
       this.items = [ ...this.items, transaction ]
-      console.log(this.items)
     },
     clear () {
       this.items = []
@@ -127,25 +135,59 @@ export default {
     async save () {
       const config = {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
         }
       }
       try {
         const newTransaction = JSON.stringify({ data: this.items })
-        console.log(newTransaction)
         const response = await axios.post('/api/general-journal', newTransaction, config)
         const savedTransaction = response.data
         if (!savedTransaction) console.log('Failed')
         this.snackbar = true
       } catch (e) {
         this.getError(e.response.data)
-        console.log(e.response.data)
       }
+    }
+  },
+  computed: {
+    totalDebit () {
+      const sumDebit = this.items.map(item => {
+        return +item.debit
+      })
+      return sumDebit
+    },
+    totalCredit () {
+      const sumCredit = this.items.map(item => {
+        return +item.credit
+      })
+      return sumCredit
+    },
+    sumDebit () {
+      let sum = 0
+      for (let i = 0; i < this.totalDebit.length; i++) {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        sum += this.totalDebit[i]
+      }
+      return sum
+    },
+    sumCredit () {
+      let sum = 0
+      for (let i = 0; i < this.totalCredit.length; i++) {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        sum += this.totalCredit[i]
+      }
+      return sum
+    },
+    isNotTheSame () {
+      return this.sumDebit !== this.sumCredit
     }
   }
 }
 </script>
 
 <style scoped>
-
+  .danger {
+    color: red;
+  }
 </style>

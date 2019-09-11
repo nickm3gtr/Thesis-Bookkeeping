@@ -88,8 +88,14 @@ export default {
   },
   async mounted () {
     try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
       this.loading = true
-      const response = await axios.get('/api/accounts')
+      const response = await axios.get('/api/accounts', config)
       this.accounts = response.data
       this.loading = false
     } catch (e) {

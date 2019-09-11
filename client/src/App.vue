@@ -17,6 +17,9 @@ export default {
   components: { Navbar },
   computed: {
     ...mapState(['auth'])
+  },
+  beforeCreate () {
+    this.$store.dispatch('auth/loadUser')
   }
 }
 </script>
