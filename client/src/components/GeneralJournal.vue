@@ -18,10 +18,15 @@
               </v-col>
               <v-col cols="12" md="1">
                 <v-dialog persistent v-model="dialog" max-width="600px">
-                  <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark fab small class="mt-4" v-on="on">
-                      <v-icon>add</v-icon>
-                    </v-btn>
+                  <template v-slot:activator="{ on: dialog }">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on: tooltip }">
+                        <v-btn color="primary" dark fab small class="mt-4" v-on="{ ...dialog, ...tooltip }">
+                          <v-icon>note_add</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Add</span>
+                    </v-tooltip>
                   </template>
                   <GeneralJournalDialog
                     :transId="transId"
@@ -32,14 +37,24 @@
                 </v-dialog>
               </v-col>
               <v-col cols="12" md="1">
-                <v-btn color="red" dark fab small class="mt-4" @click="clear">
-                  <v-icon>close</v-icon>
-                </v-btn>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn color="red" v-on="on" dark fab small class="mt-4" @click="clear">
+                      <v-icon>delete</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Clear</span>
+                </v-tooltip>
               </v-col>
               <v-col cols="12" md="1">
-                <v-btn color="success" dark fab small class="mt-4" @click="save">
-                  <v-icon>save</v-icon>
-                </v-btn>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn color="success" v-on="on" dark fab small class="mt-4" @click="save">
+                      <v-icon>save</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Save</span>
+                </v-tooltip>
               </v-col>
             </v-row>
             <v-data-table
@@ -55,6 +70,23 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <div class="text-center">
+      <v-snackbar
+        v-model="snackbar"
+        bottom="bottom"
+        color="green"
+        :timeout="timeout"
+      >
+        Saved!
+        <v-btn
+          color="white"
+          text
+          @click="closeSnackBar"
+        >
+          Close
+        </v-btn>
+      </v-snackbar>
+    </div>
   </div>
 </template>
 
@@ -69,6 +101,8 @@ export default {
   components: { GeneralJournalDialog },
   data () {
     return {
+      snackbar: false,
+      timeout: 0,
       transId: uuid(),
       dialog: false,
       memo: '',
@@ -84,9 +118,14 @@ export default {
     ...mapActions('errors', ['getError']),
     add (transaction) {
       this.items = [ ...this.items, transaction ]
+      console.log(this.items)
     },
     clear () {
       this.items = []
+    },
+    closeSnackBar () {
+      this.snackbar = false
+      this.clear()
     },
     async save () {
       const config = {
@@ -100,6 +139,7 @@ export default {
         const response = await axios.post('/api/general-journal', newTransaction, config)
         const savedTransaction = response.data
         if (!savedTransaction) console.log('Failed')
+        this.snackbar = true
       } catch (e) {
         this.getError(e.response.data)
         console.log(e.response.data)

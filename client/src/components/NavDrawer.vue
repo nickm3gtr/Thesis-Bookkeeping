@@ -86,8 +86,8 @@ export default {
           route: '/bookkeeper/chart_of_account'
         },
         {
-          action: 'local_offer',
-          title: 'Transactions',
+          action: 'chrome_reader_mode',
+          title: 'Bookkeeping',
           route: '#',
           items: [
             { title: 'General Journal', route: '/bookkeeper/general-journal' },
