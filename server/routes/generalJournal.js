@@ -3,8 +3,19 @@ const router = express.Router()
 const db = require('../models')
 
 router.post('/', (req, res) => {
-  const { data } = req.body
-  db.TransactionRecord.bulkCreate(data, { returning: true })
+  let { data } = req.body
+  const mapData = data.map(data => {
+    if (data.debit.length < 1) {
+      data.debit = null
+    }
+    if (data.credit.length < 1) {
+      data.credit = null
+    }
+    return data
+  })
+  // eslint-disable-next-line no-console
+  console.log(mapData)
+  db.TransactionRecord.bulkCreate(mapData, { returning: true })
     .then(transactions => res.json(transactions))
     .catch(err => { res.status(400).json({ msg: 'Error', err }) })
 })

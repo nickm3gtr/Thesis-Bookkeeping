@@ -6,15 +6,11 @@
           <v-card-text>
             <v-row>
               <v-col cols="12" md="9">
-                <v-textarea
+                <v-text-field
                   outlined
-                  rows="1"
-                  row-height="15"
-                  name="input-7-4"
                   label="Description..."
-                  value=""
-                  :model="memo"
-                ></v-textarea>
+                  v-model="memo"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" md="1">
                 <v-dialog persistent v-model="dialog" max-width="600px">
@@ -122,6 +118,7 @@ export default {
     },
     clear () {
       this.items = []
+      this.memo = ''
     },
     closeSnackBar () {
       this.snackbar = false

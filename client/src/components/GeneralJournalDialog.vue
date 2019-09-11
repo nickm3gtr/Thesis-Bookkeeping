@@ -76,8 +76,8 @@ export default {
         AccountId: this.selected.id,
         memo: this.memo,
         AccountName: this.selected.name,
-        debit: parseInt(this.debit),
-        credit: parseInt(this.credit)
+        debit: this.debit,
+        credit: this.credit
       }
       this.$emit('add-transaction', transaction)
       this.$emit('close-dialog')
