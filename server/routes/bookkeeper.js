@@ -33,7 +33,7 @@ router.post("/", (req, res) => {
             jwt.sign(
               { userName: user.userName },
               jwtSecret,
-              { expiresIn: 3600 },
+              { expiresIn: 28800 },
               (err, token) => res.json({ token, user })
             );
           } catch (e) {
@@ -59,7 +59,7 @@ router.post("/login", loginMiddleware, async (req, res) => {
         jwt.sign(
           { userName: user.userName },
           jwtSecret,
-          { expiresIn: 3600 },
+          { expiresIn: 28800 },
           (err, token) => res.json({ token, user })
         );
       } else {

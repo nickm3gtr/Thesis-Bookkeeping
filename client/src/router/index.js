@@ -8,6 +8,7 @@ import store from '@/store/'
 import dashboard from './dashboard'
 import charts from './charts'
 import generalJournal from './generalJournal'
+import reports from './reports'
 
 Vue.use(Router)
 
@@ -42,6 +43,7 @@ export default new Router({
     ...dashboard,
     ...charts,
     ...generalJournal,
+    ...reports,
     {
       path: '*',
       name: 'notFound',

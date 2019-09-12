@@ -7,7 +7,7 @@ function loginMiddleware (req, res, next) {
     password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required()
   }).with('userName', 'password');
 
-  const { error } = schema.validate(req.body)
+  const { error } = schema.validate(req.body.data[0])
   if (error) {
     switch (error.details[0].context.key) {
       case 'userName':

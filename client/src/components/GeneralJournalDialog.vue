@@ -57,7 +57,7 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'GeneralJournalDialog',
-  props: [ 'transId', 'memo' ],
+  props: [ 'transId', 'memo', 'date' ],
   data () {
     return {
       loading: false,
@@ -77,7 +77,8 @@ export default {
         memo: this.memo,
         AccountName: this.selected.name,
         debit: this.debit,
-        credit: this.credit
+        credit: this.credit,
+        date: this.date
       }
       this.$emit('add-transaction', transaction)
       this.$emit('close-dialog')

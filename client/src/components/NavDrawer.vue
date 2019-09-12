@@ -90,11 +90,23 @@ export default {
           title: 'Bookkeeping',
           route: '#',
           items: [
-            { title: 'General Journal', route: '/bookkeeper/general-journal' },
+            { title: 'General Journal Book', route: '/bookkeeper/general-journal' },
             { title: 'Cash Receipt Book', route: '#' },
             { title: 'Cash Disbursement Book', route: '#' },
             { title: 'Sales Book', route: '#' },
             { title: 'Purchase Book', route: '#' }
+          ]
+        },
+        {
+          action: 'bar_chart',
+          title: 'Reports',
+          route: '#',
+          items: [
+            { title: 'Journal', route: '/bookkeeper/reports/journal' },
+            { title: 'Ledger', route: '#' },
+            { title: 'Trial Balance', route: '#' },
+            { title: 'Balance Sheet', route: '#' },
+            { title: 'Income Statement', route: '#' }
           ]
         }
       ],

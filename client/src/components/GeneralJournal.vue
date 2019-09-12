@@ -5,6 +5,35 @@
         <v-card>
           <v-card-text>
             <v-row>
+              <v-col cols="12" md="4">
+                <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  :return-value.sync="date"
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="date"
+                      label="Select Date"
+                      prepend-icon="event"
+                      readonly
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker v-model="date" no-title scrollable>
+                    <div class="flex-grow-1"></div>
+                    <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+                    <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                  </v-date-picker>
+                </v-menu>
+              </v-col>
+            </v-row>
+            <v-row>
               <v-col cols="12" md="9">
                 <v-text-field
                   outlined
@@ -27,6 +56,7 @@
                   <GeneralJournalDialog
                     :transId="transId"
                     :memo="memo"
+                    :date="date"
                     @close-dialog="dialog = false"
                     @add-transaction="add"
                   />
@@ -39,7 +69,7 @@
                       <v-icon>delete</v-icon>
                     </v-btn>
                   </template>
-                  <span>Clear</span>
+                  <span>Clear All</span>
                 </v-tooltip>
               </v-col>
               <v-col cols="12" md="1">
@@ -64,11 +94,19 @@
               <template v-slot:body.append="{ headers }">
                 <tr>
                   <td>
-                    Total:
+                    <span class="font-weight-bold">Total:</span>
                   </td>
                   <td><span :class="{ 'red--text': isNotTheSame }">{{ sumDebit }}</span></td>
                   <td><span :class="{ 'red--text': isNotTheSame }">{{ sumCredit }}</span></td>
                 </tr>
+              </template>
+              <template v-slot:item.action="{ item }">
+                <v-icon
+                  small
+                  @click="deleteItem(item)"
+                >
+                  delete
+                </v-icon>
               </template>
             </v-data-table>
           </v-card-text>
@@ -111,10 +149,13 @@ export default {
       transId: uuid(),
       dialog: false,
       memo: '',
+      menu: false,
+      date: new Date().toISOString().substr(0, 10),
       headers: [
         { text: 'AccountName', value: 'AccountName' },
         { text: 'Debit', value: 'debit' },
-        { text: 'Credit', value: 'credit' }
+        { text: 'Credit', value: 'credit' },
+        { text: 'Actions', align: 'center', value: 'action', sortable: false }
       ],
       items: []
     }
@@ -132,6 +173,10 @@ export default {
       this.snackbar = false
       this.clear()
     },
+    deleteItem (item) {
+      const index = this.items.indexOf(item)
+      this.items.splice(index, 1)
+    },
     async save () {
       const config = {
         headers: {
@@ -141,12 +186,15 @@ export default {
       }
       try {
         const newTransaction = JSON.stringify({ data: this.items })
+        console.log(newTransaction)
         const response = await axios.post('/api/general-journal', newTransaction, config)
         const savedTransaction = response.data
         if (!savedTransaction) console.log('Failed')
         this.snackbar = true
+        this.transId = uuid()
       } catch (e) {
         this.getError(e.response.data)
+        this.transId = uuid()
       }
     }
   },
@@ -187,7 +235,8 @@ export default {
 </script>
 
 <style scoped>
-  .danger {
-    color: red;
+  .disable-events {
+    pointer-events: none;
+    opacity: 0.6;
   }
 </style>

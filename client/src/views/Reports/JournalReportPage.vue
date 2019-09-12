@@ -1,26 +1,22 @@
 <template>
   <div>
-    <div class="not-authenticated" v-if="$store.state.auth.isAuthenticated == false ||
+    <div v-if="$store.state.auth.isAuthenticated == false ||
     $store.state.auth.user.account !== 'bookkeeper'">
       <RestrictedResource />
     </div>
     <div v-else>
-      <ChartOfAccount />
+      <JournalReport />
     </div>
   </div>
 </template>
 
 <script>
+import JournalReport from '@/components/Reports/JournalReport'
 import RestrictedResource from '@/components/RestrictedResource'
 
-import ChartOfAccount from '@/components/ChartOfAccount'
-
 export default {
-  name: 'ChartofAccountBookkeeper',
-  components: {
-    ChartOfAccount,
-    RestrictedResource
-  }
+  name: 'JournalReportPage',
+  components: { JournalReport, RestrictedResource }
 }
 </script>
 
