@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const db = require('../models')
+const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 
 // GET journal report
