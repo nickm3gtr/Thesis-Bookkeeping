@@ -1,7 +1,7 @@
 <template>
   <div class="journal-report">
     <v-layout>
-      <v-flex sm12 md10 offset-md1>
+      <v-flex sm12 md12>
         <v-card>
           <v-card-title>
             <v-row>
@@ -10,7 +10,6 @@
                   ref="fromMenu"
                   v-model="fromMenu"
                   :close-on-content-click="false"
-                  :return-value.sync="fromDate"
                   transition="scale-transition"
                   offset-y
                   full-width
@@ -25,18 +24,11 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker v-model="fromDate" no-title scrollable>
-                    <div class="flex-grow-1"></div>
-                    <v-btn text color="primary" @click="fromMenu = false"
-                      >Cancel</v-btn
-                    >
-                    <v-btn
-                      text
-                      color="primary"
-                      @click="$refs.fromMenu.save(fromDate)"
-                      >OK</v-btn
-                    >
-                  </v-date-picker>
+                  <v-date-picker
+                    no-title
+                    v-model="fromDate"
+                    @input="fromMenu = false"
+                  ></v-date-picker>
                 </v-menu>
               </v-col>
               <v-col cols="12" md="4">
@@ -44,7 +36,6 @@
                   ref="toMenu"
                   v-model="toMenu"
                   :close-on-content-click="false"
-                  :return-value.sync="toDate"
                   transition="scale-transition"
                   offset-y
                   full-width
@@ -59,40 +50,33 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker v-model="toDate" no-title scrollable>
-                    <div class="flex-grow-1"></div>
-                    <v-btn text color="primary" @click="toMenu = false"
-                      >Cancel</v-btn
-                    >
-                    <v-btn text color="primary" @click="$refs.toMenu.save(toDate)"
-                      >OK</v-btn
-                    >
-                  </v-date-picker>
+                  <v-date-picker
+                    no-title
+                    v-model="toDate"
+                    @input="toMenu = false"
+                  ></v-date-picker>
                 </v-menu>
               </v-col>
-              <v-col cols="12" md="2" class="mt-3">
-                <v-btn dark color="primary" @click="generate">Generate</v-btn>
+              <v-col cols="12" md="4" class="mt-3">
+                <v-btn dark color="primary" class="mx-2" @click="generate">Generate</v-btn>
+                <v-btn dark color="success" class="mx-2" @click="pdf">Print</v-btn>
               </v-col>
             </v-row>
           </v-card-title>
-          <v-card-text>
-            <v-data-table
-              dense
-              hide-default-footer
-              disable-sort
-              sort-by="items.id"
-              :headers="headers"
-              :items="items"
-              no-data-text="Add General Journal transactions"
-              class="elevation-3"
-            >
-              <template v-slot:body="{ items }">
-                <tbody>
+          <div ref="content">
+            <v-card-text>
+              <v-data-table
+                hide-default-footer
+                disable-sort
+                sort-by="items.id"
+                :headers="headers"
+                :items="items"
+                no-data-text="Add General Journal transactions"
+                class="elevation-3"
+              >
+                <template v-slot:body="{ items }">
+                  <tbody>
                   <tr v-for="item in items" :key="item.id">
-                    <td>
-                      <span v-if="item.debit === null"></span>
-                      <span v-else>{{ item.TransId }}</span>
-                    </td>
                     <td>
                       <span v-if="item.debit === null"></span>
                       <span v-else>{{ item.date }}</span>
@@ -101,14 +85,18 @@
                       <span v-if="item.debit === null"></span>
                       <span v-else>{{ item.memo }}</span>
                     </td>
-                    <td>{{ item.Account.name }}</td>
+                    <td>
+                      <span v-if="item.debit === null">&emsp;{{ item.Account.name }}</span>
+                      <span v-else>{{ item.Account.name }}</span>
+                    </td>
                     <td class="text-right">{{ item.debit }}</td>
                     <td class="text-right">{{ item.credit }}</td>
                   </tr>
-                </tbody>
-              </template>
-            </v-data-table>
-          </v-card-text>
+                  </tbody>
+                </template>
+              </v-data-table>
+            </v-card-text>
+          </div>
         </v-card>
       </v-flex>
     </v-layout>
@@ -118,6 +106,8 @@
 <script>
 import axios from 'axios'
 import { mapActions } from 'vuex'
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 export default {
   name: 'JournalReport',
@@ -128,12 +118,11 @@ export default {
       fromDate: new Date().toISOString().substr(0, 10),
       toDate: new Date().toISOString().substr(0, 10),
       headers: [
-        { text: 'Trans Id', value: 'TransId' },
-        { text: 'Date', value: 'date' },
-        { text: 'Memo', value: 'memo' },
-        { text: 'AccountId', value: 'Account.name' },
-        { text: 'Debit', value: 'debit' },
-        { text: 'Credit', value: 'credit' }
+        { text: 'Date', value: 'date', width: '20%' },
+        { text: 'Memo', value: 'memo', width: '30%' },
+        { text: 'AccountId', value: 'Account.name', width: '20%' },
+        { text: 'Debit', value: 'debit', width: '15%' },
+        { text: 'Credit', value: 'credit', width: '15%' }
       ],
       items: []
     }
@@ -142,11 +131,20 @@ export default {
     ...mapActions('errors', ['getError']),
     async generate () {
       try {
-        const response = await axios.get(`/api/reports/journal/${this.fromDate}/${this.toDate}`)
+        const response = await axios.get(
+          `/api/reports/journal/${this.fromDate}/${this.toDate}`
+        )
         this.items = response.data
       } catch (e) {
         this.getError(e.response.data)
       }
+    },
+    pdf () {
+      // eslint-disable-next-line new-cap
+      const doc = new jsPDF()
+      doc.autoTable({ html: this.$refs['content'] })
+      console.log(this.$refs['content'])
+      doc.save('table.pdf')
     }
   }
 }

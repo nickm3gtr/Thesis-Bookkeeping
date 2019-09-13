@@ -18,7 +18,8 @@ router.get('/journal/:start/:end', (req, res) => {
         [Op.gte]: start,
         [Op.lte]: end
       }
-    }
+    },
+    order: ['id']
   }).then(journals => res.json(journals))
     .catch(err => res.status(400).json({ msg: 'Error fetching journals', err }))
 })

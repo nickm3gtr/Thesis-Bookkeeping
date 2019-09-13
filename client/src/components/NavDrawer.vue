@@ -88,7 +88,6 @@ export default {
         {
           action: 'chrome_reader_mode',
           title: 'Bookkeeping',
-          route: '#',
           items: [
             { title: 'General Journal Book', route: '/bookkeeper/general-journal' },
             { title: 'Cash Receipt Book', route: '#' },
@@ -100,7 +99,6 @@ export default {
         {
           action: 'bar_chart',
           title: 'Reports',
-          route: '#',
           items: [
             { title: 'Journal', route: '/bookkeeper/reports/journal' },
             { title: 'Ledger', route: '#' },

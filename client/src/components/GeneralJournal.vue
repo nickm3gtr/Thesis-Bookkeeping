@@ -96,8 +96,14 @@
                   <td>
                     <span class="font-weight-bold">Total:</span>
                   </td>
-                  <td><span :class="{ 'red--text': isNotTheSame }">{{ sumDebit }}</span></td>
-                  <td><span :class="{ 'red--text': isNotTheSame }">{{ sumCredit }}</span></td>
+                  <td>
+                    <span v-if="sumDebit === 0"></span>
+                    <span v-else :class="{ 'red--text': isNotTheSame }">{{ sumDebit }}</span>
+                  </td>
+                  <td>
+                    <span v-if="sumCredit === 0"></span>
+                    <span v-else :class="{ 'red--text': isNotTheSame }">{{ sumCredit }}</span>
+                  </td>
                 </tr>
               </template>
               <template v-slot:item.action="{ item }">
