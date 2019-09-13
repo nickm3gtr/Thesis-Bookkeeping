@@ -192,7 +192,6 @@ export default {
       }
       try {
         const newTransaction = JSON.stringify({ data: this.items })
-        console.log(newTransaction)
         const response = await axios.post('/api/general-journal', newTransaction, config)
         const savedTransaction = response.data
         if (!savedTransaction) console.log('Failed')

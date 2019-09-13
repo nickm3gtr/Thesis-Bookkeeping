@@ -89,7 +89,7 @@
                 </v-col>
               </v-row>
               <hr>
-              <div v-for="item in items" :key="item.id">
+              <div v-for="item in formatItems" :key="item.id">
                 <v-row>
                   <v-col cols="12" md="2">
                     <span v-if="item.debit === null"></span>
@@ -173,6 +173,13 @@ export default {
     },
     formatToDate () {
       return moment(this.toDate).format('MMM DD YYYY')
+    },
+    formatItems () {
+      const a = this.items.map(item => {
+        item.date = moment(item.date).format('MMM DD YYYY')
+        return item
+      })
+      return a
     }
   }
 }
