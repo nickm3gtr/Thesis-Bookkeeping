@@ -31,7 +31,7 @@
                   ></v-date-picker>
                 </v-menu>
               </v-col>
-              <v-col cols="12" md="4">
+              <v-col cols="10" md="4">
                 <v-menu
                   ref="toMenu"
                   v-model="toMenu"
@@ -59,42 +59,57 @@
               </v-col>
               <v-col cols="12" md="4" class="mt-3">
                 <v-btn dark color="primary" class="mx-2" @click="generate">Generate</v-btn>
-                <v-btn dark color="success" class="mx-2" @click="pdf">Print</v-btn>
+                <v-btn dark color="success" class="mx-2" @click="pdf">Download PDF</v-btn>
               </v-col>
             </v-row>
           </v-card-title>
-          <div ref="content">
+          <div id="content" class="mx-12">
             <v-card-text>
-              <v-data-table
-                hide-default-footer
-                disable-sort
-                sort-by="items.id"
-                :headers="headers"
-                :items="items"
-                no-data-text="Add General Journal transactions"
-                class="elevation-3"
-              >
-                <template v-slot:body="{ items }">
-                  <tbody>
-                  <tr v-for="item in items" :key="item.id">
-                    <td>
-                      <span v-if="item.debit === null"></span>
-                      <span v-else>{{ item.date }}</span>
-                    </td>
-                    <td>
-                      <span v-if="item.debit === null"></span>
-                      <span v-else>{{ item.memo }}</span>
-                    </td>
-                    <td>
-                      <span v-if="item.debit === null">&emsp;{{ item.Account.name }}</span>
-                      <span v-else>{{ item.Account.name }}</span>
-                    </td>
-                    <td class="text-right">{{ item.debit }}</td>
-                    <td class="text-right">{{ item.credit }}</td>
-                  </tr>
-                  </tbody>
-                </template>
-              </v-data-table>
+              <div class="text-center">
+                <p><span class="headline">DARBMUPCO</span></p>
+                <p><span class="subtitle-1">Transaction Journal</span></p>
+                <p><span class="subtitle-2">{{ formatFromDate }} to {{ formatToDate }}</span></p>
+                <hr>
+              </div>
+              <v-row class="ml-4">
+                <v-col cols="12" md="2">
+                  <span class="font-weight-medium">Date</span>
+                </v-col>
+                <v-col cols="12" md="3">
+                  <span class="font-weight-medium">Memo</span>
+                </v-col>
+                <v-col cols="12" md="3">
+                  <span class="font-weight-medium">Account</span>
+                </v-col>
+                <v-col cols="12" md="2">
+                  <span class="font-weight-medium">Debit</span>
+                </v-col>
+                <v-col cols="12" md="2">
+                  <span class="font-weight-medium">Credit</span>
+                </v-col>
+              </v-row>
+              <hr>
+              <div v-for="item in items" :key="item.id">
+                <v-row>
+                  <v-col cols="12" md="2">
+                    <span v-if="item.debit === null"></span>
+                    <span class="body-2 font-weight-medium" v-else>{{ item.date }}</span>
+                  </v-col>
+                  <v-col cols="12" md="3">
+                    <span v-if="item.debit === null"></span>
+                    <span class="body-2 font-weight-medium" v-else>{{ item.memo }}</span>
+                  </v-col>
+                  <v-col cols="12" md="3">
+                    <span class="body-2 font-weight-medium">{{ item.Account.name }}</span>
+                  </v-col>
+                  <v-col cols="12" md="2">
+                    <span class="body-2 font-weight-medium">{{ item.debit }}</span>
+                  </v-col>
+                  <v-col cols="12" md="2">
+                    <span class="body-2 font-weight-medium">{{ item.credit }}</span>
+                  </v-col>
+                </v-row>
+              </div>
             </v-card-text>
           </div>
         </v-card>
@@ -107,7 +122,8 @@
 import axios from 'axios'
 import { mapActions } from 'vuex'
 import jsPDF from 'jspdf'
-import 'jspdf-autotable'
+import html2canvas from 'html2canvas'
+import moment from 'moment'
 
 export default {
   name: 'JournalReport',
@@ -141,13 +157,29 @@ export default {
     },
     pdf () {
       // eslint-disable-next-line new-cap
-      const doc = new jsPDF()
-      doc.autoTable({ html: this.$refs['content'] })
-      console.log(this.$refs['content'])
-      doc.save('table.pdf')
+      const filename = 'Journal.pdf'
+
+      html2canvas(document.querySelector('#content'), { scale: 2, pagesplit: true, retina: true }).then(canvas => {
+        // eslint-disable-next-line new-cap
+        let pdf = new jsPDF('p', 'mm', 'a4')
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 20, 10, 180, 250)
+        pdf.save(filename)
+      })
+    }
+  },
+  computed: {
+    formatFromDate () {
+      return moment(this.fromDate).format('MMM DD YYYY')
+    },
+    formatToDate () {
+      return moment(this.toDate).format('MMM DD YYYY')
     }
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+  #content {
+    color: black;
+  }
+</style>
