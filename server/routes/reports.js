@@ -10,6 +10,9 @@ router.get('/journal/:start/:end', (req, res) => {
   const start = req.params.start
   const end = req.params.end
   db.TransactionRecord.findAll({
+    include: [{
+      model: db.Account
+    }],
     where: {
       date: {
         [Op.gte]: start,

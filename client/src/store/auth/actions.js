@@ -75,13 +75,15 @@ export default {
         Authorization: localStorage.getItem('token')
       }
     }
-    if (state.user.account === 'bookkeeper') {
+    if (!state.user) {
+      commit('LOGOUT_USER')
+    } else if (state.user.account === 'bookkeeper') {
       axios.get('/api/bookkeepers', config)
         .then(response => {
           commit('USER_LOADED', response.data)
           // eslint-disable-next-line handle-callback-err
         }).catch(err => commit('LOGOUT_USER'))
-    } else {
+    } else if (state.user.account === 'admin') {
       axios.get('/api/admin', config)
         .then(response => {
           commit('USER_LOADED', response.data)

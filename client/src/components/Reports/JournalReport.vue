@@ -77,13 +77,37 @@
           </v-card-title>
           <v-card-text>
             <v-data-table
+              dense
               hide-default-footer
               disable-sort
+              sort-by="items.id"
               :headers="headers"
               :items="items"
               no-data-text="Add General Journal transactions"
               class="elevation-3"
-            ></v-data-table>
+            >
+              <template v-slot:body="{ items }">
+                <tbody>
+                  <tr v-for="item in items" :key="item.id">
+                    <td>
+                      <span v-if="item.debit === null"></span>
+                      <span v-else>{{ item.TransId }}</span>
+                    </td>
+                    <td>
+                      <span v-if="item.debit === null"></span>
+                      <span v-else>{{ item.date }}</span>
+                    </td>
+                    <td>
+                      <span v-if="item.debit === null"></span>
+                      <span v-else>{{ item.memo }}</span>
+                    </td>
+                    <td>{{ item.Account.name }}</td>
+                    <td class="text-right">{{ item.debit }}</td>
+                    <td class="text-right">{{ item.credit }}</td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-data-table>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -104,7 +128,10 @@ export default {
       fromDate: new Date().toISOString().substr(0, 10),
       toDate: new Date().toISOString().substr(0, 10),
       headers: [
-        { text: 'AccountId', value: 'AccountId' },
+        { text: 'Trans Id', value: 'TransId' },
+        { text: 'Date', value: 'date' },
+        { text: 'Memo', value: 'memo' },
+        { text: 'AccountId', value: 'Account.name' },
         { text: 'Debit', value: 'debit' },
         { text: 'Credit', value: 'credit' }
       ],
@@ -114,13 +141,8 @@ export default {
   methods: {
     ...mapActions('errors', ['getError']),
     async generate () {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
       try {
-        const response = await axios.get(`/api/reports/journal/${this.fromDate}/${this.toDate}`, config)
+        const response = await axios.get(`/api/reports/journal/${this.fromDate}/${this.toDate}`)
         this.items = response.data
       } catch (e) {
         this.getError(e.response.data)
