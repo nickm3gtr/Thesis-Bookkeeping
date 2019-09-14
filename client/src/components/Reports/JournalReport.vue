@@ -66,7 +66,7 @@
           <div id="content" class="mx-12">
             <v-card-text>
               <div class="text-center">
-                <p><span class="headline">DARBMUPCO</span></p>
+                <p><span class="headline">{{ auth.user.Branch.branchName }}</span></p>
                 <p><span class="subtitle-1">Transaction Journal</span></p>
                 <p><span class="subtitle-2">{{ formatFromDate }} to {{ formatToDate }}</span></p>
                 <hr>
@@ -120,7 +120,7 @@
 
 <script>
 import axios from 'axios'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 import moment from 'moment'
@@ -148,7 +148,7 @@ export default {
     async generate () {
       try {
         const response = await axios.get(
-          `/api/reports/journal/${this.fromDate}/${this.toDate}`
+          `/api/reports/journal/${this.auth.user.BranchId}/${this.fromDate}/${this.toDate}`
         )
         this.items = response.data
       } catch (e) {
@@ -168,6 +168,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['auth']),
     formatFromDate () {
       return moment(this.fromDate).format('MMM DD YYYY')
     },

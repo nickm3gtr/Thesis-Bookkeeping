@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const jwtSecret = require("../config/secret");
 const { Bookkeeper } = require("../models");
+const db = require("../models");
 const auth = require('../middleware/auth')
 const loginMiddleware = require('../middleware/loginMiddleware')
 
@@ -74,7 +75,14 @@ router.post("/login", loginMiddleware, async (req, res) => {
 // Authorize Bookkeeper
 router.get("/", auth, async (req, res) => {
   try {
-    const user = await Bookkeeper.findOne({ where: { userName: req.user.userName } });
+      const user = await Bookkeeper.findOne({
+        where: {
+          userName: req.user.userName
+        },
+        include: [
+          { model: db.Branch }
+        ]
+    });
     if(!user) return res.status(401).json({ msg: "Unauthorized." });
     res.json(user);
   } catch (e) {
