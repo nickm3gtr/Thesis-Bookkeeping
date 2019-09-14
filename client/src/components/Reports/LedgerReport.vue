@@ -1,5 +1,5 @@
 <template>
-  <div class="journal-report">
+  <div class="ledger-report">
     <v-layout>
       <v-flex sm12 md12>
         <v-card>
@@ -58,31 +58,29 @@
                 </v-menu>
               </v-col>
               <v-col cols="12" md="4" class="mt-3">
-                <v-btn dark color="primary" class="mx-2" @click="generate">Generate</v-btn>
-                <v-btn dark color="success" class="mx-2" @click="pdf">Download PDF</v-btn>
+                <v-btn dark color="primary" class="mx-2" @click="generate"
+                  >Generate</v-btn
+                >
+                <v-btn dark color="success" class="mx-2" @click="pdf"
+                  >Download PDF</v-btn
+                >
               </v-col>
             </v-row>
           </v-card-title>
-          <div id="content" class="mx-12">
+          <div id="content">
             <v-card-text>
               <div class="text-center">
                 <p>
                   <span v-if="auth.user === null" class="headline">DARBMUPCO</span>
                   <span v-else class="headline">{{ auth.user.Branch.branchName }}</span>
                 </p>
-                <p><span class="subtitle-1">Transaction Journal</span></p>
+                <p><span class="subtitle-1">General Ledger</span></p>
                 <p><span class="subtitle-2">{{ formatFromDate }} through {{ formatToDate }}</span></p>
-                <hr>
               </div>
-              <v-row class="ml-4">
-                <v-col cols="12" md="2">
-                  <span class="font-weight-medium">Date</span>
-                </v-col>
-                <v-col cols="12" md="3">
-                  <span class="font-weight-medium">Memo</span>
-                </v-col>
-                <v-col cols="12" md="3">
-                  <span class="font-weight-medium">Account</span>
+              <hr>
+              <v-row class="ml-12">
+                <v-col cols="12" md="4">
+                  <span class="font-weight-medium">Name</span>
                 </v-col>
                 <v-col cols="12" md="2">
                   <span class="font-weight-medium">Debit</span>
@@ -90,29 +88,22 @@
                 <v-col cols="12" md="2">
                   <span class="font-weight-medium">Credit</span>
                 </v-col>
+                <v-col cols="12" md="2">
+                  <span class="font-weight-medium">Balance</span>
+                </v-col>
               </v-row>
               <hr>
-              <div v-for="item in formatItems" :key="item.id">
-                <v-row>
-                  <v-col cols="12" md="2">
-                    <span v-if="item.debit === null"></span>
-                    <span class="body-2 font-weight-medium" v-else>{{ item.date }}</span>
-                  </v-col>
-                  <v-col cols="12" md="3">
-                    <span v-if="item.debit === null"></span>
-                    <span class="body-2 font-weight-medium" v-else>{{ item.memo }}</span>
-                  </v-col>
-                  <v-col cols="12" md="3">
-                    <span class="body-2 font-weight-medium">{{ item.Account.name }}</span>
-                  </v-col>
-                  <v-col cols="12" md="2">
-                    <span class="body-2 font-weight-medium">{{ item.debit }}</span>
-                  </v-col>
-                  <v-col cols="12" md="2">
-                    <span class="body-2 font-weight-medium">{{ item.credit }}</span>
-                  </v-col>
-                </v-row>
-              </div>
+              <br>
+              <CurrentAssets :currentAssets="currentAssets" />
+              <NonCurrentAssets :nonCurrentAssets="nonCurrentAssets" />
+              <CurrentLiabilities :currentLiabilities="currentLiabilities" />
+              <NonCurrentLiabilities :nonCurrentLiabilities="nonCurrentLiabilities" />
+              <Equity :equity="equity" />
+              <Revenue :revenue="revenue" />
+              <CostOfGoodsSold :costOfGoods="costOfGoods" />
+              <CostOfServices :costOfServices="costOfServices" />
+              <Expenses :expenses="expenses" />
+              <Subsidy :subsidy="subsidy" />
             </v-card-text>
           </div>
         </v-card>
@@ -123,44 +114,59 @@
 
 <script>
 import axios from 'axios'
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
+import moment from 'moment'
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
-import moment from 'moment'
+import CurrentAssets from '@/components/Reports/ledgers/CurrentAssets'
+import NonCurrentAssets from '@/components/Reports/ledgers/NonCurrentAssets'
+import CurrentLiabilities from '@/components/Reports/ledgers/CurrentLiabilities'
+import NonCurrentLiabilities from '@/components/Reports/ledgers/NonCurrentLiabilities'
+import Equity from '@/components/Reports/ledgers/Equity'
+import Revenue from '@/components/Reports/ledgers/Revenue'
+import CostOfGoodsSold from '@/components/Reports/ledgers/CostOfGoodsSold'
+import CostOfServices from '@/components/Reports/ledgers/CostOfServices'
+import Expenses from '@/components/Reports/ledgers/Expenses'
+import Subsidy from '@/components/Reports/ledgers/Subsidy'
 
 export default {
-  name: 'JournalReport',
+  name: 'LedgerReport',
+  components: {
+    CurrentAssets,
+    NonCurrentAssets,
+    CurrentLiabilities,
+    NonCurrentLiabilities,
+    Equity,
+    Revenue,
+    CostOfGoodsSold,
+    CostOfServices,
+    Expenses,
+    Subsidy
+  },
   data () {
     return {
       fromMenu: false,
       toMenu: false,
       fromDate: new Date().toISOString().substr(0, 10),
       toDate: new Date().toISOString().substr(0, 10),
-      headers: [
-        { text: 'Date', value: 'date', width: '20%' },
-        { text: 'Memo', value: 'memo', width: '30%' },
-        { text: 'AccountId', value: 'Account.name', width: '20%' },
-        { text: 'Debit', value: 'debit', width: '15%' },
-        { text: 'Credit', value: 'credit', width: '15%' }
-      ],
       items: []
     }
   },
   methods: {
-    ...mapActions('errors', ['getError']),
     async generate () {
       try {
         const response = await axios.get(
-          `/api/reports/journal/${this.auth.user.BranchId}/${this.fromDate}/${this.toDate}`
+          `/api/reports/ledger/${this.auth.user.BranchId}/${this.fromDate}/${this.toDate}`
         )
         this.items = response.data
+        console.log(this.items)
       } catch (e) {
         this.getError(e.response.data)
       }
     },
     pdf () {
       // eslint-disable-next-line new-cap
-      const filename = 'Journal.pdf'
+      const filename = 'Ledger.pdf'
 
       html2canvas(document.querySelector('#content'), { scale: 2, pagesplit: true, retina: true }).then(canvas => {
         // eslint-disable-next-line new-cap
@@ -184,13 +190,59 @@ export default {
         return item
       })
       return a
+    },
+    currentAssets () {
+      return this.items.filter(item => {
+        return item.id === 11000
+      })
+    },
+    nonCurrentAssets () {
+      return this.items.filter(item => {
+        return item.id === 13000
+      })
+    },
+    currentLiabilities () {
+      return this.items.filter(item => {
+        return item.id === 21000
+      })
+    },
+    nonCurrentLiabilities () {
+      return this.items.filter(item => {
+        return item.id === 22000
+      })
+    },
+    equity () {
+      return this.items.filter(item => {
+        return item.id === 30100
+      })
+    },
+    revenue () {
+      return this.items.filter(item => {
+        return item.id === 40000
+      })
+    },
+    costOfGoods () {
+      return this.items.filter(item => {
+        return item.id === 50000
+      })
+    },
+    costOfServices () {
+      return this.items.filter(item => {
+        return item.id === 60000
+      })
+    },
+    expenses () {
+      return this.items.filter(item => {
+        return item.id === 70000
+      })
+    },
+    subsidy () {
+      return this.items.filter(item => {
+        return item.id === 80000
+      })
     }
   }
 }
 </script>
 
-<style scoped>
-  #content {
-    color: black;
-  }
-</style>
+<style scoped></style>
