@@ -17,13 +17,24 @@
         </v-col>
       </v-row>
     </div>
+    <hr>
+    <v-row class="ml-12">
+      <v-col cols="12" md="8">
+        <span class="subtitle-2">Total Non-Current Assets: </span>
+      </v-col>
+      <v-col cols="12" md="2">
+        <span v-if="nonCurrentAssets.length<1"></span>
+        <span v-else class="font-weight-medium">{{ balance }}</span>
+      </v-col>
+    </v-row>
+    <br />
   </div>
 </template>
 
 <script>
 export default {
   name: 'NonCurrentAssets',
-  props: ['nonCurrentAssets']
+  props: ['nonCurrentAssets', 'balance']
 }
 </script>
 

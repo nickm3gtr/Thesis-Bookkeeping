@@ -17,13 +17,24 @@
         </v-col>
       </v-row>
     </div>
+    <hr>
+    <v-row class="ml-12">
+      <v-col cols="12" md="8">
+        <span class="subtitle-2">Total Equity: </span>
+      </v-col>
+      <v-col cols="12" md="2">
+        <span v-if="equity.length<1"></span>
+        <span v-else class="font-weight-medium">{{ balance }}</span>
+      </v-col>
+    </v-row>
+    <br />
   </div>
 </template>
 
 <script>
 export default {
   name: 'Equity',
-  props: ['equity']
+  props: ['equity', 'balance']
 }
 </script>
 

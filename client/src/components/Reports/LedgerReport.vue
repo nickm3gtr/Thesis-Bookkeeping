@@ -94,16 +94,16 @@
               </v-row>
               <hr>
               <br>
-              <CurrentAssets :currentAssets="currentAssets" />
-              <NonCurrentAssets :nonCurrentAssets="nonCurrentAssets" />
-              <CurrentLiabilities :currentLiabilities="currentLiabilities" />
-              <NonCurrentLiabilities :nonCurrentLiabilities="nonCurrentLiabilities" />
-              <Equity :equity="equity" />
-              <Revenue :revenue="revenue" />
-              <CostOfGoodsSold :costOfGoods="costOfGoods" />
-              <CostOfServices :costOfServices="costOfServices" />
-              <Expenses :expenses="expenses" />
-              <Subsidy :subsidy="subsidy" />
+              <CurrentAssets :currentAssets="currentAssets" :balance="balanceCurrentAsset"/>
+              <NonCurrentAssets :nonCurrentAssets="nonCurrentAssets" :balance="balanceNonCurrentAsset" />
+              <CurrentLiabilities :currentLiabilities="currentLiabilities" :balance="balanceCurrentLiabilities" />
+              <NonCurrentLiabilities :nonCurrentLiabilities="nonCurrentLiabilities" :balance="balanceNonCurrentLiabilities" />
+              <Equity :equity="equity" :balance="balanceEquity" />
+              <Revenue :revenue="revenue" :balance="balanceRevenue" />
+              <CostOfGoodsSold :costOfGoods="costOfGoods" :balance="balanceCostOfGoods" />
+              <CostOfServices :costOfServices="costOfServices" :balance="balanceCostOfServices" />
+              <Expenses :expenses="expenses" :balance="balanceExpenses" />
+              <Subsidy :subsidy="subsidy" :balance="balanceSubsidy" />
             </v-card-text>
           </div>
         </v-card>
@@ -240,6 +240,96 @@ export default {
       return this.items.filter(item => {
         return item.id === 80000
       })
+    },
+    balanceCurrentAsset () {
+      let balances = this.currentAssets.map(asset => {
+        let balance = parseFloat(asset.balance)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return sum
+    },
+    balanceNonCurrentAsset () {
+      let balances = this.nonCurrentAssets.map(asset => {
+        let balance = parseFloat(asset.balance)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return sum
+    },
+    balanceCurrentLiabilities () {
+      let balances = this.currentLiabilities.map(asset => {
+        let balance = parseFloat(asset.balance)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return sum
+    },
+    balanceNonCurrentLiabilities () {
+      let balances = this.nonCurrentLiabilities.map(asset => {
+        let balance = parseFloat(asset.balance)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return sum
+    },
+    balanceEquity () {
+      let balances = this.equity.map(asset => {
+        let balance = parseFloat(asset.balance)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return sum
+    },
+    balanceRevenue () {
+      let balances = this.revenue.map(asset => {
+        let balance = parseFloat(asset.balance)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return sum
+    },
+    balanceCostOfGoods () {
+      let balances = this.costOfGoods.map(asset => {
+        let balance = parseFloat(asset.balance)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return sum
+    },
+    balanceCostOfServices () {
+      let balances = this.costOfServices.map(asset => {
+        let balance = parseFloat(asset.balance)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return sum
+    },
+    balanceExpenses () {
+      let balances = this.expenses.map(asset => {
+        let balance = parseFloat(asset.balance)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return sum
+    },
+    balanceSubsidy () {
+      let balances = this.subsidy.map(asset => {
+        let balance = parseFloat(asset.balance)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return sum
     }
   }
 }
