@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   TransactionRecord.associate = function(models) {
     TransactionRecord.belongsTo(models.Account, { foreignKey: 'AccountId' })
     TransactionRecord.belongsTo(models.Bookkeeper, { foreignKey: 'BookkeeperId' })
+    TransactionRecord.belongsTo(models.Book, { foreignKey: 'BookId' })
   };
   return TransactionRecord;
 };

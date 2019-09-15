@@ -10,7 +10,6 @@
                   ref="menu"
                   v-model="menu"
                   :close-on-content-click="false"
-                  :return-value.sync="date"
                   transition="scale-transition"
                   offset-y
                   full-width
@@ -25,10 +24,7 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker v-model="date" no-title scrollable>
-                    <div class="flex-grow-1"></div>
-                    <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                    <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                  <v-date-picker v-model="date" no-title @input="menu = false">
                   </v-date-picker>
                 </v-menu>
               </v-col>
@@ -56,6 +52,7 @@
                   <GeneralJournalDialog
                     :transId="transId"
                     :memo="memo"
+                    :BookId="BookId"
                     :date="date"
                     @close-dialog="dialog = false"
                     @add-transaction="add"
@@ -153,6 +150,7 @@ export default {
       snackbar: false,
       timeout: 0,
       transId: uuid(),
+      BookId: 1,
       dialog: false,
       memo: '',
       menu: false,

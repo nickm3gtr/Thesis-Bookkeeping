@@ -16,6 +16,14 @@ module.exports = {
           key: 'id'
         }
       },
+      BookId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Books',
+          key: 'id'
+        }
+      },
       TransId: {
         type: Sequelize.UUID,
         allowNull: false

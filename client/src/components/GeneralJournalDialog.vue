@@ -57,7 +57,7 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'GeneralJournalDialog',
-  props: [ 'transId', 'memo', 'date' ],
+  props: [ 'transId', 'memo', 'date', 'BookId' ],
   data () {
     return {
       loading: false,
@@ -72,6 +72,7 @@ export default {
     add () {
       const transaction = {
         BookkeeperId: this.auth.user.id,
+        BookId: this.BookId,
         TransId: this.transId,
         AccountId: this.selected.id,
         memo: this.memo,

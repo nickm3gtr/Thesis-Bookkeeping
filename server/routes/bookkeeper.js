@@ -51,7 +51,14 @@ router.post("/", (req, res) => {
 router.post("/login", loginMiddleware, async (req, res) => {
   const { userName, password } = req.body;
   try {
-    const user = await Bookkeeper.findOne({ where: { userName } });
+    const user = await Bookkeeper.findOne({
+      where: {
+        userName
+      },
+      include: [
+        { model: db.Branch }
+      ]
+    });
 
     bcrypt.compare(password, user.password, (err, response) => {
       if (err) throw err;
