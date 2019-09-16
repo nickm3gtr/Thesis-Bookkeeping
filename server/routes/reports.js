@@ -48,7 +48,22 @@ router.get("/ledger/:id/:date", (req, res) => {
       model: db.TransactionRecord,
       replacements: { date, id }
     })
-    .then(transactions => res.json(transactions));
+    .then(transactions => res.json(transactions))
+    .catch(err => res.status(400).json({ msg: err }))
+});
+
+router.get("/trial-balance/:date", (req, res) => {
+  const { date } = req.params
+
+  db.sequelize.query("select a.id as id, s.name as subtype, a.\"name\" as account, (select sum(coalesce(debit, 0)) - sum(coalesce(credit, 0)) \n" +
+    "\tfrom \"TransactionRecords\" \n" +
+    "\twhere \"AccountId\"=a.id and \"date\" <= :date) as balance\n" +
+    "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id\n" +
+    "where a.id in (select \"AccountId\" from \"TransactionRecords\")",{
+    model: db.TransactionRecord,
+    replacements: { date }
+  })
+    .then(transactions => res.json(transactions))
 });
 
 module.exports = router;
