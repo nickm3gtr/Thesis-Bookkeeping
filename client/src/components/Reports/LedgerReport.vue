@@ -1,14 +1,14 @@
 <template>
   <div class="ledger-report">
     <v-layout>
-      <v-flex sm12 md12>
+      <v-flex sm12 md10 offset-md1>
         <v-card>
           <v-card-title>
             <v-row>
               <v-col cols="12" md="4">
                 <v-menu
-                  ref="fromMenu"
-                  v-model="fromMenu"
+                  ref="menu"
+                  v-model="menu"
                   :close-on-content-click="false"
                   transition="scale-transition"
                   offset-y
@@ -17,8 +17,8 @@
                 >
                   <template v-slot:activator="{ on }">
                     <v-text-field
-                      v-model="fromDate"
-                      label="From"
+                      v-model="date"
+                      label="Choose Date"
                       prepend-icon="event"
                       readonly
                       v-on="on"
@@ -26,38 +26,14 @@
                   </template>
                   <v-date-picker
                     no-title
-                    v-model="fromDate"
-                    @input="fromMenu = false"
+                    v-model="date"
+                    @input="menu = false"
                   ></v-date-picker>
                 </v-menu>
               </v-col>
-              <v-col cols="10" md="4">
-                <v-menu
-                  ref="toMenu"
-                  v-model="toMenu"
-                  :close-on-content-click="false"
-                  transition="scale-transition"
-                  offset-y
-                  full-width
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on }">
-                    <v-text-field
-                      v-model="toDate"
-                      label="To"
-                      prepend-icon="event"
-                      readonly
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    no-title
-                    v-model="toDate"
-                    @input="toMenu = false"
-                  ></v-date-picker>
-                </v-menu>
+              <v-col cols="10" md="2">
               </v-col>
-              <v-col cols="12" md="4" class="mt-3">
+              <v-col cols="12" md="6" class="mt-3">
                 <v-btn dark color="primary" class="mx-2" @click="generate"
                   >Generate</v-btn
                 >
@@ -75,12 +51,12 @@
                   <span v-else class="headline">{{ auth.user.Branch.branchName }}</span>
                 </p>
                 <p><span class="subtitle-1">General Ledger</span></p>
-                <p><span class="subtitle-2">{{ formatFromDate }} through {{ formatToDate }}</span></p>
+                <p><span class="subtitle-2">As of {{ formatDate }}</span></p>
               </div>
               <hr>
               <v-row class="ml-12">
                 <v-col cols="12" md="4">
-                  <span class="font-weight-medium">Name</span>
+                  <span class="font-weight-medium">Account</span>
                 </v-col>
                 <v-col cols="12" md="2">
                   <span class="font-weight-medium">Debit</span>
@@ -116,8 +92,9 @@
 import axios from 'axios'
 import { mapState } from 'vuex'
 import moment from 'moment'
-import jsPDF from 'jspdf'
-import html2canvas from 'html2canvas'
+// import jsPDF from 'jspdf'
+// import html2canvas from 'html2canvas'
+import html2pdf from 'html2pdf.js'
 import CurrentAssets from '@/components/Reports/ledgers/CurrentAssets'
 import NonCurrentAssets from '@/components/Reports/ledgers/NonCurrentAssets'
 import CurrentLiabilities from '@/components/Reports/ledgers/CurrentLiabilities'
@@ -145,10 +122,8 @@ export default {
   },
   data () {
     return {
-      fromMenu: false,
-      toMenu: false,
-      fromDate: new Date().toISOString().substr(0, 10),
-      toDate: new Date().toISOString().substr(0, 10),
+      menu: false,
+      date: new Date().toISOString().substr(0, 10),
       items: []
     }
   },
@@ -156,33 +131,29 @@ export default {
     async generate () {
       try {
         const response = await axios.get(
-          `/api/reports/ledger/${this.auth.user.BranchId}/${this.fromDate}/${this.toDate}`
+          `/api/reports/ledger/${this.auth.user.BranchId}/${this.date}`
         )
         this.items = response.data
-        console.log(this.items)
       } catch (e) {
         this.getError(e.response.data)
       }
     },
     pdf () {
-      // eslint-disable-next-line new-cap
-      const filename = 'Ledger.pdf'
-
-      html2canvas(document.querySelector('#content'), { scale: 2, pagesplit: true, retina: true }).then(canvas => {
-        // eslint-disable-next-line new-cap
-        let pdf = new jsPDF('p', 'mm', 'a4')
-        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 15, 10, 180, 250)
-        pdf.save(filename)
-      })
+      const element = document.getElementById('content')
+      const opt = {
+        margin: 1,
+        filename: 'Ledger.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      }
+      html2pdf().from(element).set(opt).save()
     }
   },
   computed: {
     ...mapState(['auth']),
-    formatFromDate () {
-      return moment(this.fromDate).format('MMM DD YYYY')
-    },
-    formatToDate () {
-      return moment(this.toDate).format('MMM DD YYYY')
+    formatDate () {
+      return moment(this.date).format('MMM DD YYYY')
     },
     formatItems () {
       const a = this.items.map(item => {

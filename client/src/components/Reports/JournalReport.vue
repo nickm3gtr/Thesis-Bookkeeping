@@ -1,5 +1,5 @@
 <template>
-  <div class="journal-report">
+  <div id="journal" class="journal-report">
     <v-layout>
       <v-flex sm12 md12>
         <v-card>
@@ -68,7 +68,7 @@
               <div class="text-center">
                 <p>
                   <span v-if="auth.user === null" class="headline">DARBMUPCO</span>
-                  <span v-else class="headline">{{ auth.user.Branch.branchName }}</span>
+                  <span v-else class="headline centered">{{ auth.user.Branch.branchName }}</span>
                 </p>
                 <p><span class="subtitle-1">Transaction Journal</span></p>
                 <p><span class="subtitle-2">{{ formatFromDate }} through {{ formatToDate }}</span></p>
@@ -124,7 +124,10 @@
 <script>
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
+import html2pdf from 'html2pdf.js'
+// eslint-disable-next-line no-unused-vars
 import jsPDF from 'jspdf'
+// eslint-disable-next-line no-unused-vars
 import html2canvas from 'html2canvas'
 import moment from 'moment'
 
@@ -159,15 +162,15 @@ export default {
       }
     },
     pdf () {
-      // eslint-disable-next-line new-cap
-      const filename = 'Journal.pdf'
-
-      html2canvas(document.querySelector('#content'), { scale: 2, pagesplit: true, retina: true }).then(canvas => {
-        // eslint-disable-next-line new-cap
-        let pdf = new jsPDF('p', 'mm', 'a4')
-        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 15, 10, 180, 250)
-        pdf.save(filename)
-      })
+      const element = document.getElementById('content')
+      const opt = {
+        margin: 1,
+        filename: 'Journal.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 4, canvas: element },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+      }
+      html2pdf().from(element).set(opt).save()
     }
   },
   computed: {
