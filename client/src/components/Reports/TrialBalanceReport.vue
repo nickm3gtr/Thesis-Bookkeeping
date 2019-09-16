@@ -132,7 +132,7 @@ export default {
     async generate () {
       try {
         const response = await axios.get(
-          `/api/reports/trial-balance/${this.date}`
+          `/api/reports/trial-balance/${this.auth.user.BranchId}/${this.date}`
         )
         this.items = response.data
       } catch (e) {

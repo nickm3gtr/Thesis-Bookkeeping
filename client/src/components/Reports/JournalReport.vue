@@ -103,7 +103,7 @@
                     <span class="body-2 font-weight-medium" v-else>{{ item.memo }}</span>
                   </v-col>
                   <v-col cols="12" md="3">
-                    <span class="body-2 font-weight-medium">{{ item.Account.name }}</span>
+                    <span class="body-2 font-weight-medium">{{ item.accountname }}</span>
                   </v-col>
                   <v-col cols="12" md="2">
                     <span class="body-2 font-weight-medium">{{ item.debit }}</span>
