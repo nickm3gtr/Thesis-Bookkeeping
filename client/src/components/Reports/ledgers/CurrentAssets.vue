@@ -7,13 +7,13 @@
           <span class="font-weight-medium">{{ item.name }}</span>
         </v-col>
         <v-col cols="12" md="2">
-          <span class="font-weight-medium">{{ item.debit }}</span>
+          <p class="text-right"><span class="font-weight-medium">{{ item.debit }}</span></p>
         </v-col>
         <v-col cols="12" md="2">
-          <span class="font-weight-medium">{{ item.credit }}</span>
+          <p class="text-right"><span class="font-weight-medium">{{ item.credit }}</span></p>
         </v-col>
         <v-col cols="12" md="2">
-          <span class="font-weight-medium">{{ item.balance }}</span>
+          <p class="text-right"><span class="font-weight-medium">{{ item.balance }}</span></p>
         </v-col>
       </v-row>
     </div>
@@ -23,8 +23,8 @@
         <span class="subtitle-2">Total Current Assets:</span>
       </v-col>
       <v-col cols="12" md="2">
-        <span v-if="currentAssets.length<1"></span>
-        <span v-else class="font-weight-medium">{{ balance }}</span>
+        <p v-if="currentAssets.length<1"><span></span></p>
+        <p v-else class="text-right"><span class="font-weight-medium">{{ balance }}</span></p>
       </v-col>
     </v-row>
     <br />

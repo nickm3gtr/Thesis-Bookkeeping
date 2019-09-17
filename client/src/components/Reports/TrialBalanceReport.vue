@@ -58,16 +58,16 @@
                 <div class="text-center"></div>
                 <v-row class="ml-4">
                   <v-col cols="12" md="4">
-                    <span class="font-weight-medium">Category</span>
+                    <p class="font-weight-medium">Category</p>
                   </v-col>
                   <v-col cols="12" md="4">
-                    <span class="font-weight-medium">Account</span>
+                    <p class="font-weight-medium">Account</p>
                   </v-col>
                   <v-col cols="12" md="2">
-                    <span class="font-weight-medium">Debit</span>
+                    <p class="font-weight-medium text-center">Debit</p>
                   </v-col>
                   <v-col cols="12" md="2">
-                    <span class="font-weight-medium">Credit</span>
+                    <p class="font-weight-medium text-center">Credit</p>
                   </v-col>
                 </v-row>
                 <hr>
@@ -89,6 +89,23 @@
                     </v-col>
                   </v-row>
                 </div>
+                <hr>
+                <v-row>
+                  <v-col cols="12" md="4">
+                    <span class="font-weight-medium">TOTAL</span>
+                  </v-col>
+                  <v-col cols="12" md="4">
+                    <span class="font-weight-medium"></span>
+                  </v-col>
+                  <v-col cols="12" md="2">
+                    <p v-if="this.items.length <= 0"></p>
+                    <p v-else class="underlined text-right"><span class="font-weight-medium">{{ this.formatBalance(this.totalDebit) }}</span></p>
+                  </v-col>
+                  <v-col cols="12" md="2">
+                    <p v-if="this.items.length <= 0"></p>
+                    <p v-else class="underlined text-right"><span class="font-weight-medium">{{ this.formatBalance(this.totalCredit) }}</span></p>
+                  </v-col>
+                </v-row>
               </v-flex>
             </v-card-text>
           </div>
@@ -149,11 +166,50 @@ export default {
       return this.items.filter(item => {
         return item.balance !== null
       })
+    },
+    filterDebit () {
+      const debits = this.items.filter(item => {
+        return item.balance > 0
+      })
+      const debitBalance = debits.map(debit => {
+        return debit.balance
+      })
+      return debitBalance
+    },
+    filterCredit () {
+      const credits = this.items.filter(item => {
+        return item.balance < 0
+      })
+      const creditBalance = credits.map(credit => {
+        return credit.balance
+      })
+      return creditBalance
+    },
+    totalDebit () {
+      let balances = this.filterDebit.map(debit => {
+        let balance = parseFloat(debit)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return sum
+    },
+    totalCredit () {
+      let balances = this.filterCredit.map(debit => {
+        let balance = parseFloat(debit)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return sum
     }
   }
 }
 </script>
 
 <style scoped>
-
+ .underlined {
+   text-decoration-line: underline;
+   text-decoration-style: double;
+ }
 </style>

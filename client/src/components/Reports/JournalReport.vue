@@ -76,19 +76,19 @@
               </div>
               <v-row class="ml-4">
                 <v-col cols="12" md="2">
-                  <span class="font-weight-medium">Date</span>
+                  <p class="font-weight-medium">Date</p>
                 </v-col>
                 <v-col cols="12" md="3">
-                  <span class="font-weight-medium">Memo</span>
+                  <p class="font-weight-medium">Memo</p>
                 </v-col>
                 <v-col cols="12" md="3">
-                  <span class="font-weight-medium">Account</span>
+                  <p class="font-weight-medium">Account</p>
                 </v-col>
                 <v-col cols="12" md="2">
-                  <span class="font-weight-medium">Debit</span>
+                  <p class="font-weight-medium text-center">Debit</p>
                 </v-col>
                 <v-col cols="12" md="2">
-                  <span class="font-weight-medium">Credit</span>
+                  <p class="font-weight-medium text-center">Credit</p>
                 </v-col>
               </v-row>
               <hr>
@@ -106,10 +106,10 @@
                     <span class="body-2 font-weight-medium">{{ item.accountname }}</span>
                   </v-col>
                   <v-col cols="12" md="2">
-                    <span class="body-2 font-weight-medium">{{ item.debit }}</span>
+                    <p class="body-2 font-weight-medium text-right">{{ item.debit }}</p>
                   </v-col>
                   <v-col cols="12" md="2">
-                    <span class="body-2 font-weight-medium">{{ item.credit }}</span>
+                    <p class="body-2 font-weight-medium text-right">{{ item.credit }}</p>
                   </v-col>
                 </v-row>
               </div>
@@ -125,10 +125,6 @@
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 import html2pdf from 'html2pdf.js'
-// eslint-disable-next-line no-unused-vars
-import jsPDF from 'jspdf'
-// eslint-disable-next-line no-unused-vars
-import html2canvas from 'html2canvas'
 import moment from 'moment'
 
 export default {

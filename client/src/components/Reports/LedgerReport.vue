@@ -79,13 +79,13 @@
                   <span class="font-weight-medium">Account</span>
                 </v-col>
                 <v-col cols="12" md="2">
-                  <span class="font-weight-medium">Debit</span>
+                  <p class="text-center"><span class="font-weight-medium">Debit</span></p>
                 </v-col>
                 <v-col cols="12" md="2">
-                  <span class="font-weight-medium">Credit</span>
+                  <p class="text-center"><span class="font-weight-medium">Credit</span></p>
                 </v-col>
                 <v-col cols="12" md="2">
-                  <span class="font-weight-medium">Balance</span>
+                  <p class="text-center"><span class="font-weight-medium">Balance</span></p>
                 </v-col>
               </v-row>
               <hr>
@@ -241,7 +241,7 @@ export default {
       })
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)
       const sum = arrSum(balances)
-      return sum
+      return parseFloat(Math.round(sum * 100) / 100).toFixed(2)
     },
     balanceNonCurrentAsset () {
       let balances = this.nonCurrentAssets.map(asset => {
@@ -250,7 +250,7 @@ export default {
       })
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)
       const sum = arrSum(balances)
-      return sum
+      return parseFloat(Math.round(sum * 100) / 100).toFixed(2)
     },
     balanceCurrentLiabilities () {
       let balances = this.currentLiabilities.map(asset => {
@@ -259,7 +259,7 @@ export default {
       })
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)
       const sum = arrSum(balances)
-      return sum
+      return parseFloat(Math.round(sum * 100) / 100).toFixed(2)
     },
     balanceNonCurrentLiabilities () {
       let balances = this.nonCurrentLiabilities.map(asset => {
@@ -268,7 +268,7 @@ export default {
       })
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)
       const sum = arrSum(balances)
-      return sum
+      return parseFloat(Math.round(sum * 100) / 100).toFixed(2)
     },
     balanceEquity () {
       let balances = this.equity.map(asset => {
@@ -277,7 +277,7 @@ export default {
       })
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)
       const sum = arrSum(balances)
-      return sum
+      return parseFloat(Math.round(sum * 100) / 100).toFixed(2)
     },
     balanceRevenue () {
       let balances = this.revenue.map(asset => {
@@ -286,7 +286,7 @@ export default {
       })
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)
       const sum = arrSum(balances)
-      return sum
+      return parseFloat(Math.round(sum * 100) / 100).toFixed(2)
     },
     balanceCostOfGoods () {
       let balances = this.costOfGoods.map(asset => {
@@ -295,7 +295,7 @@ export default {
       })
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)
       const sum = arrSum(balances)
-      return sum
+      return parseFloat(Math.round(sum * 100) / 100).toFixed(2)
     },
     balanceCostOfServices () {
       let balances = this.costOfServices.map(asset => {
@@ -304,7 +304,7 @@ export default {
       })
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)
       const sum = arrSum(balances)
-      return sum
+      return parseFloat(Math.round(sum * 100) / 100).toFixed(2)
     },
     balanceExpenses () {
       let balances = this.expenses.map(asset => {
@@ -313,7 +313,7 @@ export default {
       })
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)
       const sum = arrSum(balances)
-      return sum
+      return parseFloat(Math.round(sum * 100) / 100).toFixed(2)
     },
     balanceSubsidy () {
       let balances = this.subsidy.map(asset => {
@@ -322,7 +322,7 @@ export default {
       })
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)
       const sum = arrSum(balances)
-      return sum
+      return parseFloat(Math.round(sum * 100) / 100).toFixed(2)
     }
   }
 }
