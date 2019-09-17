@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f74612c7-0b76-4efb-9329-bce768567bd1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Reports/TrialBalanceReport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Reports/TrialBalanceReport.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Reports/LedgerReport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Reports/LedgerReport.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routes/reports.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/reports.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -23,17 +24,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/routes/reports.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="18" column="41" lean-forward="true" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
+            <state relative-caret-position="510">
+              <caret line="30" column="76" lean-forward="true" selection-start-line="30" selection-start-column="76" selection-end-line="30" selection-end-column="76" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/src/components/Reports/LedgerReport.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="133" column="56" lean-forward="true" selection-start-line="133" selection-start-column="33" selection-end-line="133" selection-end-column="56" />
+            <state relative-caret-position="71">
+              <caret line="172" column="5" lean-forward="true" selection-start-line="172" selection-start-column="5" selection-end-line="172" selection-end-column="5" />
               <folding>
                 <element signature="e#3650#3675#0" expanded="true" />
                 <element signature="e#3806#3840#0" expanded="true" />
@@ -42,15 +43,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="650">
-              <caret line="105" column="89" selection-start-line="105" selection-start-column="89" selection-end-line="105" selection-end-column="89" />
-              <folding>
-                <element signature="e#4722#4747#0" expanded="true" />
-                <element signature="e#4939#4976#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="361">
+              <caret line="63" column="20" lean-forward="true" selection-start-line="59" selection-start-column="14" selection-end-line="63" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -58,11 +55,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/Reports/TrialBalanceReport.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="136" column="34" lean-forward="true" selection-start-line="136" selection-start-column="34" selection-end-line="136" selection-end-column="34" />
-              <folding>
-                <element signature="e#2697#2728#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="3192">
+              <caret line="136" column="34" selection-start-line="136" selection-start-column="34" selection-end-line="136" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -132,13 +126,13 @@
         <option value="$PROJECT_DIR$/client/src/components/GeneralJournalDialog.vue" />
         <option value="$PROJECT_DIR$/server/seeders/20190908230724-demo-Book.js" />
         <option value="$PROJECT_DIR$/client/src/components/GeneralJournal.vue" />
-        <option value="$PROJECT_DIR$/client/src/components/Reports/LedgerReport.vue" />
         <option value="$PROJECT_DIR$/client/src/components/NavDrawer.vue" />
         <option value="$PROJECT_DIR$/client/src/router/reports.js" />
         <option value="$PROJECT_DIR$/client/src/views/Reports/TrialBalanceReportPage.vue" />
         <option value="$PROJECT_DIR$/client/src/components/Reports/TrialBalanceReport.vue" />
-        <option value="$PROJECT_DIR$/server/routes/reports.js" />
         <option value="$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue" />
+        <option value="$PROJECT_DIR$/server/routes/reports.js" />
+        <option value="$PROJECT_DIR$/client/src/components/Reports/LedgerReport.vue" />
       </list>
     </option>
   </component>
@@ -156,7 +150,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -260,6 +253,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -333,12 +327,13 @@
       <workItem from="1568540833470" duration="365000" />
       <workItem from="1568542551142" duration="2931000" />
       <workItem from="1568551171692" duration="11174000" />
-      <workItem from="1568607947247" duration="6793000" />
+      <workItem from="1568607947247" duration="6931000" />
+      <workItem from="1568686827476" duration="1117000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="237338000" />
+    <option name="totallyTimeSpent" value="238593000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -701,41 +696,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/LedgerReport.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="133" column="56" lean-forward="true" selection-start-line="133" selection-start-column="33" selection-end-line="133" selection-end-column="56" />
-          <folding>
-            <element signature="e#3650#3675#0" expanded="true" />
-            <element signature="e#3806#3840#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/Reports/TrialBalanceReport.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="136" column="34" lean-forward="true" selection-start-line="136" selection-start-column="34" selection-end-line="136" selection-end-column="34" />
-          <folding>
-            <element signature="e#2697#2728#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/routes/reports.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="18" column="41" lean-forward="true" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
+        <state relative-caret-position="3192">
+          <caret line="136" column="34" selection-start-line="136" selection-start-column="34" selection-end-line="136" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="650">
-          <caret line="105" column="89" selection-start-line="105" selection-start-column="89" selection-end-line="105" selection-end-column="89" />
+        <state relative-caret-position="361">
+          <caret line="63" column="20" lean-forward="true" selection-start-line="59" selection-start-column="14" selection-end-line="63" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/routes/reports.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="76" lean-forward="true" selection-start-line="30" selection-start-column="76" selection-end-line="30" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/LedgerReport.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="71">
+          <caret line="172" column="5" lean-forward="true" selection-start-line="172" selection-start-column="5" selection-end-line="172" selection-end-column="5" />
           <folding>
-            <element signature="e#4722#4747#0" expanded="true" />
-            <element signature="e#4939#4976#0" expanded="true" />
+            <element signature="e#3650#3675#0" expanded="true" />
+            <element signature="e#3806#3840#0" expanded="true" />
           </folding>
         </state>
       </provider>

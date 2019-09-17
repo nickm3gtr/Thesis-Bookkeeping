@@ -31,7 +31,7 @@
                   ></v-date-picker>
                 </v-menu>
               </v-col>
-              <v-col cols="10" md="4">
+              <v-col cols="12" md="4">
                 <v-menu
                   ref="toMenu"
                   v-model="toMenu"
