@@ -97,4 +97,14 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
+// Find All Bookkeepers
+router.get("/all-bookkeepers", auth, (req, res) => {
+  db.sequelize.query("select b.id as id, b.\"userName\" as name, br.id as branchId, br.\"branchName\" as branch\n" +
+    "from \"Bookkeepers\" b inner join \"Branches\" br on b.\"BranchId\"=br.id\n" +
+    "order by b.id", {
+    model: db.Bookkeeper
+  }).then(bookkeepers => res.json(bookkeepers))
+    .catch(err => res.status(400).json({ msg: "Can't get bookkeepers", err }))
+})
+
 module.exports = router;

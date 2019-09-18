@@ -115,6 +115,11 @@ export default {
           route: '/admin/dashboard'
         },
         {
+          action: 'group',
+          title: 'Bookkeepers',
+          route: '/admin/bookkeepers'
+        },
+        {
           action: 'event_note',
           title: 'Chart of Accounts',
           route: '/admin/chart_of_account'
