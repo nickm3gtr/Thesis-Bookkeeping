@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f74612c7-0b76-4efb-9329-bce768567bd1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/NavDrawer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/NavDrawer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/BookkeeperAdmin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/BookkeeperAdmin.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/routes/bookkeeper.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/bookkeeper.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,19 +20,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/routes/reports.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="502">
-              <caret line="30" column="76" selection-start-line="30" selection-start-column="76" selection-end-line="30" selection-end-column="76" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/routes/bookkeeper.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="12" column="52" lean-forward="true" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
+            <state relative-caret-position="178">
+              <caret line="101" column="27" selection-start-line="101" selection-start-column="27" selection-end-line="101" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -42,8 +31,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/GeneralJournal.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2682">
-              <caret line="40" column="72" lean-forward="true" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="72" />
+            <state relative-caret-position="200">
+              <caret line="181" column="33" lean-forward="true" selection-start-line="181" selection-start-column="33" selection-end-line="181" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -51,19 +40,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/GeneralJournalDialog.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-408">
-              <caret line="47" column="25" lean-forward="true" selection-start-line="43" selection-start-column="8" selection-end-line="47" selection-end-column="25" />
+            <state relative-caret-position="312">
+              <caret line="47" column="25" selection-start-line="43" selection-start-column="8" selection-end-line="47" selection-end-column="25" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/src/components/BookkeeperAdmin.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="85" column="20" lean-forward="true" selection-start-line="85" selection-start-column="20" selection-end-line="85" selection-end-column="20" />
+            <state relative-caret-position="107">
+              <caret line="22" column="47" lean-forward="true" selection-start-line="22" selection-start-column="47" selection-end-line="22" selection-end-column="47" />
               <folding>
-                <element signature="e#587#612#0" expanded="true" />
+                <element signature="e#2132#2157#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,7 +104,6 @@
         <option value="$PROJECT_DIR$/server/seeders/20190915103135-demo-Book.js" />
         <option value="$PROJECT_DIR$/client/src/components/GeneralJournalDialog.vue" />
         <option value="$PROJECT_DIR$/server/seeders/20190908230724-demo-Book.js" />
-        <option value="$PROJECT_DIR$/client/src/components/GeneralJournal.vue" />
         <option value="$PROJECT_DIR$/client/src/router/reports.js" />
         <option value="$PROJECT_DIR$/client/src/views/Reports/TrialBalanceReportPage.vue" />
         <option value="$PROJECT_DIR$/server/routes/reports.js" />
@@ -139,6 +127,7 @@
         <option value="$PROJECT_DIR$/client/src/router/index.js" />
         <option value="$PROJECT_DIR$/client/src/components/Reports/BookkeeperAdmin.vue" />
         <option value="$PROJECT_DIR$/client/src/views/BookkeepersAdmin.vue" />
+        <option value="$PROJECT_DIR$/client/src/components/GeneralJournal.vue" />
         <option value="$PROJECT_DIR$/server/routes/bookkeeper.js" />
         <option value="$PROJECT_DIR$/client/src/components/BookkeeperAdmin.vue" />
       </list>
@@ -232,6 +221,12 @@
               <item name="bookkeeping_system" type="b2602c69:ProjectViewProjectNode" />
               <item name="bookkeeping_system" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bookkeeping_system" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bookkeeping_system" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -316,11 +311,12 @@
       <workItem from="1568720624768" duration="6205000" />
       <workItem from="1568769523911" duration="416000" />
       <workItem from="1568770021276" duration="6070000" />
+      <workItem from="1568963133078" duration="5806000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="251384000" />
+    <option name="totallyTimeSpent" value="257190000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -597,13 +593,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/router/bookkeepers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/router/bookkeepers.js" />
     <entry file="file://$PROJECT_DIR$/client/src/router/charts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -624,13 +614,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/BookkeeperAdmin.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="2" column="11" lean-forward="true" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/BookkeeperAdmin.vue" />
     <entry file="file://$PROJECT_DIR$/client/src/components/ChartOfAccount.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -676,47 +660,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/routes/reports.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="30" column="76" selection-start-line="30" selection-start-column="76" selection-end-line="30" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/models/Bookkeeper.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/server/migrations/20190906110228-create-bookkeeper.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/GeneralJournal.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2682">
-          <caret line="40" column="72" lean-forward="true" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="72" />
+        <state relative-caret-position="-92">
+          <caret line="12" column="8" lean-forward="true" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/GeneralJournalDialog.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-408">
-          <caret line="47" column="25" lean-forward="true" selection-start-line="43" selection-start-column="8" selection-end-line="47" selection-end-column="25" />
+        <state relative-caret-position="312">
+          <caret line="47" column="25" selection-start-line="43" selection-start-column="8" selection-end-line="47" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/BookkeeperAdmin.vue">
+    <entry file="file://$PROJECT_DIR$/server/routes/reports.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="85" column="20" lean-forward="true" selection-start-line="85" selection-start-column="20" selection-end-line="85" selection-end-column="20" />
-          <folding>
-            <element signature="e#587#612#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-230">
+          <caret line="30" column="76" selection-start-line="30" selection-start-column="76" selection-end-line="30" selection-end-column="76" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/routes/bookkeeper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="12" column="52" lean-forward="true" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
+        <state relative-caret-position="178">
+          <caret line="101" column="27" selection-start-line="101" selection-start-column="27" selection-end-line="101" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/GeneralJournal.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="181" column="33" lean-forward="true" selection-start-line="181" selection-start-column="33" selection-end-line="181" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/BookkeeperAdmin.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="107">
+          <caret line="22" column="47" lean-forward="true" selection-start-line="22" selection-start-column="47" selection-end-line="22" selection-end-column="47" />
+          <folding>
+            <element signature="e#2132#2157#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

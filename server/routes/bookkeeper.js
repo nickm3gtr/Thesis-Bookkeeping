@@ -9,8 +9,8 @@ const auth = require('../middleware/auth')
 const loginMiddleware = require('../middleware/loginMiddleware')
 
 // Register Bookkeeper
-router.post("/", (req, res) => {
-  const { userName, password, BranchId } = req.body;
+router.post("/", auth, (req, res) => {
+  const { userName, password, account, BranchId } = req.body;
 
   Bookkeeper.findOne({ where: { userName: userName } })
     .then(user => {
@@ -20,28 +20,19 @@ router.post("/", (req, res) => {
       bcrypt.genSalt(10, (err, salt) => {
         // eslint-disable-next-line no-console
         if (err) console.log(err);
-        bcrypt.hash(password, salt, async (err, hash) => {
+        bcrypt.hash(password, salt, (err, hash) => {
           // eslint-disable-next-line no-console
           if (err) console.log(err);
           const newPassword = hash;
           const newUser = {
             userName,
             password: newPassword,
+            account: account,
             BranchId
           };
-          try {
-            const user = await Bookkeeper.create(newUser);
-            jwt.sign(
-              { userName: user.userName },
-              jwtSecret,
-              { expiresIn: 28800 },
-              (err, token) => res.json({ token, user })
-            );
-          } catch (e) {
-            res.status(400).json({
-              msg: "username already in use."
-            });
-          }
+          Bookkeeper.create(newUser)
+            .then(account => res.json(account))
+            .catch(err => res.status(400).json({ msg: "Account not created.", err }))
         });
       })
     );
@@ -105,6 +96,17 @@ router.get("/all-bookkeepers", auth, (req, res) => {
     model: db.Bookkeeper
   }).then(bookkeepers => res.json(bookkeepers))
     .catch(err => res.status(400).json({ msg: "Can't get bookkeepers", err }))
+})
+
+// Delete a bokkeeper
+router.delete("/:id", auth, (req, res) => {
+  const id = req.params.id
+  db.Bookkeeper.destroy({
+    where: {
+      id: id
+    }
+  }).then(res.json({ msg: `Deleted bookkeeper with id of ${id}` }))
+    .catch(err => res.status(400).json({ msg: 'not deleted', err }))
 })
 
 module.exports = router;

@@ -37,7 +37,7 @@
                     <v-card-actions>
                       <div class="flex-grow-1"></div>
                       <v-btn color="blue darken-1" @click="dialog = false" text>Close</v-btn>
-                      <v-btn color="blue darken-1" text @click="emit">Save</v-btn>
+                      <v-btn color="blue darken-1" text @click="save">Save</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
@@ -48,11 +48,38 @@
             <v-data-table
               :headers="headers"
               :items="items"
-            ></v-data-table>
+              :loading="loading"
+            >
+              <template v-slot:item.action="{ item }">
+                <v-icon
+                  small
+                  @click="deleteItem (item)"
+                >
+                  delete
+                </v-icon>
+              </template>
+            </v-data-table>
           </v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
+    <div class="text-center">
+      <v-snackbar
+        v-model="snackbar"
+        bottom="bottom"
+        color="green"
+        :timeout="timeout"
+      >
+        Saved!
+        <v-btn
+          color="white"
+          text
+          @click="closeSnackBar"
+        >
+          Close
+        </v-btn>
+      </v-snackbar>
+    </div>
   </div>
 </template>
 
@@ -69,21 +96,73 @@ export default {
       branchId: '',
       select: '',
       dialog: false,
+      deleteDialog: false,
+      snackbar: false,
+      timeout: 0,
+      saved: 1,
+      loading: false,
       items: [],
       headers: [
         { text: 'ID', value: 'id' },
         { text: 'Username', value: 'name' },
-        { text: 'Branch', value: 'branch' }
+        { text: 'Branch', value: 'branch' },
+        { text: 'Actions', align: 'center', value: 'action', sortable: false }
       ]
     }
   },
   methods: {
     ...mapActions('errors', ['getError']),
-    emit () {
-      this.$emit('abc', this.select.branchid)
+    async save () {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
+      const newUser = JSON.stringify({
+        userName: this.name,
+        password: this.password,
+        account: 'bookkeeper',
+        BranchId: this.select.branchid
+      })
+      try {
+        const response = await axios.post('http://localhost:5000/api/bookkeepers', newUser, config)
+        const savedTransaction = response.data
+        if (!savedTransaction) this.getError('Failed')
+        this.saved++
+        this.snackbar = true
+        this.dialog = false
+      } catch (e) {
+        this.getError(e.response.data)
+      }
+    },
+    async deleteItem (item) {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
+      try {
+        const response = await axios.delete(`/api/bookkeepers/${item.id}`)
+
+      } catch (e) {
+
+      }
+      console.log(item.id)
+    },
+    closeSnackBar () {
+      this.snackbar = false
+      this.clear()
+    },
+    clear () {
+      this.name = ''
+      this.password = ''
+      this.select = ''
     }
   },
   async mounted () {
+    this.loading = true
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -92,9 +171,30 @@ export default {
     }
     try {
       const response = await axios.get('/api/bookkeepers/all-bookkeepers', config)
+      this.loading = false
       this.items = response.data
     } catch (e) {
+      this.loading = false
       this.getError(e.response.data)
+    }
+  },
+  watch: {
+    async saved () {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
+      try {
+        this.loading = true
+        const response = await axios.get('/api/bookkeepers/all-bookkeepers', config)
+        this.loading = false
+        this.items = response.data
+      } catch (e) {
+        this.loading = false
+        this.getError(e.response.data)
+      }
     }
   }
 }
