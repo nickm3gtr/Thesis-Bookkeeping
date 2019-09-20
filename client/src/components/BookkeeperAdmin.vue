@@ -51,12 +51,47 @@
               :loading="loading"
             >
               <template v-slot:item.action="{ item }">
-                <v-icon
-                  small
-                  @click="deleteItem (item)"
+                <v-dialog
+                  v-model="deleteDialog" max-width="600px"
                 >
-                  delete
-                </v-icon>
+                  <template v-slot:activator="{ on: dialog }">
+                    <v-icon
+                      small
+                      v-on="{ ...dialog }"
+                    >
+                      delete
+                    </v-icon>
+                  </template>
+                  <v-card>
+                    <v-card-title
+                      class="headline grey lighten-2"
+                      primary-title
+                    >
+                      Delete Account
+                    </v-card-title>
+                    <v-card-text>
+                      <p class="subtitle-1">Are you sure you want to delete?</p>
+                    </v-card-text>
+                    <v-divider></v-divider>
+                    <v-card-actions>
+                      <div class="flex-grow-1"></div>
+                      <v-btn
+                        color="primary"
+                        text
+                        @click="deleteDialog = false"
+                      >
+                        Close
+                      </v-btn>
+                      <v-btn
+                        color="primary"
+                        text
+                        @click="deleteItem(item)"
+                      >
+                        Okay
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
               </template>
             </v-data-table>
           </v-card-text>
@@ -70,7 +105,7 @@
         color="green"
         :timeout="timeout"
       >
-        Saved!
+        {{ msg }}
         <v-btn
           color="white"
           text
@@ -101,6 +136,7 @@ export default {
       timeout: 0,
       saved: 1,
       loading: false,
+      msg: '',
       items: [],
       headers: [
         { text: 'ID', value: 'id' },
@@ -129,6 +165,7 @@ export default {
         const response = await axios.post('http://localhost:5000/api/bookkeepers', newUser, config)
         const savedTransaction = response.data
         if (!savedTransaction) this.getError('Failed')
+        this.msg = 'Saved!'
         this.saved++
         this.snackbar = true
         this.dialog = false
@@ -144,10 +181,13 @@ export default {
         }
       }
       try {
-        const response = await axios.delete(`/api/bookkeepers/${item.id}`)
-
+        const response = await axios.delete(`/api/bookkeepers/${item.id}`, config)
+        this.msg = response.data.msg
+        this.saved++
+        this.deleteDialog = false
+        this.snackbar = true
       } catch (e) {
-
+        this.getError(e.response.data)
       }
       console.log(item.id)
     },
@@ -159,6 +199,7 @@ export default {
       this.name = ''
       this.password = ''
       this.select = ''
+      this.msg = ''
     }
   },
   async mounted () {
