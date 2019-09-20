@@ -27,8 +27,8 @@
                       <v-col cols="12" md="6">
                         <v-combobox
                           v-model="select"
-                          :items="items"
-                          item-text="branch"
+                          :items="branches"
+                          item-text="branchName"
                           value="branchId"
                           label="Select Branch"
                         ></v-combobox>
@@ -138,6 +138,7 @@ export default {
       loading: false,
       msg: '',
       items: [],
+      branches: [],
       headers: [
         { text: 'ID', value: 'id' },
         { text: 'Username', value: 'name' },
@@ -159,7 +160,7 @@ export default {
         userName: this.name,
         password: this.password,
         account: 'bookkeeper',
-        BranchId: this.select.branchid
+        BranchId: this.select.id
       })
       try {
         const response = await axios.post('http://localhost:5000/api/bookkeepers', newUser, config)
@@ -183,13 +184,12 @@ export default {
       try {
         const response = await axios.delete(`/api/bookkeepers/${item.id}`, config)
         this.msg = response.data.msg
-        this.saved++
         this.deleteDialog = false
         this.snackbar = true
+        this.saved++
       } catch (e) {
         this.getError(e.response.data)
       }
-      console.log(item.id)
     },
     closeSnackBar () {
       this.snackbar = false
@@ -212,7 +212,9 @@ export default {
     }
     try {
       const response = await axios.get('/api/bookkeepers/all-bookkeepers', config)
+      const branches = await axios.get('/api/admin/branches', config)
       this.loading = false
+      this.branches = branches.data
       this.items = response.data
     } catch (e) {
       this.loading = false

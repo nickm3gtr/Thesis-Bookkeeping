@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const jwtSecret = require("../config/secret");
 const { Admin } = require("../models");
+const db = require("../models");
 const auth = require('../middleware/auth')
 const loginMiddleware = require('../middleware/loginMiddleware')
 
@@ -42,5 +43,13 @@ router.get("/", auth, async (req, res) => {
     res.status(401).json({ msg: "Unauthorized." });
   }
 });
+
+router.get("/branches", (req, res) => {
+  db.sequelize.query("select * from \"Branches\"", {
+    model: db.Branch,
+  })
+    .then(branches => res.json(branches))
+    .catch(err => res.status(400).json({ msg: "Can't get branches.", err }))
+})
 
 module.exports = router

@@ -8,7 +8,7 @@
     <v-progress-circular
       v-if="auth.isLoading"
       size="90"
-      width="15"
+      width="10"
       indeterminate
       color="primary"
     ></v-progress-circular>

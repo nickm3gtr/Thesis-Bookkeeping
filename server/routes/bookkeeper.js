@@ -98,7 +98,7 @@ router.get("/all-bookkeepers", auth, (req, res) => {
     .catch(err => res.status(400).json({ msg: "Can't get bookkeepers", err }))
 })
 
-// Delete a bokkeeper
+// Delete a bookkeeper
 router.delete("/:id", auth, (req, res) => {
   const id = req.params.id
   db.Bookkeeper.destroy({
