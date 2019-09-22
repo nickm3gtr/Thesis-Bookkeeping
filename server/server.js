@@ -16,6 +16,7 @@ app.use("/api/charts", require("./routes/charts"));
 app.use("/api/general-journal", require("./routes/generalJournal"));
 app.use("/api/accounts", require("./routes/accounts"));
 app.use("/api/reports", require("./routes/reports"));
+app.use("/api/books", require("./routes/books"));
 
 
 // PRODUCTION

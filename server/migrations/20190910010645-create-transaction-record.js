@@ -28,6 +28,9 @@ module.exports = {
         type: Sequelize.UUID,
         allowNull: false
       },
+      num: {
+        type: Sequelize.STRING
+      },
       AccountId: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -44,6 +47,9 @@ module.exports = {
       },
       credit: {
         type: Sequelize.DECIMAL(10, 2)
+      },
+      tags: {
+        type: Sequelize.STRING
       },
       date: {
         type: Sequelize.DATE,

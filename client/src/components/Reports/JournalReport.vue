@@ -5,7 +5,7 @@
         <v-card>
           <v-card-title>
             <v-row>
-              <v-col cols="12" md="4">
+              <v-col cols="12" md="2">
                 <v-menu
                   ref="fromMenu"
                   v-model="fromMenu"
@@ -31,7 +31,7 @@
                   ></v-date-picker>
                 </v-menu>
               </v-col>
-              <v-col cols="12" md="4">
+              <v-col cols="12" md="2">
                 <v-menu
                   ref="toMenu"
                   v-model="toMenu"
@@ -57,6 +57,15 @@
                   ></v-date-picker>
                 </v-menu>
               </v-col>
+              <v-col cols="12" md="4">
+                <v-combobox
+                  v-model="selected"
+                  :items="books"
+                  item-text="name"
+                  label="Select Book"
+                  return-object
+                ></v-combobox>
+              </v-col>
               <v-col cols="12" md="4" class="mt-3">
                 <v-btn dark color="primary" class="mx-2" @click="generate">Generate</v-btn>
                 <v-btn dark color="success" class="mx-2" @click="pdf">Download PDF</v-btn>
@@ -65,53 +74,19 @@
           </v-card-title>
           <div id="content" class="mx-12">
             <v-card-text>
-              <div class="text-center">
-                <p>
-                  <span v-if="auth.user === null" class="headline">DARBMUPCO</span>
-                  <span v-else class="headline centered">{{ auth.user.Branch.branchName }}</span>
-                </p>
-                <p><span class="subtitle-1">Transaction Journal</span></p>
-                <p><span class="subtitle-2">{{ formatFromDate }} through {{ formatToDate }}</span></p>
-                <hr>
+              <div v-if="selected == '' || selected.id == 1">
+                <GeneralJournalComponent
+                  :formatFromDate="formatFromDate"
+                  :formatToDate="formatToDate"
+                  :formatItems="formatItems"
+                />
               </div>
-              <v-row class="ml-4">
-                <v-col cols="12" md="2">
-                  <p class="font-weight-medium">Date</p>
-                </v-col>
-                <v-col cols="12" md="3">
-                  <p class="font-weight-medium">Memo</p>
-                </v-col>
-                <v-col cols="12" md="3">
-                  <p class="font-weight-medium">Account</p>
-                </v-col>
-                <v-col cols="12" md="2">
-                  <p class="font-weight-medium text-center">Debit</p>
-                </v-col>
-                <v-col cols="12" md="2">
-                  <p class="font-weight-medium text-center">Credit</p>
-                </v-col>
-              </v-row>
-              <hr>
-              <div v-for="item in formatItems" :key="item.id">
-                <v-row>
-                  <v-col cols="12" md="2">
-                    <span v-if="item.debit === null"></span>
-                    <span class="body-2 font-weight-medium" v-else>{{ item.date }}</span>
-                  </v-col>
-                  <v-col cols="12" md="3">
-                    <span v-if="item.debit === null"></span>
-                    <span class="body-2 font-weight-medium" v-else>{{ item.memo }}</span>
-                  </v-col>
-                  <v-col cols="12" md="3">
-                    <span class="body-2 font-weight-medium">{{ item.accountname }}</span>
-                  </v-col>
-                  <v-col cols="12" md="2">
-                    <p class="body-2 font-weight-medium text-right">{{ item.debit }}</p>
-                  </v-col>
-                  <v-col cols="12" md="2">
-                    <p class="body-2 font-weight-medium text-right">{{ item.credit }}</p>
-                  </v-col>
-                </v-row>
+              <div v-else-if="selected.id == 2">
+                <CashReceiptComponent
+                  :formatFromDate="formatFromDate"
+                  :formatToDate="formatToDate"
+                  :formatItems="formatItems"
+                />
               </div>
             </v-card-text>
           </div>
@@ -126,11 +101,16 @@ import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 import html2pdf from 'html2pdf.js'
 import moment from 'moment'
+import GeneralJournalComponent from '@/components/Reports/journals/GeneralJournalComponent'
+import CashReceiptComponent from '@/components/Reports/journals/CashReceiptComponent'
 
 export default {
   name: 'JournalReport',
+  components: { GeneralJournalComponent, CashReceiptComponent },
   data () {
     return {
+      selected: '',
+      books: [],
       fromMenu: false,
       toMenu: false,
       fromDate: new Date().toISOString().substr(0, 10),
@@ -150,7 +130,7 @@ export default {
     async generate () {
       try {
         const response = await axios.get(
-          `/api/reports/journal/${this.auth.user.BranchId}/${this.fromDate}/${this.toDate}`
+          `/api/reports/journal/${this.auth.user.BranchId}/${this.selected.id}/${this.fromDate}/${this.toDate}`
         )
         this.items = response.data
       } catch (e) {
@@ -160,7 +140,7 @@ export default {
     pdf () {
       const element = document.getElementById('content')
       const opt = {
-        margin: 1,
+        margin: 0.5,
         filename: 'Journal.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 4, canvas: element },
@@ -179,10 +159,24 @@ export default {
     },
     formatItems () {
       const a = this.items.map(item => {
-        item.date = moment(item.date).format('MMM DD YYYY')
+        item.date = moment(item.date).format('MMM DD')
         return item
       })
       return a
+    }
+  },
+  async mounted () {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token')
+      }
+    }
+    try {
+      const response = await axios.get('/api/books', config)
+      this.books = response.data
+    } catch (e) {
+      this.getError(e.response.data)
     }
   }
 }
