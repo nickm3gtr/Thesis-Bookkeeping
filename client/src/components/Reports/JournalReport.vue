@@ -74,14 +74,14 @@
           </v-card-title>
           <div id="content" class="mx-12">
             <v-card-text>
-              <div v-if="selected == '' || selected.id == 1">
+              <div v-if="selected === null || selected === '' || selected.id === 1">
                 <GeneralJournalComponent
                   :formatFromDate="formatFromDate"
                   :formatToDate="formatToDate"
                   :formatItems="formatItems"
                 />
               </div>
-              <div v-else-if="selected.id == 2">
+              <div v-else-if="selected.id === 2">
                 <CashReceiptComponent
                   :formatFromDate="formatFromDate"
                   :formatToDate="formatToDate"
@@ -109,7 +109,7 @@ export default {
   components: { GeneralJournalComponent, CashReceiptComponent },
   data () {
     return {
-      selected: '',
+      selected: { id: 1, name: 'General Journal' },
       books: [],
       fromMenu: false,
       toMenu: false,
@@ -134,7 +134,8 @@ export default {
         )
         this.items = response.data
       } catch (e) {
-        this.getError(e.response.data)
+        if (e.response.data) this.getError(e.response.data)
+        this.getError("Can't fetch journal")
       }
     },
     pdf () {
@@ -177,6 +178,13 @@ export default {
       this.books = response.data
     } catch (e) {
       this.getError(e.response.data)
+    }
+  },
+  watch: {
+    selected () {
+      if (this.selected !== null || this.selected !== '') {
+        this.generate()
+      }
     }
   }
 }

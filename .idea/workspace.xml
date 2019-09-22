@@ -7,10 +7,6 @@
     <list default="true" id="f74612c7-0b76-4efb-9329-bce768567bd1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/migrations/20190910010645-create-transaction-record.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/migrations/20190910010645-create-transaction-record.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/TransactionRecord.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/TransactionRecord.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routes/reports.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/reports.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,29 +22,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/Reports/journals/GeneralJournalComponent.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1008">
-              <caret line="61" column="3" lean-forward="true" selection-start-line="58" selection-start-column="2" selection-end-line="61" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-240">
-              <caret line="142" column="20" lean-forward="true" selection-start-line="142" selection-start-column="20" selection-end-line="142" selection-end-column="20" />
-              <folding>
-                <element signature="e#3048#3073#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="1296">
+              <caret line="54" column="31" selection-start-line="54" selection-start-column="31" selection-end-line="54" selection-end-column="31" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1152">
+              <caret line="175" column="9" lean-forward="true" selection-start-line="175" selection-start-column="9" selection-end-line="175" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/Reports/journals/CashReceiptComponent.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="24">
-              <caret line="151" column="16" lean-forward="true" selection-start-line="151" selection-start-column="16" selection-end-line="151" selection-end-column="16" />
+            <state relative-caret-position="2112">
+              <caret line="88" column="82" selection-start-line="88" selection-start-column="82" selection-end-line="88" selection-end-column="82" />
             </state>
           </provider>
         </entry>
@@ -56,8 +49,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/Reports/TrialBalanceReport.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="136" column="6" lean-forward="true" selection-start-line="133" selection-start-column="4" selection-end-line="136" selection-end-column="6" />
+            <state relative-caret-position="3192">
+              <caret line="136" column="6" selection-start-line="133" selection-start-column="4" selection-end-line="136" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -141,8 +134,8 @@
         <option value="$PROJECT_DIR$/server/models/TransactionRecord.js" />
         <option value="$PROJECT_DIR$/server/migrations/20190910010645-create-transaction-record.js" />
         <option value="$PROJECT_DIR$/server/routes/reports.js" />
-        <option value="$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue" />
         <option value="$PROJECT_DIR$/client/src/components/Reports/journals/CashReceiptComponent.vue" />
+        <option value="$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue" />
       </list>
     </option>
   </component>
@@ -160,7 +153,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -214,6 +206,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -294,12 +287,13 @@
       <workItem from="1568770021276" duration="6070000" />
       <workItem from="1568963133078" duration="5806000" />
       <workItem from="1568974732174" duration="7761000" />
-      <workItem from="1569105956796" duration="12167000" />
+      <workItem from="1569105956796" duration="13168000" />
+      <workItem from="1569134133527" duration="1556000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="277118000" />
+    <option name="totallyTimeSpent" value="279675000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -641,13 +635,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/journals/GeneralJournalComponent.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1008">
-          <caret line="61" column="3" lean-forward="true" selection-start-line="58" selection-start-column="2" selection-end-line="61" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/models/TransactionRecord.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
@@ -662,6 +649,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/journals/GeneralJournalComponent.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1296">
+          <caret line="54" column="31" selection-start-line="54" selection-start-column="31" selection-end-line="54" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/journals/CashReceiptComponent.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2112">
+          <caret line="88" column="82" selection-start-line="88" selection-start-column="82" selection-end-line="88" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/TrialBalanceReport.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3192">
+          <caret line="136" column="6" selection-start-line="133" selection-start-column="4" selection-end-line="136" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/server/routes/reports.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
@@ -671,25 +679,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-240">
-          <caret line="142" column="20" lean-forward="true" selection-start-line="142" selection-start-column="20" selection-end-line="142" selection-end-column="20" />
-          <folding>
-            <element signature="e#3048#3073#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/TrialBalanceReport.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="136" column="6" lean-forward="true" selection-start-line="133" selection-start-column="4" selection-end-line="136" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/journals/CashReceiptComponent.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="151" column="16" lean-forward="true" selection-start-line="151" selection-start-column="16" selection-end-line="151" selection-end-column="16" />
+        <state relative-caret-position="1152">
+          <caret line="175" column="9" lean-forward="true" selection-start-line="175" selection-start-column="9" selection-end-line="175" selection-end-column="9" />
         </state>
       </provider>
     </entry>
