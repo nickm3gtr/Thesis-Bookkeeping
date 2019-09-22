@@ -1,12 +1,12 @@
 <template>
   <div class="text-center ma-12 mt-12">
     <v-overlay
-      v-if="auth.isLoading"
+      v-if="auth !== null && auth.isLoading"
       :value="!overlay"
     >
     </v-overlay>
     <v-progress-circular
-      v-if="auth.isLoading"
+      v-if="auth !== null && auth.isLoading"
       size="90"
       width="10"
       indeterminate

@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f74612c7-0b76-4efb-9329-bce768567bd1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/views/ChartofAccountAdmin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/views/ChartofAccountAdmin.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/views/ChartofAccountBookkeeper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/views/ChartofAccountBookkeeper.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/views/DashboardAdmin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/views/DashboardAdmin.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/views/DashboardBookkeeper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/views/DashboardBookkeeper.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/views/GeneralJournalPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/views/GeneralJournalPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/views/Home.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,46 +24,64 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/components/Reports/journals/GeneralJournalComponent.vue">
+        <entry file="file://$PROJECT_DIR$/client/src/views/DashboardBookkeeper.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1296">
-              <caret line="54" column="31" selection-start-line="54" selection-start-column="31" selection-end-line="54" selection-end-column="31" />
+            <state relative-caret-position="48">
+              <caret line="2" column="28" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/views/GeneralJournalPage.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="11" column="8" lean-forward="true" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue">
+        <entry file="file://$PROJECT_DIR$/client/src/views/Home.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1152">
-              <caret line="175" column="9" lean-forward="true" selection-start-line="175" selection-start-column="9" selection-end-line="175" selection-end-column="9" />
+            <state relative-caret-position="24">
+              <caret line="7" column="24" lean-forward="true" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/components/Reports/journals/CashReceiptComponent.vue">
+        <entry file="file://$PROJECT_DIR$/client/src/views/BookkeepersAdmin.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2112">
-              <caret line="88" column="82" selection-start-line="88" selection-start-column="82" selection-end-line="88" selection-end-column="82" />
+            <state relative-caret-position="96">
+              <caret line="4" column="11" lean-forward="true" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/components/Reports/TrialBalanceReport.vue">
+        <entry file="file://$PROJECT_DIR$/client/src/views/ChartofAccountAdmin.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3192">
-              <caret line="136" column="6" selection-start-line="133" selection-start-column="4" selection-end-line="136" selection-end-column="6" />
+            <state relative-caret-position="168">
+              <caret line="7" column="10" lean-forward="true" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/routes/reports.js">
+        <entry file="file://$PROJECT_DIR$/client/src/views/ChartofAccountBookkeeper.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="13" column="213" selection-start-line="13" selection-start-column="213" selection-end-line="13" selection-end-column="213" />
+            <state relative-caret-position="144">
+              <caret line="6" column="16" lean-forward="true" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/views/DashboardAdmin.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="5" column="8" lean-forward="true" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -85,12 +107,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/server/routes/generalJournal.js" />
-        <option value="$PROJECT_DIR$/client/src/views/Reports/JornalReportPage.vue" />
-        <option value="$PROJECT_DIR$/client/src/views/ChartofAccountBookkeeper.vue" />
-        <option value="$PROJECT_DIR$/client/src/views/Reports/JournalReportPage.vue" />
-        <option value="$PROJECT_DIR$/client/src/store/auth/actions.js" />
-        <option value="$PROJECT_DIR$/server/middleware/loginMiddleware.js" />
         <option value="$PROJECT_DIR$/server/models/Account.js" />
         <option value="$PROJECT_DIR$/server/models/Branch.js" />
         <option value="$PROJECT_DIR$/client/src/views/Reports/LedgerReportPage.vue" />
@@ -136,6 +152,12 @@
         <option value="$PROJECT_DIR$/server/routes/reports.js" />
         <option value="$PROJECT_DIR$/client/src/components/Reports/journals/CashReceiptComponent.vue" />
         <option value="$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue" />
+        <option value="$PROJECT_DIR$/client/src/views/DashboardBookkeeper.vue" />
+        <option value="$PROJECT_DIR$/client/src/views/ChartofAccountAdmin.vue" />
+        <option value="$PROJECT_DIR$/client/src/views/ChartofAccountBookkeeper.vue" />
+        <option value="$PROJECT_DIR$/client/src/views/DashboardAdmin.vue" />
+        <option value="$PROJECT_DIR$/client/src/views/GeneralJournalPage.vue" />
+        <option value="$PROJECT_DIR$/client/src/views/Home.vue" />
       </list>
     </option>
   </component>
@@ -288,12 +310,12 @@
       <workItem from="1568963133078" duration="5806000" />
       <workItem from="1568974732174" duration="7761000" />
       <workItem from="1569105956796" duration="13168000" />
-      <workItem from="1569134133527" duration="1556000" />
+      <workItem from="1569134133527" duration="2387000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="279675000" />
+    <option name="totallyTimeSpent" value="280506000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -346,33 +368,6 @@
     </ignored-roots>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/server/models/Branch.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="7" column="37" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/seeders/20190908230726-demo_Account.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/seeders/20190906125014-demo-Bookkeeper.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/models/Book.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="28" lean-forward="true" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/migrations/20190908091912-create-book.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="8" column="8" lean-forward="true" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/models/Account.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -510,13 +505,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/views/BookkeepersAdmin.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="11" lean-forward="true" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/NavDrawer.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="384">
@@ -561,9 +549,6 @@
           <caret line="46" column="39" lean-forward="true" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/views/Home.vue">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/views/HomeAdmin.vue">
       <provider selected="true" editor-type-id="text-editor">
@@ -679,8 +664,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1152">
-          <caret line="175" column="9" lean-forward="true" selection-start-line="175" selection-start-column="9" selection-end-line="175" selection-end-column="9" />
+        <state relative-caret-position="240">
+          <caret line="110" column="12" lean-forward="true" selection-start-line="110" selection-start-column="12" selection-end-line="110" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/views/BookkeepersAdmin.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="4" column="11" lean-forward="true" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/views/ChartofAccountAdmin.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="7" column="10" lean-forward="true" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/views/ChartofAccountBookkeeper.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="6" column="16" lean-forward="true" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/views/DashboardAdmin.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="5" column="8" lean-forward="true" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/views/DashboardBookkeeper.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="2" column="28" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/views/GeneralJournalPage.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="11" column="8" lean-forward="true" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/views/Home.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="7" column="24" lean-forward="true" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
         </state>
       </provider>
     </entry>

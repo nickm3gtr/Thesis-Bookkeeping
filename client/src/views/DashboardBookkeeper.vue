@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <div v-if="auth.isAuthenticated == false || auth.user.account !== 'bookkeeper'">
+    <div v-if="auth === null || auth.isAuthenticated === false || auth.user.account !== 'bookkeeper'">
       <RestrictedResource />
     </div>
     <div v-else>
