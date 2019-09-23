@@ -28,6 +28,12 @@
                   </v-date-picker>
                 </v-menu>
               </v-col>
+              <v-col cols="12" md="4">
+                <v-text-field
+                  label="OR number"
+                  v-model="num"
+                ></v-text-field>
+              </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="9">
@@ -49,13 +55,14 @@
                       <span>Add</span>
                     </v-tooltip>
                   </template>
-                  <GeneralJournalDialog
+                  <CashReceiptDialog
                     :transId="transId"
                     :memo="memo"
                     :BookId="BookId"
                     :date="date"
-                    @close-dialog="dialog = false"
+                    :num="num"
                     @add-transaction="add"
+                    @close-dialog="dialog = false"
                   />
                 </v-dialog>
               </v-col>
@@ -85,31 +92,38 @@
               disable-sort
               :headers="headers"
               :items="items"
-              no-data-text="Add General Journal transactions"
+              no-data-text="Add Cash Receipt Book Transactions"
               class="elevation-3"
             >
+              <template v-slot:body.prepend="{ headers }">
+                <tr>
+                  <td>
+                    <span v-if="totalCash === 0"></span>
+                    <span v-else>11110-Cash on Hand</span>
+                  </td>
+                  <td>
+                    <span v-if="totalCash === 0"></span>
+                    <span v-else>{{ totalCash }}</span>
+                  </td>
+                  <td>
+                    <span></span>
+                  </td>
+                </tr>
+              </template>
               <template v-slot:body.append="{ headers }">
                 <tr>
                   <td>
                     <span class="font-weight-bold">Total:</span>
                   </td>
                   <td>
-                    <span v-if="sumDebit === 0"></span>
-                    <span v-else :class="{ 'red--text': isNotTheSame }">{{ sumDebit }}</span>
+                    <span v-if="totalCash === 0"></span>
+                    <span v-else>{{ totalCash }}</span>
                   </td>
                   <td>
-                    <span v-if="sumCredit === 0"></span>
-                    <span v-else :class="{ 'red--text': isNotTheSame }">{{ sumCredit }}</span>
+                    <span v-if="totalCash === 0"></span>
+                    <span v-else>{{ totalCash }}</span>
                   </td>
                 </tr>
-              </template>
-              <template v-slot:item.action="{ item }">
-                <v-icon
-                  small
-                  @click="deleteItem(item)"
-                >
-                  delete
-                </v-icon>
               </template>
             </v-data-table>
           </v-card-text>
@@ -137,29 +151,29 @@
 </template>
 
 <script>
-import GeneralJournalDialog from './GeneralJournalDialog'
-import { mapActions } from 'vuex'
 import uuid from 'uuid/v4'
 import axios from 'axios'
+import { mapState, mapActions } from 'vuex'
+import CashReceiptDialog from '@/components/books/CashReceiptDialog'
 
 export default {
-  name: 'GeneralJournal',
-  components: { GeneralJournalDialog },
+  name: 'CashReceipt',
+  components: { CashReceiptDialog },
   data () {
     return {
       snackbar: false,
       timeout: 0,
-      transId: uuid(),
-      BookId: 1,
-      dialog: false,
-      memo: '',
       menu: false,
       date: new Date().toISOString().substr(0, 10),
+      transId: uuid(),
+      BookId: 2,
+      dialog: false,
+      num: '',
+      memo: '',
       headers: [
         { text: 'AccountName', value: 'AccountName' },
         { text: 'Debit', value: 'debit' },
-        { text: 'Credit', value: 'credit' },
-        { text: 'Actions', align: 'center', value: 'action', sortable: false }
+        { text: 'Credit', value: 'credit' }
       ],
       items: []
     }
@@ -169,18 +183,6 @@ export default {
     add (transaction) {
       this.items = [ ...this.items, transaction ]
     },
-    clear () {
-      this.items = []
-      this.memo = ''
-    },
-    closeSnackBar () {
-      this.snackbar = false
-      this.clear()
-    },
-    deleteItem (item) {
-      const index = this.items.indexOf(item)
-      this.items.splice(index, 1)
-    },
     async save () {
       const config = {
         headers: {
@@ -189,8 +191,26 @@ export default {
         }
       }
       try {
-        const newTransaction = JSON.stringify({ data: this.items })
-        const response = await axios.post('/api/bookkeeping/general-journal', newTransaction, config)
+        const cashItem = {
+          AccountId: 11110,
+          AccountName: '11110-Cash on Hand',
+          BookId: this.BookId,
+          BookkeeperId: this.auth.user.id,
+          TransId: this.transId,
+          debit: this.totalCash,
+          credit: null,
+          date: this.date,
+          memo: this.memo,
+          num: this.num
+        }
+        const data = [ cashItem, ...this.items ]
+        const newData = data.map(data => {
+          data.num = this.num
+          data.memo = this.memo
+          return data
+        })
+        const newTransaction = JSON.stringify({ data: newData })
+        const response = await axios.post('/api/bookkeeping/cash-receipts', newTransaction, config)
         const savedTransaction = response.data
         if (!savedTransaction) console.log('Failed')
         this.snackbar = true
@@ -199,47 +219,32 @@ export default {
         this.getError(e.response.data)
         this.transId = uuid()
       }
+    },
+    clear () {
+      this.items = []
+      this.memo = ''
+      this.num = ''
+    },
+    closeSnackBar () {
+      this.snackbar = false
+      this.clear()
     }
   },
   computed: {
-    totalDebit () {
-      const sumDebit = this.items.map(item => {
-        return +item.debit
+    ...mapState(['auth']),
+    totalCash () {
+      let balances = this.items.map(item => {
+        let balance = parseFloat(item.credit)
+        return balance
       })
-      return sumDebit
-    },
-    totalCredit () {
-      const sumCredit = this.items.map(item => {
-        return +item.credit
-      })
-      return sumCredit
-    },
-    sumDebit () {
-      let sum = 0
-      for (let i = 0; i < this.totalDebit.length; i++) {
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        sum += this.totalDebit[i]
-      }
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
       return sum
-    },
-    sumCredit () {
-      let sum = 0
-      for (let i = 0; i < this.totalCredit.length; i++) {
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        sum += this.totalCredit[i]
-      }
-      return sum
-    },
-    isNotTheSame () {
-      return this.sumDebit !== this.sumCredit
     }
   }
 }
 </script>
 
 <style scoped>
-  .disable-events {
-    pointer-events: none;
-    opacity: 0.6;
-  }
+
 </style>

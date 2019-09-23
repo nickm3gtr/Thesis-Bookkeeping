@@ -90,7 +90,7 @@ export default {
           title: 'Bookkeeping',
           items: [
             { title: 'General Journal Book', route: '/bookkeeper/general-journal' },
-            { title: 'Cash Receipt Book', route: '#' },
+            { title: 'Cash Receipt Book', route: '/bookkeeper/cash-receipt' },
             { title: 'Cash Disbursement Book', route: '#' },
             { title: 'Sales Book', route: '#' },
             { title: 'Purchase Book', route: '#' }
