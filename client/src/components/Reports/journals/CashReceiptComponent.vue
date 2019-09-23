@@ -3,17 +3,20 @@
     <div class="text-center">
       <p>
         <span v-if="auth.user === null" class="headline">DARBMUPCO</span>
-        <span v-else class="headline centered">{{ auth.user.Branch.branchName }}</span>
+        <span v-else class="headline centered">{{
+          auth.user.Branch.branchName
+        }}</span>
       </p>
       <p><span class="subtitle-1">Cash Receipts Journal</span></p>
-      <p><span class="subtitle-2">{{ formatFromDate }} through {{ formatToDate }}</span></p>
-      <hr>
+      <p>
+        <span class="subtitle-2"
+          >{{ formatFromDate }} through {{ formatToDate }}</span
+        >
+      </p>
+      <hr />
     </div>
     <v-row>
-      <v-col cols="12" md="1">
-        <p class="caption font-weight-medium text-center">OR</p>
-      </v-col>
-      <v-col cols="12" md="1">
+      <v-col cols="12" md="2">
         <p class="caption font-weight-medium">Account Credited</p>
       </v-col>
       <v-col cols="12" md="2">
@@ -32,58 +35,79 @@
         <p class="caption font-weight-medium text-center">Others</p>
       </v-col>
     </v-row>
-    <hr>
-    <div v-for="item in filterCredits" :key="item.id">
+    <hr/>
+    <div v-for="(item, index) in filterCredits" :key="item.id">
       <v-row>
-        <v-col cols="12" md="1">
-          <p class="text-center"><span class="caption font-weight-medium">{{ item.num }}</span></p>
-        </v-col>
-        <v-col cols="12" md="1">
-          <p><span class="caption font-weight-medium">{{ item.accountname }}</span></p>
+        <v-col cols="12" md="2">
+          <p v-if="(index + 1) % 9 === 0" class="html2pdf__page-break">
+            <span class="caption font-weight-medium">{{
+              item.accountname
+            }}</span>
+          </p>
+          <p v-else>
+            <span class="caption font-weight-medium">{{
+              item.accountname
+            }}</span>
+          </p>
         </v-col>
         <v-col cols="12" md="2">
           <p class="caption font-weight-medium text-right">{{ item.credit }}</p>
         </v-col>
         <v-col cols="12" md="2">
           <p v-if="item.tags !== 'sales'"></p>
-          <p v-else class="caption font-weight-medium text-right">{{ item.credit }}</p>
+          <p v-else class="caption font-weight-medium text-right">
+            {{ item.credit }}
+          </p>
         </v-col>
         <v-col cols="12" md="2">
           <p v-if="item.tags !== 'loans'"></p>
-          <p v-else class="caption font-weight-medium text-right">{{ item.credit }}</p>
+          <p v-else class="caption font-weight-medium text-right">
+            {{ item.credit }}
+          </p>
         </v-col>
         <v-col cols="12" md="2">
           <p v-if="item.tags !== 'a/r'"></p>
-          <p v-else class="caption font-weight-medium text-right">{{ item.credit }}</p>
+          <p v-else class="caption font-weight-medium text-right">
+            {{ item.credit }}
+          </p>
         </v-col>
         <v-col cols="12" md="2">
           <p v-if="item.tags !== 'others'"></p>
-          <p v-else class="caption font-weight-medium text-right">{{ item.credit }}</p>
+          <p v-else class="caption font-weight-medium text-right">
+            {{ item.credit }}
+          </p>
         </v-col>
       </v-row>
     </div>
-    <hr>
+    <hr />
     <v-row>
-      <v-col cols="12" md="1">
-        <p class="caption font-weight-medium text-center">Total</p>
-      </v-col>
-      <v-col cols="12" md="1">
-        <p class="caption font-weight-medium"></p>
+      <v-col cols="12" md="2">
+        <p class="caption font-weight-medium">Total</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">{{ formatBalance(totalCash) }}</p>
+        <p class="caption font-weight-medium text-right">
+          {{ formatBalance(totalCash) }}
+        </p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">{{ formatBalance(totalSales) }}</p>
+        <p class="caption font-weight-medium text-right">
+          {{ formatBalance(totalSales) }}
+        </p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">{{ formatBalance(totalLoans) }}</p>
+        <p class="caption font-weight-medium text-right">
+          {{ formatBalance(totalLoans) }}
+        </p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">{{ formatBalance(totalAR) }}</p>
+        <p class="caption font-weight-medium text-right">
+          {{ formatBalance(totalAR) }}
+        </p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">{{ formatBalance(totalOthers) }}</p>
+        <p class="caption font-weight-medium text-right">
+          {{ formatBalance(totalOthers) }}
+        </p>
       </v-col>
     </v-row>
   </div>
@@ -94,7 +118,7 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'CashReceiptComponent',
-  props: [ 'formatFromDate', 'formatToDate', 'formatItems' ],
+  props: ['formatFromDate', 'formatToDate', 'formatItems'],
   methods: {
     formatBalance (value) {
       const num = Math.abs(value)
@@ -182,6 +206,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

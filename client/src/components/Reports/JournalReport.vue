@@ -193,5 +193,9 @@ export default {
 <style scoped>
   #content {
     color: black;
+    font-family: "Roboto", sans-serif;
+  }
+  .text-center {
+    text-align: center;
   }
 </style>

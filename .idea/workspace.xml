@@ -6,11 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f74612c7-0b76-4efb-9329-bce768567bd1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/GeneralJournal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/GeneralJournal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/NavDrawer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/NavDrawer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/router/generalJournal.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/router/generalJournal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routes/generalJournal.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/bookkeeping.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Reports/journals/CashReceiptComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Reports/journals/CashReceiptComponent.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,57 +19,21 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/src/components/books/CashReceipt.vue">
+        <entry file="file://$PROJECT_DIR$/client/src/components/Reports/journals/CashReceiptComponent.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="207" column="10" selection-start-line="207" selection-start-column="10" selection-end-line="207" selection-end-column="10" />
-              <folding>
-                <element signature="e#3401#3427#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="264">
+              <caret line="37" column="9" selection-start-line="37" selection-start-column="9" selection-end-line="37" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/routes/bookkeeping.js">
+        <entry file="file://$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="14" column="5" lean-forward="true" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/components/GeneralJournal.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="199" column="29" lean-forward="true" selection-start-line="199" selection-start-column="29" selection-end-line="199" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/components/books/CashReceiptDialog.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-576">
-              <caret line="33" column="2" lean-forward="true" selection-start-line="33" selection-start-column="2" selection-end-line="33" selection-end-column="2" />
-              <folding>
-                <element signature="e#1334#1359#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/components/GeneralJournalDialog.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-618">
-              <caret line="40" column="20" lean-forward="true" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="20" />
-              <folding>
-                <element signature="e#1578#1603#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="176">
+              <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -132,8 +93,6 @@
         <option value="$PROJECT_DIR$/server/models/TransactionRecord.js" />
         <option value="$PROJECT_DIR$/server/migrations/20190910010645-create-transaction-record.js" />
         <option value="$PROJECT_DIR$/server/routes/reports.js" />
-        <option value="$PROJECT_DIR$/client/src/components/Reports/journals/CashReceiptComponent.vue" />
-        <option value="$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue" />
         <option value="$PROJECT_DIR$/client/src/views/DashboardBookkeeper.vue" />
         <option value="$PROJECT_DIR$/client/src/views/ChartofAccountAdmin.vue" />
         <option value="$PROJECT_DIR$/client/src/views/ChartofAccountBookkeeper.vue" />
@@ -149,6 +108,8 @@
         <option value="$PROJECT_DIR$/client/src/components/GeneralJournal.vue" />
         <option value="$PROJECT_DIR$/server/routes/bookkeeping.js" />
         <option value="$PROJECT_DIR$/client/src/components/books/CashReceipt.vue" />
+        <option value="$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue" />
+        <option value="$PROJECT_DIR$/client/src/components/Reports/journals/CashReceiptComponent.vue" />
       </list>
     </option>
   </component>
@@ -166,7 +127,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -254,6 +214,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -336,16 +297,16 @@
       <workItem from="1568974732174" duration="7761000" />
       <workItem from="1569105956796" duration="13168000" />
       <workItem from="1569134133527" duration="3236000" />
-      <workItem from="1569233097797" duration="11050000" />
+      <workItem from="1569233097797" duration="14107000" />
+      <workItem from="1569251881215" duration="593000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="292405000" />
+    <option name="totallyTimeSpent" value="296055000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24981412" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -573,31 +534,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/journals/GeneralJournalComponent.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1296">
-          <caret line="54" column="31" selection-start-line="54" selection-start-column="31" selection-end-line="54" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/journals/CashReceiptComponent.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2112">
-          <caret line="88" column="82" selection-start-line="88" selection-start-column="82" selection-end-line="88" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/routes/reports.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
           <caret line="13" column="213" selection-start-line="13" selection-start-column="213" selection-end-line="13" selection-end-column="213" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="110" column="12" lean-forward="true" selection-start-line="110" selection-start-column="12" selection-end-line="110" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -745,11 +685,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/books/CashReceipt.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="207" column="10" selection-start-line="207" selection-start-column="10" selection-end-line="207" selection-end-column="10" />
+        <state relative-caret-position="336">
+          <caret line="209" column="21" lean-forward="true" selection-start-line="209" selection-start-column="21" selection-end-line="209" selection-end-column="21" />
           <folding>
             <element signature="e#3401#3427#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/journals/GeneralJournalComponent.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="502">
+          <caret line="54" column="31" selection-start-line="54" selection-start-column="31" selection-end-line="54" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/JournalReport.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/Reports/journals/CashReceiptComponent.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="37" column="9" selection-start-line="37" selection-start-column="9" selection-end-line="37" selection-end-column="9" />
         </state>
       </provider>
     </entry>
