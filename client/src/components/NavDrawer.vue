@@ -86,6 +86,11 @@ export default {
           route: '/bookkeeper/chart_of_account'
         },
         {
+          action: 'local_atm',
+          title: 'Transactions',
+          route: '/bookkeeper/transactions'
+        },
+        {
           action: 'chrome_reader_mode',
           title: 'Bookkeeping',
           items: [
