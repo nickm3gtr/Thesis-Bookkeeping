@@ -4,6 +4,33 @@
       <v-flex sm12 md10 offset-md1>
         <v-card>
           <v-card-text>
+            <v-row>
+              <v-col cols="12" md="4">
+                <v-text-field
+                  v-model="date"
+                  label="Select Date"
+                  prepend-icon="event"
+                  readonly
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="4">
+                <v-text-field
+                  label="OR number"
+                  v-model="num"
+                  readonly
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" md="9">
+                <v-text-field
+                  outlined
+                  label="Memo"
+                  v-model="memo"
+                  readonly
+                ></v-text-field>
+              </v-col>
+            </v-row>
             <v-data-table
               hide-default-footer
               disable-sort
@@ -18,32 +45,20 @@
             >
               <template v-slot:body="{ items }">
                 <tbody>
-                <tr v-for="item in items" :key="item.id">
-                  <td>
-                    <span v-if="item.debit === null"></span>
-                    <span v-else>{{ item.date }}</span>
-                  </td>
-                  <td>
-                    <span v-if="item.debit === null"></span>
-                    <span v-else>{{ item.num }}</span>
-                  </td>
-                  <td>
-                    <span v-if="item.debit === null"></span>
-                    <span v-else>{{ item.memo }}</span>
-                  </td>
-                  <td>
-                    <span></span>
-                    <span>{{ item.name }}</span>
-                  </td>
-                  <td>
-                    <span></span>
-                    <span>{{ item.debit }}</span>
-                  </td>
-                  <td>
-                    <span></span>
-                    <span>{{ item.credit }}</span>
-                  </td>
-                </tr>
+                  <tr v-for="item in items" :key="item.id">
+                    <td>
+                      <span></span>
+                      <span>{{ item.name }}</span>
+                    </td>
+                    <td>
+                      <span></span>
+                      <span>{{ item.debit }}</span>
+                    </td>
+                    <td>
+                      <span></span>
+                      <span>{{ item.credit }}</span>
+                    </td>
+                  </tr>
                 </tbody>
               </template>
             </v-data-table>
@@ -62,17 +77,22 @@ export default {
   name: 'TransactionFilter',
   data () {
     return {
+      date: '',
+      num: '',
+      memo: '',
       search: '',
       transactions: [],
       loading: false,
       headers: [
-        { text: 'Date', value: 'date' },
-        { text: 'Num', value: 'num' },
-        { text: 'Memo', value: 'memo' },
         { text: 'Account', value: 'name' },
         { text: 'Debit', value: 'debit' },
         { text: 'Credit', value: 'credit' }
       ]
+    }
+  },
+  methods: {
+    formatDate (date) {
+      return moment(date).format('MMM DD YYYY')
     }
   },
   computed: {
@@ -98,6 +118,9 @@ export default {
       )
       this.loading = false
       this.transactions = transactions.data
+      this.date = this.formatDate(transactions.data[0].date)
+      this.num = transactions.data[0].num
+      this.memo = transactions.data[0].memo
     } catch (e) {
       this.getError(e.response.data)
     }
