@@ -28,6 +28,14 @@ router.post("/cash-receipts", auth, (req, res) => {
     .catch(err => { res.status(400).json({ msg: 'Error', err }) })
 })
 
+// Add CDB transactions
+router.post("/cash-disbursements", auth, (req, res) => {
+  let { data } = req.body
+  db.TransactionRecord.bulkCreate(data, { returning: true })
+    .then(transactions => res.json(transactions))
+    .catch(err => { res.status(400).json({ msg: 'Error', err }) })
+})
+
 // Fetch all transaction records
 router.get("/transactions", auth, (req, res) => {
   db.sequelize.query("select \"TransId\", memo, \"date\", num\n" +
@@ -58,9 +66,10 @@ router.get("/transactions/:bookId", auth, (req, res) => {
 router.get("/transactions/trans_id/:transId", auth, (req, res) => {
   const transId = req.params.transId
 
-  db.sequelize.query("select tr.id as id, tr.\"date\" as date, tr.num as num, tr.memo as memo, a.name as name, tr.debit as debit, tr.credit as credit\n" +
+  db.sequelize.query("select tr.id, tr.\"date\" as date, tr.num as num, tr.memo as memo, a.name as name, coalesce(tr.debit, 0) as debit, coalesce(tr.credit, 0) as credit\n" +
     "from \"TransactionRecords\" tr inner join \"Accounts\" a on tr.\"AccountId\"=a.id\n" +
-    "where \"TransId\" = :transId", {
+    "where \"TransId\" = :transId\n" +
+    "order by tr.id asc", {
     model: db.TransactionRecord,
     replacements: { transId }
   }).then(transactions => res.json(transactions))

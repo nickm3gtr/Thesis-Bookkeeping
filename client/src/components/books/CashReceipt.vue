@@ -95,29 +95,10 @@
               no-data-text="Add Cash Receipt Book Transactions"
               class="elevation-3"
             >
-              <template v-slot:body.prepend="{ headers }">
-                <tr>
-                  <td>
-                    <span v-if="totalCash === 0"></span>
-                    <span v-else>11110-Cash on Hand</span>
-                  </td>
-                  <td>
-                    <span v-if="totalCash === 0"></span>
-                    <span v-else>{{ totalCash }}</span>
-                  </td>
-                  <td>
-                    <span></span>
-                  </td>
-                </tr>
-              </template>
               <template v-slot:body.append="{ headers }">
                 <tr>
                   <td>
                     <span class="font-weight-bold">Total:</span>
-                  </td>
-                  <td>
-                    <span v-if="totalCash === 0"></span>
-                    <span v-else>{{ totalCash }}</span>
                   </td>
                   <td>
                     <span v-if="totalCash === 0"></span>
@@ -172,8 +153,7 @@ export default {
       memo: '',
       headers: [
         { text: 'AccountName', value: 'AccountName' },
-        { text: 'Debit', value: 'debit' },
-        { text: 'Credit', value: 'credit' }
+        { text: 'Amount', value: 'credit' }
       ],
       items: []
     }

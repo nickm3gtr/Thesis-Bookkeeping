@@ -43,23 +43,20 @@
               loading-text="Loading..."
               class="elevation-3"
             >
-              <template v-slot:body="{ items }">
-                <tbody>
-                  <tr v-for="item in items" :key="item.id">
-                    <td>
-                      <span></span>
-                      <span>{{ item.name }}</span>
-                    </td>
-                    <td>
-                      <span></span>
-                      <span>{{ item.debit }}</span>
-                    </td>
-                    <td>
-                      <span></span>
-                      <span>{{ item.credit }}</span>
-                    </td>
-                  </tr>
-                </tbody>
+              <template v-slot:body.append="{ headers }">
+                <tr>
+                  <td>
+                    <span class="font-weight-bold">Total:</span>
+                  </td>
+                  <td>
+                    <span v-if="totalDebit === 0"></span>
+                    <span v-else>{{ formatBalance(totalDebit) }}</span>
+                  </td>
+                  <td>
+                    <span v-if="totalCredit === 0"></span>
+                    <span v-else>{{ formatBalance(totalCredit) }}</span>
+                  </td>
+                </tr>
               </template>
             </v-data-table>
           </v-card-text>
@@ -93,6 +90,10 @@ export default {
   methods: {
     formatDate (date) {
       return moment(date).format('MMM DD YYYY')
+    },
+    formatBalance (value) {
+      const num = Math.abs(value)
+      return parseFloat(Math.round(num * 100) / 100).toFixed(2)
     }
   },
   computed: {
@@ -101,6 +102,24 @@ export default {
         transaction.date = moment(transaction.date).format('MMM DD')
         return transaction
       })
+    },
+    totalDebit () {
+      let balances = this.transactions.map(item => {
+        let balance = parseFloat(item.debit)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return parseFloat(sum)
+    },
+    totalCredit () {
+      let balances = this.transactions.map(item => {
+        let balance = parseFloat(item.credit)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return parseFloat(sum)
     }
   },
   async mounted () {

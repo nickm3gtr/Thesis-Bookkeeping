@@ -1,5 +1,6 @@
 import GeneralJournalPage from '@/views/GeneralJournalPage'
 import CashReceiptPage from '@/views/Books/CashReceiptPage'
+import CashDisbursementPage from '@/views/Books/CashDisbursementPage'
 import TransactionListPage from '@/views/Books/TransactionListPage'
 import TransactionFilterPage from '@/views/Books/TransactionFilterPage'
 
@@ -18,6 +19,14 @@ export default [
     component: CashReceiptPage,
     meta: {
       title: 'Cash Receipt Books'
+    }
+  },
+  {
+    path: '/bookkeeper/cash-disbursement',
+    name: 'cash-disbursement-bookkeeper',
+    component: CashDisbursementPage,
+    meta: {
+      title: 'Cash Disbursement Books'
     }
   },
   {
