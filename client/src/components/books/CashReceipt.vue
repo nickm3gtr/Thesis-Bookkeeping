@@ -69,7 +69,9 @@
               <v-col cols="12" md="1">
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <v-btn color="red" v-on="on" dark fab small class="mt-4" @click="clear">
+                    <v-btn color="red" v-on="on" dark fab small class="mt-4"
+                           :class="{'disable-events': selectedItems}"
+                           @click="clear">
                       <v-icon>delete</v-icon>
                     </v-btn>
                   </template>
@@ -79,7 +81,9 @@
               <v-col cols="12" md="1">
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <v-btn color="success" v-on="on" dark fab small class="mt-4" @click="save">
+                    <v-btn color="success" v-on="on" dark fab small class="mt-4"
+                           :class="{'disable-events': selectedItems}"
+                           @click="save">
                       <v-icon>save</v-icon>
                     </v-btn>
                   </template>
@@ -193,6 +197,7 @@ export default {
         const response = await axios.post('/api/bookkeeping/cash-receipts', newTransaction, config)
         const savedTransaction = response.data
         if (!savedTransaction) console.log('Failed')
+        this.clear()
         this.snackbar = true
         this.transId = uuid()
       } catch (e) {
@@ -220,11 +225,17 @@ export default {
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)
       const sum = arrSum(balances)
       return sum
+    },
+    selectedItems () {
+      return this.items <= 0
     }
   }
 }
 </script>
 
 <style scoped>
-
+  .disable-events {
+    pointer-events: none;
+    opacity: 0.6;
+  }
 </style>

@@ -62,7 +62,9 @@
               <v-col cols="12" md="1">
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <v-btn color="red" v-on="on" dark fab small class="mt-4" @click="clear">
+                    <v-btn color="red" v-on="on" dark fab small class="mt-4"
+                           :class="{'disable-events': selectedItems}"
+                           @click="clear">
                       <v-icon>delete</v-icon>
                     </v-btn>
                   </template>
@@ -72,7 +74,9 @@
               <v-col cols="12" md="1">
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <v-btn color="success" v-on="on" dark fab small class="mt-4" @click="save">
+                    <v-btn color="success" v-on="on" dark fab small class="mt-4"
+                           :class="{'disable-events': selectedItems}"
+                           @click="save">
                       <v-icon>save</v-icon>
                     </v-btn>
                   </template>
@@ -232,6 +236,9 @@ export default {
     },
     isNotTheSame () {
       return this.sumDebit !== this.sumCredit
+    },
+    selectedItems () {
+      return this.items <= 0
     }
   }
 }

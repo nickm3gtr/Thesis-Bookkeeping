@@ -15,7 +15,7 @@
               </v-col>
               <v-col cols="12" md="4">
                 <v-text-field
-                  label="OR number"
+                  label="Num"
                   v-model="num"
                   readonly
                 ></v-text-field>
