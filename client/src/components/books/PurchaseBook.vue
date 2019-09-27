@@ -28,12 +28,6 @@
                   </v-date-picker>
                 </v-menu>
               </v-col>
-              <v-col cols="12" md="4">
-                <v-text-field
-                  label="Check number"
-                  v-model="num"
-                ></v-text-field>
-              </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="9">
@@ -55,12 +49,11 @@
                       <span>Add</span>
                     </v-tooltip>
                   </template>
-                  <CashDisbursementDialog
+                  <PurchaseBookDialog
                     :transId="transId"
                     :memo="memo"
                     :BookId="BookId"
                     :date="date"
-                    :num="num"
                     @add-transaction="add"
                     @close-dialog="dialog = false"
                   />
@@ -96,7 +89,7 @@
               disable-sort
               :headers="headers"
               :items="items"
-              no-data-text="Add Cash Disbursement Book Transactions"
+              no-data-text="Add Purchase Book Transactions"
               class="elevation-3"
             >
               <template v-slot:body.append="{ headers }">
@@ -136,14 +129,14 @@
 </template>
 
 <script>
+import PurchaseBookDialog from './PurchaseBookDialog'
 import uuid from 'uuid/v4'
-import { mapActions, mapState } from 'vuex'
 import axios from 'axios'
-import CashDisbursementDialog from '@/components/books/CashDisbursementDialog'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: 'CashDisbursement',
-  components: { CashDisbursementDialog },
+  name: 'PurchaseBook',
+  components: { PurchaseBookDialog },
   data () {
     return {
       snackbar: false,
@@ -151,9 +144,8 @@ export default {
       menu: false,
       date: new Date().toISOString().substr(0, 10),
       transId: uuid(),
-      BookId: 3,
+      BookId: 4,
       dialog: false,
-      num: '',
       memo: '',
       headers: [
         { text: 'AccountName', value: 'AccountName' },
@@ -176,16 +168,15 @@ export default {
       }
       try {
         const cashItem = {
-          AccountId: 11130,
-          AccountName: '11130-Cash in Bank',
+          AccountId: 21210,
+          AccountName: '21210-Accounts Payable-Trade',
           BookId: this.BookId,
           BookkeeperId: this.auth.user.id,
           TransId: this.transId,
           debit: null,
           credit: this.totalCash,
           date: this.date,
-          memo: this.memo,
-          num: this.num
+          memo: this.memo
         }
         const data = [ ...this.items, cashItem ]
         const newData = data.map(data => {
@@ -194,7 +185,7 @@ export default {
           return data
         })
         const newTransaction = JSON.stringify({ data: newData })
-        const response = await axios.post('/api/bookkeeping/cash-disbursements', newTransaction, config)
+        const response = await axios.post('/api/bookkeeping/cash-receipts', newTransaction, config)
         const savedTransaction = response.data
         if (!savedTransaction) console.log('Failed')
         this.clear()

@@ -97,8 +97,8 @@ export default {
             { title: 'General Journal Book', route: '/bookkeeper/general-journal' },
             { title: 'Cash Receipt Book', route: '/bookkeeper/cash-receipt' },
             { title: 'Cash Disbursement Book', route: '/bookkeeper/cash-disbursement' },
-            { title: 'Sales Book', route: '#' },
-            { title: 'Purchase Book', route: '#' }
+            { title: 'Sales Book', route: '/bookkeeper/sales-book' },
+            { title: 'Purchase Book', route: '/bookkeeper/purchase-book' }
           ]
         },
         {

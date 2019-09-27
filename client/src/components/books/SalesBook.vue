@@ -30,7 +30,7 @@
               </v-col>
               <v-col cols="12" md="4">
                 <v-text-field
-                  label="Check number"
+                  label="Sales slip number"
                   v-model="num"
                 ></v-text-field>
               </v-col>
@@ -44,7 +44,7 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="1">
-                <v-dialog persistent v-model="dialog" max-width="600px">
+                <v-dialog persistent v-model="dialog" max-width="400px">
                   <template v-slot:activator="{ on: dialog }">
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on: tooltip }">
@@ -55,7 +55,7 @@
                       <span>Add</span>
                     </v-tooltip>
                   </template>
-                  <CashDisbursementDialog
+                  <SalesBookDialog
                     :transId="transId"
                     :memo="memo"
                     :BookId="BookId"
@@ -96,7 +96,7 @@
               disable-sort
               :headers="headers"
               :items="items"
-              no-data-text="Add Cash Disbursement Book Transactions"
+              no-data-text="Add Sales Book Transactions"
               class="elevation-3"
             >
               <template v-slot:body.append="{ headers }">
@@ -136,14 +136,14 @@
 </template>
 
 <script>
+import SalesBookDialog from '@/components/books/SalesBookDialog'
 import uuid from 'uuid/v4'
 import { mapActions, mapState } from 'vuex'
 import axios from 'axios'
-import CashDisbursementDialog from '@/components/books/CashDisbursementDialog'
 
 export default {
-  name: 'CashDisbursement',
-  components: { CashDisbursementDialog },
+  name: 'SalesBook',
+  components: { SalesBookDialog },
   data () {
     return {
       snackbar: false,
@@ -151,13 +151,13 @@ export default {
       menu: false,
       date: new Date().toISOString().substr(0, 10),
       transId: uuid(),
-      BookId: 3,
+      BookId: 5,
       dialog: false,
       num: '',
       memo: '',
       headers: [
         { text: 'AccountName', value: 'AccountName' },
-        { text: 'Amount', value: 'debit' }
+        { text: 'Amount', value: 'credit' }
       ],
       items: []
     }
@@ -176,18 +176,18 @@ export default {
       }
       try {
         const cashItem = {
-          AccountId: 11130,
-          AccountName: '11130-Cash in Bank',
+          AccountId: 11250,
+          AccountName: '11250-Accounts Receivables Trade-Current',
           BookId: this.BookId,
           BookkeeperId: this.auth.user.id,
           TransId: this.transId,
-          debit: null,
-          credit: this.totalCash,
+          debit: this.totalCash,
+          credit: null,
           date: this.date,
           memo: this.memo,
           num: this.num
         }
-        const data = [ ...this.items, cashItem ]
+        const data = [ cashItem, ...this.items ]
         const newData = data.map(data => {
           data.num = this.num
           data.memo = this.memo
@@ -219,7 +219,7 @@ export default {
     ...mapState(['auth']),
     totalCash () {
       let balances = this.items.map(item => {
-        let balance = parseFloat(item.debit)
+        let balance = parseFloat(item.credit)
         return balance
       })
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)
