@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     credit: DataTypes.DECIMAL(10, 2),
     tags: DataTypes.STRING,
     date: DataTypes.DATE
-  }, { timestamps: false });
+  }, {});
   TransactionRecord.associate = function(models) {
     TransactionRecord.belongsTo(models.Account, { foreignKey: 'AccountId' })
     TransactionRecord.belongsTo(models.Bookkeeper, { foreignKey: 'BookkeeperId' })

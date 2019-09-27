@@ -6,16 +6,7 @@ const auth = require('../middleware/auth')
 // Add general journal transactions
 router.post("/general-journal", auth, (req, res) => {
   let { data } = req.body
-  const mapData = data.map(data => {
-    if (data.debit.length < 1) {
-      data.debit = null
-    }
-    if (data.credit.length < 1) {
-      data.credit = null
-    }
-    return data
-  })
-  db.TransactionRecord.bulkCreate(mapData, { returning: true })
+  db.TransactionRecord.bulkCreate(data, { returning: true })
     .then(transactions => res.json(transactions))
     .catch(err => { res.status(400).json({ msg: 'Error', err }) })
 })
@@ -38,10 +29,10 @@ router.post("/cash-disbursements", auth, (req, res) => {
 
 // Fetch all transaction records
 router.get("/transactions", auth, (req, res) => {
-  db.sequelize.query("select \"TransId\", memo, \"date\", num\n" +
+  db.sequelize.query("select \"TransId\", memo, \"date\", \"createdAt\", num\n" +
     "from \"TransactionRecords\"\n" +
-    "group by \"TransId\", memo, date, num\n" +
-    "order by \"date\" desc", {
+    "group by \"TransId\", memo, \"createdAt\", date, num\n" +
+    "order by \"createdAt\" desc, \"date\" desc", {
     model: db.TransactionRecord
   }).then(transactions => res.json(transactions))
     .catch(err => res.status(400).json({ msg: "Can't fetch transactions", err }))

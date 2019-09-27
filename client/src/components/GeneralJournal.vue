@@ -193,7 +193,7 @@ export default {
         }
       }
       try {
-        const newTransaction = JSON.stringify({ data: this.items })
+        const newTransaction = JSON.stringify({ data: this.formatItems })
         const response = await axios.post('/api/bookkeeping/general-journal', newTransaction, config)
         const savedTransaction = response.data
         if (!savedTransaction) console.log('Failed')
@@ -206,6 +206,17 @@ export default {
     }
   },
   computed: {
+    formatItems () {
+      const formatItem = this.items.map(item => {
+        if (item.debit.length <= 0) {
+          item.debit = null
+        } else if (item.credit.length <= 0) {
+          item.credit = null
+        }
+        return item
+      })
+      return formatItem
+    },
     totalDebit () {
       const sumDebit = this.items.map(item => {
         return +item.debit
