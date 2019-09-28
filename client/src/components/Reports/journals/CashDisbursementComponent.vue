@@ -20,19 +20,19 @@
         <p class="caption font-weight-medium">Account Debited</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-center">Cash Paid</p>
+        <p class="caption font-weight-medium text-right">Cash Paid</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-center">A/P Debit</p>
+        <p class="caption font-weight-medium text-right">A/P Debit</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-center">Salaries Debit</p>
+        <p class="caption font-weight-medium text-right">Salaries Debit</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-center">Expenses Debit</p>
+        <p class="caption font-weight-medium text-right">Expenses Debit</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-center">Others</p>
+        <p class="caption font-weight-medium text-right">Others</p>
       </v-col>
     </v-row>
     <hr/>

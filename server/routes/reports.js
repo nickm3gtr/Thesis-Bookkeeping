@@ -40,16 +40,16 @@ router.get("/ledger/:id/:start/:end", (req, res) => {
     .catch(err => res.status(400).json({ msg: err }))
 });
 
-router.get("/trial-balance/:id/:date", (req, res) => {
-  const { id, date } = req.params
+router.get("/trial-balance/:id/:start/:end", (req, res) => {
+  const { id, start, end } = req.params
 
   db.sequelize.query("select s.name as subtype, a.\"name\" as account, (select sum(coalesce(debit, 0)) - sum(coalesce(credit, 0)) \n" +
     "\tfrom \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
-    "\twhere \"AccountId\"=a.id and \"date\" <= :date and b.\"BranchId\"=:id) as balance\n" +
+    "\twhere \"AccountId\"=a.id and \"date\" between :start and :end and b.\"BranchId\"=:id) as balance\n" +
     "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id\n" +
     "where a.id in (select \"AccountId\" from \"TransactionRecords\")", {
     model: db.TransactionRecord,
-    replacements: { id, date }
+    replacements: { id, start, end }
   })
     .then(transactions => res.json(transactions))
 });

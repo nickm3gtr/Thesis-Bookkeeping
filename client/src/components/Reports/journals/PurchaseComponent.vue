@@ -20,16 +20,16 @@
         <p class="caption font-weight-medium">Vendor</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-center">A/P Credit</p>
+        <p class="caption font-weight-medium text-right">A/P Credit</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-center">Inventory Debit</p>
+        <p class="caption font-weight-medium text-right">Inventory Debit</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-center">Office Supplies Debit</p>
+        <p class="caption font-weight-medium text-right">Office Supplies Debit</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-center">Others</p>
+        <p class="caption font-weight-medium text-right">Others</p>
       </v-col>
     </v-row>
     <hr/>

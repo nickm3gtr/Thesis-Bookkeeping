@@ -20,19 +20,19 @@
         <p class="caption font-weight-medium">Account Credited</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-center">Cash Received</p>
+        <p class="caption font-weight-medium text-right">Cash Received</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-center">Sales Credit</p>
+        <p class="caption font-weight-medium text-right">Sales Credit</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-center">L/R Credit</p>
+        <p class="caption font-weight-medium text-right">L/R Credit</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-center">A/R Credit</p>
+        <p class="caption font-weight-medium text-right">A/R Credit</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-center">Others</p>
+        <p class="caption font-weight-medium text-right">Others</p>
       </v-col>
     </v-row>
     <hr/>

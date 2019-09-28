@@ -5,10 +5,10 @@
         <v-card>
           <v-card-title>
             <v-row>
-              <v-col cols="12" md="4">
+              <v-col cols="12" md="3">
                 <v-menu
                   ref="menu"
-                  v-model="menu"
+                  v-model="fromMenu"
                   :close-on-content-click="false"
                   transition="scale-transition"
                   offset-y
@@ -17,7 +17,7 @@
                 >
                   <template v-slot:activator="{ on }">
                     <v-text-field
-                      v-model="date"
+                      v-model="fromDate"
                       label="Choose Date"
                       prepend-icon="event"
                       readonly
@@ -26,12 +26,36 @@
                   </template>
                   <v-date-picker
                     no-title
-                    v-model="date"
-                    @input="menu = false"
+                    v-model="fromDate"
+                    @input="fromMenu = false"
                   ></v-date-picker>
                 </v-menu>
               </v-col>
-              <v-col cols="10" md="2">
+              <v-col cols="12" md="3">
+                <v-menu
+                  ref="toMenu"
+                  v-model="toMenu"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="toDate"
+                      label="To"
+                      prepend-icon="event"
+                      readonly
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    no-title
+                    v-model="toDate"
+                    @input="toMenu = false"
+                  ></v-date-picker>
+                </v-menu>
               </v-col>
               <v-col cols="12" md="6" class="mt-3">
                 <v-btn dark color="primary" class="mx-2" @click="generate"
@@ -125,8 +149,10 @@ export default {
   name: 'TrialBalanceReport',
   data () {
     return {
-      menu: false,
-      date: new Date().toISOString().substr(0, 10),
+      fromMenu: false,
+      toMenu: false,
+      fromDate: new Date().toISOString().substr(0, 10),
+      toDate: new Date().toISOString().substr(0, 10),
       items: []
     }
   },
@@ -149,7 +175,7 @@ export default {
     async generate () {
       try {
         const response = await axios.get(
-          `/api/reports/trial-balance/${this.auth.user.BranchId}/${this.date}`
+          `/api/reports/trial-balance/${this.auth.user.BranchId}/${this.fromDate}/${this.toDate}`
         )
         this.items = response.data
       } catch (e) {

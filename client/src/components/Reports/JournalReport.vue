@@ -102,6 +102,13 @@
                   :formatItems="formatItems"
                 />
               </div>
+              <div v-else-if="selected.id === 5">
+                <SalesComponent
+                  :formatFromDate="formatFromDate"
+                  :formatToDate="formatToDate"
+                  :formatItems="formatItems"
+                />
+              </div>
             </v-card-text>
           </div>
         </v-card>
@@ -119,6 +126,7 @@ import GeneralJournalComponent from '@/components/Reports/journals/GeneralJourna
 import CashReceiptComponent from '@/components/Reports/journals/CashReceiptComponent'
 import CashDisbursementComponent from '@/components/Reports/journals/CashDisbursementComponent'
 import PurchaseComponent from '@/components/Reports/journals/PurchaseComponent'
+import SalesComponent from '@/components/Reports/journals/SalesComponent'
 
 export default {
   name: 'JournalReport',
@@ -126,7 +134,8 @@ export default {
     GeneralJournalComponent,
     CashReceiptComponent,
     CashDisbursementComponent,
-    PurchaseComponent
+    PurchaseComponent,
+    SalesComponent
   },
   data () {
     return {
