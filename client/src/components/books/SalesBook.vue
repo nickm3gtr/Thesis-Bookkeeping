@@ -39,7 +39,7 @@
               <v-col cols="12" md="9">
                 <v-text-field
                   outlined
-                  label="Memo"
+                  label="Customer"
                   v-model="memo"
                 ></v-text-field>
               </v-col>

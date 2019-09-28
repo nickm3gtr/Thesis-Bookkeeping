@@ -88,6 +88,20 @@
                   :formatItems="formatItems"
                 />
               </div>
+              <div v-else-if="selected.id === 3">
+                <CashDisbursementComponent
+                  :formatFromDate="formatFromDate"
+                  :formatToDate="formatToDate"
+                  :formatItems="formatItems"
+                />
+              </div>
+              <div v-else-if="selected.id === 4">
+                <PurchaseComponent
+                  :formatFromDate="formatFromDate"
+                  :formatToDate="formatToDate"
+                  :formatItems="formatItems"
+                />
+              </div>
             </v-card-text>
           </div>
         </v-card>
@@ -103,10 +117,17 @@ import html2pdf from 'html2pdf.js'
 import moment from 'moment'
 import GeneralJournalComponent from '@/components/Reports/journals/GeneralJournalComponent'
 import CashReceiptComponent from '@/components/Reports/journals/CashReceiptComponent'
+import CashDisbursementComponent from '@/components/Reports/journals/CashDisbursementComponent'
+import PurchaseComponent from '@/components/Reports/journals/PurchaseComponent'
 
 export default {
   name: 'JournalReport',
-  components: { GeneralJournalComponent, CashReceiptComponent },
+  components: {
+    GeneralJournalComponent,
+    CashReceiptComponent,
+    CashDisbursementComponent,
+    PurchaseComponent
+  },
   data () {
     return {
       selected: { id: 1, name: 'General Journal' },
