@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout>
-      <v-flex sm12 md10 offset-md1>
+      <v-flex sm12 md12>
         <v-card>
           <v-card-title>
             <v-row>
@@ -76,31 +76,37 @@
                     <span v-else class="headline">{{ auth.user.Branch.branchName }}</span>
                   </p>
                   <p><span class="subtitle-1">Trial Balance</span></p>
-                  <p><span class="subtitle-2">As of {{ formatDate }}</span></p>
+                  <p><span class="subtitle-2">{{ formatFromDate }} through {{ formatToDate }}</span></p>
                 </div>
                 <hr>
                 <div class="text-center"></div>
                 <v-row class="ml-4">
-                  <v-col cols="12" md="4">
+                  <v-col cols="12" md="2">
+                    <p class="font-weight-medium">Type</p>
+                  </v-col>
+                  <v-col cols="12" md="3">
                     <p class="font-weight-medium">Category</p>
                   </v-col>
-                  <v-col cols="12" md="4">
+                  <v-col cols="12" md="3">
                     <p class="font-weight-medium">Account</p>
                   </v-col>
                   <v-col cols="12" md="2">
-                    <p class="font-weight-medium text-center">Debit</p>
+                    <p class="font-weight-medium text-right">Debit</p>
                   </v-col>
                   <v-col cols="12" md="2">
-                    <p class="font-weight-medium text-center">Credit</p>
+                    <p class="font-weight-medium text-right">Credit</p>
                   </v-col>
                 </v-row>
                 <hr>
                 <div v-for="item in filterNullItems" :key="item.id">
                   <v-row>
-                    <v-col cols="12" md="4">
+                    <v-col cols="12" md="2">
+                      <span class="font-weight-medium">{{ item.type }}</span>
+                    </v-col>
+                    <v-col cols="12" md="3">
                       <span class="font-weight-medium">{{ item.subtype }}</span>
                     </v-col>
-                    <v-col cols="12" md="4">
+                    <v-col cols="12" md="3">
                       <span class="font-weight-medium">{{ item.account }}</span>
                     </v-col>
                     <v-col cols="12" md="2">
@@ -115,10 +121,13 @@
                 </div>
                 <hr>
                 <v-row>
-                  <v-col cols="12" md="4">
+                  <v-col cols="12" md="2">
                     <span class="font-weight-medium">TOTAL</span>
                   </v-col>
-                  <v-col cols="12" md="4">
+                  <v-col cols="12" md="3">
+                    <span class="font-weight-medium"></span>
+                  </v-col>
+                  <v-col cols="12" md="3">
                     <span class="font-weight-medium"></span>
                   </v-col>
                   <v-col cols="12" md="2">
@@ -164,7 +173,7 @@ export default {
     pdf () {
       const element = document.getElementById('content')
       const opt = {
-        margin: 1,
+        margin: 0.5,
         filename: 'TrialBalance.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
@@ -185,8 +194,11 @@ export default {
   },
   computed: {
     ...mapState(['auth']),
-    formatDate () {
-      return moment(this.date).format('MMM DD YYYY')
+    formatFromDate () {
+      return moment(this.fromDate).format('MMMM DD')
+    },
+    formatToDate () {
+      return moment(this.toDate).format('MMMM DD YYYY')
     },
     filterNullItems () {
       return this.items.filter(item => {

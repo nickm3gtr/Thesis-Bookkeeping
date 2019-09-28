@@ -71,7 +71,7 @@
                   <span v-else class="headline">{{ auth.user.Branch.branchName }}</span>
                 </p>
                 <p><span class="subtitle-1">General Ledger</span></p>
-                <p><span class="subtitle-2">As of {{ formatDate }}</span></p>
+                <p><span class="subtitle-2">{{ formatFromDate }} through {{ formatToDate }}</span></p>
               </div>
               <hr>
               <v-row class="ml-12">
@@ -79,13 +79,13 @@
                   <span class="font-weight-medium">Account</span>
                 </v-col>
                 <v-col cols="12" md="2">
-                  <p class="text-center"><span class="font-weight-medium">Debit</span></p>
+                  <p class="text-right"><span class="font-weight-medium">Debit</span></p>
                 </v-col>
                 <v-col cols="12" md="2">
-                  <p class="text-center"><span class="font-weight-medium">Credit</span></p>
+                  <p class="text-right"><span class="font-weight-medium">Credit</span></p>
                 </v-col>
                 <v-col cols="12" md="2">
-                  <p class="text-center"><span class="font-weight-medium">Balance</span></p>
+                  <p class="text-right"><span class="font-weight-medium">Balance</span></p>
                 </v-col>
               </v-row>
               <hr>
@@ -174,8 +174,11 @@ export default {
   },
   computed: {
     ...mapState(['auth']),
-    formatDate () {
-      return moment(this.toDate).format('MMM DD YYYY')
+    formatFromDate () {
+      return moment(this.fromDate).format('MMMM DD')
+    },
+    formatToDate () {
+      return moment(this.toDate).format('MMMM DD YYYY')
     },
     formatItems () {
       const a = this.items.map(item => {

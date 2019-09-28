@@ -183,10 +183,10 @@ export default {
   computed: {
     ...mapState(['auth']),
     formatFromDate () {
-      return moment(this.fromDate).format('MMM DD YYYY')
+      return moment(this.fromDate).format('MMMM DD')
     },
     formatToDate () {
-      return moment(this.toDate).format('MMM DD YYYY')
+      return moment(this.toDate).format('MMMM DD YYYY')
     },
     formatItems () {
       const a = this.items.map(item => {

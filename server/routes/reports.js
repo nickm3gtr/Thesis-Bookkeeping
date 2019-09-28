@@ -43,11 +43,11 @@ router.get("/ledger/:id/:start/:end", (req, res) => {
 router.get("/trial-balance/:id/:start/:end", (req, res) => {
   const { id, start, end } = req.params
 
-  db.sequelize.query("select s.name as subtype, a.\"name\" as account, (select sum(coalesce(debit, 0)) - sum(coalesce(credit, 0)) \n" +
-    "\tfrom \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
-    "\twhere \"AccountId\"=a.id and \"date\" between :start and :end and b.\"BranchId\"=:id) as balance\n" +
-    "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id\n" +
-    "where a.id in (select \"AccountId\" from \"TransactionRecords\")", {
+  db.sequelize.query("select tr.name as type, s.name as subtype, a.\"name\" as account, (select sum(coalesce(debit, 0)) - sum(coalesce(credit, 0))\n" +
+    "    from \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
+    "    where \"AccountId\"=a.id and \"date\" between :start and :end and b.\"BranchId\"=:id) as balance\n" +
+    "    from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id inner join \"Types\" tr on s.\"TypeId\"=tr.id\n" +
+    "    where a.id in (select \"AccountId\" from \"TransactionRecords\")", {
     model: db.TransactionRecord,
     replacements: { id, start, end }
   })

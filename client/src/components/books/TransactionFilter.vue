@@ -41,8 +41,23 @@
               :search="search"
               :loading="loading"
               loading-text="Loading..."
-              class="elevation-3"
+              class="elevation-3 mb-6"
             >
+              <template v-slot:body="{ items }">
+                <tbody>
+                <tr v-for="item in items" :key="item.name">
+                  <td>{{ item.name }}</td>
+                  <td>
+                    <p v-if="item.debit == 0"></p>
+                    <p v-else>{{ item.debit }}</p>
+                  </td>
+                  <td>
+                    <p v-if="item.credit == 0"></p>
+                    <p v-else>{{ item.credit }}</p>
+                  </td>
+                </tr>
+                </tbody>
+              </template>
               <template v-slot:body.append="{ headers }">
                 <tr>
                   <td>
