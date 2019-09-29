@@ -2,6 +2,7 @@ const currentAssets = require('../libs/currentAssets')
 const nonCurrentAssets = require('../libs/nonCurrentAssets')
 const currentLiabilities = require('../libs/currentLiabilities')
 const nonCurrentLiabilities = require('../libs/nonCurrentLiabilities')
+const equity = require('../libs/equity')
 const revenue = require('../libs/revenue')
 const costOfGoods = require('../libs/costOfGoods')
 const costOfServices = require('../libs/costOfServices')
@@ -17,6 +18,7 @@ module.exports = {
         ...nonCurrentAssets,
         ...currentLiabilities,
         ...nonCurrentLiabilities,
+        ...equity,
         ...revenue,
         ...costOfGoods,
         ...costOfServices,

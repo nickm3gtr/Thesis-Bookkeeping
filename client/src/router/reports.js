@@ -2,6 +2,7 @@ import JournalReportPage from '@/views/Reports/JournalReportPage'
 import LedgerReportPage from '@/views/Reports/LedgerReportPage'
 import TrialBalanceReportPage from '@/views/Reports/TrialBalanceReportPage'
 import IncomeStatementPage from '@/views/Reports/IncomeStatementPage'
+import BalanceSheetPage from '@/views/Reports/BalanceSheetPage'
 
 export default [
   {
@@ -34,6 +35,14 @@ export default [
     component: IncomeStatementPage,
     meta: {
       title: 'Income Statement'
+    }
+  },
+  {
+    path: '/bookkeeper/reports/balance-sheet',
+    name: 'reports-balanceSheet',
+    component: BalanceSheetPage,
+    meta: {
+      title: 'Balance Sheet'
     }
   }
 ]
