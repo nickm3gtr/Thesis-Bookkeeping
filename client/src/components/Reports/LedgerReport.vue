@@ -151,9 +151,15 @@ export default {
   },
   methods: {
     async generate () {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
       try {
         const response = await axios.get(
-          `/api/reports/ledger/${this.auth.user.BranchId}/${this.fromDate}/${this.toDate}`
+          `/api/reports/ledger/${this.auth.user.BranchId}/${this.fromDate}/${this.toDate}`, config
         )
         this.items = response.data
       } catch (e) {

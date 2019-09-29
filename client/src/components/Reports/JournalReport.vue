@@ -158,9 +158,15 @@ export default {
   methods: {
     ...mapActions('errors', ['getError']),
     async generate () {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
       try {
         const response = await axios.get(
-          `/api/reports/journal/${this.auth.user.BranchId}/${this.selected.id}/${this.fromDate}/${this.toDate}`
+          `/api/reports/journal/${this.auth.user.BranchId}/${this.selected.id}/${this.fromDate}/${this.toDate}`, config
         )
         this.items = response.data
       } catch (e) {

@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
-const Sequelize = require("sequelize");
-const Op = Sequelize.Op;
+const auth = require("../middleware/auth")
 
 // GET journal report
-router.get("/journal/:id/:bookId/:start/:end", (req, res) => {
+router.get("/journal/:id/:bookId/:start/:end", auth, (req, res) => {
   // const { start, end } = req.query
   const bookId = req.params.bookId
   const start = req.params.start;
@@ -25,7 +24,7 @@ router.get("/journal/:id/:bookId/:start/:end", (req, res) => {
 });
 
 // Get Ledger Report
-router.get("/ledger/:id/:start/:end", (req, res) => {
+router.get("/ledger/:id/:start/:end", auth, (req, res) => {
   const { id, start, end } = req.params
   db.sequelize
     .query("select t.id, tr.\"AccountId\", a.\"name\", sum(tr.debit) as debit, sum(tr.credit) as credit, coalesce(sum(tr.debit), 0)-coalesce(sum(tr.credit), 0) as balance\n" +
@@ -40,7 +39,7 @@ router.get("/ledger/:id/:start/:end", (req, res) => {
     .catch(err => res.status(400).json({ msg: err }))
 });
 
-router.get("/trial-balance/:id/:start/:end", (req, res) => {
+router.get("/trial-balance/:id/:start/:end", auth, (req, res) => {
   const { id, start, end } = req.params
 
   db.sequelize.query("select tr.name as type, s.name as subtype, a.\"name\" as account, (select sum(coalesce(debit, 0)) - sum(coalesce(credit, 0))\n" +
@@ -52,6 +51,24 @@ router.get("/trial-balance/:id/:start/:end", (req, res) => {
     replacements: { id, start, end }
   })
     .then(transactions => res.json(transactions))
+    .catch(err => res.status(400).json({ msg: err }))
 });
+
+// Get Income Statement report
+router.get("/income-statement/:id/:start/:end", (req, res) => {
+  const { id, start, end } = req.params
+
+  db.sequelize.query("select tr.name as type, s.name as subtype, a.id as id, a.\"name\" as account, (select sum(coalesce(debit, 0)) - sum(coalesce(credit, 0))\n" +
+    "    from \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
+    "    where \"AccountId\"=a.id and \"date\" between :start and :end and b.\"BranchId\"=:id) as balance\n" +
+    "    from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id inner join \"Types\" tr on s.\"TypeId\"=tr.id\n" +
+    "    where a.id in (select \"AccountId\" " +
+    "from \"TransactionRecords\" tr where \"AccountId\" >= 40000 and \"AccountId\" <= 80000)", {
+    model: db.TransactionRecord,
+    replacements: { id, start, end }
+  }).then(transactions => res.json(transactions))
+    .catch(err => res.status(400).json({ msg: err }))
+})
+
 
 module.exports = router;

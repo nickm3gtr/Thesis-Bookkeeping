@@ -75,68 +75,58 @@
                     <span v-if="auth.user === null" class="headline">DARBMUPCO</span>
                     <span v-else class="headline">{{ auth.user.Branch.branchName }}</span>
                   </p>
-                  <p><span class="subtitle-1">Trial Balance</span></p>
+                  <p><span class="subtitle-1">Income Statement</span></p>
                   <p><span class="subtitle-2">{{ formatFromDate }} through {{ formatToDate }}</span></p>
                 </div>
                 <hr>
-                <div class="text-center"></div>
-                <v-row class="ml-4">
-                  <v-col cols="12" md="2">
-                    <p class="font-weight-medium">Type</p>
+                <v-row class="ml-4 mt-4">
+                  <span class="subtitle-1 font-weight-bold">Revenues</span>
+                </v-row>
+                <ItemComponent :accounts="filterItems(40000, 50000)"
+                                  :total="totalBalance(40000, 50000)"
+                                  :msg="totalMsg('Total Revenue')"
+                />
+                <v-row class="ml-4 mt-4">
+                  <span class="subtitle-1 font-weight-bold">Cost of Goods Sold</span>
+                </v-row>
+                <ItemComponent :accounts="filterItems(50000, 60000)"
+                               :total="totalBalance(50000, 60000)"
+                               :msg="totalMsg('Total Cost of Goods Sold')"
+                />
+                <v-row class="ml-4 mt-4">
+                  <span class="subtitle-1 font-weight-bold">Cost of Services</span>
+                </v-row>
+                <ItemComponent :accounts="filterItems(60000, 70000)"
+                               :total="totalBalance(60000, 70000)"
+                               :msg="totalMsg('Total Cost of Services')"
+                />
+                <v-row class="ml-4 mb-4">
+                  <v-col cols="12" md="5">
+                    <span class="font-weight-bold">Gross Profit</span>
                   </v-col>
+                  <v-col cols="12" md="4"></v-col>
                   <v-col cols="12" md="3">
-                    <p class="font-weight-medium">Category</p>
-                  </v-col>
-                  <v-col cols="12" md="3">
-                    <p class="font-weight-medium">Account</p>
-                  </v-col>
-                  <v-col cols="12" md="2">
-                    <p class="font-weight-medium text-right">Debit</p>
-                  </v-col>
-                  <v-col cols="12" md="2">
-                    <p class="font-weight-medium text-right">Credit</p>
+                    <p class="text-right font-weight-bold"><span>{{ grossProfit }}</span></p>
                   </v-col>
                 </v-row>
+                <v-row class="ml-4 mt-4">
+                  <span class="subtitle-1 font-weight-bold">Expenses</span>
+                </v-row>
+                <ItemComponent :accounts="filterItems(70000, 80000)"
+                               :total="totalBalance(70000, 80000)"
+                               :msg="totalMsg('Total Expenses')"
+                />
                 <hr>
-                <div v-for="item in filterNullItems" :key="item.id">
-                  <v-row>
-                    <v-col cols="12" md="2">
-                      <span class="font-weight-medium">{{ item.type }}</span>
-                    </v-col>
-                    <v-col cols="12" md="3">
-                      <span class="font-weight-medium">{{ item.subtype }}</span>
-                    </v-col>
-                    <v-col cols="12" md="3">
-                      <span class="font-weight-medium">{{ item.account }}</span>
-                    </v-col>
-                    <v-col cols="12" md="2">
-                      <p v-if="item.balance>0" class="text-right"><span class="font-weight-medium">{{ formatBalance(item.balance) }}</span></p>
-                      <p v-else><span></span></p>
-                    </v-col>
-                    <v-col cols="12" md="2">
-                      <p v-if="item.balance<0" class="text-right"><span class="font-weight-medium">{{ formatBalance(item.balance) }}</span></p>
-                      <p v-else><span></span></p>
-                    </v-col>
-                  </v-row>
-                </div>
-                <hr>
-                <v-row>
-                  <v-col cols="12" md="2">
-                    <span class="font-weight-medium">TOTAL</span>
+                <v-row class="ml-4 mb-4">
+                  <v-col cols="12" md="5">
+                    <span v-if="netProfit < 0" class="font-weight-bold red--text">Net Loss</span>
+                    <span v-else class="font-weight-bold">Net Income</span>
                   </v-col>
+                  <v-col cols="12" md="4"></v-col>
                   <v-col cols="12" md="3">
-                    <span class="font-weight-medium"></span>
-                  </v-col>
-                  <v-col cols="12" md="3">
-                    <span class="font-weight-medium"></span>
-                  </v-col>
-                  <v-col cols="12" md="2">
-                    <p v-if="this.items.length <= 0"></p>
-                    <p v-else class="underlined text-right"><span class="font-weight-medium">{{ this.formatBalance(this.totalDebit) }}</span></p>
-                  </v-col>
-                  <v-col cols="12" md="2">
-                    <p v-if="this.items.length <= 0"></p>
-                    <p v-else class="underlined text-right"><span class="font-weight-medium">{{ this.formatBalance(this.totalCredit) }}</span></p>
+                    <p v-if="netProfit < 0"
+                      class="text-right font-weight-bold red--text"><span>{{ formatBalance(netProfit) }}</span></p>
+                    <p v-else class="text-right font-weight-bold"><span>{{ formatBalance(netProfit) }}</span></p>
                   </v-col>
                 </v-row>
               </v-flex>
@@ -153,9 +143,13 @@ import { mapState } from 'vuex'
 import moment from 'moment'
 import html2pdf from 'html2pdf.js'
 import axios from 'axios'
+import ItemComponent from './incomeStatement/ItemComponent'
 
 export default {
-  name: 'TrialBalanceReport',
+  name: 'IncomeStatementReport',
+  components: {
+    ItemComponent
+  },
   data () {
     return {
       fromMenu: false,
@@ -170,11 +164,32 @@ export default {
       const num = Math.abs(value)
       return parseFloat(Math.round(num * 100) / 100).toFixed(2)
     },
+    totalBalance (min, max) {
+      let filterItem = this.items.filter(item => {
+        return item.id >= min && item.id <= max
+      })
+      let balances = filterItem.map(item => {
+        let balance = parseFloat(item.balance)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return sum
+    },
+    totalMsg (msg) {
+      return msg
+    },
+    filterItems (min, max) {
+      const revenues = this.items.filter(item => {
+        return item.id >= min && item.id <= max
+      })
+      return revenues
+    },
     pdf () {
       const element = document.getElementById('content')
       const opt = {
         margin: 0.5,
-        filename: 'TrialBalance.pdf',
+        filename: 'IncomeStatement.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
@@ -182,15 +197,9 @@ export default {
       html2pdf().from(element).set(opt).save()
     },
     async generate () {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: localStorage.getItem('token')
-        }
-      }
       try {
         const response = await axios.get(
-          `/api/reports/trial-balance/${this.auth.user.BranchId}/${this.fromDate}/${this.toDate}`, config
+          `/api/reports/income-statement/${this.auth.user.BranchId}/${this.fromDate}/${this.toDate}`
         )
         this.items = response.data
       } catch (e) {
@@ -206,54 +215,21 @@ export default {
     formatToDate () {
       return moment(this.toDate).format('MMMM DD YYYY')
     },
-    filterNullItems () {
-      return this.items.filter(item => {
-        return item.balance !== null
-      })
+    grossProfit () {
+      const revenue = this.formatBalance(this.totalBalance(40000, 50000))
+      const costOfGoods = this.formatBalance(this.totalBalance(50000, 60000))
+      const costOfServices = this.formatBalance(this.totalBalance(60000, 70000))
+      const answer = parseFloat(revenue) - (parseFloat(costOfGoods) + parseFloat(costOfServices))
+      return parseFloat(answer).toFixed(2)
     },
-    filterDebit () {
-      const debits = this.items.filter(item => {
-        return item.balance > 0
-      })
-      const debitBalance = debits.map(debit => {
-        return debit.balance
-      })
-      return debitBalance
-    },
-    filterCredit () {
-      const credits = this.items.filter(item => {
-        return item.balance < 0
-      })
-      const creditBalance = credits.map(credit => {
-        return credit.balance
-      })
-      return creditBalance
-    },
-    totalDebit () {
-      let balances = this.filterDebit.map(debit => {
-        let balance = parseFloat(debit)
-        return balance
-      })
-      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
-      const sum = arrSum(balances)
-      return sum
-    },
-    totalCredit () {
-      let balances = this.filterCredit.map(debit => {
-        let balance = parseFloat(debit)
-        return balance
-      })
-      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
-      const sum = arrSum(balances)
-      return sum
+    netProfit () {
+      const netProfit = parseFloat(this.grossProfit) - parseFloat(this.formatBalance(this.totalBalance(70000, 80000)))
+      return parseFloat(netProfit).toFixed(2)
     }
   }
 }
 </script>
 
 <style scoped>
- .underlined {
-   text-decoration-line: underline;
-   text-decoration-style: double;
- }
+
 </style>
