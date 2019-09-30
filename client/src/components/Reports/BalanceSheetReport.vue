@@ -223,7 +223,7 @@ export default {
       const currentLiability = (parseFloat(this.totalBalance(21000, 21999)) * (-1))
       const nonCurrentLiability = (parseFloat(this.totalBalance(22000, 29999)) * (-1))
       const equity = (parseFloat(this.totalBalance(30000, 39999)) * (-1))
-      const netProfit = this.netProfit
+      const netProfit = parseFloat(this.netProfit)
       return parseFloat(currentLiability + nonCurrentLiability + equity + netProfit).toFixed(2)
     },
     grossProfit () {
