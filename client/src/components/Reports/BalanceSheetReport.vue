@@ -101,6 +101,15 @@
               />
               <v-row class="ml-4 mb-4">
                 <v-col cols="12" md="5">
+                  <span class="font-weight-medium">Net Income</span>
+                </v-col>
+                <v-col cols="12" md="4"></v-col>
+                <v-col cols="12" md="3">
+                  <p class="text-right font-weight-medium"><span>{{ netProfit }}</span></p>
+                </v-col>
+              </v-row>
+              <v-row class="ml-4 mb-4">
+                <v-col cols="12" md="5">
                   <span class="font-weight-bold">Total Liabilities and Equity</span>
                 </v-col>
                 <v-col cols="12" md="4"></v-col>
@@ -131,7 +140,8 @@ export default {
     return {
       menu: false,
       date: new Date().toISOString().substr(0, 10),
-      items: []
+      items: [],
+      profits: []
     }
   },
   methods: {
@@ -141,6 +151,18 @@ export default {
     },
     totalBalance (min, max) {
       let filterItem = this.items.filter(item => {
+        return item.id >= min && item.id <= max
+      })
+      let balances = filterItem.map(item => {
+        let balance = parseFloat(item.balance)
+        return balance
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(balances)
+      return parseFloat(sum).toFixed(2)
+    },
+    totalProfit (min, max) {
+      let filterItem = this.profits.filter(item => {
         return item.id >= min && item.id <= max
       })
       let balances = filterItem.map(item => {
@@ -176,9 +198,14 @@ export default {
         const response = await axios.get(
           `/api/reports/balance-sheet/${this.auth.user.BranchId}/${this.date}`
         )
+        const profit = await axios.get(
+          `/api/reports/net-profit/${this.auth.user.BranchId}/${this.date}`
+        )
         this.items = response.data
+        this.profits = profit.data
       } catch (e) {
         this.getError(e.response.data)
+        this.getError(e.profit.data)
       }
     }
   },
@@ -196,7 +223,19 @@ export default {
       const currentLiability = (parseFloat(this.totalBalance(21000, 21999)) * (-1))
       const nonCurrentLiability = (parseFloat(this.totalBalance(22000, 29999)) * (-1))
       const equity = (parseFloat(this.totalBalance(30000, 39999)) * (-1))
-      return parseFloat(currentLiability + nonCurrentLiability + equity).toFixed(2)
+      const netProfit = this.netProfit
+      return parseFloat(currentLiability + nonCurrentLiability + equity + netProfit).toFixed(2)
+    },
+    grossProfit () {
+      const revenue = this.formatBalance(this.totalProfit(40000, 50000))
+      const costOfGoods = this.formatBalance(this.totalProfit(50000, 60000))
+      const costOfServices = this.formatBalance(this.totalProfit(60000, 70000))
+      const answer = parseFloat(revenue) - (parseFloat(costOfGoods) + parseFloat(costOfServices))
+      return parseFloat(answer).toFixed(2)
+    },
+    netProfit () {
+      const netProfit = parseFloat(this.grossProfit) - parseFloat(this.formatBalance(this.totalProfit(70000, 80000)))
+      return parseFloat(netProfit).toFixed(2)
     }
   }
 }
