@@ -231,5 +231,8 @@ export default {
 </script>
 
 <style scoped>
-
+  #content {
+    color: black;
+    font-family: "Roboto", sans-serif;
+  }
 </style>

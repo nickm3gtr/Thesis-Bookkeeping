@@ -99,7 +99,6 @@
               <CostOfGoodsSold :costOfGoods="costOfGoods" :balance="balanceCostOfGoods" />
               <CostOfServices :costOfServices="costOfServices" :balance="balanceCostOfServices" />
               <Expenses :expenses="expenses" :balance="balanceExpenses" />
-              <Subsidy :subsidy="subsidy" :balance="balanceSubsidy" />
             </v-card-text>
           </div>
         </v-card>
@@ -112,8 +111,6 @@
 import axios from 'axios'
 import { mapState } from 'vuex'
 import moment from 'moment'
-// import jsPDF from 'jspdf'
-// import html2canvas from 'html2canvas'
 import html2pdf from 'html2pdf.js'
 import CurrentAssets from '@/components/Reports/ledgers/CurrentAssets'
 import NonCurrentAssets from '@/components/Reports/ledgers/NonCurrentAssets'
@@ -124,7 +121,6 @@ import Revenue from '@/components/Reports/ledgers/Revenue'
 import CostOfGoodsSold from '@/components/Reports/ledgers/CostOfGoodsSold'
 import CostOfServices from '@/components/Reports/ledgers/CostOfServices'
 import Expenses from '@/components/Reports/ledgers/Expenses'
-import Subsidy from '@/components/Reports/ledgers/Subsidy'
 
 export default {
   name: 'LedgerReport',
@@ -137,8 +133,7 @@ export default {
     Revenue,
     CostOfGoodsSold,
     CostOfServices,
-    Expenses,
-    Subsidy
+    Expenses
   },
   data () {
     return {
@@ -337,4 +332,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+  #content {
+    color: black;
+    font-family: "Roboto", sans-serif;
+  }
+</style>

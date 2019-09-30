@@ -46,7 +46,9 @@ router.get("/trial-balance/:id/:start/:end", auth, (req, res) => {
     "    from \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
     "    where \"AccountId\"=a.id and \"date\" between :start and :end and b.\"BranchId\"=:id) as balance\n" +
     "    from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id inner join \"Types\" tr on s.\"TypeId\"=tr.id\n" +
-    "    where a.id in (select \"AccountId\" from \"TransactionRecords\")", {
+    "    where a.id in (select t.\"AccountId\" \n" +
+    "from \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
+    "where t.\"date\" between :start and :end and b.\"BranchId\"=:id)", {
     model: db.TransactionRecord,
     replacements: { id, start, end }
   })
@@ -62,8 +64,9 @@ router.get("/income-statement/:id/:start/:end", (req, res) => {
     "    from \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
     "    where \"AccountId\"=a.id and \"date\" between :start and :end and b.\"BranchId\"=:id) as balance\n" +
     "    from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id inner join \"Types\" tr on s.\"TypeId\"=tr.id\n" +
-    "    where a.id in (select \"AccountId\" " +
-    "from \"TransactionRecords\" tr where \"AccountId\" >= 40000 and \"AccountId\" <= 80000)", {
+    "    where a.id in (select t.\"AccountId\" \n" +
+    "from \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
+    "where t.\"AccountId\" >= 40000 and \"AccountId\" <= 80000 and t.\"date\" between :start and :end and b.\"BranchId\"=:id)", {
     model: db.TransactionRecord,
     replacements: { id, start, end }
   }).then(transactions => res.json(transactions))

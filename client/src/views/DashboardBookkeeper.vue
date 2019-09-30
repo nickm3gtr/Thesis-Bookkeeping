@@ -4,7 +4,7 @@
       <RestrictedResource />
     </div>
     <div v-else>
-      <h1></h1>
+      <DashboardBookkeeperComponent />
     </div>
   </div>
 </template>
@@ -12,10 +12,11 @@
 <script>
 import RestrictedResource from '@/components/RestrictedResource'
 import { mapState } from 'vuex'
+import DashboardBookkeeperComponent from '@/components/DashboardBookkeeperComponent'
 
 export default {
   name: 'DashboardBookkeeper',
-  components: { RestrictedResource },
+  components: { RestrictedResource, DashboardBookkeeperComponent },
   computed: {
     ...mapState(['auth'])
   }

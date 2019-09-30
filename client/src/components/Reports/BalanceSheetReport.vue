@@ -75,7 +75,7 @@
                 </v-col>
                 <v-col cols="12" md="4"></v-col>
                 <v-col cols="12" md="3">
-                  <p class="text-right font-weight-bold"><span>{{ totalAssets }}</span></p>
+                  <p class="text-right font-weight-bold underlined"><span>{{ totalAssets }}</span></p>
                 </v-col>
               </v-row>
               <v-row class="ml-4 mt-4">
@@ -105,7 +105,7 @@
                 </v-col>
                 <v-col cols="12" md="4"></v-col>
                 <v-col cols="12" md="3">
-                  <p class="text-right font-weight-bold"><span>{{ totalLiabilities }}</span></p>
+                  <p class="text-right font-weight-bold underlined"><span>{{ totalLiabilities }}</span></p>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -203,5 +203,12 @@ export default {
 </script>
 
 <style scoped>
-
+  #content {
+    color: black;
+    font-family: "Roboto", sans-serif;
+  }
+  .underlined {
+    text-decoration-line: underline;
+    text-decoration-style: double;
+  }
 </style>

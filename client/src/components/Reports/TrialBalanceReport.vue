@@ -252,6 +252,10 @@ export default {
 </script>
 
 <style scoped>
+  #content {
+    color: black;
+    font-family: "Roboto", sans-serif;
+  }
  .underlined {
    text-decoration-line: underline;
    text-decoration-style: double;
