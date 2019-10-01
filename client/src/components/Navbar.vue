@@ -1,13 +1,13 @@
 <template>
   <nav>
-    <v-app-bar flat app class="grey lighten-3">
+    <v-app-bar flat app class="nav-color">
       <v-app-bar-nav-icon class="hidden-md-and-up" @click="toggleDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title v-if="!isAuth" class="toolbar-title">
         <span class="title grey--text text--darken-2">DARBMUPCO</span>
         <span class="hidden-sm-and-down font-weight-light title grey--text text--darken-2">Bookkeeping System</span>
       </v-toolbar-title>
       <v-toolbar-title v-else class="toolbar-title">
-        <span class="title font-weight-light grey--text text--darken-2">{{ $route.meta.title }}</span>
+        <span class="title font-weight-light grey--text text--darken-2"></span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="!isAuth">
@@ -55,7 +55,7 @@
       app
       dark
       floating
-      color="blue-grey darken-1"
+      color="blue-grey"
       width="260"
       v-if="isAuth"
       v-model="drawer">
@@ -132,3 +132,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .nav-color {
+    background-color: #e5e5e5;
+  }
+</style>

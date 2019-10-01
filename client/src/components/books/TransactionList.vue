@@ -2,7 +2,10 @@
   <div>
     <v-layout>
       <v-flex sm12 md10 offset-md1>
-        <v-card>
+        <v-card outlined elevation="10">
+          <v-toolbar color="light-blue darken-3" dark>
+            <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
+          </v-toolbar>
           <v-card-text>
             <v-row>
               <v-col cols="12" md="4">
@@ -17,7 +20,7 @@
               <v-col cols="12" md="2"></v-col>
               <v-col cols="12" md="6">
                 <v-text-field
-                  solo
+                  outlined
                   v-model="search"
                   append-icon="search"
                   label="Filter transactions"

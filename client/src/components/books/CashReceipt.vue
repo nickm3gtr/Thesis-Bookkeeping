@@ -2,7 +2,10 @@
   <div>
     <v-layout>
       <v-flex sm12 md10 offset-md1>
-        <v-card>
+        <v-card outlined elevation="10">
+          <v-toolbar color="light-blue darken-3" dark>
+            <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
+          </v-toolbar>
           <v-card-text>
             <v-row>
               <v-col cols="12" md="4">
@@ -39,7 +42,7 @@
               <v-col cols="12" md="9">
                 <v-text-field
                   outlined
-                  label="Memo"
+                  label="Description"
                   v-model="memo"
                 ></v-text-field>
               </v-col>
@@ -136,7 +139,7 @@
 </template>
 
 <script>
-import uuid from 'uuid/v4'
+import uniqid from 'uniqid'
 import axios from 'axios'
 import { mapState, mapActions } from 'vuex'
 import CashReceiptDialog from '@/components/books/CashReceiptDialog'
@@ -150,7 +153,7 @@ export default {
       timeout: 0,
       menu: false,
       date: new Date().toISOString().substr(0, 10),
-      transId: uuid(),
+      transId: uniqid.time('CRBK-'),
       BookId: 2,
       dialog: false,
       num: '',
@@ -199,10 +202,10 @@ export default {
         if (!savedTransaction) console.log('Failed')
         this.clear()
         this.snackbar = true
-        this.transId = uuid()
+        this.transId = uniqid.time('CRBK-')
       } catch (e) {
         this.getError(e.response.data)
-        this.transId = uuid()
+        this.transId = uniqid.time('CRBK-')
       }
     },
     clear () {

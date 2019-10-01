@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const TransactionRecord = sequelize.define('TransactionRecord', {
-    TransId: DataTypes.UUID,
+    TransId: DataTypes.STRING,
     num: DataTypes.STRING,
     memo: DataTypes.STRING,
     debit: DataTypes.DECIMAL(10, 2),

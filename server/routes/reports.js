@@ -79,7 +79,7 @@ router.get("/balance-sheet/:id/:date", (req, res) => {
 
   db.sequelize.query("select tr.name as type, s.name as subtype, a.id as id, a.\"name\" as account, (select sum(coalesce(debit, 0)) - sum(coalesce(credit, 0))\n" +
     "    from \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
-    "    where \"AccountId\"=a.id and \"date\" <= :date and b.\"BranchId\"=5) as balance\n" +
+    "    where \"AccountId\"=a.id and \"date\" <= :date and b.\"BranchId\"=:id) as balance\n" +
     "    from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id inner join \"Types\" tr on s.\"TypeId\"=tr.id\n" +
     "    where a.id in (select \"AccountId\" \n" +
     "    \t\t\t\t\tfrom \"TransactionRecords\" tr inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id\n" +

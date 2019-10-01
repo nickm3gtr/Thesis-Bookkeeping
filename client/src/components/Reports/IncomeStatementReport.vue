@@ -1,8 +1,11 @@
 <template>
   <div>
     <v-layout>
-      <v-flex sm12 md12>
-        <v-card>
+      <v-flex sm12 md10 offset-md1>
+        <v-card outlined elevation="10" class="mb-10">
+          <v-toolbar color="light-blue darken-3" dark>
+            <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
+          </v-toolbar>
           <v-card-title>
             <v-row>
               <v-col cols="12" md="3">

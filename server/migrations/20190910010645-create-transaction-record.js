@@ -25,7 +25,7 @@ module.exports = {
         }
       },
       TransId: {
-        type: Sequelize.UUID,
+        type: Sequelize.STRING,
         allowNull: false
       },
       num: {

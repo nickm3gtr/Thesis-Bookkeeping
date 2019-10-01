@@ -2,13 +2,16 @@
   <div class="chart-of-account">
     <v-layout>
       <v-flex sm12 md10 offset-md1>
-        <v-card>
+        <v-card outlined elevation="10">
+          <v-toolbar color="light-blue darken-3" dark>
+            <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
+          </v-toolbar>
           <v-card-title>
             <v-col cols="6" md="6">
             </v-col>
             <v-col cols="6" md="6">
               <v-text-field
-                solo
+                outlined
                 v-model="search"
                 append-icon="search"
                 label="Filter accounts"

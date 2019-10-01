@@ -2,7 +2,10 @@
   <div>
     <v-layout>
       <v-flex sm12 md10 offset-md1>
-        <v-card>
+        <v-card outlined elevation="10">
+          <v-toolbar color="light-blue darken-3" dark>
+            <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
+          </v-toolbar>
           <v-card-text>
             <v-row>
               <v-col cols="12" md="4">

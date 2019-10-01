@@ -2,7 +2,10 @@
   <div>
     <v-layout>
       <v-flex sm12 md10 offset-md1>
-        <v-card>
+        <v-card outlined elevation="10">
+          <v-toolbar color="light-blue darken-3" dark>
+            <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
+          </v-toolbar>
           <v-card-text>
             <v-row>
               <v-col cols="12" md="4">
@@ -130,7 +133,7 @@
 
 <script>
 import PurchaseBookDialog from './PurchaseBookDialog'
-import uuid from 'uuid/v4'
+import uniqid from 'uniqid'
 import axios from 'axios'
 import { mapState, mapActions } from 'vuex'
 
@@ -143,7 +146,7 @@ export default {
       timeout: 0,
       menu: false,
       date: new Date().toISOString().substr(0, 10),
-      transId: uuid(),
+      transId: uniqid.time('PRCHSBK-'),
       BookId: 4,
       dialog: false,
       memo: '',
@@ -190,10 +193,10 @@ export default {
         if (!savedTransaction) console.log('Failed')
         this.clear()
         this.snackbar = true
-        this.transId = uuid()
+        this.transId = uniqid.time('PRCHSBK-')
       } catch (e) {
         this.getError(e.response.data)
-        this.transId = uuid()
+        this.transId = uniqid.time('PRCHSBK-')
       }
     },
     clear () {
