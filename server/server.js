@@ -17,6 +17,7 @@ app.use("/api/bookkeeping", require("./routes/bookkeeping"));
 app.use("/api/accounts", require("./routes/accounts"));
 app.use("/api/reports", require("./routes/reports"));
 app.use("/api/books", require("./routes/books"));
+app.use("/api/graphs", require("./routes/graphs"));
 
 
 // PRODUCTION

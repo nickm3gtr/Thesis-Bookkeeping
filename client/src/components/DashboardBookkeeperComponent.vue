@@ -5,9 +5,15 @@
         <v-row>
           <v-col cols="12" md="4">
             <v-card>
-              <v-card-title>Profits</v-card-title>
               <v-card-text>
                 <Barchart />
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-card>
+              <v-card-text>
+                <ExpenseBarChart />
               </v-card-text>
             </v-card>
           </v-col>
@@ -19,10 +25,11 @@
 
 <script>
 import Barchart from './charts/Barchart'
+import ExpenseBarChart from './charts/ExpenseBarChart'
 
 export default {
   name: 'DashboardBookkeeperComponent',
-  components: { Barchart }
+  components: { Barchart, ExpenseBarChart }
 }
 </script>
 

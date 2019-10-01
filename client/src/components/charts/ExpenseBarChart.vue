@@ -5,7 +5,7 @@ import { mapState, mapActions } from 'vuex'
 import moment from 'moment'
 
 export default {
-  name: 'Barchart',
+  name: 'ExpenseBarChart',
   extends: Bar,
   data () {
     return {
@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     ...mapState(['auth']),
-    filterSales () {
+    filterExpenses () {
       return this.sales.map(sales => {
         sales.balance = Math.abs(sales.balance)
         sales.balance = parseFloat(Math.round(sales.balance * 100) / 100).toFixed(2)
@@ -36,7 +36,7 @@ export default {
   },
   async mounted () {
     try {
-      const response = await axios.get(`/api/graphs/sales/${this.auth.user.BranchId}/${this.startDate}/${this.endDate}`)
+      const response = await axios.get(`/api/graphs/expenses/${this.auth.user.BranchId}/${this.startDate}/${this.endDate}`)
       this.sales = response.data
     } catch (e) {
       this.getError(e.response.data)
@@ -45,10 +45,10 @@ export default {
       labels: this.filterMonth,
       datasets: [
         {
-          label: 'Sales',
-          data: this.filterSales,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
+          label: 'Expenses',
+          data: this.filterExpenses,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 1
         }
       ]
