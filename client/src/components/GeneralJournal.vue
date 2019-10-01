@@ -63,16 +63,39 @@
                 </v-dialog>
               </v-col>
               <v-col cols="12" md="1">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn color="red" v-on="on" dark fab small class="mt-4"
-                           :class="{'disable-events': selectedItems}"
-                           @click="clear">
-                      <v-icon>delete</v-icon>
-                    </v-btn>
+                <v-dialog
+                  v-model="dialogDelete"
+                  width="500"
+                >
+                  <template v-slot:activator="{ on: deleteDialog }">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on: tooltip }">
+                        <v-btn color="red" v-on="{ ...deleteDialog, ...tooltip }"
+                               dark fab small class="mt-4" :class="{'disable-events': deleteItems}">
+                          <v-icon>delete</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Delete</span>
+                    </v-tooltip>
                   </template>
-                  <span>Clear All</span>
-                </v-tooltip>
+                  <v-card>
+                    <v-toolbar color="red lighten-1" dark>
+                      <v-toolbar-title>Delete</v-toolbar-title>
+                    </v-toolbar>
+                    <v-card-text>
+                      <p class="subtitle-1 mt-5">Are you sure you want to delete?</p>
+                    </v-card-text>
+                    <v-card-actions>
+                      <div class="flex-grow-1"></div>
+                      <v-btn color="primary" text @click="dialogDelete = false">
+                        Cancel
+                      </v-btn>
+                      <v-btn color="red" text @click="clear">
+                        Delete
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
               </v-col>
               <v-col cols="12" md="1">
                 <v-tooltip bottom>
@@ -88,15 +111,19 @@
               </v-col>
             </v-row>
             <v-data-table
+              v-model="selected"
+              show-select
               hide-default-footer
               disable-sort
               :headers="headers"
               :items="items"
+              item-key="AccountId"
               no-data-text="Add General Journal transactions"
               class="elevation-3"
             >
               <template v-slot:body.append="{ headers }">
                 <tr>
+                  <td></td>
                   <td>
                     <span class="font-weight-bold">Total:</span>
                   </td>
@@ -109,14 +136,6 @@
                     <span v-else :class="{ 'red--text': isNotTheSame }">{{ sumCredit }}</span>
                   </td>
                 </tr>
-              </template>
-              <template v-slot:item.action="{ item }">
-                <v-icon
-                  small
-                  @click="deleteItem(item)"
-                >
-                  delete
-                </v-icon>
               </template>
             </v-data-table>
           </v-card-text>
@@ -154,19 +173,20 @@ export default {
   components: { GeneralJournalDialog },
   data () {
     return {
+      selected: [],
       snackbar: false,
       timeout: 0,
       transId: uniqid.time('GNLJRNL-'),
       BookId: 1,
       dialog: false,
+      dialogDelete: false,
       memo: '',
       menu: false,
       date: new Date().toISOString().substr(0, 10),
       headers: [
         { text: 'AccountName', value: 'AccountName' },
         { text: 'Debit', value: 'debit' },
-        { text: 'Credit', value: 'credit' },
-        { text: 'Actions', align: 'center', value: 'action', sortable: false }
+        { text: 'Credit', value: 'credit' }
       ],
       items: []
     }
@@ -177,8 +197,12 @@ export default {
       this.items = [ ...this.items, transaction ]
     },
     clear () {
-      this.items = []
-      this.memo = ''
+      for (let i = 0; i < this.selected.length; i++) {
+        const index = this.items.indexOf(this.selected[i])
+        this.items.splice(index, 1)
+      }
+      this.selected = []
+      this.dialogDelete = false
     },
     closeSnackBar () {
       this.snackbar = false
@@ -253,6 +277,9 @@ export default {
     },
     selectedItems () {
       return this.items <= 0
+    },
+    deleteItems () {
+      return this.selected <= 0
     }
   }
 }
