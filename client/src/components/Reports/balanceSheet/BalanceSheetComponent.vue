@@ -21,7 +21,7 @@
         <span></span>
       </v-col>
       <v-col cols="12" md="3">
-        <p class="text-right"><span class="font-weight-medium">{{ total }}</span></p>
+        <p class="text-right"><span class="font-weight-medium">{{ formatBalance(total) }}</span></p>
       </v-col>
     </v-row>
   </div>
@@ -30,7 +30,12 @@
 <script>
 export default {
   name: 'BalanceSheetComponent',
-  props: ['accounts', 'total', 'msg']
+  props: ['accounts', 'total', 'msg'],
+  methods: {
+    formatBalance (val) {
+      return parseFloat(val).toFixed(2)
+    }
+  }
 }
 </script>
 
