@@ -60,7 +60,7 @@
       width="260"
       v-if="isAuth"
       v-model="drawer">
-      <NavDrawer />
+      <NavDrawer :hover="hover" />
     </v-navigation-drawer>
     <ErrorSnackbar :snackbar="hasError" :text="getError" @close-snackbar="!hasError" />
   </nav>

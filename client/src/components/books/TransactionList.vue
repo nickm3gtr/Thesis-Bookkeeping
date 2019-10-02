@@ -17,7 +17,7 @@
                   return-object
                 ></v-combobox>
               </v-col>
-              <v-col cols="12" md="1"></v-col>
+              <v-col cols="12" md="2"></v-col>
               <v-col cols="12" md="6">
                 <v-text-field
                   outlined
@@ -28,51 +28,8 @@
                   hide-details
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" md="1">
-                <v-dialog v-model="dialogDelete" width="500">
-                  <template v-slot:activator="{ on: deleteDialog }">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on: tooltip }">
-                        <v-btn
-                          color="red"
-                          v-on="{ ...deleteDialog, ...tooltip }"
-                          dark
-                          fab
-                          small
-                          class="mt-4"
-                          :class="{ 'disable-events': deleteItems }"
-                        >
-                          <v-icon>delete</v-icon>
-                        </v-btn>
-                      </template>
-                      <span>Delete</span>
-                    </v-tooltip>
-                  </template>
-                  <v-card>
-                    <v-toolbar color="red lighten-1" dark>
-                      <v-toolbar-title>Delete</v-toolbar-title>
-                    </v-toolbar>
-                    <v-card-text>
-                      <p class="subtitle-1 mt-5">
-                        Are you sure you want to delete?
-                      </p>
-                    </v-card-text>
-                    <v-card-actions>
-                      <div class="flex-grow-1"></div>
-                      <v-btn color="primary" text @click="dialogDelete = false">
-                        Cancel
-                      </v-btn>
-                      <v-btn color="red" text @click="clear">
-                        Delete
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </v-col>
             </v-row>
             <v-data-table
-              v-model="selected"
-              show-select
               item-key="TransId"
               :headers="headers"
               :items="formatTransactions"
@@ -82,25 +39,20 @@
               loading-text="Loading..."
               class="elevation-3"
             >
-              <template slot="{ item, select }" slot-scope="props">
-                <router-link
-                  tag="tr"
-                  :to="{
-                    name: 'transactions-filter',
-                    params: {
-                      transId: `${props.item.TransId}`
-                    }
-                  }"
+              <template v-slot:item.action="{ item }">
+                <v-icon
+                  small
+                  class="mr-2"
+                  @click="editItem(item)"
                 >
-                  <td>
-                    <v-checkbox input-value = "select.props.value primary"
-                    hide-details @click.stop= "select.on.input" />
-                  </td>
-                  <td>{{ props.item.date }}</td>
-                  <td>{{ props.item.TransId }}</td>
-                  <td>{{ props.item.num }}</td>
-                  <td>{{ props.item.memo }}</td>
-                </router-link>
+                  edit
+                </v-icon>
+                <v-icon
+                  small
+                  @click="deleteItem(item)"
+                >
+                  delete
+                </v-icon>
               </template>
             </v-data-table>
           </v-card-text>
@@ -119,7 +71,6 @@ export default {
   name: 'TransactionList',
   data () {
     return {
-      selected: [],
       dialogDelete: false,
       select: { id: 0, name: 'All' },
       books: [],
@@ -129,8 +80,8 @@ export default {
       headers: [
         { text: 'Date', value: 'date' },
         { text: 'TransactionID', value: 'TransId' },
-        { text: 'Num', value: 'num' },
-        { text: 'Memo', value: 'memo' }
+        { text: 'Memo', value: 'memo' },
+        { text: 'Actions', value: 'action', sortable: false }
       ]
     }
   },
@@ -158,6 +109,11 @@ export default {
       }
       this.selected = []
       this.dialogDelete = false
+    },
+    deleteItem (item) {
+      const index = this.transactions.indexOf(item)
+      confirm('Are you sure you want to delete this item?') && this.transactions.splice(index, 1)
+      console.log(item)
     }
   },
   computed: {

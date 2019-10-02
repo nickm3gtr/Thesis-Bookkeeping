@@ -1,7 +1,7 @@
 <template>
   <v-list-item-group color="white">
       <v-list-item two-line>
-        <v-list-item-content>
+        <v-list-item-content :hidden="hover == true">
           <v-list-item-title class="headline text-lg-center">DARBMUPCO</v-list-item-title>
           <v-list-item-subtitle class="text-lg-center">Bookkeeping System</v-list-item-subtitle>
         </v-list-item-content>
@@ -72,6 +72,7 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'BookkeeperNavDrawer',
+  props: ['hover'],
   data () {
     return {
       bookkeeperItems: [

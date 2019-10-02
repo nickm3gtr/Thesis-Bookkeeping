@@ -143,6 +143,10 @@
             </v-data-table>
           </v-card-text>
         </v-card>
+        <RecordStatus :hidden="hidden"
+                      :statusId="statusId"
+                      @close-status="hidden=true"
+        />
       </v-flex>
     </v-layout>
     <div class="text-center">
@@ -170,16 +174,17 @@ import uniqid from 'uniqid'
 import { mapActions, mapState } from 'vuex'
 import axios from 'axios'
 import CashDisbursementDialog from '@/components/books/CashDisbursementDialog'
+import RecordStatus from '@/components/status/RecordStatus'
 
 export default {
   name: 'CashDisbursement',
-  components: { CashDisbursementDialog },
+  components: { CashDisbursementDialog, RecordStatus },
   data () {
     return {
       selected: [],
       dialogDelete: false,
       snackbar: false,
-      timeout: 0,
+      timeout: 2000,
       menu: false,
       date: new Date().toISOString().substr(0, 10),
       transId: uniqid.time('CDBK-'),
@@ -191,7 +196,9 @@ export default {
         { text: 'AccountName', value: 'AccountName' },
         { text: 'Amount', value: 'debit' }
       ],
-      items: []
+      items: [],
+      hidden: true,
+      statusId: ''
     }
   },
   methods: {
@@ -229,13 +236,20 @@ export default {
         const response = await axios.post('/api/bookkeeping/cash-disbursements', newTransaction, config)
         const savedTransaction = response.data
         if (!savedTransaction) console.log('Failed')
-        this.clear()
         this.snackbar = true
+        this.statusId = this.transId
+        this.clearAll()
         this.transId = uniqid.time('CDBK-')
+        this.hidden = false
       } catch (e) {
         this.getError(e.response.data)
         this.transId = uniqid.time('CDBK-')
       }
+    },
+    clearAll () {
+      this.memo = ''
+      this.num = ''
+      this.items = []
     },
     clear () {
       for (let i = 0; i < this.selected.length; i++) {
@@ -247,7 +261,7 @@ export default {
     },
     closeSnackBar () {
       this.snackbar = false
-      this.clear()
+      this.clearAll()
     }
   },
   computed: {
