@@ -116,8 +116,8 @@
               hide-default-footer
               disable-sort
               :headers="headers"
-              :items="items"
-              item-key="AccountId"
+              :items="indexedItems"
+              item-key="id"
               no-data-text="Add General Journal transactions"
               class="elevation-3"
             >
@@ -274,6 +274,12 @@ export default {
     },
     isNotTheSame () {
       return this.sumDebit !== this.sumCredit
+    },
+    indexedItems () {
+      return this.items.map((item, index) => ({
+        id: index,
+        ...item
+      }))
     },
     selectedItems () {
       return this.items <= 0

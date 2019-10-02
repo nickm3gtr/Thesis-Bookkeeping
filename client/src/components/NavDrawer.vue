@@ -9,6 +9,7 @@
     <v-divider></v-divider>
     <div v-if="auth.user.account === 'bookkeeper'">
       <v-list-group
+        class="my-4"
         color="white"
         v-for="item in bookkeeperItems"
         :key="item.title"

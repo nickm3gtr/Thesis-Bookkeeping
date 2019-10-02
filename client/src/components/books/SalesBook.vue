@@ -70,16 +70,39 @@
                 </v-dialog>
               </v-col>
               <v-col cols="12" md="1">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn color="red" v-on="on" dark fab small class="mt-4"
-                           :class="{'disable-events': selectedItems}"
-                           @click="clear">
-                      <v-icon>delete</v-icon>
-                    </v-btn>
+                <v-dialog
+                  v-model="dialogDelete"
+                  width="500"
+                >
+                  <template v-slot:activator="{ on: deleteDialog }">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on: tooltip }">
+                        <v-btn color="red" v-on="{ ...deleteDialog, ...tooltip }"
+                               dark fab small class="mt-4" :class="{'disable-events': deleteItems}">
+                          <v-icon>delete</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Delete</span>
+                    </v-tooltip>
                   </template>
-                  <span>Clear All</span>
-                </v-tooltip>
+                  <v-card>
+                    <v-toolbar color="red lighten-1" dark>
+                      <v-toolbar-title>Delete</v-toolbar-title>
+                    </v-toolbar>
+                    <v-card-text>
+                      <p class="subtitle-1 mt-5">Are you sure you want to delete?</p>
+                    </v-card-text>
+                    <v-card-actions>
+                      <div class="flex-grow-1"></div>
+                      <v-btn color="primary" text @click="dialogDelete = false">
+                        Cancel
+                      </v-btn>
+                      <v-btn color="red" text @click="clear">
+                        Delete
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
               </v-col>
               <v-col cols="12" md="1" class="mt-4">
                 <v-tooltip bottom>
@@ -95,15 +118,19 @@
               </v-col>
             </v-row>
             <v-data-table
+              v-model="selected"
+              show-select
+              item-key="id"
               hide-default-footer
               disable-sort
               :headers="headers"
-              :items="items"
+              :items="indexedItems"
               no-data-text="Add Sales Book Transactions"
               class="elevation-3"
             >
               <template v-slot:body.append="{ headers }">
                 <tr>
+                  <td></td>
                   <td>
                     <span class="font-weight-bold">Total:</span>
                   </td>
@@ -149,6 +176,8 @@ export default {
   components: { SalesBookDialog },
   data () {
     return {
+      selected: [],
+      dialogDelete: false,
       snackbar: false,
       timeout: 0,
       menu: false,
@@ -209,9 +238,12 @@ export default {
       }
     },
     clear () {
-      this.items = []
-      this.memo = ''
-      this.num = ''
+      for (let i = 0; i < this.selected.length; i++) {
+        const index = this.items.indexOf(this.selected[i])
+        this.items.splice(index, 1)
+      }
+      this.selected = []
+      this.dialogDelete = false
     },
     closeSnackBar () {
       this.snackbar = false
@@ -229,8 +261,17 @@ export default {
       const sum = arrSum(balances)
       return sum
     },
+    indexedItems () {
+      return this.items.map((item, index) => ({
+        id: index,
+        ...item
+      }))
+    },
     selectedItems () {
       return this.items <= 0
+    },
+    deleteItems () {
+      return this.selected <= 0
     }
   }
 }

@@ -55,7 +55,7 @@
       app
       dark
       floating
-      color="blue-grey"
+      :src="require('../assets/drawer-1.jpg')"
       width="260"
       v-if="isAuth"
       v-model="drawer">

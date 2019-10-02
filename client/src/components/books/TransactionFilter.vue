@@ -28,7 +28,7 @@
               <v-col cols="12" md="9">
                 <v-text-field
                   outlined
-                  label="Memo"
+                  label="Description"
                   v-model="memo"
                   readonly
                 ></v-text-field>
