@@ -140,6 +140,10 @@
             </v-data-table>
           </v-card-text>
         </v-card>
+        <RecordStatus :hidden="hidden"
+                      :statusId="statusId"
+                      @close-status="hidden=true"
+        />
       </v-flex>
     </v-layout>
     <div class="text-center">
@@ -163,6 +167,7 @@
 </template>
 
 <script>
+import RecordStatus from '@/components/status/RecordStatus'
 import GeneralJournalDialog from './GeneralJournalDialog'
 import { mapActions } from 'vuex'
 import uniqid from 'uniqid'
@@ -170,12 +175,12 @@ import axios from 'axios'
 
 export default {
   name: 'GeneralJournal',
-  components: { GeneralJournalDialog },
+  components: { GeneralJournalDialog, RecordStatus },
   data () {
     return {
       selected: [],
       snackbar: false,
-      timeout: 0,
+      timeout: 2000,
       transId: uniqid.time('GNLJRNL-'),
       BookId: 1,
       dialog: false,
@@ -188,13 +193,19 @@ export default {
         { text: 'Debit', value: 'debit' },
         { text: 'Credit', value: 'credit' }
       ],
-      items: []
+      items: [],
+      hidden: true,
+      statusId: ''
     }
   },
   methods: {
     ...mapActions('errors', ['getError']),
     add (transaction) {
       this.items = [ ...this.items, transaction ]
+    },
+    clearAll () {
+      this.memo = ''
+      this.items = []
     },
     clear () {
       for (let i = 0; i < this.selected.length; i++) {
@@ -206,7 +217,7 @@ export default {
     },
     closeSnackBar () {
       this.snackbar = false
-      this.clear()
+      this.clearAll()
     },
     deleteItem (item) {
       const index = this.items.indexOf(item)
@@ -225,7 +236,10 @@ export default {
         const savedTransaction = response.data
         if (!savedTransaction) console.log('Failed')
         this.snackbar = true
+        this.statusId = this.transId
+        this.clearAll()
         this.transId = uniqid.time('GNLJRNL-')
+        this.hidden = false
       } catch (e) {
         this.getError(e.response.data)
         this.transId = uniqid.time('GNLJRNL-')

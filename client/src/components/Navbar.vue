@@ -1,7 +1,7 @@
 <template>
   <nav>
     <v-app-bar flat app class="nav-color">
-      <v-app-bar-nav-icon class="hidden-md-and-up" @click="toggleDrawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title v-if="!isAuth" class="toolbar-title">
         <span class="title grey--text text--darken-2">DARBMUPCO</span>
         <span class="hidden-sm-and-down font-weight-light title grey--text text--darken-2">Bookkeeping System</span>
@@ -52,6 +52,7 @@
       </v-toolbar-items>
     </v-app-bar>
     <v-navigation-drawer
+      :expand-on-hover="hover"
       app
       dark
       floating
@@ -79,6 +80,7 @@ export default {
   },
   data () {
     return {
+      hover: false,
       drawer: true,
       loginDialog: false,
       registerDialog: false,
@@ -100,7 +102,7 @@ export default {
   methods: {
     ...mapActions('auth', ['registerUser', 'loginUser', 'loginAdmin', 'logoutUser']),
     toggleDrawer () {
-      this.drawer = true
+      this.hover = !this.hover
     },
     close (val) {
       if (val === 'register') {

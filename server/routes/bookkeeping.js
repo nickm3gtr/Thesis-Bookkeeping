@@ -57,7 +57,7 @@ router.get("/transactions/:bookId", auth, (req, res) => {
 router.get("/transactions/trans_id/:transId", auth, (req, res) => {
   const transId = req.params.transId
 
-  db.sequelize.query("select tr.id, tr.\"date\" as date, tr.num as num, tr.memo as memo, a.name as name, coalesce(tr.debit, 0) as debit, coalesce(tr.credit, 0) as credit\n" +
+  db.sequelize.query("select tr.id, tr.\"TransId\", tr.\"date\" as date, tr.num as num, tr.memo as memo, a.name as name, coalesce(tr.debit, 0) as debit, coalesce(tr.credit, 0) as credit\n" +
     "from \"TransactionRecords\" tr inner join \"Accounts\" a on tr.\"AccountId\"=a.id\n" +
     "where \"TransId\" = :transId\n" +
     "order by tr.id asc", {
@@ -77,6 +77,19 @@ router.delete("/transactions", (req, res) => {
     }
   }).then(() => res.json({ msg: 'Deleted!' }))
     .catch(err => res.status(400).json({ msg: 'ERROR DELETING', err }))
+})
+
+// Fetch latest transaction by Bookkeeper
+router.get("/transactions/latest/:id", (req, res) => {
+  const { id } = req.params
+
+  db.TransactionRecord.findOne({
+    where: {
+      BookkeeperId: id
+    },
+    order: [['id', 'DESC']]
+  }).then(transaction => res.json(transaction))
+    .catch(err => res.status(404).json({ msg: 'Error fetching data', err }))
 })
 
 module.exports = router

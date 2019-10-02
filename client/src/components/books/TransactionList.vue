@@ -76,7 +76,7 @@
               item-key="TransId"
               :headers="headers"
               :items="formatTransactions"
-              :items-per-page="10"
+              :items-per-page="5"
               :search="search"
               :loading="loading"
               loading-text="Loading..."
@@ -84,7 +84,6 @@
             >
               <template slot="{ item, select }" slot-scope="props">
                 <router-link
-                  :active="select.props.value"
                   tag="tr"
                   :to="{
                     name: 'transactions-filter',
