@@ -67,4 +67,16 @@ router.get("/transactions/trans_id/:transId", auth, (req, res) => {
     .catch(err => res.status(400).json({ msg: "Can't fetch transactions", err }))
 })
 
+// Delete transactions
+router.delete("/transactions", (req, res) => {
+  const transId = req.body.transId
+
+  db.TransactionRecord.destroy({
+    where: {
+      TransId: transId
+    }
+  }).then(() => res.json({ msg: 'Deleted!' }))
+    .catch(err => res.status(400).json({ msg: 'ERROR DELETING', err }))
+})
+
 module.exports = router

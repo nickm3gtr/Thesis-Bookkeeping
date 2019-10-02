@@ -117,7 +117,7 @@
               hide-default-footer
               disable-sort
               :headers="headers"
-              :items="items"
+              :items="indexedItems"
               no-data-text="Add Purchase Book Transactions"
               class="elevation-3"
             >
