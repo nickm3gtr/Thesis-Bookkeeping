@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="general-journal">
     <v-layout>
       <v-flex sm12 md10 offset-md1>
         <v-card outlined elevation="10">
@@ -35,6 +35,7 @@
             <v-row>
               <v-col cols="12" md="9">
                 <v-text-field
+                  height="4"
                   outlined
                   label="Description"
                   v-model="memo"
@@ -125,7 +126,7 @@
                 <tr>
                   <td></td>
                   <td>
-                    <span class="font-weight-bold">Total:</span>
+                    <span class="font-weight-bold caption">Total:</span>
                   </td>
                   <td>
                     <span v-if="sumDebit === 0"></span>

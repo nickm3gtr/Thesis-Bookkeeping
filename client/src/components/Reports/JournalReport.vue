@@ -2,7 +2,7 @@
   <div id="journal" class="journal-report">
     <v-layout>
       <v-flex sm12 md10 offset-md1>
-        <v-card outlined elevation="10" class="mb-10">
+        <v-card outlined elevation="10" class="mb-10" min-height="400">
           <v-toolbar color="light-blue darken-3" dark>
             <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
           </v-toolbar>
@@ -60,7 +60,7 @@
                   ></v-date-picker>
                 </v-menu>
               </v-col>
-              <v-col cols="12" md="4">
+              <v-col cols="12" md="3">
                 <v-combobox
                   v-model="selected"
                   :items="books"
@@ -69,13 +69,13 @@
                   return-object
                 ></v-combobox>
               </v-col>
-              <v-col cols="12" md="4" class="mt-3">
+              <v-col cols="12" md="5" class="mt-3">
                 <v-btn dark color="primary" class="mx-2" @click="generate">Generate</v-btn>
                 <v-btn dark color="success" class="mx-2" @click="pdf">Download PDF</v-btn>
               </v-col>
             </v-row>
           </v-card-title>
-          <div id="content" class="mx-12">
+          <div id="content" class="mx-12" :hidden="hidden">
             <v-card-text>
               <div v-if="selected === null || selected === '' || selected.id === 1">
                 <GeneralJournalComponent
@@ -155,7 +155,8 @@ export default {
         { text: 'Debit', value: 'debit', width: '15%' },
         { text: 'Credit', value: 'credit', width: '15%' }
       ],
-      items: []
+      items: [],
+      hidden: true
     }
   },
   methods: {
@@ -176,6 +177,7 @@ export default {
         if (e.response.data) this.getError(e.response.data)
         this.getError("Can't fetch journal")
       }
+      this.hidden = false
     },
     pdf () {
       const element = document.getElementById('content')

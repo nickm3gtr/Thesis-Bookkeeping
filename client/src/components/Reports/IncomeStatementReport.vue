@@ -2,7 +2,7 @@
   <div>
     <v-layout>
       <v-flex sm12 md10 offset-md1>
-        <v-card outlined elevation="10" class="mb-10">
+        <v-card outlined elevation="10" class="mb-10" min-height="400">
           <v-toolbar color="light-blue darken-3" dark>
             <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
           </v-toolbar>
@@ -70,7 +70,7 @@
               </v-col>
             </v-row>
           </v-card-title>
-          <div id="content">
+          <div id="content" :hidden="hidden">
             <v-card-text>
               <v-flex sm12 md10 offset-md1>
                 <div class="text-center">
@@ -159,7 +159,8 @@ export default {
       toMenu: false,
       fromDate: new Date().toISOString().substr(0, 10),
       toDate: new Date().toISOString().substr(0, 10),
-      items: []
+      items: [],
+      hidden: true
     }
   },
   methods: {
@@ -208,6 +209,7 @@ export default {
       } catch (e) {
         this.getError(e.response.data)
       }
+      this.hidden = false
     }
   },
   computed: {

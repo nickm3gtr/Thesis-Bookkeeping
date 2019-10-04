@@ -2,7 +2,7 @@
   <div>
     <v-layout>
       <v-flex sm12 md10 offset-md1>
-        <v-card outlined elevation="10" class="mb-10">
+        <v-card outlined elevation="10" class="mb-10" min-height="400">
           <v-toolbar color="light-blue darken-3" dark>
             <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
           </v-toolbar>
@@ -45,7 +45,7 @@
               </v-col>
             </v-row>
           </v-card-title>
-          <div id="content">
+          <div :hidden="hidden" id="content">
             <v-card-text>
               <v-flex sm12 md10 offset-md1>
                 <div class="text-center">
@@ -74,11 +74,29 @@
               />
               <v-row class="ml-4 mb-4">
                 <v-col cols="12" md="5">
-                  <span class="font-weight-bold">Total Assets</span>
+                  <div v-if="totalAssets <= 0">
+                    <span class="font-weight-bold red--text text--darken-3">
+                      Total Assets
+                    </span>
+                  </div>
+                  <div v-else>
+                    <span class="font-weight-bold blue--text text--darken-3">
+                      Total Assets
+                    </span>
+                  </div>
                 </v-col>
                 <v-col cols="12" md="4"></v-col>
                 <v-col cols="12" md="3">
-                  <p class="text-right font-weight-bold underlined"><span>{{ totalAssets }}</span></p>
+                  <div v-if="totalAssets <= 0">
+                    <p class="text-right font-weight-bold underlined red--text text--darken-3">
+                      <span>{{ totalAssets }}</span>
+                    </p>
+                  </div>
+                  <div v-else>
+                    <p class="text-right font-weight-bold underlined blue--text text--darken-3">
+                      <span>{{ totalAssets }}</span>
+                    </p>
+                  </div>
                 </v-col>
               </v-row>
               <v-row class="ml-4 mt-4">
@@ -113,11 +131,29 @@
               </v-row>
               <v-row class="ml-4 mb-4">
                 <v-col cols="12" md="5">
-                  <span class="font-weight-bold">Total Liabilities and Equity</span>
+                  <div v-if="totalLiabilities <= 0">
+                    <span class="font-weight-bold red--text text--darken-3">
+                      Total Liabilities and Equity
+                    </span>
+                  </div>
+                  <div v-else>
+                    <span class="font-weight-bold blue--text text--darken-3">
+                      Total Liabilities and Equity
+                    </span>
+                  </div>
                 </v-col>
                 <v-col cols="12" md="4"></v-col>
                 <v-col cols="12" md="3">
-                  <p class="text-right font-weight-bold underlined"><span>{{ totalLiabilities }}</span></p>
+                  <div v-if="totalLiabilities <= 0">
+                    <p class="text-right font-weight-bold red--text text--darken-3 underlined">
+                      <span>{{ totalLiabilities }}</span>
+                    </p>
+                  </div>
+                  <div v-else>
+                    <p class="text-right font-weight-bold blue--text text--darken-3 underlined">
+                      <span>{{ totalLiabilities }}</span>
+                    </p>
+                  </div>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -144,7 +180,8 @@ export default {
       menu: false,
       date: new Date().toISOString().substr(0, 10),
       items: [],
-      profits: []
+      profits: [],
+      hidden: true
     }
   },
   methods: {
@@ -210,6 +247,7 @@ export default {
         this.getError(e.response.data)
         this.getError(e.profit.data)
       }
+      this.hidden = false
     }
   },
   computed: {

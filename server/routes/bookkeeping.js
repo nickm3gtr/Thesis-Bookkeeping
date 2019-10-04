@@ -79,6 +79,17 @@ router.delete("/transactions", (req, res) => {
     .catch(err => res.status(400).json({ msg: 'ERROR DELETING', err }))
 })
 
+// Delete transactions by TransId
+router.delete("/transactions/:transId", (req, res) => {
+  const {transId} = req.params
+
+  db.sequelize.query("delete from \"TransactionRecords\" where \"TransId\" = :transId", {
+    model: db.TransactionRecord,
+    replacements: { transId }
+  }).then(() => res.json({ msg: 'Deleted!' }))
+    .catch(err => res.status(400).json({ msg: 'ERROR DELETING', err }))
+})
+
 // Fetch latest transaction by Bookkeeper
 router.get("/transactions/latest/:id", (req, res) => {
   const { id } = req.params

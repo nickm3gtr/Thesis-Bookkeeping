@@ -40,23 +40,38 @@
               class="elevation-3"
             >
               <template v-slot:item.action="{ item }">
-                <v-icon
-                  small
-                  class="mr-2"
-                  @click="editItem(item)"
-                >
-                  edit
-                </v-icon>
-                <v-icon
-                  small
-                  @click="deleteItem(item)"
-                >
-                  delete
-                </v-icon>
+                <v-btn dark small color="green" class="mx-1" @click="goToItem(item)">
+                  <v-icon small>search</v-icon>
+                </v-btn>
+                <v-btn dark color="blue" small class="mx-1"  @click="editItem(item)">
+                  <v-icon small class="mr-2">edit</v-icon>
+                </v-btn>
+                <v-btn dark small color="red" class="mx-1" @click="clickDelete(item)">
+                  <v-icon small>delete</v-icon>
+                </v-btn>
+                <v-dialog hide-overlay v-model="dialogDelete" width="500">
+                  <v-card>
+                    <v-toolbar color="red lighten-1" dark>
+                      <v-toolbar-title>Delete</v-toolbar-title>
+                    </v-toolbar>
+                    <v-card-text>
+                      <p class="subtitle-1 mt-5">Are you sure you want to delete?</p>
+                    </v-card-text>
+                    <v-card-actions>
+                      <div class="flex-grow-1"></div>
+                      <v-btn color="primary" text @click="dialogDelete = false">Cancel</v-btn>
+                      <v-btn color="red" text @click="deleteItem">Delete</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
               </template>
             </v-data-table>
           </v-card-text>
         </v-card>
+        <v-snackbar v-model="snackbar" bottom="bottom" color="red" :timeout="timeout">
+          Deleted!
+          <v-btn color="white" text @click="snackbar=false">Close</v-btn>
+        </v-snackbar>
       </v-flex>
     </v-layout>
   </div>
@@ -81,8 +96,17 @@ export default {
         { text: 'Date', value: 'date' },
         { text: 'TransactionID', value: 'TransId' },
         { text: 'Memo', value: 'memo' },
-        { text: 'Actions', value: 'action', sortable: false }
-      ]
+        {
+          text: 'Actions',
+          value: 'action',
+          align: 'center',
+          sortable: false
+        }
+      ],
+      itemToDelete: '',
+      indexToDelete: '',
+      timeout: 2000,
+      snackbar: false
     }
   },
   methods: {
@@ -102,7 +126,10 @@ export default {
           },
           data: deleteCode
         }
-        const response = await axios.delete('/api/bookkeeping/transactions', config)
+        const response = await axios.delete(
+          '/api/bookkeeping/transactions',
+          config
+        )
         console.log(response.data)
       } catch (e) {
         this.getError(e.response.data)
@@ -110,10 +137,26 @@ export default {
       this.selected = []
       this.dialogDelete = false
     },
-    deleteItem (item) {
-      const index = this.transactions.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.transactions.splice(index, 1)
-      console.log(item)
+    clickDelete (item) {
+      this.index = this.transactions.indexOf(item)
+      this.itemToDelete = item
+      this.dialogDelete = true
+    },
+    async deleteItem () {
+      try {
+        const response = await axios.delete(
+          `/api/bookkeeping/transactions/${this.itemToDelete.TransId}`
+        )
+        console.log(response.data)
+        this.transactions.splice(this.index, 1)
+        this.dialogDelete = false
+        this.snackbar = true
+      } catch (e) {
+        this.getError(e.response.data)
+      }
+    },
+    goToItem (item) {
+      this.$router.push(`/bookkeeper/transactions/${item.TransId}`)
     }
   },
   computed: {

@@ -1,7 +1,7 @@
 <template>
   <nav>
     <v-app-bar flat app class="nav-color">
-      <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon v-if="isAuth" @click="toggleDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title v-if="!isAuth" class="toolbar-title">
         <span class="title grey--text text--darken-2">DARBMUPCO</span>
         <span class="hidden-sm-and-down font-weight-light title grey--text text--darken-2">Bookkeeping System</span>
