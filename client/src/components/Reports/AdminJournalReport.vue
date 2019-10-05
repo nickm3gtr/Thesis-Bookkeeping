@@ -99,6 +99,7 @@
                   :formatFromDate="formatFromDate"
                   :formatToDate="formatToDate"
                   :formatItems="formatItems"
+                  :selectedBranch="selectedBranch"
                 />
               </div>
               <div v-else-if="selected.id === 3">
@@ -106,6 +107,7 @@
                   :formatFromDate="formatFromDate"
                   :formatToDate="formatToDate"
                   :formatItems="formatItems"
+                  :selectedBranch="selectedBranch"
                 />
               </div>
               <div v-else-if="selected.id === 4">
@@ -113,6 +115,7 @@
                   :formatFromDate="formatFromDate"
                   :formatToDate="formatToDate"
                   :formatItems="formatItems"
+                  :selectedBranch="selectedBranch"
                 />
               </div>
               <div v-else-if="selected.id === 5">
@@ -120,6 +123,7 @@
                   :formatFromDate="formatFromDate"
                   :formatToDate="formatToDate"
                   :formatItems="formatItems"
+                  :selectedBranch="selectedBranch"
                 />
               </div>
             </v-card-text>

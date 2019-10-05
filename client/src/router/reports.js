@@ -4,6 +4,8 @@ import TrialBalanceReportPage from '@/views/Reports/TrialBalanceReportPage'
 import IncomeStatementPage from '@/views/Reports/IncomeStatementPage'
 import BalanceSheetPage from '@/views/Reports/BalanceSheetPage'
 import AdminJournalPage from '@/views/AdminReports/AdminJournalPage'
+import AdminLedgerPage from '@/views/AdminReports/AdminLedgerPage'
+import AdminTrialBalancePage from '@/views/AdminReports/AdminTrialBalancePage'
 
 export default [
   {
@@ -52,6 +54,22 @@ export default [
     component: AdminJournalPage,
     meta: {
       title: 'Journal'
+    }
+  },
+  {
+    path: '/admin/reports/ledger',
+    name: 'reports-ledger-admin',
+    component: AdminLedgerPage,
+    meta: {
+      title: 'Ledger'
+    }
+  },
+  {
+    path: '/admin/reports/trial-balance',
+    name: 'reports-trialBalance-admin',
+    component: AdminTrialBalancePage,
+    meta: {
+      title: 'Trial Balance'
     }
   }
 ]

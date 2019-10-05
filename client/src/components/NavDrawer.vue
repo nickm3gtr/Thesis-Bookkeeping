@@ -148,8 +148,8 @@ export default {
           title: 'Reports',
           items: [
             { title: 'Journal', route: '/admin/reports/journal' },
-            { title: 'Ledger', route: '/bookkeeper/reports/ledger' },
-            { title: 'Trial Balance', route: '/bookkeeper/reports/trial-balance' },
+            { title: 'Ledger', route: '/admin/reports/ledger' },
+            { title: 'Trial Balance', route: '/admin/reports/trial-balance' },
             { title: 'Balance Sheet', route: '/bookkeeper/reports/balance-sheet' },
             { title: 'Income Statement', route: '/bookkeeper/reports/income-statement' }
           ]

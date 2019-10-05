@@ -79,7 +79,7 @@
 
 <script>
 import axios from 'axios'
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import moment from 'moment'
 
 export default {
@@ -160,6 +160,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['auth']),
     prependBook () {
       const prependBook = [{ id: 0, name: 'All' }, ...this.books]
       return prependBook
@@ -228,7 +229,7 @@ export default {
       const response = await axios.get('/api/books', config)
       this.loading = true
       const transactions = await axios.get(
-        '/api/bookkeeping/transactions',
+        `/api/bookkeeping/transactions/${this.auth.user.Branch.id}`,
         config
       )
       this.books = response.data

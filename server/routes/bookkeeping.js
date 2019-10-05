@@ -28,12 +28,15 @@ router.post("/cash-disbursements", auth, (req, res) => {
 })
 
 // Fetch all transaction records
-router.get("/transactions", auth, (req, res) => {
-  db.sequelize.query("select \"TransId\", memo, \"date\", \"createdAt\", num\n" +
-    "from \"TransactionRecords\"\n" +
-    "group by \"TransId\", memo, \"createdAt\", date, num\n" +
-    "order by \"createdAt\" desc, \"date\" desc", {
-    model: db.TransactionRecord
+router.get("/transactions/:branchId", auth, (req, res) => {
+  const { branchId } = req.params
+  db.sequelize.query("select tr.\"TransId\", tr.memo, tr.\"date\", tr.\"createdAt\", tr.num\n" +
+    "from \"TransactionRecords\" tr inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id\n" +
+    "where b.id=:branchId\n" +
+    "group by tr.\"TransId\", tr.memo, tr.\"createdAt\", tr.date, tr.num\n" +
+    "order by tr.\"createdAt\" desc, tr.\"date\" desc", {
+    model: db.TransactionRecord,
+    replacements: { branchId }
   }).then(transactions => res.json(transactions))
     .catch(err => res.status(400).json({ msg: "Can't fetch transactions", err }))
 })

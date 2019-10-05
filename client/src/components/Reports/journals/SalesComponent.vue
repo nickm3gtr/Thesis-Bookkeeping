@@ -2,10 +2,10 @@
   <div>
     <div class="text-center">
       <p>
-        <span v-if="auth.user === null" class="headline">DARBMUPCO</span>
-        <span v-else class="headline centered">{{
-          auth.user.Branch.branchName
-        }}</span>
+        <span v-if="auth.user === null || auth.user.account == 'admin'" class="headline">
+          {{ selectedBranch.branchName }}
+        </span>
+        <span v-else class="headline centered">{{ auth.user.Branch.branchName }}</span>
       </p>
       <p><span class="subtitle-1">Sales Journal</span></p>
       <p>
@@ -73,7 +73,7 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'SalesComponent',
-  props: ['formatFromDate', 'formatToDate', 'formatItems'],
+  props: ['formatFromDate', 'formatToDate', 'formatItems', 'selectedBranch'],
   methods: {
     formatBalance (value) {
       const num = Math.abs(value)

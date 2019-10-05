@@ -39,34 +39,63 @@ router.get("/journal/:id/:bookId/:start/:end", auth, (req, res) => {
 // Get Ledger Report
 router.get("/ledger/:id/:start/:end", auth, (req, res) => {
   const { id, start, end } = req.params
-  db.sequelize
-    .query("select t.id, tr.\"AccountId\", a.\"name\", sum(tr.debit) as debit, sum(tr.credit) as credit, coalesce(sum(tr.debit), 0)-coalesce(sum(tr.credit), 0) as balance\n" +
-      "from \"Bookkeepers\" b inner join \"TransactionRecords\" tr on b.id=tr.\"BookkeeperId\" inner join \"Accounts\" a on tr.\"AccountId\" = a.id inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id inner join \"Types\" t on s.\"TypeId\"=t.id \n" +
-      "where b.\"BranchId\"=:id and tr.\"date\" between :start and :end\n" +
-      "group by a.\"name\", tr.\"AccountId\", t.id\n" +
-      "order by tr.\"AccountId\" asc", {
-      model: db.TransactionRecord,
-      replacements: { start, end, id }
-    })
-    .then(transactions => res.json(transactions))
-    .catch(err => res.status(400).json({ msg: err }))
+  if (id == 0) {
+    db.sequelize
+      .query("select t.id, tr.\"AccountId\", a.\"name\", sum(tr.debit) as debit, sum(tr.credit) as credit, coalesce(sum(tr.debit), 0)-coalesce(sum(tr.credit), 0) as balance\n" +
+        "from \"Bookkeepers\" b inner join \"TransactionRecords\" tr on b.id=tr.\"BookkeeperId\" inner join \"Accounts\" a on tr.\"AccountId\" = a.id inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id inner join \"Types\" t on s.\"TypeId\"=t.id \n" +
+        "where tr.\"date\" between :start and :end\n" +
+        "group by a.\"name\", tr.\"AccountId\", t.id\n" +
+        "order by tr.\"AccountId\" asc", {
+        model: db.TransactionRecord,
+        replacements: { start, end, id }
+      })
+      .then(transactions => res.json(transactions))
+      .catch(err => res.status(400).json({ msg: err }))
+  } else {
+    db.sequelize
+      .query("select t.id, tr.\"AccountId\", a.\"name\", sum(tr.debit) as debit, sum(tr.credit) as credit, coalesce(sum(tr.debit), 0)-coalesce(sum(tr.credit), 0) as balance\n" +
+        "from \"Bookkeepers\" b inner join \"TransactionRecords\" tr on b.id=tr.\"BookkeeperId\" inner join \"Accounts\" a on tr.\"AccountId\" = a.id inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id inner join \"Types\" t on s.\"TypeId\"=t.id \n" +
+        "where b.\"BranchId\"=:id and tr.\"date\" between :start and :end\n" +
+        "group by a.\"name\", tr.\"AccountId\", t.id\n" +
+        "order by tr.\"AccountId\" asc", {
+        model: db.TransactionRecord,
+        replacements: { start, end, id }
+      })
+      .then(transactions => res.json(transactions))
+      .catch(err => res.status(400).json({ msg: err }))
+  }
 });
 
 router.get("/trial-balance/:id/:start/:end", auth, (req, res) => {
   const { id, start, end } = req.params
 
-  db.sequelize.query("select tr.name as type, s.name as subtype, a.\"name\" as account, (select sum(coalesce(debit, 0)) - sum(coalesce(credit, 0))\n" +
-    "    from \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
-    "    where \"AccountId\"=a.id and \"date\" between :start and :end and b.\"BranchId\"=:id) as balance\n" +
-    "    from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id inner join \"Types\" tr on s.\"TypeId\"=tr.id\n" +
-    "    where a.id in (select t.\"AccountId\" \n" +
-    "from \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
-    "where t.\"date\" between :start and :end and b.\"BranchId\"=:id)", {
-    model: db.TransactionRecord,
-    replacements: { id, start, end }
-  })
-    .then(transactions => res.json(transactions))
-    .catch(err => res.status(400).json({ msg: err }))
+  if (id == 0) {
+    db.sequelize.query("select tr.name as type, s.name as subtype, a.\"name\" as account, (select sum(coalesce(debit, 0)) - sum(coalesce(credit, 0))\n" +
+      "    from \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
+      "    where \"AccountId\"=a.id and \"date\" between :start and :end) as balance\n" +
+      "    from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id inner join \"Types\" tr on s.\"TypeId\"=tr.id\n" +
+      "    where a.id in (select t.\"AccountId\" \n" +
+      "from \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
+      "where t.\"date\" between :start and :end)", {
+      model: db.TransactionRecord,
+      replacements: { id, start, end }
+    })
+      .then(transactions => res.json(transactions))
+      .catch(err => res.status(400).json({ msg: err }))
+  } else {
+    db.sequelize.query("select tr.name as type, s.name as subtype, a.\"name\" as account, (select sum(coalesce(debit, 0)) - sum(coalesce(credit, 0))\n" +
+      "    from \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
+      "    where \"AccountId\"=a.id and \"date\" between :start and :end and b.\"BranchId\"=:id) as balance\n" +
+      "    from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id inner join \"Types\" tr on s.\"TypeId\"=tr.id\n" +
+      "    where a.id in (select t.\"AccountId\" \n" +
+      "from \"TransactionRecords\" t inner join \"Bookkeepers\" b on  t.\"BookkeeperId\"=b.id\n" +
+      "where t.\"date\" between :start and :end and b.\"BranchId\"=:id)", {
+      model: db.TransactionRecord,
+      replacements: { id, start, end }
+    })
+      .then(transactions => res.json(transactions))
+      .catch(err => res.status(400).json({ msg: err }))
+  }
 });
 
 // Get Income Statement report

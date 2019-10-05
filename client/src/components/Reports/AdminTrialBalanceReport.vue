@@ -60,6 +60,15 @@
                   ></v-date-picker>
                 </v-menu>
               </v-col>
+              <v-col cols="12" md="3">
+                <v-combobox
+                  v-model="selectedBranch"
+                  :items="branches"
+                  item-text="branchName"
+                  label="Select Branch"
+                  return-object
+                ></v-combobox>
+              </v-col>
               <v-col cols="12" md="6" class="mt-3">
                 <v-btn dark color="primary" class="mx-2" @click="generate"
                 >Generate</v-btn
@@ -155,13 +164,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import moment from 'moment'
 import html2pdf from 'html2pdf.js'
 import axios from 'axios'
 
 export default {
-  name: 'TrialBalanceReport',
+  name: 'AdminTrialBalanceReport',
   data () {
     return {
       selectedBranch: { id: 0, branchName: 'DARBMUPCO' },
@@ -175,6 +184,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('errors', ['getError']),
     formatBalance (value) {
       const num = Math.abs(value)
       return parseFloat(Math.round(num * 100) / 100).toFixed(2)
@@ -199,7 +209,7 @@ export default {
       }
       try {
         const response = await axios.get(
-          `/api/reports/trial-balance/${this.auth.user.BranchId}/${this.fromDate}/${this.toDate}`, config
+          `/api/reports/trial-balance/${this.selectedBranch.id}/${this.fromDate}/${this.toDate}`, config
         )
         this.items = response.data
       } catch (e) {
@@ -256,6 +266,20 @@ export default {
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)
       const sum = arrSum(balances)
       return sum
+    }
+  },
+  async mounted () {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token')
+      }
+    }
+    try {
+      const branches = await axios.get('/api/admin/branches', config)
+      this.branches = [{ id: 0, branchName: 'DARBMUPCO' }, ...branches.data]
+    } catch (e) {
+      this.getError(e.response.data)
     }
   }
 }
