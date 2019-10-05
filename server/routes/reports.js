@@ -5,22 +5,35 @@ const auth = require("../middleware/auth")
 
 // GET journal report
 router.get("/journal/:id/:bookId/:start/:end", auth, (req, res) => {
-  // const { start, end } = req.query
   const bookId = req.params.bookId
   const start = req.params.start;
   const end = req.params.end;
   const id = req.params.id;
-  db.sequelize.query("select tr.id as id, tr.\"date\" as date, tr.\"num\" as num, tr.memo as memo, tr.\"AccountId\" as account_id, a.name as AccountName, tr.debit as debit, tr.credit as credit, tr.\"tags\" as tags\n" +
-    "from  \"Bookkeepers\" b inner join \"TransactionRecords\" tr on b.id=tr.\"BookkeeperId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id\n" +
-    "where date between :start and :end and b.\"BranchId\"=:id and tr.\"BookId\"=:bookId\n" +
-    "order by tr.id", {
-    model: db.TransactionRecord,
-    replacements: { id, start, end, bookId }
-  })
-    .then(journals => res.json(journals))
-    .catch(err =>
-      res.status(400).json({ msg: "Error fetching journals", err })
-    );
+  if (id == 0) {
+    db.sequelize.query("select tr.id as id, tr.\"date\" as date, tr.\"num\" as num, tr.memo as memo, tr.\"AccountId\" as account_id, a.name as AccountName, tr.debit as debit, tr.credit as credit, tr.\"tags\" as tags\n" +
+      "from  \"Bookkeepers\" b inner join \"TransactionRecords\" tr on b.id=tr.\"BookkeeperId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id\n" +
+      "where date between :start and :end and tr.\"BookId\"=:bookId\n" +
+      "order by tr.id", {
+      model: db.TransactionRecord,
+      replacements: { id, start, end, bookId }
+    })
+      .then(journals => res.json(journals))
+      .catch(err =>
+        res.status(400).json({ msg: "Error fetching journals", err })
+      );
+  } else {
+    db.sequelize.query("select tr.id as id, tr.\"date\" as date, tr.\"num\" as num, tr.memo as memo, tr.\"AccountId\" as account_id, a.name as AccountName, tr.debit as debit, tr.credit as credit, tr.\"tags\" as tags\n" +
+      "from  \"Bookkeepers\" b inner join \"TransactionRecords\" tr on b.id=tr.\"BookkeeperId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id\n" +
+      "where date between :start and :end and b.\"BranchId\"=:id and tr.\"BookId\"=:bookId\n" +
+      "order by tr.id", {
+      model: db.TransactionRecord,
+      replacements: { id, start, end, bookId }
+    })
+      .then(journals => res.json(journals))
+      .catch(err =>
+        res.status(400).json({ msg: "Error fetching journals", err })
+      );
+  }
 });
 
 // Get Ledger Report

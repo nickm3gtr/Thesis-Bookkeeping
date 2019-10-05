@@ -3,6 +3,7 @@ import LedgerReportPage from '@/views/Reports/LedgerReportPage'
 import TrialBalanceReportPage from '@/views/Reports/TrialBalanceReportPage'
 import IncomeStatementPage from '@/views/Reports/IncomeStatementPage'
 import BalanceSheetPage from '@/views/Reports/BalanceSheetPage'
+import AdminJournalPage from '@/views/AdminReports/AdminJournalPage'
 
 export default [
   {
@@ -43,6 +44,14 @@ export default [
     component: BalanceSheetPage,
     meta: {
       title: 'Balance Sheet'
+    }
+  },
+  {
+    path: '/admin/reports/journal',
+    name: 'reports-journal-admin',
+    component: AdminJournalPage,
+    meta: {
+      title: 'Journal'
     }
   }
 ]

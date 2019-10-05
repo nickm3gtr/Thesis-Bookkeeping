@@ -2,7 +2,9 @@
   <div class="general-journal">
     <div class="text-center">
       <p>
-        <span v-if="auth.user === null" class="headline">DARBMUPCO</span>
+        <span v-if="auth.user === null || auth.user.account == 'admin'" class="headline">
+          {{ selectedBranch.branchName }}
+        </span>
         <span v-else class="headline centered">{{ auth.user.Branch.branchName }}</span>
       </p>
       <p><span class="subtitle-1">General Journal</span></p>
@@ -76,7 +78,7 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'GeneralJournalComponent',
-  props: [ 'formatFromDate', 'formatToDate', 'formatItems' ],
+  props: [ 'formatFromDate', 'formatToDate', 'formatItems', 'selectedBranch' ],
   methods: {
     formatBalance (value) {
       const num = Math.abs(value)

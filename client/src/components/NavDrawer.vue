@@ -57,6 +57,7 @@
         <v-list-item
           v-for="subItem in item.items"
           :key="subItem.title"
+          :to="subItem.route"
         >
           <v-list-item-content>
             <v-list-item-title class="subtitle-2 font-weight-light" v-text="subItem.title"></v-list-item-title>
@@ -140,6 +141,17 @@ export default {
             { title: 'Cash Disbursement Book' },
             { title: 'Sales Book' },
             { title: 'Purchase Book' }
+          ]
+        },
+        {
+          action: 'bar_chart',
+          title: 'Reports',
+          items: [
+            { title: 'Journal', route: '/admin/reports/journal' },
+            { title: 'Ledger', route: '/bookkeeper/reports/ledger' },
+            { title: 'Trial Balance', route: '/bookkeeper/reports/trial-balance' },
+            { title: 'Balance Sheet', route: '/bookkeeper/reports/balance-sheet' },
+            { title: 'Income Statement', route: '/bookkeeper/reports/income-statement' }
           ]
         }
       ]
