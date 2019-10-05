@@ -6,6 +6,7 @@ import BalanceSheetPage from '@/views/Reports/BalanceSheetPage'
 import AdminJournalPage from '@/views/AdminReports/AdminJournalPage'
 import AdminLedgerPage from '@/views/AdminReports/AdminLedgerPage'
 import AdminTrialBalancePage from '@/views/AdminReports/AdminTrialBalancePage'
+import AdminBalanceSheetPage from '@/views/AdminReports/AdminBalanceSheetPage'
 
 export default [
   {
@@ -70,6 +71,14 @@ export default [
     component: AdminTrialBalancePage,
     meta: {
       title: 'Trial Balance'
+    }
+  },
+  {
+    path: '/admin/reports/balance-sheet',
+    name: 'reports-balanceSheet-admin',
+    component: AdminBalanceSheetPage,
+    meta: {
+      title: 'Balance Sheet'
     }
   }
 ]

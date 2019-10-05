@@ -150,7 +150,7 @@ export default {
             { title: 'Journal', route: '/admin/reports/journal' },
             { title: 'Ledger', route: '/admin/reports/ledger' },
             { title: 'Trial Balance', route: '/admin/reports/trial-balance' },
-            { title: 'Balance Sheet', route: '/bookkeeper/reports/balance-sheet' },
+            { title: 'Balance Sheet', route: '/admin/reports/balance-sheet' },
             { title: 'Income Statement', route: '/bookkeeper/reports/income-statement' }
           ]
         }
