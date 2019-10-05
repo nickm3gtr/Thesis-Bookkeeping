@@ -218,7 +218,7 @@ export default {
           AccountId: 11250,
           AccountName: '11250-Accounts Receivables Trade-Current',
           BookId: this.BookId,
-          BookkeeperId: this.auth.user.id,
+          BranchId: this.auth.user.BranchId,
           TransId: this.transId,
           debit: this.totalCash,
           credit: null,

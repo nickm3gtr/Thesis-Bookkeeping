@@ -218,7 +218,7 @@ export default {
           AccountId: 11110,
           AccountName: '11110-Cash on Hand',
           BookId: this.BookId,
-          BookkeeperId: this.auth.user.id,
+          BranchId: this.auth.user.BranchId,
           TransId: this.transId,
           debit: this.totalCash,
           credit: null,

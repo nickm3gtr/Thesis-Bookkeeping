@@ -132,18 +132,6 @@ export default {
           route: '/admin/chart_of_account'
         },
         {
-          action: 'local_offer',
-          title: 'Transactions',
-          route: '#',
-          items: [
-            { title: 'General Journal' },
-            { title: 'Cash Receipt Book' },
-            { title: 'Cash Disbursement Book' },
-            { title: 'Sales Book' },
-            { title: 'Purchase Book' }
-          ]
-        },
-        {
           action: 'bar_chart',
           title: 'Reports',
           items: [
@@ -151,7 +139,7 @@ export default {
             { title: 'Ledger', route: '/admin/reports/ledger' },
             { title: 'Trial Balance', route: '/admin/reports/trial-balance' },
             { title: 'Balance Sheet', route: '/admin/reports/balance-sheet' },
-            { title: 'Income Statement', route: '/bookkeeper/reports/income-statement' }
+            { title: 'Income Statement', route: '/admin/reports/income-statement' }
           ]
         }
       ]

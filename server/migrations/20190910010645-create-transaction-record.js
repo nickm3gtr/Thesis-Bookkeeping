@@ -8,11 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      BookkeeperId: {
+      BranchId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Bookkeepers',
+          model: 'Branches',
           key: 'id'
         }
       },

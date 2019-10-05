@@ -31,7 +31,7 @@ router.post("/cash-disbursements", auth, (req, res) => {
 router.get("/transactions/:branchId", auth, (req, res) => {
   const { branchId } = req.params
   db.sequelize.query("select tr.\"TransId\", tr.memo, tr.\"date\", tr.\"createdAt\", tr.num\n" +
-    "from \"TransactionRecords\" tr inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id\n" +
+    "from \"TransactionRecords\" tr inner join \"Branches\" b on tr.\"BranchId\"=b.id\n" +
     "where b.id=:branchId\n" +
     "group by tr.\"TransId\", tr.memo, tr.\"createdAt\", tr.date, tr.num\n" +
     "order by tr.\"createdAt\" desc, tr.\"date\" desc", {
@@ -99,7 +99,7 @@ router.get("/transactions/latest/:id", (req, res) => {
 
   db.TransactionRecord.findOne({
     where: {
-      BookkeeperId: id
+      BranchId: id
     },
     order: [['id', 'DESC']]
   }).then(transaction => res.json(transaction))

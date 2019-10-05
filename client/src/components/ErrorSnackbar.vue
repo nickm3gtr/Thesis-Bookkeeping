@@ -28,7 +28,7 @@ export default {
   data () {
     return {
       multiline: true,
-      timeout: 0
+      timeout: 2000
     }
   },
   methods: {

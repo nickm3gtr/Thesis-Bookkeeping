@@ -210,7 +210,7 @@ export default {
           AccountId: 21210,
           AccountName: '21210-Accounts Payable-Trade',
           BookId: this.BookId,
-          BookkeeperId: this.auth.user.id,
+          BranchId: this.auth.user.BranchId,
           TransId: this.transId,
           debit: null,
           credit: this.totalCash,

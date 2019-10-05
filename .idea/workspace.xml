@@ -6,7 +6,28 @@
   <component name="ChangeListManager">
     <list default="true" id="f74612c7-0b76-4efb-9329-bce768567bd1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Navbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/DashboardBookkeeperComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/DashboardBookkeeperComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ErrorSnackbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ErrorSnackbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/GeneralJournalDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/GeneralJournalDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/NavDrawer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/NavDrawer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/books/CashDisbursement.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/books/CashDisbursement.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/books/CashDisbursementDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/books/CashDisbursementDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/books/CashReceipt.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/books/CashReceipt.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/books/CashReceiptDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/books/CashReceiptDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/books/PurchaseBook.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/books/PurchaseBook.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/books/PurchaseBookDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/books/PurchaseBookDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/books/SalesBook.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/books/SalesBook.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/books/SalesBookDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/books/SalesBookDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/charts/Barchart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/charts/Barchart.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/charts/ExpenseBarChart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/charts/ExpenseBarChart.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/status/RecordStatus.vue" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/status/RecordStatus.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/router/reports.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/router/reports.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/migrations/20190910010645-create-transaction-record.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/migrations/20190910010645-create-transaction-record.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/Branch.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/Branch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/TransactionRecord.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/TransactionRecord.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/bookkeeping.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/bookkeeping.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/graphs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/graphs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/reports.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/reports.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,21 +39,27 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/components/books/CashDisbursement.vue">
+        <entry file="file://$PROJECT_DIR$/client/src/components/charts/Barchart.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1490">
-              <caret line="217" column="27" lean-forward="true" selection-start-line="217" selection-start-column="27" selection-end-line="217" selection-end-column="27" />
+            <state relative-caret-position="72">
+              <caret line="3" column="43" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
+              <folding>
+                <element signature="e#9#42#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/src/components/Navbar.vue">
+        <entry file="file://$PROJECT_DIR$/client/src/components/charts/ExpenseBarChart.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2592">
-              <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
+            <state relative-caret-position="1536">
+              <caret line="64" column="29" selection-start-line="64" selection-start-column="29" selection-end-line="64" selection-end-column="29" />
+              <folding>
+                <element signature="e#9#42#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -85,9 +112,6 @@
         <option value="$PROJECT_DIR$/client/src/views/DashboardBookkeeper.vue" />
         <option value="$PROJECT_DIR$/client/src/components/Reports/incomeStatement/ItemComponent.vue" />
         <option value="$PROJECT_DIR$/server/server.js" />
-        <option value="$PROJECT_DIR$/server/routes/graphs.js" />
-        <option value="$PROJECT_DIR$/client/src/components/charts/Barchart.vue" />
-        <option value="$PROJECT_DIR$/client/src/components/charts/ExpenseBarChart.vue" />
         <option value="$PROJECT_DIR$/client/src/components/DashboardBookkeeperComponent.vue" />
         <option value="$PROJECT_DIR$/client/src/components/Reports/balanceSheet/BalanceSheetComponent.vue" />
         <option value="$PROJECT_DIR$/server/routes/reports.js" />
@@ -104,13 +128,16 @@
         <option value="$PROJECT_DIR$/server/routes/bookkeeping.js" />
         <option value="$PROJECT_DIR$/client/src/components/GeneralJournal.vue" />
         <option value="$PROJECT_DIR$/client/src/components/status/RecordStatus.vue" />
-        <option value="$PROJECT_DIR$/client/src/components/NavDrawer.vue" />
         <option value="$PROJECT_DIR$/client/src/components/books/TransactionList.vue" />
         <option value="$PROJECT_DIR$/client/src/components/books/CashReceipt.vue" />
         <option value="$PROJECT_DIR$/client/src/components/books/CashDisbursement.vue" />
         <option value="$PROJECT_DIR$/client/src/components/books/PurchaseBook.vue" />
         <option value="$PROJECT_DIR$/client/src/components/books/SalesBook.vue" />
+        <option value="$PROJECT_DIR$/client/src/components/NavDrawer.vue" />
         <option value="$PROJECT_DIR$/client/src/components/Navbar.vue" />
+        <option value="$PROJECT_DIR$/server/routes/graphs.js" />
+        <option value="$PROJECT_DIR$/client/src/components/charts/ExpenseBarChart.vue" />
+        <option value="$PROJECT_DIR$/client/src/components/charts/Barchart.vue" />
       </list>
     </option>
   </component>
@@ -128,6 +155,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -160,6 +188,14 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="books" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bookkeeping_system" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bookkeeping_system" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="charts" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="bookkeeping_system" type="b2602c69:ProjectViewProjectNode" />
@@ -211,7 +247,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -229,7 +264,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\Nick\AppData\Roaming\npm\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.HTML" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -318,16 +353,19 @@
       <workItem from="1570011754267" duration="13002000" />
       <workItem from="1570053023071" duration="5299000" />
       <workItem from="1570179819428" duration="359000" />
+      <workItem from="1570270554862" duration="733000" />
+      <workItem from="1570271590871" duration="456000" />
+      <workItem from="1570277872107" duration="1683000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="421773000" />
+    <option name="totallyTimeSpent" value="424645000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24981412" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24597365" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -340,7 +378,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.37414965" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32840723" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -455,39 +493,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/routes/graphs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="38" column="23" lean-forward="true" selection-start-line="38" selection-start-column="23" selection-end-line="38" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/charts/Barchart.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="50" column="23" selection-start-line="50" selection-start-column="23" selection-end-line="50" selection-end-column="23" />
-          <folding>
-            <element signature="e#9#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/DashboardBookkeeperComponent.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
           <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
           <folding>
             <element signature="e#407#447#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/charts/ExpenseBarChart.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="52" column="9" lean-forward="true" selection-start-line="52" selection-start-column="9" selection-end-line="52" selection-end-column="9" />
-          <folding>
-            <element signature="e#9#42#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -658,13 +669,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/NavDrawer.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2702">
-          <caret line="12" column="39" lean-forward="true" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/books/TransactionList.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
@@ -721,15 +725,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/books/CashDisbursement.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1490">
-          <caret line="217" column="27" lean-forward="true" selection-start-line="217" selection-start-column="27" selection-end-line="217" selection-end-column="27" />
+        <state relative-caret-position="480">
+          <caret line="217" column="27" selection-start-line="217" selection-start-column="27" selection-end-line="217" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/Navbar.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2592">
-          <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
+        <state relative-caret-position="72">
+          <caret line="3" column="83" lean-forward="true" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/NavDrawer.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="1" column="35" lean-forward="true" selection-start-line="1" selection-start-column="35" selection-end-line="1" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/routes/graphs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="67" column="18" lean-forward="true" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/charts/Barchart.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="3" column="43" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
+          <folding>
+            <element signature="e#9#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/charts/ExpenseBarChart.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1536">
+          <caret line="64" column="29" selection-start-line="64" selection-start-column="29" selection-end-line="64" selection-end-column="29" />
+          <folding>
+            <element signature="e#9#42#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

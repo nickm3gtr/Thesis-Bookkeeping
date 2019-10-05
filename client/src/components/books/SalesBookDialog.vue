@@ -53,7 +53,7 @@ export default {
     ...mapActions('errors', ['getError']),
     add () {
       const transaction = {
-        BookkeeperId: this.auth.user.id,
+        BranchId: this.auth.user.BranchId,
         BookId: this.BookId,
         TransId: this.transId,
         AccountId: this.AccountId,

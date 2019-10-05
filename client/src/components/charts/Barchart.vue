@@ -2,7 +2,6 @@
 import { Bar } from 'vue-chartjs'
 import axios from 'axios'
 import { mapState, mapActions } from 'vuex'
-import moment from 'moment'
 
 export default {
   name: 'Barchart',
@@ -10,46 +9,46 @@ export default {
   data () {
     return {
       loading: false,
-      startDate: `${new Date().getFullYear()}-01-01`,
-      endDate: new Date().toISOString().substr(0, 10),
+      year: new Date().getFullYear(),
       sales: []
     }
   },
   methods: {
-    ...mapActions('errors', ['getError'])
+    ...mapActions('errors', ['getError']),
+    formatBalance (value) {
+      const num = (value * -1)
+      return parseFloat(Math.round(num * 100) / 100).toFixed(2)
+    }
   },
   computed: {
-    ...mapState(['auth']),
-    filterSales () {
-      return this.sales.map(sales => {
-        sales.balance = Math.abs(sales.balance)
-        sales.balance = parseFloat(Math.round(sales.balance * 100) / 100).toFixed(2)
-        return sales.balance
-      })
-    },
-    filterMonth () {
-      return this.sales.map(sales => {
-        sales.month = moment().month(sales.month).format('MMM')
-        return sales.month
-      })
-    }
+    ...mapState(['auth'])
   },
   async mounted () {
     try {
-      const response = await axios.get(`/api/graphs/sales/${this.auth.user.BranchId}/${this.startDate}/${this.endDate}`)
+      const response = await axios.get(`/api/graphs/sales/${this.auth.user.BranchId}/${this.year}`)
       this.sales = response.data
     } catch (e) {
-      this.getError(e.response.data)
     }
     const renderChartData = {
-      labels: this.filterMonth,
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       datasets: [
         {
           label: 'Sales',
-          data: this.filterSales,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1
+          data: [
+            this.formatBalance(this.sales[0].january),
+            this.formatBalance(this.sales[0].february),
+            this.formatBalance(this.sales[0].march),
+            this.formatBalance(this.sales[0].april),
+            this.formatBalance(this.sales[0].may),
+            this.formatBalance(this.sales[0].june),
+            this.formatBalance(this.sales[0].july),
+            this.formatBalance(this.sales[0].august),
+            this.formatBalance(this.sales[0].september),
+            this.formatBalance(this.sales[0].october),
+            this.formatBalance(this.sales[0].november),
+            this.formatBalance(this.sales[0].december)
+          ],
+          backgroundColor: '#039be5'
         }
       ]
     }
@@ -57,7 +56,6 @@ export default {
       scales: {
         xAxes: [{
           barPercentage: 0.5,
-          barThickness: 40,
           gridLines: {
             offsetGridLines: true
           }
