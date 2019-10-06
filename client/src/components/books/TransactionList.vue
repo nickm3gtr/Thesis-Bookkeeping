@@ -29,6 +29,28 @@
                 ></v-text-field>
               </v-col>
             </v-row>
+            <v-dialog
+              v-model="dialog"
+              width="500"
+            >
+              <v-card>
+                <v-toolbar color="red lighten-1" dark>
+                  <v-toolbar-title>Delete</v-toolbar-title>
+                </v-toolbar>
+                <v-card-text>
+                  <p class="subtitle-1 mt-5">Are you sure you want to delete?</p>
+                </v-card-text>
+                <v-card-actions>
+                  <div class="flex-grow-1"></div>
+                  <v-btn color="primary" text @click="dialog = false">
+                    Cancel
+                  </v-btn>
+                  <v-btn color="red" text @click="deleteItem">
+                    Delete
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
             <v-data-table
               item-key="TransId"
               :headers="headers"
@@ -46,7 +68,7 @@
                 <v-btn dark color="blue" small class="mx-1"  @click="editItem(item)">
                   <v-icon small class="mr-2">edit</v-icon>
                 </v-btn>
-                <v-btn dark small color="red" class="mx-1" @click="deleteItem(item)">
+                <v-btn dark small color="red" class="mx-1" @click="prepareDelete(item)">
                   <v-icon small>delete</v-icon>
                 </v-btn>
               </template>
@@ -76,6 +98,7 @@ export default {
       search: '',
       transactions: [],
       loading: false,
+      dialog: false,
       headers: [
         { text: 'Date', value: 'date' },
         { text: 'TransactionID', value: 'TransId' },
@@ -88,24 +111,28 @@ export default {
         }
       ],
       timeout: 2000,
-      snackbar: false
+      snackbar: false,
+      itemToDelete: ''
     }
   },
   methods: {
     ...mapActions('errors', ['getError']),
-    async deleteItem (item) {
-      const index = this.transactions.indexOf(item)
-      if (confirm('Are you sure you want to delete this item?')) {
-        try {
-          const response = await axios.delete(
-            `/api/bookkeeping/transactions/${item.TransId}`
-          )
-          console.log(response.data)
-          this.transactions.splice(index, 1)
-          this.snackbar = true
-        } catch (e) {
-          this.getError(e.response.data)
-        }
+    prepareDelete (item) {
+      this.itemToDelete = item
+      this.dialog = true
+    },
+    async deleteItem () {
+      const index = this.transactions.indexOf(this.itemToDelete)
+      try {
+        const response = await axios.delete(
+          `/api/bookkeeping/transactions/${this.itemToDelete.TransId}`
+        )
+        console.log(response.data)
+        this.transactions.splice(index, 1)
+        this.dialog = false
+        this.snackbar = true
+      } catch (e) {
+        this.getError(e.response.data)
       }
     },
     goToItem (item) {

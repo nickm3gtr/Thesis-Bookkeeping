@@ -2,11 +2,13 @@
   <div>
     <v-layout>
       <v-flex sm12 md10 offset-md1>
-        <v-card>
+        <v-card outlined elevation="10">
+          <v-toolbar color="light-blue darken-3" dark>
+            <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
+          </v-toolbar>
           <v-card-title>
             <v-row>
               <v-col cols="12" md="9">
-                <p>Bookkeeper Accounts</p>
               </v-col>
               <v-col cols="12" md="3">
                 <v-dialog persistent v-model="dialog" max-width="600px">
@@ -45,13 +47,35 @@
             </v-row>
           </v-card-title>
           <v-card-text>
+            <v-dialog
+              v-model="deleteDialog"
+              width="500"
+            >
+              <v-card>
+                <v-toolbar color="red lighten-1" dark>
+                  <v-toolbar-title>Delete</v-toolbar-title>
+                </v-toolbar>
+                <v-card-text>
+                  <p class="subtitle-1 mt-5">Are you sure you want to delete?</p>
+                </v-card-text>
+                <v-card-actions>
+                  <div class="flex-grow-1"></div>
+                  <v-btn color="primary" text @click="deleteDialog = false">
+                    Cancel
+                  </v-btn>
+                  <v-btn color="red" text @click="deleteItem">
+                    Delete
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
             <v-data-table
               :headers="headers"
               :items="items"
               :loading="loading"
             >
               <template v-slot:item.action="{ item }">
-                <v-btn dark small color="red" class="mx-1" @click="deleteItem(item)">
+                <v-btn dark small color="red" class="mx-1" @click="prepareDelete(item)">
                   <v-icon small>delete</v-icon>
                 </v-btn>
               </template>
@@ -106,7 +130,8 @@ export default {
         { text: 'Username', value: 'name' },
         { text: 'Branch', value: 'branch' },
         { text: 'Actions', align: 'center', value: 'action', sortable: false }
-      ]
+      ],
+      userToDelete: ''
     }
   },
   methods: {
@@ -136,13 +161,12 @@ export default {
         this.getError(e.response.data)
       }
     },
-    deleteItem (item) {
-      const index = this.items.indexOf(item)
-      if (confirm('Are you sure you want to delete this item?')) {
-        this.delete(item, index)
-      }
+    prepareDelete (item) {
+      this.userToDelete = item
+      this.deleteDialog = true
     },
-    async delete (item, index) {
+    async deleteItem () {
+      const index = this.items.indexOf(this.userToDelete)
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -150,12 +174,13 @@ export default {
         }
       }
       try {
-        const response = await axios.delete(`/api/bookkeepers/${item.id}`, config)
-        this.msg = response.data.msg
+        const response = await axios.delete(
+          `/api/bookkeepers/${this.userToDelete.id}`, config
+        )
         this.items.splice(index, 1)
         this.deleteDialog = false
+        this.msg = response.data.msg
         this.snackbar = true
-        this.saved++
       } catch (e) {
         this.getError(e.response.data)
       }
