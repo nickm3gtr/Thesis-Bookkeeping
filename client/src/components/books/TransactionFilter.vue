@@ -34,49 +34,51 @@
                 ></v-text-field>
               </v-col>
             </v-row>
-            <v-data-table
-              hide-default-footer
-              disable-sort
-              item-key="id"
-              :headers="headers"
-              :items="formatTransactions"
-              :items-per-page="5"
-              :search="search"
-              :loading="loading"
-              loading-text="Loading..."
-              class="elevation-3 mb-6"
+            <v-dialog
+              v-model="dialog"
+              width="500"
             >
-              <template v-slot:body="{ items }">
+              <TransactionFilterDialog
+              :transaction="propTransaction"
+              @close-dialog="closeUpdateDialog"
+              @updated="update++" />
+            </v-dialog>
+            <v-simple-table class="mb-10">
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-left">Account</th>
+                    <th class="text-left">Debit</th>
+                    <th class="text-left">Credit</th>
+                    <th class="text-left">Action</th>
+                  </tr>
+                </thead>
                 <tbody>
-                <tr v-for="item in items" :key="item.name">
-                  <td>{{ item.name }}</td>
-                  <td>
-                    <p v-if="item.debit == 0"></p>
-                    <p v-else>{{ item.debit }}</p>
-                  </td>
-                  <td>
-                    <p v-if="item.credit == 0"></p>
-                    <p v-else>{{ item.credit }}</p>
-                  </td>
-                </tr>
+                  <tr v-for="(item, index) in formatTransactions" :key="item.id">
+                    <td>{{ item.name }}</td>
+                    <td>
+                      <p v-if="item.debit == 0"></p>
+                      <p v-else>{{ item.debit }}</p>
+                    </td>
+                    <td>
+                      <p v-if="item.credit == 0"></p>
+                      <p v-else>{{ item.credit }}</p>
+                    </td>
+                    <td>
+                      <v-btn
+                        class="mt-0"
+                        dark
+                        x-small
+                        color="primary"
+                        @click="openUpdateDialog(index)"
+                      >
+                        <v-icon small>edit</v-icon>
+                      </v-btn>
+                    </td>
+                  </tr>
                 </tbody>
               </template>
-              <template v-slot:body.append="{ headers }">
-                <tr>
-                  <td>
-                    <span class="font-weight-bold">Total:</span>
-                  </td>
-                  <td>
-                    <span v-if="totalDebit === 0"></span>
-                    <span v-else>{{ formatBalance(totalDebit) }}</span>
-                  </td>
-                  <td>
-                    <span v-if="totalCredit === 0"></span>
-                    <span v-else>{{ formatBalance(totalCredit) }}</span>
-                  </td>
-                </tr>
-              </template>
-            </v-data-table>
+            </v-simple-table>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -87,11 +89,14 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import TransactionFilterDialog from './TransactionFilterDialog'
 
 export default {
   name: 'TransactionFilter',
+  components: { TransactionFilterDialog },
   data () {
     return {
+      dialog: false,
       date: '',
       num: '',
       memo: '',
@@ -102,10 +107,20 @@ export default {
         { text: 'Account', value: 'name' },
         { text: 'Debit', value: 'debit' },
         { text: 'Credit', value: 'credit' }
-      ]
+      ],
+      propTransaction: '',
+      update: 0
     }
   },
   methods: {
+    openUpdateDialog (index) {
+      this.propTransaction = this.transactions[index]
+      this.dialog = true
+    },
+    closeUpdateDialog () {
+      this.dialog = false
+      this.propTransaction = ''
+    },
     formatDate (date) {
       return moment(date).format('MMM DD YYYY')
     },
@@ -160,6 +175,30 @@ export default {
       this.memo = transactions.data[0].memo
     } catch (e) {
       this.getError(e.response.data)
+    }
+  },
+  watch: {
+    async update () {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
+      try {
+        this.loading = true
+        const transactions = await axios.get(
+          `/api/bookkeeping/transactions/trans_id/${this.$route.params.transId}`,
+          config
+        )
+        this.loading = false
+        this.transactions = transactions.data
+        this.date = this.formatDate(transactions.data[0].date)
+        this.num = transactions.data[0].num
+        this.memo = transactions.data[0].memo
+      } catch (e) {
+        this.getError(e.response.data)
+      }
     }
   }
 }

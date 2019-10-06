@@ -60,7 +60,7 @@ router.get("/transactions/book/:bookId", auth, (req, res) => {
 router.get("/transactions/trans_id/:transId", auth, (req, res) => {
   const transId = req.params.transId
 
-  db.sequelize.query("select tr.id, tr.\"TransId\", tr.\"date\" as date, tr.num as num, tr.memo as memo, a.name as name, coalesce(tr.debit, 0) as debit, coalesce(tr.credit, 0) as credit\n" +
+  db.sequelize.query("select tr.id, tr.\"TransId\", tr.\"BranchId\" as branch_id, tr.\"BookId\" as book_id, tr.\"date\" as date, tr.num as num, tr.memo as memo, tr.\"AccountId\" as account_id, a.name as name, coalesce(tr.debit, 0) as debit, coalesce(tr.credit, 0) as credit\n" +
     "from \"TransactionRecords\" tr inner join \"Accounts\" a on tr.\"AccountId\"=a.id\n" +
     "where \"TransId\" = :transId\n" +
     "order by tr.id asc", {
@@ -104,6 +104,23 @@ router.get("/transactions/latest/:id", (req, res) => {
     order: [['id', 'DESC']]
   }).then(transaction => res.json(transaction))
     .catch(err => res.status(404).json({ msg: 'Error fetching data', err }))
+})
+
+// Update Transactions by ID
+router.put("/transactions/update/:id", (req, res) => {
+  const id = parseInt(req.params.id)
+  const AccountId = parseInt(req.body.AccountId)
+  const {  debit, credit } = req.body
+
+  db.sequelize.query("update \"TransactionRecords\"\n" +
+	"set debit = :debit,\n" +
+	" credit = :credit,\n" +
+	" \"AccountId\" = :AccountId\n" +
+	"where id=:id", {
+    model: db.TransactionRecord,
+    replacements: { id, AccountId, debit, credit }
+  }).then(update => res.json({ msg: 'Updated!', update }))
+    .catch(err => res.status(404).json({ msg: 'Error updating data', err }))
 })
 
 module.exports = router
