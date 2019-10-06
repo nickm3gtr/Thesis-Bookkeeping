@@ -46,24 +46,9 @@
                 <v-btn dark color="blue" small class="mx-1"  @click="editItem(item)">
                   <v-icon small class="mr-2">edit</v-icon>
                 </v-btn>
-                <v-btn dark small color="red" class="mx-1" @click="clickDelete(item)">
+                <v-btn dark small color="red" class="mx-1" @click="deleteItem(item)">
                   <v-icon small>delete</v-icon>
                 </v-btn>
-                <v-dialog hide-overlay v-model="dialogDelete" width="500">
-                  <v-card>
-                    <v-toolbar color="red lighten-1" dark>
-                      <v-toolbar-title>Delete</v-toolbar-title>
-                    </v-toolbar>
-                    <v-card-text>
-                      <p class="subtitle-1 mt-5">Are you sure you want to delete?</p>
-                    </v-card-text>
-                    <v-card-actions>
-                      <div class="flex-grow-1"></div>
-                      <v-btn color="primary" text @click="dialogDelete = false">Cancel</v-btn>
-                      <v-btn color="red" text @click="deleteItem">Delete</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
               </template>
             </v-data-table>
           </v-card-text>
@@ -86,7 +71,6 @@ export default {
   name: 'TransactionList',
   data () {
     return {
-      dialogDelete: false,
       select: { id: 0, name: 'All' },
       books: [],
       search: '',
@@ -103,56 +87,25 @@ export default {
           sortable: false
         }
       ],
-      itemToDelete: '',
-      indexToDelete: '',
       timeout: 2000,
       snackbar: false
     }
   },
   methods: {
     ...mapActions('errors', ['getError']),
-    async clear () {
-      for (let i = 0; i < this.selected.length; i++) {
-        const index = this.transactions.indexOf(this.selected[i])
-        this.transactions.splice(index, 1)
-      }
-      const codes = this.selected.map(select => select.TransId)
-      const deleteCode = JSON.stringify({ transId: codes })
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('token')
-          },
-          data: deleteCode
+    async deleteItem (item) {
+      const index = this.transactions.indexOf(item)
+      if (confirm('Are you sure you want to delete this item?')) {
+        try {
+          const response = await axios.delete(
+            `/api/bookkeeping/transactions/${item.TransId}`
+          )
+          console.log(response.data)
+          this.transactions.splice(index, 1)
+          this.snackbar = true
+        } catch (e) {
+          this.getError(e.response.data)
         }
-        const response = await axios.delete(
-          '/api/bookkeeping/transactions',
-          config
-        )
-        console.log(response.data)
-      } catch (e) {
-        this.getError(e.response.data)
-      }
-      this.selected = []
-      this.dialogDelete = false
-    },
-    clickDelete (item) {
-      this.index = this.transactions.indexOf(item)
-      this.itemToDelete = item
-      this.dialogDelete = true
-    },
-    async deleteItem () {
-      try {
-        const response = await axios.delete(
-          `/api/bookkeeping/transactions/${this.itemToDelete.TransId}`
-        )
-        console.log(response.data)
-        this.transactions.splice(this.index, 1)
-        this.dialogDelete = false
-        this.snackbar = true
-      } catch (e) {
-        this.getError(e.response.data)
       }
     },
     goToItem (item) {
@@ -187,7 +140,7 @@ export default {
         try {
           this.loading = true
           const response = await axios.get(
-            '/api/bookkeeping/transactions',
+            `/api/bookkeeping/transactions/branch/${this.auth.user.BranchId}`,
             config
           )
           this.loading = false
@@ -206,7 +159,7 @@ export default {
         try {
           this.loading = true
           const response = await axios.get(
-            `/api/bookkeeping/transactions/${this.select.id}`,
+            `/api/bookkeeping/transactions/book/${this.select.id}`,
             config
           )
           this.loading = false
@@ -229,7 +182,7 @@ export default {
       const response = await axios.get('/api/books', config)
       this.loading = true
       const transactions = await axios.get(
-        `/api/bookkeeping/transactions/${this.auth.user.Branch.id}`,
+        `/api/bookkeeping/transactions/branch/${this.auth.user.BranchId}`,
         config
       )
       this.books = response.data

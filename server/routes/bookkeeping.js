@@ -28,7 +28,7 @@ router.post("/cash-disbursements", auth, (req, res) => {
 })
 
 // Fetch all transaction records
-router.get("/transactions/:branchId", auth, (req, res) => {
+router.get("/transactions/branch/:branchId", auth, (req, res) => {
   const { branchId } = req.params
   db.sequelize.query("select tr.\"TransId\", tr.memo, tr.\"date\", tr.\"createdAt\", tr.num\n" +
     "from \"TransactionRecords\" tr inner join \"Branches\" b on tr.\"BranchId\"=b.id\n" +
@@ -42,7 +42,7 @@ router.get("/transactions/:branchId", auth, (req, res) => {
 })
 
 // Fetch transaction records by bookId
-router.get("/transactions/:bookId", auth, (req, res) => {
+router.get("/transactions/book/:bookId", auth, (req, res) => {
   const bookId = req.params.bookId
 
   db.sequelize.query("select \"TransId\", memo, \"date\", num\n" +

@@ -51,47 +51,9 @@
               :loading="loading"
             >
               <template v-slot:item.action="{ item }">
-                <v-dialog
-                  v-model="deleteDialog" max-width="600px"
-                >
-                  <template v-slot:activator="{ on: dialog }">
-                    <v-icon
-                      small
-                      v-on="{ ...dialog }"
-                    >
-                      delete
-                    </v-icon>
-                  </template>
-                  <v-card>
-                    <v-card-title
-                      class="headline grey lighten-2"
-                      primary-title
-                    >
-                      Delete Account
-                    </v-card-title>
-                    <v-card-text>
-                      <p class="subtitle-1">Are you sure you want to delete?</p>
-                    </v-card-text>
-                    <v-divider></v-divider>
-                    <v-card-actions>
-                      <div class="flex-grow-1"></div>
-                      <v-btn
-                        color="primary"
-                        text
-                        @click="deleteDialog = false"
-                      >
-                        Close
-                      </v-btn>
-                      <v-btn
-                        color="primary"
-                        text
-                        @click="deleteItem(item)"
-                      >
-                        Okay
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
+                <v-btn dark small color="red" class="mx-1" @click="deleteItem(item)">
+                  <v-icon small>delete</v-icon>
+                </v-btn>
               </template>
             </v-data-table>
           </v-card-text>
@@ -133,7 +95,7 @@ export default {
       dialog: false,
       deleteDialog: false,
       snackbar: false,
-      timeout: 0,
+      timeout: 2000,
       saved: 1,
       loading: false,
       msg: '',
@@ -174,7 +136,13 @@ export default {
         this.getError(e.response.data)
       }
     },
-    async deleteItem (item) {
+    deleteItem (item) {
+      const index = this.items.indexOf(item)
+      if (confirm('Are you sure you want to delete this item?')) {
+        this.delete(item, index)
+      }
+    },
+    async delete (item, index) {
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -184,6 +152,7 @@ export default {
       try {
         const response = await axios.delete(`/api/bookkeepers/${item.id}`, config)
         this.msg = response.data.msg
+        this.items.splice(index, 1)
         this.deleteDialog = false
         this.snackbar = true
         this.saved++

@@ -105,7 +105,7 @@ router.delete("/:id", auth, (req, res) => {
     where: {
       id: id
     }
-  }).then(res.json({ msg: `Deleted bookkeeper with id of ${id}` }))
+  }).then(res.json({ msg: `Deleted` }))
     .catch(err => res.status(400).json({ msg: 'not deleted', err }))
 })
 

@@ -18,6 +18,9 @@ export default {
   actions: {
     getError: ({ commit }, payload) => {
       commit('error', payload)
+      setTimeout(() => {
+        commit('clearError')
+      }, 2000)
     },
     clearError: ({ commit }) => {
       commit('clearError')
