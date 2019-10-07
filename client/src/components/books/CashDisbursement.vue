@@ -170,7 +170,6 @@
 </template>
 
 <script>
-import uniqid from 'uniqid'
 import { mapActions, mapState } from 'vuex'
 import axios from 'axios'
 import CashDisbursementDialog from '@/components/books/CashDisbursementDialog'
@@ -187,7 +186,6 @@ export default {
       timeout: 2000,
       menu: false,
       date: new Date().toISOString().substr(0, 10),
-      transId: uniqid.time('CDBK-'),
       BookId: 3,
       dialog: false,
       num: '',
@@ -197,8 +195,7 @@ export default {
         { text: 'Amount', value: 'debit' }
       ],
       items: [],
-      hidden: true,
-      statusId: ''
+      hidden: true
     }
   },
   methods: {
@@ -216,34 +213,27 @@ export default {
       try {
         const cashItem = {
           AccountId: 11130,
-          AccountName: '11130-Cash in Bank',
-          BookId: this.BookId,
-          BranchId: this.auth.user.BranchId,
-          TransId: this.transId,
           debit: null,
-          credit: this.totalCash,
-          date: this.date,
-          memo: this.memo,
-          num: this.num
+          credit: this.totalCash
         }
         const data = [ ...this.items, cashItem ]
-        const newData = data.map(data => {
-          data.num = this.num
-          data.memo = this.memo
-          return data
+        const newTransaction = JSON.stringify({
+          BranchId: this.auth.user.BranchId,
+          BookId: this.BookId,
+          memo: this.memo,
+          num: this.num,
+          date: this.date,
+          data: data
         })
-        const newTransaction = JSON.stringify({ data: newData })
-        const response = await axios.post('/api/bookkeeping/cash-disbursements', newTransaction, config)
+        const response = await axios.post('/api/bookkeeping/general-journal', newTransaction, config)
         const savedTransaction = response.data
         if (!savedTransaction) console.log('Failed')
         this.snackbar = true
         this.statusId = this.transId
         this.clearAll()
-        this.transId = uniqid.time('CDBK-')
         this.hidden = false
       } catch (e) {
         this.getError(e.response.data)
-        this.transId = uniqid.time('CDBK-')
       }
     },
     clearAll () {

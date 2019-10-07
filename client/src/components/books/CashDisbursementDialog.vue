@@ -49,7 +49,6 @@ import axios from 'axios'
 
 export default {
   name: 'CashDisbursementDialog',
-  props: [ 'transId', 'memo', 'date', 'BookId', 'num' ],
   data () {
     return {
       loading: false,
@@ -62,16 +61,9 @@ export default {
     ...mapActions('errors', ['getError']),
     add () {
       const transaction = {
-        BranchId: this.auth.user.BranchId,
-        BookId: this.BookId,
-        TransId: this.transId,
         AccountId: this.selected.id,
-        memo: this.memo,
-        AccountName: this.selected.name,
         debit: this.amount,
-        credit: null,
-        date: this.date,
-        num: this.num
+        credit: null
       }
       this.$emit('add-transaction', transaction)
       this.$emit('close-dialog')

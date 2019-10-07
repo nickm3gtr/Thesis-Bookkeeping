@@ -39,7 +39,6 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'SalesBookDialog',
-  props: [ 'transId', 'memo', 'date', 'BookId', 'num' ],
   data () {
     return {
       loading: false,
@@ -53,16 +52,9 @@ export default {
     ...mapActions('errors', ['getError']),
     add () {
       const transaction = {
-        BranchId: this.auth.user.BranchId,
-        BookId: this.BookId,
-        TransId: this.transId,
         AccountId: this.AccountId,
-        memo: this.memo,
-        AccountName: this.AccountName,
         debit: null,
-        credit: this.amount,
-        date: this.date,
-        num: this.num
+        credit: this.amount
       }
       this.$emit('add-transaction', transaction)
       this.$emit('close-dialog')

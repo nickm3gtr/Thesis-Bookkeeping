@@ -27,7 +27,7 @@
       </v-col>
     </v-row>
     <hr/>
-    <div v-for="(item, index) in filterDebits" :key="item.id">
+    <div v-for="(item, index) in filterDebits" :key="item.trans_id">
       <v-row>
         <v-col cols="12" md="3">
           <p v-if="(index + 1) % 9 === 0" class="html2pdf__page-break">

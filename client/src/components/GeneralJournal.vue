@@ -54,7 +54,6 @@
                     </v-tooltip>
                   </template>
                   <GeneralJournalDialog
-                    :transId="transId"
                     :memo="memo"
                     :BookId="BookId"
                     :date="date"
@@ -142,7 +141,6 @@
           </v-card-text>
         </v-card>
         <RecordStatus :hidden="hidden"
-                      :statusId="statusId"
                       @close-status="hidden=true"
         />
       </v-flex>
@@ -170,8 +168,7 @@
 <script>
 import RecordStatus from '@/components/status/RecordStatus'
 import GeneralJournalDialog from './GeneralJournalDialog'
-import { mapActions } from 'vuex'
-import uniqid from 'uniqid'
+import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 
 export default {
@@ -182,7 +179,6 @@ export default {
       selected: [],
       snackbar: false,
       timeout: 2000,
-      transId: uniqid.time('GNLJRNL-'),
       BookId: 1,
       dialog: false,
       dialogDelete: false,
@@ -195,8 +191,7 @@ export default {
         { text: 'Credit', value: 'credit' }
       ],
       items: [],
-      hidden: true,
-      statusId: ''
+      hidden: true
     }
   },
   methods: {
@@ -232,22 +227,28 @@ export default {
         }
       }
       try {
-        const newTransaction = JSON.stringify({ data: this.formatItems })
+        const newTransaction = JSON.stringify(
+          {
+            BranchId: this.auth.user.BranchId,
+            BookId: this.BookId,
+            memo: this.memo,
+            date: this.date,
+            data: this.formatItems
+          }
+        )
         const response = await axios.post('/api/bookkeeping/general-journal', newTransaction, config)
         const savedTransaction = response.data
         if (!savedTransaction) console.log('Failed')
         this.snackbar = true
-        this.statusId = this.transId
         this.clearAll()
-        this.transId = uniqid.time('GNLJRNL-')
         this.hidden = false
       } catch (e) {
         this.getError(e.response.data)
-        this.transId = uniqid.time('GNLJRNL-')
       }
     }
   },
   computed: {
+    ...mapState(['auth']),
     formatItems () {
       const formatItem = this.items.map(item => {
         if (item.debit.length <= 0) {

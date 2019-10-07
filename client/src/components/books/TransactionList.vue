@@ -101,7 +101,7 @@ export default {
       dialog: false,
       headers: [
         { text: 'Date', value: 'date' },
-        { text: 'TransactionID', value: 'TransId' },
+        { text: 'TransactionID', value: 'id' },
         { text: 'Memo', value: 'memo' },
         {
           text: 'Actions',
@@ -125,7 +125,7 @@ export default {
       const index = this.transactions.indexOf(this.itemToDelete)
       try {
         const response = await axios.delete(
-          `/api/bookkeeping/transactions/${this.itemToDelete.TransId}`
+          `/api/bookkeeping/transactions/${this.itemToDelete.id}`
         )
         console.log(response.data)
         this.transactions.splice(index, 1)
@@ -136,7 +136,7 @@ export default {
       }
     },
     goToItem (item) {
-      this.$router.push(`/bookkeeper/transactions/${item.TransId}`)
+      this.$router.push(`/bookkeeper/transactions/${item.id}`)
     }
   },
   computed: {
@@ -186,7 +186,7 @@ export default {
         try {
           this.loading = true
           const response = await axios.get(
-            `/api/bookkeeping/transactions/book/${this.select.id}`,
+            `/api/bookkeeping/transactions/book/${this.auth.user.BranchId}/${this.select.id}`,
             config
           )
           this.loading = false

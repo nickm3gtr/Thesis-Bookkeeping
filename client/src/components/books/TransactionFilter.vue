@@ -174,15 +174,16 @@ export default {
     }
     try {
       this.loading = true
-      const transactions = await axios.get(
+      const response = await axios.get(`/api/bookkeeping/transaction-records/trans_id/${this.$route.params.transId}`)
+      const trans = await axios.get(
         `/api/bookkeeping/transactions/trans_id/${this.$route.params.transId}`,
         config
       )
       this.loading = false
-      this.transactions = transactions.data
-      this.date = this.formatDate(transactions.data[0].date)
-      this.num = transactions.data[0].num
-      this.memo = transactions.data[0].memo
+      this.transactions = response.data
+      this.date = this.formatDate(trans.data[0].date)
+      this.num = trans.data[0].num
+      this.memo = trans.data[0].memo
     } catch (e) {
       this.getError(e.response.data)
     }
@@ -197,15 +198,16 @@ export default {
       }
       try {
         this.loading = true
-        const transactions = await axios.get(
+        const response = await axios.get(`/api/bookkeeping/transaction-records/trans_id/${this.$route.params.transId}`)
+        const trans = await axios.get(
           `/api/bookkeeping/transactions/trans_id/${this.$route.params.transId}`,
           config
         )
         this.loading = false
-        this.transactions = transactions.data
-        this.date = this.formatDate(transactions.data[0].date)
-        this.num = transactions.data[0].num
-        this.memo = transactions.data[0].memo
+        this.transactions = response.data
+        this.date = this.formatDate(trans.data[0].date)
+        this.num = trans.data[0].num
+        this.memo = trans.data[0].memo
       } catch (e) {
         this.getError(e.response.data)
       }

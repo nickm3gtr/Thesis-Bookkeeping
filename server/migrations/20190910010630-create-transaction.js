@@ -1,42 +1,42 @@
+/* eslint-disable no-unused-vars */
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('TransactionRecords', {
+    return queryInterface.createTable('Transactions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      TransId: {
+      BranchId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Transactions',
+          model: 'Branches',
           key: 'id'
         }
       },
-      AccountId: {
+      BookId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Accounts',
+          model: 'Books',
           key: 'id'
         }
       },
-      debit: {
-        type: Sequelize.DECIMAL(10, 2)
-      },
-      credit: {
-        type: Sequelize.DECIMAL(10, 2)
-      },
-      tags: {
+      num: {
         type: Sequelize.STRING
+      },
+      memo: {
+        type: Sequelize.STRING
+      },
+      date: {
+        type: Sequelize.DATE
       }
     });
   },
-  // eslint-disable-next-line no-unused-vars
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('TransactionRecords');
+    return queryInterface.dropTable('Transactions');
   }
 };

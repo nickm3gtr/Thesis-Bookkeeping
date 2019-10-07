@@ -71,15 +71,10 @@ export default {
     ...mapActions('errors', ['getError']),
     add () {
       const transaction = {
-        BranchId: this.auth.user.BranchId,
-        BookId: this.BookId,
-        TransId: this.transId,
         AccountId: this.selected.id,
-        memo: this.memo,
         AccountName: this.selected.name,
         debit: this.debit,
-        credit: this.credit,
-        date: this.date
+        credit: this.credit
       }
       this.$emit('add-transaction', transaction)
       this.$emit('close-dialog')
