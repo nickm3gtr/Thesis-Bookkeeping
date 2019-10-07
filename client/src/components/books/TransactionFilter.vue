@@ -41,7 +41,7 @@
               <TransactionFilterDialog
               :transaction="propTransaction"
               @close-dialog="closeUpdateDialog"
-              @updated="update++" />
+              @updated="transactionUpdated" />
             </v-dialog>
             <v-simple-table class="mb-10">
               <template v-slot:default>
@@ -81,6 +81,10 @@
             </v-simple-table>
           </v-card-text>
         </v-card>
+        <v-snackbar v-model="snackbar" bottom="bottom" color="primary" :timeout="timeout">
+          Updated!
+          <v-btn color="white" text @click="snackbar=false">Close</v-btn>
+        </v-snackbar>
       </v-flex>
     </v-layout>
   </div>
@@ -109,7 +113,9 @@ export default {
         { text: 'Credit', value: 'credit' }
       ],
       propTransaction: '',
-      update: 0
+      update: 0,
+      timeout: 2000,
+      snackbar: false
     }
   },
   methods: {
@@ -120,6 +126,10 @@ export default {
     closeUpdateDialog () {
       this.dialog = false
       this.propTransaction = ''
+    },
+    transactionUpdated () {
+      this.update++
+      this.snackbar = true
     },
     formatDate (date) {
       return moment(date).format('MMM DD YYYY')
