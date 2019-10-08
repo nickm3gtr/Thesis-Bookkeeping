@@ -150,7 +150,7 @@ export default {
         BranchId: this.select.id
       })
       try {
-        const response = await axios.post('http://localhost:5000/api/bookkeepers', newUser, config)
+        const response = await axios.post('/api/bookkeepers', newUser, config)
         const savedTransaction = response.data
         if (!savedTransaction) this.getError('Failed')
         this.msg = 'Saved!'
