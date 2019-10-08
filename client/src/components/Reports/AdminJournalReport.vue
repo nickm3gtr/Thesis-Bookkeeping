@@ -84,7 +84,16 @@
               </v-col>
             </v-row>
           </v-card-title>
-          <div id="content" class="mx-12" :hidden="hidden">
+          <div class="text-center">
+            <v-progress-circular
+              v-if="loading === true"
+              size="90"
+              width="10"
+              indeterminate
+              color="primary"
+            ></v-progress-circular>
+          </div>
+          <div id="content" class="mx-12" :hidden="hidden" v-if="loading === false">
             <v-card-text>
               <div v-if="selected === null || selected === '' || selected.id === 1">
                 <GeneralJournalComponent
@@ -172,12 +181,14 @@ export default {
       ],
       items: [],
       hidden: true,
-      branches: []
+      branches: [],
+      loading: false
     }
   },
   methods: {
     ...mapActions('errors', ['getError']),
     async generate () {
+      this.loading = true
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -189,9 +200,11 @@ export default {
           `/api/reports/journal/${this.selectedBranch.id}/${this.selected.id}/${this.fromDate}/${this.toDate}`, config
         )
         this.items = response.data
+        this.loading = false
       } catch (e) {
         if (e.response.data) this.getError(e.response.data)
         this.getError("Can't fetch journal")
+        this.loading = false
       }
       this.hidden = false
     },

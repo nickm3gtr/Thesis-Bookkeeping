@@ -67,7 +67,16 @@
               </v-col>
             </v-row>
           </v-card-title>
-          <div id="content" :hidden="hidden">
+          <div class="text-center">
+            <v-progress-circular
+              v-if="loading === true"
+              size="90"
+              width="10"
+              indeterminate
+              color="primary"
+            ></v-progress-circular>
+          </div>
+          <div id="content" :hidden="hidden" v-if="loading === false">
             <v-card-text>
               <div class="text-center">
                 <p>
@@ -170,12 +179,14 @@ export default {
       toDate: new Date().toISOString().substr(0, 10),
       items: [],
       hidden: true,
-      branches: []
+      branches: [],
+      loading: false
     }
   },
   methods: {
     ...mapActions('errors', ['getError']),
     async generate () {
+      this.loading = true
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -188,8 +199,10 @@ export default {
           config
         )
         this.items = response.data
+        this.loading = false
       } catch (e) {
         this.getError(e.response.data)
+        this.loading = false
       }
       this.hidden = false
     },

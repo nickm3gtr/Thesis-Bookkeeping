@@ -79,7 +79,16 @@
               </v-col>
             </v-row>
           </v-card-title>
-          <div id="content" :hidden="hidden">
+          <div class="text-center">
+            <v-progress-circular
+              v-if="loading === true"
+              size="90"
+              width="10"
+              indeterminate
+              color="primary"
+            ></v-progress-circular>
+          </div>
+          <div id="content" :hidden="hidden" v-if="loading === false">
             <v-card-text>
               <v-flex sm12 md10 offset-md1>
                 <div class="text-center">
@@ -174,7 +183,8 @@ export default {
       toDate: new Date().toISOString().substr(0, 10),
       items: [],
       hidden: true,
-      branches: []
+      branches: [],
+      loading: false
     }
   },
   methods: {
@@ -216,13 +226,16 @@ export default {
       html2pdf().from(element).set(opt).save()
     },
     async generate () {
+      this.loading = true
       try {
         const response = await axios.get(
           `/api/reports/income-statement/${this.selectedBranch.id}/${this.fromDate}/${this.toDate}`
         )
         this.items = response.data
+        this.loading = false
       } catch (e) {
         this.getError(e.response.data)
+        this.loading = false
       }
       this.hidden = false
     }

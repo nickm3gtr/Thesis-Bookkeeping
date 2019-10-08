@@ -53,8 +53,8 @@ router.get("/transactions/trans_id/:transId", (req, res) => {
   const transId = req.params.transId
 
   db.sequelize.query("select *\n" +
-    "from \"TransactionRecords\"\n" +
-    "where \"TransId\" = :transId", {
+    "from \"Transactions\"\n" +
+    "where id = :transId", {
     model: db.TransactionRecord,
     replacements: { transId }
   }).then(transactions => res.json(transactions))
