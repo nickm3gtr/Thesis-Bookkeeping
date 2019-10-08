@@ -57,7 +57,6 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'GeneralJournalDialog',
-  props: [ 'transId', 'memo', 'date', 'BookId' ],
   data () {
     return {
       loading: false,

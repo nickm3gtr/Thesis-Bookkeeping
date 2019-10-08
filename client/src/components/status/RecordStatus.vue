@@ -27,7 +27,7 @@
       >
         <template v-slot:body="{ items }">
           <tbody>
-          <tr v-for="item in items" :key="item.name">
+          <tr v-for="item in items" :key="item.id">
             <td>{{ item.name }}</td>
             <td>
               <span v-if="item.debit == 0"></span>
@@ -95,8 +95,8 @@ export default {
           }
         }
         const response = await axios.get(`/api/bookkeeping/transactions/latest/${this.auth.user.BranchId}`)
-        const transId = response.data.TransId
-        const transaction = await axios.get(`/api/bookkeeping/transactions/trans_id/${transId}`, config)
+        const transId = response.data.id
+        const transaction = await axios.get(`/api/bookkeeping/transaction-records/trans_id/${transId}`, config)
         this.items = transaction.data
         this.loading = false
       } catch (e) {

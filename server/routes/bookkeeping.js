@@ -26,7 +26,7 @@ router.get("/transactions/branch/:branchId", auth, (req, res) => {
   const { branchId } = req.params
   db.sequelize.query("select id, memo, num, date\n" +
       "from \"Transactions\"\n" +
-      "where \"BranchId\"=1\n" +
+      "where \"BranchId\"=:branchId\n" +
       "order by id desc, \"date\" desc", {
     model: db.Transaction,
     replacements: { branchId }
@@ -53,8 +53,8 @@ router.get("/transactions/trans_id/:transId", (req, res) => {
   const transId = req.params.transId
 
   db.sequelize.query("select *\n" +
-    "from \"Transactions\"\n" +
-    "where id = :transId", {
+    "from \"TransactionRecords\"\n" +
+    "where \"TransId\" = :transId", {
     model: db.TransactionRecord,
     replacements: { transId }
   }).then(transactions => res.json(transactions))
@@ -96,7 +96,7 @@ router.delete("/transactions/:transId", (req, res) => {
 router.get("/transactions/latest/:id", (req, res) => {
   const { id } = req.params
 
-  db.TransactionRecord.findOne({
+  db.Transaction.findOne({
     where: {
       BranchId: id
     },

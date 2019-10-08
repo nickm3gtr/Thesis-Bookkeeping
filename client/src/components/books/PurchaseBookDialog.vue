@@ -64,6 +64,7 @@ export default {
     add () {
       const transaction = {
         AccountId: this.selected.id,
+        AccountName: this.selected.name,
         debit: this.amount,
         credit: null
       }

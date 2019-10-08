@@ -54,9 +54,6 @@
                     </v-tooltip>
                   </template>
                   <GeneralJournalDialog
-                    :memo="memo"
-                    :BookId="BookId"
-                    :date="date"
                     @close-dialog="dialog = false"
                     @add-transaction="add"
                   />
@@ -141,6 +138,7 @@
           </v-card-text>
         </v-card>
         <RecordStatus :hidden="hidden"
+                      :statusId="statusId"
                       @close-status="hidden=true"
         />
       </v-flex>
@@ -191,7 +189,8 @@ export default {
         { text: 'Credit', value: 'credit' }
       ],
       items: [],
-      hidden: true
+      hidden: true,
+      statusId: 0
     }
   },
   methods: {
@@ -241,6 +240,7 @@ export default {
         if (!savedTransaction) console.log('Failed')
         this.snackbar = true
         this.clearAll()
+        this.statusId++
         this.hidden = false
       } catch (e) {
         this.getError(e.response.data)

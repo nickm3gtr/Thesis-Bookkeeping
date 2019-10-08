@@ -59,11 +59,6 @@
                     </v-tooltip>
                   </template>
                   <CashDisbursementDialog
-                    :transId="transId"
-                    :memo="memo"
-                    :BookId="BookId"
-                    :date="date"
-                    :num="num"
                     @add-transaction="add"
                     @close-dialog="dialog = false"
                   />
@@ -195,7 +190,8 @@ export default {
         { text: 'Amount', value: 'debit' }
       ],
       items: [],
-      hidden: true
+      hidden: true,
+      statusId: 0
     }
   },
   methods: {
@@ -229,8 +225,8 @@ export default {
         const savedTransaction = response.data
         if (!savedTransaction) console.log('Failed')
         this.snackbar = true
-        this.statusId = this.transId
         this.clearAll()
+        this.statusId++
         this.hidden = false
       } catch (e) {
         this.getError(e.response.data)
