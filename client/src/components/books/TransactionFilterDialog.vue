@@ -71,27 +71,10 @@ export default {
       this.$emit('close-dialog')
       this.selected = ''
     },
-    async updateTransaction () {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-      const newTransaction = {
-        AccountId: this.selected.id,
-        debit: this.transaction.debit,
-        credit: this.transaction.credit
-      }
-      try {
-        const response = await axios.put(`/api/bookkeeping/transactions/update/${this.transaction.id}`,
-          newTransaction, config)
-        console.log(response.data)
-        this.$emit('updated')
-        this.closeDialog()
-      } catch (e) {
-        this.getError(e.response.data.msg)
-        this.closeDialog()
-      }
+    updateTransaction () {
+      this.transaction.account_id = this.selected.id
+      this.transaction.name = this.selected.name
+      this.closeDialog()
     }
   },
   computed: {

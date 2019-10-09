@@ -9,19 +9,46 @@
           <v-card-text>
             <v-row>
               <v-col cols="12" md="4">
-                <v-text-field
-                  v-model="date"
-                  label="Select Date"
-                  prepend-icon="event"
-                  readonly
-                ></v-text-field>
+                <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  min-width="290px"
+                  :disabled="!editable"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                      v-model="date"
+                      label="Select Date"
+                      prepend-icon="event"
+                      readonly
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker v-model="date" no-title @input="menu = false">
+                  </v-date-picker>
+                </v-menu>
               </v-col>
               <v-col cols="12" md="4">
                 <v-text-field
                   label="Num"
                   v-model="num"
-                  readonly
+                  :readonly="!editable"
                 ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="2">
+                <v-switch v-model="editable" label="Edit"></v-switch>
+              </v-col>
+              <v-col cols="12" md="2">
+                <v-btn color="primary"
+                  :disabled="!editable"
+                  @click="transactionUpdated"
+                >
+                  Update
+                </v-btn>
               </v-col>
             </v-row>
             <v-row>
@@ -30,7 +57,7 @@
                   outlined
                   label="Description"
                   v-model="memo"
-                  readonly
+                  :readonly="!editable"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -39,9 +66,9 @@
               width="500"
             >
               <TransactionFilterDialog
-              :transaction="propTransaction"
-              @close-dialog="closeUpdateDialog"
-              @updated="transactionUpdated" />
+                :transaction="propTransaction"
+                @close-dialog="closeUpdateDialog"
+               />
             </v-dialog>
             <v-simple-table class="mb-10">
               <template v-slot:default>
@@ -54,7 +81,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, index) in formatTransactions" :key="item.id">
+                  <tr v-for="(item, index) in transactions" :key="item.id">
                     <td>{{ item.name }}</td>
                     <td>
                       <p v-if="item.debit == 0"></p>
@@ -70,6 +97,7 @@
                         dark
                         x-small
                         color="primary"
+                        :disabled="!editable"
                         @click="openUpdateDialog(index)"
                       >
                         <v-icon small>edit</v-icon>
@@ -100,6 +128,7 @@ export default {
   components: { TransactionFilterDialog },
   data () {
     return {
+      menu: false,
       dialog: false,
       date: '',
       num: '',
@@ -115,7 +144,8 @@ export default {
       propTransaction: '',
       update: 0,
       timeout: 2000,
-      snackbar: false
+      snackbar: false,
+      editable: false
     }
   },
   methods: {
@@ -127,12 +157,35 @@ export default {
       this.dialog = false
       this.propTransaction = ''
     },
-    transactionUpdated () {
+    async transactionUpdated () {
+      const updateData = JSON.stringify({
+        transaction: {
+          date: this.date,
+          num: this.num,
+          memo: this.memo
+        },
+        transRecord: this.formatTransactions
+      })
+      console.log(updateData)
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
+
+      try {
+        const response = await axios.put(`/api/bookkeeping/transactions/transaction/${this.$route.params.transId}`,
+          updateData, config)
+        console.log(response.data)
+      } catch (e) {
+        this.getError(e.response.data)
+      }
       this.update++
       this.snackbar = true
     },
     formatDate (date) {
-      return moment(date).format('MMM DD YYYY')
+      return moment(date).format('YYYY-M-D')
     },
     formatBalance (value) {
       const num = Math.abs(value)
@@ -142,7 +195,12 @@ export default {
   computed: {
     formatTransactions () {
       return this.transactions.map(transaction => {
-        transaction.date = moment(transaction.date).format('MMM DD')
+        // eslint-disable-next-line eqeqeq
+        if (transaction.credit == null || transaction.credit == 0) {
+          transaction.debit = parseInt(transaction.debit)
+        } else {
+          transaction.credit = parseInt(transaction.credit)
+        }
         return transaction
       })
     },

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 const express = require('express')
 const router = express.Router()
 const db = require('../models')
@@ -122,4 +124,37 @@ router.put("/transactions/update/:id", (req, res) => {
     .catch(err => res.status(404).json({ msg: 'Error updating data', err }))
 })
 
+// Update transactions with transactions table
+router.put("/transactions/transaction/:id", (req, res) => {
+  const transId = req.params.id
+  const { transaction, transRecord } = req.body
+  const { date, num, memo } = transaction
+
+  db.sequelize.query("update \"Transactions\"\n" +
+    "set date=:date, \n" +
+    "num=:num, \n" +
+    "memo=:memo \n" +
+    "where id=:transId", {
+      model: db.Transaction,
+      replacements: { transId, date, num, memo }
+    }).then(() => {
+
+      // For loop to iterate each transactionRecord
+      let transPromise = []
+      for(let i=0; i<transRecord.length; i++) {
+        transPromise.push(db.TransactionRecord.update({
+          AccountId: transRecord[i].account_id,
+          debit: transRecord[i].debit,
+          credit: transRecord[i].credit
+        }, {
+          where: {
+            id: transRecord[i].id
+          }
+        }))
+      }
+      Promise.all(transPromise)
+        .then(() => res.json({ msg: 'updated!' }))
+        .catch(err => res.status(400).json({ msg: 'Error updating', err }))
+    }).catch(err => console.log(err))
+})
 module.exports = router
