@@ -163,7 +163,8 @@ export default {
         transaction: {
           date: this.date,
           num: this.num,
-          memo: this.memo
+          memo: this.memo,
+          updatedAt: new Date()
         },
         transRecord: this.formatTransactions
       })

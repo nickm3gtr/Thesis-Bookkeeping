@@ -128,15 +128,16 @@ router.get("/transactions/latest/:id", (req, res) => {
 router.put("/transactions/transaction/:id", (req, res) => {
   const transId = req.params.id
   const { transaction, transRecord } = req.body
-  const { date, num, memo } = transaction
+  const { date, num, memo, updatedAt } = transaction
 
   db.sequelize.query("update \"Transactions\"\n" +
     "set date=:date, \n" +
     "num=:num, \n" +
-    "memo=:memo \n" +
+    "memo=:memo, \n" +
+    "\"updatedAt\"=:updatedAt \n" +
     "where id=:transId", {
       model: db.Transaction,
-      replacements: { transId, date, num, memo }
+      replacements: { transId, date, num, memo, updatedAt }
     }).then(() => {
 
       // For loop to iterate each transactionRecord
