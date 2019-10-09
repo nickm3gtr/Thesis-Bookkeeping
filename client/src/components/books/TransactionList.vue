@@ -65,9 +65,6 @@
                 <v-btn dark small color="green" class="mx-1" @click="goToItem(item)">
                   <v-icon small>search</v-icon>
                 </v-btn>
-                <v-btn dark color="blue" small class="mx-1"  @click="editItem(item)">
-                  <v-icon small class="mr-2">edit</v-icon>
-                </v-btn>
                 <v-btn dark small color="red" class="mx-1" @click="prepareDelete(item)">
                   <v-icon small>delete</v-icon>
                 </v-btn>

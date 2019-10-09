@@ -43,8 +43,7 @@
         </v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="blue darken-1" text @click="closeDialog">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="updateTransaction">Update</v-btn>
+          <v-btn color="blue darken-1" text @click="updateTransaction">Close</v-btn>
         </v-card-actions>
       </v-form>
     </v-card>

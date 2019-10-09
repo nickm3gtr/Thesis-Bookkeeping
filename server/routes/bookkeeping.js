@@ -107,22 +107,22 @@ router.get("/transactions/latest/:id", (req, res) => {
     .catch(err => res.status(404).json({ msg: 'Error fetching data', err }))
 })
 
-// Update Transactions by ID
-router.put("/transactions/update/:id", (req, res) => {
-  const id = parseInt(req.params.id)
-  const AccountId = parseInt(req.body.AccountId)
-  const {  debit, credit } = req.body
+// // Update Transactions by ID
+// router.put("/transactions/update/:id", (req, res) => {
+//   const id = parseInt(req.params.id)
+//   const AccountId = parseInt(req.body.AccountId)
+//   const {  debit, credit } = req.body
 
-  db.sequelize.query("update \"TransactionRecords\"\n" +
-	"set debit = :debit,\n" +
-	" credit = :credit,\n" +
-	" \"AccountId\" = :AccountId\n" +
-	"where id=:id", {
-    model: db.TransactionRecord,
-    replacements: { id, AccountId, debit, credit }
-  }).then(update => res.json({ msg: 'Updated!', update }))
-    .catch(err => res.status(404).json({ msg: 'Error updating data', err }))
-})
+//   db.sequelize.query("update \"TransactionRecords\"\n" +
+// 	"set debit = :debit,\n" +
+// 	" credit = :credit,\n" +
+// 	" \"AccountId\" = :AccountId\n" +
+// 	"where id=:id", {
+//     model: db.TransactionRecord,
+//     replacements: { id, AccountId, debit, credit }
+//   }).then(update => res.json({ msg: 'Updated!', update }))
+//     .catch(err => res.status(404).json({ msg: 'Error updating data', err }))
+// })
 
 // Update transactions with transactions table
 router.put("/transactions/transaction/:id", (req, res) => {

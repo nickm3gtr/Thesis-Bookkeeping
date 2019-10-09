@@ -44,6 +44,7 @@
               </v-col>
               <v-col cols="12" md="2">
                 <v-btn color="primary"
+                  class="mt-2"
                   :disabled="!editable"
                   @click="transactionUpdated"
                 >
@@ -166,7 +167,6 @@ export default {
         },
         transRecord: this.formatTransactions
       })
-      console.log(updateData)
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -175,13 +175,13 @@ export default {
       }
 
       try {
-        const response = await axios.put(`/api/bookkeeping/transactions/transaction/${this.$route.params.transId}`,
+        await axios.put(`/api/bookkeeping/transactions/transaction/${this.$route.params.transId}`,
           updateData, config)
-        console.log(response.data)
       } catch (e) {
         this.getError(e.response.data)
       }
       this.update++
+      this.editable = false
       this.snackbar = true
     },
     formatDate (date) {
