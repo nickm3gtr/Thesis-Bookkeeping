@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   const Transaction = sequelize.define('Transaction', {
     num: DataTypes.STRING,
     memo: DataTypes.STRING,
+    status: DataTypes.STRING,
     date: DataTypes.DATE
   }, {});
   Transaction.associate = function(models) {

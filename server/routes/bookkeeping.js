@@ -7,8 +7,9 @@ const auth = require('../middleware/auth')
 
 router.post("/general-journal", (req, res) => {
   let { BranchId, BookId, num, memo, date, data } = req.body
+  const status = 'created'
   db.Transaction.create({
-    BranchId, BookId, num, memo, date
+    BranchId, BookId, num, memo, status, date
   }).then(transaction => {
     let newData = data.map(data => {
       data.TransId = transaction.id
@@ -57,7 +58,7 @@ router.get("/transactions/trans_id/:transId", (req, res) => {
   db.sequelize.query("select *\n" +
     "from \"Transactions\"\n" +
     "where id = :transId", {
-    model: db.TransactionRecord,
+    model: db.Transaction,
     replacements: { transId }
   }).then(transactions => res.json(transactions))
     .catch(err => res.status(400).json({ msg: "Can't fetch transactions", err }))
@@ -127,6 +128,7 @@ router.get("/transactions/latest/:id", (req, res) => {
 // Update transactions with transactions table
 router.put("/transactions/transaction/:id", (req, res) => {
   const transId = req.params.id
+  const status = 'updated'
   const { transaction, transRecord } = req.body
   const { date, num, memo, updatedAt } = transaction
 
@@ -134,10 +136,11 @@ router.put("/transactions/transaction/:id", (req, res) => {
     "set date=:date, \n" +
     "num=:num, \n" +
     "memo=:memo, \n" +
+    "status=:status, \n" +
     "\"updatedAt\"=:updatedAt \n" +
     "where id=:transId", {
       model: db.Transaction,
-      replacements: { transId, date, num, memo, updatedAt }
+      replacements: { transId, date, num, memo, status, updatedAt }
     }).then(() => {
 
       // For loop to iterate each transactionRecord

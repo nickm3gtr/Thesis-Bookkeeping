@@ -31,6 +31,10 @@ module.exports = {
       memo: {
         type: Sequelize.STRING
       },
+      status: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       date: {
         type: Sequelize.DATE
       },

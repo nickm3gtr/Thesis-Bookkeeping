@@ -108,6 +108,12 @@
                 </tbody>
               </template>
             </v-simple-table>
+            <div v-if="status == 'created'">
+              <p class="caption">Transaction recorded on {{createdAt}}</p>
+            </div>
+            <div v-else>
+              <p class="caption">Transaction updated on {{updatedAt}}</p>
+            </div>
           </v-card-text>
         </v-card>
         <v-snackbar v-model="snackbar" bottom="bottom" color="primary" :timeout="timeout">
@@ -134,6 +140,9 @@ export default {
       date: '',
       num: '',
       memo: '',
+      status: '',
+      createdAt: '',
+      updatedAt: '',
       search: '',
       transactions: [],
       loading: false,
@@ -243,6 +252,9 @@ export default {
       this.date = this.formatDate(trans.data[0].date)
       this.num = trans.data[0].num
       this.memo = trans.data[0].memo
+      this.status = trans.data[0].status
+      this.createdAt = moment(trans.data[0].createdAt).format('LLLL')
+      this.updatedAt = moment(trans.data[0].updatedAt).format('LLLL')
     } catch (e) {
       this.getError(e.response.data)
     }
@@ -267,6 +279,9 @@ export default {
         this.date = this.formatDate(trans.data[0].date)
         this.num = trans.data[0].num
         this.memo = trans.data[0].memo
+        this.status = trans.data[0].status
+        this.createdAt = moment(trans.data[0].createdAt).format('LLLL')
+        this.updatedAt = moment(trans.data[0].updatedAt).format('LLLL')
       } catch (e) {
         this.getError(e.response.data)
       }
