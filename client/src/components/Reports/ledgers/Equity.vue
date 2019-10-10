@@ -40,4 +40,8 @@ export default {
 
 <style scoped>
 
+ .font-weight-medium {
+   font-size: 12px;
+   color: black;
+ }
 </style>

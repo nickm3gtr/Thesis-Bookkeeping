@@ -3,13 +3,13 @@
     <div v-for="item in accounts" :key="item.id">
       <v-row>
         <v-col cols="12" md="5">
-          <span>{{ item.subtype }}</span>
+          <span class="font-weight-medium">{{ item.subtype }}</span>
         </v-col>
         <v-col cols="12" md="4">
-          <span>{{ item.account }}</span>
+          <span class="font-weight-medium">{{ item.account }}</span>
         </v-col>
         <v-col cols="12" md="3">
-          <p class="text-right"><span>{{ item.balance }}</span></p>
+          <p class="text-right"><span class="font-weight-medium">{{ item.balance }}</span></p>
         </v-col>
       </v-row>
     </div>
@@ -41,4 +41,8 @@ export default {
 
 <style scoped>
 
+ .font-weight-medium {
+   font-size: 12px;
+   color: black;
+ }
 </style>

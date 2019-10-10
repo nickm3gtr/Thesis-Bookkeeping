@@ -97,39 +97,39 @@
                 <div class="text-center"></div>
                 <v-row class="ml-4">
                   <v-col cols="12" md="2">
-                    <p class="font-weight-medium">Type</p>
+                    <p class="font-weight-medium small">Type</p>
                   </v-col>
                   <v-col cols="12" md="3">
-                    <p class="font-weight-medium">Category</p>
+                    <p class="font-weight-medium small">Category</p>
                   </v-col>
-                  <v-col cols="12" md="3">
-                    <p class="font-weight-medium">Account</p>
-                  </v-col>
-                  <v-col cols="12" md="2">
-                    <p class="font-weight-medium text-right">Debit</p>
+                  <v-col cols="12" md="3 ">
+                    <p class="font-weight-medium small">Account</p>
                   </v-col>
                   <v-col cols="12" md="2">
-                    <p class="font-weight-medium text-right">Credit</p>
+                    <p class="font-weight-medium text-right small">Debit</p>
+                  </v-col>
+                  <v-col cols="12" md="2">
+                    <p class="font-weight-medium text-right small">Credit</p>
                   </v-col>
                 </v-row>
                 <hr>
                 <div v-for="item in filterNullItems" :key="item.id">
                   <v-row>
                     <v-col cols="12" md="2">
-                      <span class="font-weight-medium">{{ item.type }}</span>
+                      <span class="font-weight-medium x-small">{{ item.type }}</span>
                     </v-col>
                     <v-col cols="12" md="3">
-                      <span class="font-weight-medium">{{ item.subtype }}</span>
+                      <span class="font-weight-medium x-small">{{ item.subtype }}</span>
                     </v-col>
                     <v-col cols="12" md="3">
-                      <span class="font-weight-medium">{{ item.account }}</span>
+                      <span class="font-weight-medium x-small">{{ item.account }}</span>
                     </v-col>
                     <v-col cols="12" md="2">
-                      <p v-if="item.balance>0" class="text-right"><span class="font-weight-medium">{{ formatBalance(item.balance) }}</span></p>
+                      <p v-if="item.balance>0" class="text-right"><span class="font-weight-medium x-small">{{ formatBalance(item.balance) }}</span></p>
                       <p v-else><span></span></p>
                     </v-col>
                     <v-col cols="12" md="2">
-                      <p v-if="item.balance<0" class="text-right"><span class="font-weight-medium">{{ formatBalance(item.balance) }}</span></p>
+                      <p v-if="item.balance<0" class="text-right"><span class="font-weight-medium x-small">{{ formatBalance(item.balance) }}</span></p>
                       <p v-else><span></span></p>
                     </v-col>
                   </v-row>
@@ -282,5 +282,15 @@ export default {
  .underlined {
    text-decoration-line: underline;
    text-decoration-style: double;
+ }
+ .text-center {
+   text-align: center !important;
+ }
+ .small {
+   font-size: small;
+ }
+ .x-small {
+   font-size: x-small;
+   color: black;
  }
 </style>

@@ -79,11 +79,11 @@
             <v-card-text>
               <div class="text-center">
                 <p>
-                  <span v-if="auth.user === null" class="headline">DARBMUPCO</span>
-                  <span v-else class="headline">{{ auth.user.Branch.branchName }}</span>
+                  <span v-if="auth.user === null" class="headline text-center">DARBMUPCO</span>
+                  <span v-else class="headline text-center">{{ auth.user.Branch.branchName }}</span>
                 </p>
-                <p><span class="subtitle-1">General Ledger</span></p>
-                <p><span class="subtitle-2">{{ formatFromDate }} through {{ formatToDate }}</span></p>
+                <p><span class="subtitle-1 text-center">General Ledger</span></p>
+                <p><span class="subtitle-2 text-center">{{ formatFromDate }} through {{ formatToDate }}</span></p>
               </div>
               <hr>
               <v-row class="ml-12">
@@ -355,4 +355,7 @@ export default {
     color: black;
     font-family: "Roboto", sans-serif;
   }
+ .text-center {
+   text-align: center !important;
+ }
 </style>

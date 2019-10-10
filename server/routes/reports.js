@@ -93,7 +93,8 @@ router.get("/trial-balance/:id/:start/:end", auth, (req, res) => {
                           "select tr.\"AccountId\"\n" +
                           "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
                           "where t.\"date\" between :start and :end\n" +
-                        ")", {
+                        ")\n" +
+                        "order by ty.id asc", {
       model: db.TransactionRecord,
       replacements: { id, start, end }
     })
@@ -101,17 +102,18 @@ router.get("/trial-balance/:id/:start/:end", auth, (req, res) => {
       .catch(err => res.status(400).json({ msg: err }))
   } else {
     db.sequelize.query("select ty.\"name\" as type, s.name as subtype, a.\"name\" as account, (\n"+
-    "select sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0))\n" +
-    "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-    "where tr.\"AccountId\"=a.id and t.\"date\" between :start and :end and t.\"BranchId\"=:id\n" +
-  ") as balance\n" +
-"from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id\n" +
-    "inner join \"Types\" ty on s.\"TypeId\"=ty.id\n" +
-"where a.id in (\n" +
-  "select tr.\"AccountId\"\n" +
-  "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-  "where t.\"date\" between :start and :end and t.\"BranchId\"=:id\n" +
-")", {
+                            "select sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0))\n" +
+                            "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
+                            "where tr.\"AccountId\"=a.id and t.\"date\" between :start and :end and t.\"BranchId\"=:id\n" +
+                          ") as balance\n" +
+                        "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id\n" +
+                            "inner join \"Types\" ty on s.\"TypeId\"=ty.id\n" +
+                        "where a.id in (\n" +
+                          "select tr.\"AccountId\"\n" +
+                          "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
+                          "where t.\"date\" between :start and :end and t.\"BranchId\"=:id\n" +
+                        ")\n" +
+                        "order by ty.id asc", {
       model: db.TransactionRecord,
       replacements: { id, start, end }
     })
@@ -144,17 +146,17 @@ router.get("/income-statement/:id/:start/:end", (req, res) => {
 
   } else {
     db.sequelize.query("select ty.name as type, s.\"name\" as subtype, a.id as id, a.\"name\" as account, (\n" +
-    "select sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0))\n" +
-    "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-    "where tr.\"AccountId\"=a.id and t.\"date\" between :start and :end and t.\"BranchId\"=:id\n" +
-  ") as balance\n" +
-  "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id\n" +
-      "inner join \"Types\" ty on s.\"TypeId\"=ty.id\n" +
-  "where a.id in (\n" +
-    "select tr.\"AccountId\"\n" +
-    "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-      "where tr.\"AccountId\" >=40000 and tr.\"AccountId\" <= 80000 and t.\"date\" between :start and :end and t.\"BranchId\"=:id\n" +
-  ")", {
+                          "select sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0))\n" +
+                          "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
+                          "where tr.\"AccountId\"=a.id and t.\"date\" between :start and :end and t.\"BranchId\"=:id\n" +
+                        ") as balance\n" +
+                        "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id\n" +
+                            "inner join \"Types\" ty on s.\"TypeId\"=ty.id\n" +
+                        "where a.id in (\n" +
+                          "select tr.\"AccountId\"\n" +
+                          "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
+                            "where tr.\"AccountId\" >=40000 and tr.\"AccountId\" <= 80000 and t.\"date\" between :start and :end and t.\"BranchId\"=:id\n" +
+                        ")", {
       model: db.TransactionRecord,
       replacements: { id, start, end }
     }).then(transactions => res.json(transactions))
