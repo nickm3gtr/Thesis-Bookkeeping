@@ -109,10 +109,10 @@
               </template>
             </v-simple-table>
             <div v-if="status == 'created'">
-              <p class="caption">Transaction recorded on {{createdAt}}</p>
+              <p class="caption">Transaction recorded on {{createdAt}} by {{userName}}</p>
             </div>
             <div v-else>
-              <p class="caption">Transaction updated on {{updatedAt}}</p>
+              <p class="caption">Transaction updated on {{updatedAt}} by {{userName}}</p>
             </div>
           </v-card-text>
         </v-card>
@@ -128,6 +128,7 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import { mapActions, mapState } from 'vuex'
 import TransactionFilterDialog from './TransactionFilterDialog'
 
 export default {
@@ -143,6 +144,7 @@ export default {
       status: '',
       createdAt: '',
       updatedAt: '',
+      userName: '',
       search: '',
       transactions: [],
       loading: false,
@@ -159,6 +161,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('errors', ['getError']),
     openUpdateDialog (index) {
       this.propTransaction = this.transactions[index]
       this.dialog = true
@@ -170,6 +173,7 @@ export default {
     async transactionUpdated () {
       const updateData = JSON.stringify({
         transaction: {
+          BookkeeperId: this.auth.user.id,
           date: this.date,
           num: this.num,
           memo: this.memo,
@@ -203,6 +207,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['auth']),
     formatTransactions () {
       return this.transactions.map(transaction => {
         // eslint-disable-next-line eqeqeq
@@ -255,6 +260,7 @@ export default {
       this.status = trans.data[0].status
       this.createdAt = moment(trans.data[0].createdAt).format('LLLL')
       this.updatedAt = moment(trans.data[0].updatedAt).format('LLLL')
+      this.userName = trans.data[0].userName
     } catch (e) {
       this.getError(e.response.data)
     }
@@ -282,6 +288,7 @@ export default {
         this.status = trans.data[0].status
         this.createdAt = moment(trans.data[0].createdAt).format('LLLL')
         this.updatedAt = moment(trans.data[0].updatedAt).format('LLLL')
+        this.userName = trans.data[0].userName
       } catch (e) {
         this.getError(e.response.data)
       }

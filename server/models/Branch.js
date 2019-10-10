@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
   // eslint-disable-next-line no-unused-vars
   Branch.associate = function(models) {
     Branch.hasMany(models.Bookkeeper)
-    Branch.hasMany(models.TransactionRecord)
   };
   return Branch;
 };

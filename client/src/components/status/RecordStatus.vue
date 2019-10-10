@@ -94,8 +94,8 @@ export default {
             Authorization: localStorage.getItem('token')
           }
         }
-        const response = await axios.get(`/api/bookkeeping/transactions/latest/${this.auth.user.BranchId}`)
-        const transId = response.data.id
+        const response = await axios.get(`/api/bookkeeping/transactions/latest/${this.auth.user.id}`)
+        const transId = response.data[0].id
         const transaction = await axios.get(`/api/bookkeeping/transaction-records/trans_id/${transId}`, config)
         this.items = transaction.data
         this.loading = false

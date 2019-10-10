@@ -6,17 +6,15 @@ const db = require('../models')
 const auth = require('../middleware/auth')
 
 router.post("/general-journal", (req, res) => {
-  let { BranchId, BookId, num, memo, date, data } = req.body
+  let { BookkeeperId, BookId, num, memo, date, data } = req.body
   const status = 'created'
   db.Transaction.create({
-    BranchId, BookId, num, memo, status, date
+    BookkeeperId, BookId, num, memo, status, date
   }).then(transaction => {
     let newData = data.map(data => {
       data.TransId = transaction.id
       return data
     })
-    // eslint-disable-next-line no-console
-    console.log(newData)
     db.TransactionRecord
       .bulkCreate(newData, {returning: true})
       .then(transactionRecord => res.json(transactionRecord))
@@ -27,10 +25,10 @@ router.post("/general-journal", (req, res) => {
 // Fetch all transaction records
 router.get("/transactions/branch/:branchId", auth, (req, res) => {
   const { branchId } = req.params
-  db.sequelize.query("select id, memo, num, date\n" +
-      "from \"Transactions\"\n" +
-      "where \"BranchId\"=:branchId\n" +
-      "order by id desc, \"date\" desc", {
+  db.sequelize.query("select tr.id, tr.memo, tr.num, tr.date\n" +
+      "from \"Transactions\" tr inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id\n" +
+      "where b.\"BranchId\"=:branchId\n" +
+      "order by tr.id desc, tr.\"date\" desc", {
     model: db.Transaction,
     replacements: { branchId }
   }).then(transactions => res.json(transactions))
@@ -41,10 +39,10 @@ router.get("/transactions/branch/:branchId", auth, (req, res) => {
 router.get("/transactions/book/:branchId/:bookId", auth, (req, res) => {
   const { branchId, bookId } = req.params
 
-  db.sequelize.query("select id, memo, num, date\n" +
-  "from \"Transactions\"\n" +
-  "where \"BranchId\"=:branchId and \"BookId\"=:bookId\n" +
-  "order by id desc, \"date\" desc", {
+  db.sequelize.query("select tr.id, tr.memo, tr.num, tr.date\n" +
+  "from \"Transactions\" tr inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id\n" +
+  "where b.\"BranchId\"=:branchId and tr.\"BookId\"=:bookId\n" +
+  "order by id desc, tr.\"date\" desc", {
     model: db.Transaction,
     replacements: { branchId, bookId }
   }).then(transactions => res.json(transactions))
@@ -56,8 +54,8 @@ router.get("/transactions/trans_id/:transId", (req, res) => {
   const transId = req.params.transId
 
   db.sequelize.query("select *\n" +
-    "from \"Transactions\"\n" +
-    "where id = :transId", {
+    "from \"Transactions\" t inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
+    "where t.id = :transId", {
     model: db.Transaction,
     replacements: { transId }
   }).then(transactions => res.json(transactions))
@@ -99,48 +97,34 @@ router.delete("/transactions/:transId", (req, res) => {
 router.get("/transactions/latest/:id", (req, res) => {
   const { id } = req.params
 
-  db.Transaction.findOne({
-    where: {
-      BranchId: id
-    },
-    order: [['id', 'DESC']]
+  db.sequelize.query("select tr.id\n" +
+  "from \"Transactions\" tr inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id\n" +
+  "where b.\"id\"=:id\n" +
+  "order by tr.id desc, tr.\"date\" desc\n" +
+  "limit 1", {
+    model: db.Transaction,
+    replacements: { id }
   }).then(transaction => res.json(transaction))
     .catch(err => res.status(404).json({ msg: 'Error fetching data', err }))
 })
-
-// // Update Transactions by ID
-// router.put("/transactions/update/:id", (req, res) => {
-//   const id = parseInt(req.params.id)
-//   const AccountId = parseInt(req.body.AccountId)
-//   const {  debit, credit } = req.body
-
-//   db.sequelize.query("update \"TransactionRecords\"\n" +
-// 	"set debit = :debit,\n" +
-// 	" credit = :credit,\n" +
-// 	" \"AccountId\" = :AccountId\n" +
-// 	"where id=:id", {
-//     model: db.TransactionRecord,
-//     replacements: { id, AccountId, debit, credit }
-//   }).then(update => res.json({ msg: 'Updated!', update }))
-//     .catch(err => res.status(404).json({ msg: 'Error updating data', err }))
-// })
 
 // Update transactions with transactions table
 router.put("/transactions/transaction/:id", (req, res) => {
   const transId = req.params.id
   const status = 'updated'
   const { transaction, transRecord } = req.body
-  const { date, num, memo, updatedAt } = transaction
+  const { BookkeeperId, date, num, memo, updatedAt } = transaction
 
   db.sequelize.query("update \"Transactions\"\n" +
     "set date=:date, \n" +
+    "\"BookkeeperId\"=:BookkeeperId, \n" +
     "num=:num, \n" +
     "memo=:memo, \n" +
     "status=:status, \n" +
     "\"updatedAt\"=:updatedAt \n" +
     "where id=:transId", {
       model: db.Transaction,
-      replacements: { transId, date, num, memo, status, updatedAt }
+      replacements: { BookkeeperId, transId, date, num, memo, status, updatedAt }
     }).then(() => {
 
       // For loop to iterate each transactionRecord

@@ -214,7 +214,7 @@ export default {
         }
         const data = [ cashItem, ...this.items ]
         const newTransaction = JSON.stringify({
-          BranchId: this.auth.user.BranchId,
+          BookkeeperId: this.auth.user.id,
           BookId: this.BookId,
           memo: this.memo,
           num: this.num,

@@ -228,7 +228,7 @@ export default {
       try {
         const newTransaction = JSON.stringify(
           {
-            BranchId: this.auth.user.BranchId,
+            BookkeeperId: this.auth.user.id,
             BookId: this.BookId,
             memo: this.memo,
             date: this.date,

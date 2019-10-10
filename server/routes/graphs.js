@@ -45,8 +45,8 @@ router.get("/sales/:id/:year", (req, res) => {
     "\t\tcase when extract(month from t.date) = 12 \n" +
     "\t\tthen  sum(coalesce(debit, 0)) - sum(coalesce(credit, 0)) else 0 \n" +
     "\t\tend as December\n" +
-    "\tfrom \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-    "\twhere tr.\"AccountId\" >= 40000 and tr.\"AccountId\" < 50000 and extract(year from t.date) = :year and t.\"BranchId\"=:id\n" +
+    "\tfrom \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
+    "\twhere tr.\"AccountId\" >= 40000 and tr.\"AccountId\" < 50000 and extract(year from t.date) = :year and b.\"BranchId\"=:id\n" +
     "\tgroup by t.date, credit, debit\n" +
     ")\n" +
     "select sum(january) as january, sum(february) as february, sum(march) as march, sum(april) as april,\n" +
@@ -102,8 +102,8 @@ router.get("/expenses/:id/:year", (req, res) => {
     "\t\tcase when extract(month from t.date) = 12 \n" +
     "\t\tthen  sum(coalesce(debit, 0)) - sum(coalesce(credit, 0)) else 0 \n" +
     "\t\tend as December\n" +
-    "\tfrom \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-    "\twhere tr.\"AccountId\" >= 70000 and tr.\"AccountId\" < 80000 and extract(year from t.date) = :year and t.\"BranchId\"=:id\n" +
+    "\tfrom \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
+    "\twhere tr.\"AccountId\" >= 70000 and tr.\"AccountId\" < 80000 and extract(year from t.date) = :year and b.\"BranchId\"=:id\n" +
     "\tgroup by t.date, credit, debit\n" +
     ")\n" +
     "select sum(january) as january, sum(february) as february, sum(march) as march, sum(april) as april,\n" +

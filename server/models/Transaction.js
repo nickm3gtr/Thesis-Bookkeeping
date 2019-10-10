@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.DATE
   }, {});
   Transaction.associate = function(models) {
-    Transaction.belongsTo(models.Branch, { foreignKey: 'BranchId' })
+    Transaction.belongsTo(models.Bookkeeper, { foreignKey: 'BookkeeperId' })
     Transaction.belongsTo(models.Book, { foreignKey: 'BookId' })
     Transaction.hasMany(models.TransactionRecord)
   };

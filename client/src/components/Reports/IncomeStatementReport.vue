@@ -122,7 +122,7 @@
                   </v-col>
                 </v-row>
                 <v-row class="ml-4 mt-4">
-                  <span class="subtitle-1 font-weight-bold">Expenses</span>
+                  <span class="subtitle-1 font-weight-bold">Operating Expenses</span>
                 </v-row>
                 <ItemComponent :accounts="filterItems(70000, 80000)"
                                :total="totalBalance(70000, 80000)"

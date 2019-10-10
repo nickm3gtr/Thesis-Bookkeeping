@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   // eslint-disable-next-line no-unused-vars
   Bookkeeper.associate = function(models) {
     Bookkeeper.belongsTo(models.Branch, { foreignKey: 'BranchId' })
+    Bookkeeper.hasMany(models.Transaction)
   };
   return Bookkeeper;
 };
