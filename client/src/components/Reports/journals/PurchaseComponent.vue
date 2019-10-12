@@ -16,8 +16,14 @@
       <hr />
     </div>
     <v-row>
+      <v-col cols="12" md="1">
+        <p class="caption font-weight-medium">Date</p>
+      </v-col>
+      <v-col cols="12" md="1">
+        <p class="caption font-weight-medium">TransId</p>
+      </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium">Vendor</p>
+        <p class="caption font-weight-medium">Description</p>
       </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">A/P Credit</p>
@@ -33,15 +39,16 @@
       </v-col>
     </v-row>
     <hr/>
-    <div v-for="(item, index) in filterDebits" :key="item.trans_id">
+    <div v-for="item in filterDebits" :key="item.trans_id">
       <v-row>
+        <v-col cols="12" md="1">
+          <p class="caption font-weight-medium">{{item.date}}</p>
+        </v-col>
+        <v-col cols="12" md="1">
+          <p class="caption font-weight-medium">{{item.trans_id}}</p>
+        </v-col>
         <v-col cols="12" md="2">
-          <p v-if="(index + 1) % 9 === 0" class="html2pdf__page-break">
-            <span class="caption font-weight-medium">{{
-              item.memo
-            }}</span>
-          </p>
-          <p v-else>
+          <p>
             <span class="caption font-weight-medium">{{
               item.memo
             }}</span>
@@ -72,8 +79,14 @@
     </div>
     <hr />
     <v-row>
-      <v-col cols="12" md="2">
+      <v-col cols="12" md="1">
         <p class="caption font-weight-medium">Total</p>
+      </v-col>
+      <v-col cols="12" md="1">
+        <p class="caption font-weight-medium"></p>
+      </v-col>
+      <v-col cols="12" md="2">
+        <p class="caption font-weight-medium"></p>
       </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">

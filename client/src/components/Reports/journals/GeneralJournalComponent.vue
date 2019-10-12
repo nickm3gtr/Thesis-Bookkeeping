@@ -11,14 +11,17 @@
       <p><span class="subtitle-2">{{ formatFromDate }} through {{ formatToDate }}</span></p>
       <hr>
     </div>
-    <v-row class="ml-4">
-      <v-col cols="12" md="2">
+    <v-row>
+      <v-col cols="12" md="1">
         <p class="caption font-weight-medium">Date</p>
       </v-col>
-      <v-col cols="12" md="3">
-        <p class="caption font-weight-medium">Memo</p>
+      <v-col cols="12" md="2">
+        <p class="caption font-weight-medium">TransId</p>
       </v-col>
       <v-col cols="12" md="3">
+        <p class="caption font-weight-medium">Description</p>
+      </v-col>
+      <v-col cols="12" md="2">
         <p class="caption font-weight-medium">Account</p>
       </v-col>
       <v-col cols="12" md="2">
@@ -31,15 +34,19 @@
     <hr>
     <div v-for="item in formatItems" :key="item.trans_id">
       <v-row>
-        <v-col cols="12" md="2">
-          <span v-if="item.debit === null"></span>
+        <v-col cols="12" md="1">
+          <span v-if="item.debit === null || item.debit == 0"></span>
           <span class="caption font-weight-medium" v-else>{{ item.date }}</span>
         </v-col>
-        <v-col cols="12" md="3">
-          <span v-if="item.debit === null"></span>
-          <span class="caption font-weight-medium" v-else>{{ item.memo }}</span>
+        <v-col cols="12" md="2">
+          <span v-if="item.debit === null || item.debit == 0"></span>
+          <span class="caption font-weight-medium" v-else>{{ item.trans_id }}</span>
         </v-col>
         <v-col cols="12" md="3">
+          <span v-if="item.debit === null || item.debit == 0"></span>
+          <span class="caption font-weight-medium" v-else>{{ item.memo }}</span>
+        </v-col>
+        <v-col cols="12" md="2">
           <span class="caption font-weight-medium">{{ item.accountname }}</span>
         </v-col>
         <v-col cols="12" md="2">

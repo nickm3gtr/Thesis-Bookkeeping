@@ -16,50 +16,63 @@
       <hr />
     </div>
     <v-row>
-      <v-col cols="12" md="3">
-        <p class="caption font-weight-medium">Customer</p>
+      <v-col cols="12" md="2">
+        <p class="caption font-weight-medium">Date</p>
+      </v-col>
+      <v-col cols="12" md="2">
+        <p class="caption font-weight-medium">TransId</p>
       </v-col>
       <v-col cols="12" md="3">
+        <p class="caption font-weight-medium">Description</p>
+      </v-col>
+      <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">A/R Debit</p>
       </v-col>
-      <v-col cols="12" md="3">
+      <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">Sales Credit</p>
       </v-col>
     </v-row>
     <hr/>
-    <div v-for="(item, index) in filterDebits" :key="item.trans_id">
+    <div v-for="item in filterDebits" :key="item.trans_id">
       <v-row>
+        <v-col cols="12" md="2">
+          <p class="caption font-weight-medium">{{ item.date }}</p>
+        </v-col>
+        <v-col cols="12" md="2">
+          <p class="caption font-weight-medium">{{ item.trans_id }}</p>
+        </v-col>
         <v-col cols="12" md="3">
-          <p v-if="(index + 1) % 9 === 0" class="html2pdf__page-break">
-            <span class="caption font-weight-medium">{{
-              item.memo
-            }}</span>
-          </p>
-          <p v-else>
+          <p>
             <span class="caption font-weight-medium">{{
               item.memo
             }}</span>
           </p>
         </v-col>
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="2">
           <p class="caption font-weight-medium text-right">{{ item.debit }}</p>
         </v-col>
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="2">
           <p class="caption font-weight-medium text-right">{{ item.debit }}</p>
         </v-col>
       </v-row>
     </div>
     <hr />
     <v-row>
-      <v-col cols="12" md="3">
+      <v-col cols="12" md="2">
         <p class="caption font-weight-medium">Total</p>
       </v-col>
+      <v-col cols="12" md="2">
+        <p class="caption font-weight-medium"></p>
+      </v-col>
       <v-col cols="12" md="3">
+        <p class="caption font-weight-medium"></p>
+      </v-col>
+      <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">
           {{ formatBalance(totalDebit) }}
         </p>
       </v-col>
-      <v-col cols="12" md="3">
+      <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">
           {{ formatBalance(totalDebit) }}
         </p>

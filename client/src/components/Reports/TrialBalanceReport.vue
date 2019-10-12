@@ -21,7 +21,7 @@
                   <template v-slot:activator="{ on }">
                     <v-text-field
                       v-model="fromDate"
-                      label="Choose Date"
+                      label="From"
                       prepend-icon="event"
                       readonly
                       v-on="on"
@@ -95,7 +95,7 @@
                 </div>
                 <hr>
                 <div class="text-center"></div>
-                <v-row class="ml-4">
+                <v-row>
                   <v-col cols="12" md="2">
                     <p class="font-weight-medium small">Type</p>
                   </v-col>
@@ -290,7 +290,7 @@ export default {
    font-size: small;
  }
  .x-small {
-   font-size: x-small;
+   font-size: 12px;
    color: black;
  }
 </style>

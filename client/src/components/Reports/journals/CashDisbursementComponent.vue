@@ -16,6 +16,9 @@
       <hr />
     </div>
     <v-row>
+      <v-col cols="12" md="1">
+        <p class="caption font-weight-medium">TransId</p>
+      </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium">Account Debited</p>
       </v-col>
@@ -31,20 +34,22 @@
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">Expenses Debit</p>
       </v-col>
-      <v-col cols="12" md="2">
+      <v-col cols="12" md="1">
         <p class="caption font-weight-medium text-right">Others</p>
       </v-col>
     </v-row>
     <hr/>
-    <div v-for="(item, index) in filterDebits" :key="item.trans_id">
+    <div v-for="item in filterDebits" :key="item.trans_id">
       <v-row>
-        <v-col cols="12" md="2">
-          <p v-if="(index + 1) % 9 === 0" class="html2pdf__page-break">
+        <v-col cols="12" md="1">
+          <p>
             <span class="caption font-weight-medium">{{
-              item.accountname
+              item.trans_id
             }}</span>
           </p>
-          <p v-else>
+        </v-col>
+        <v-col cols="12" md="2">
+          <p>
             <span class="caption font-weight-medium">{{
               item.accountname
             }}</span>
@@ -71,7 +76,7 @@
             {{ item.debit }}
           </p>
         </v-col>
-        <v-col cols="12" md="2">
+        <v-col cols="12" md="1">
           <p v-if="item.tags !== 'others'"></p>
           <p v-else class="caption font-weight-medium text-right">
             {{ item.debit }}
@@ -81,8 +86,12 @@
     </div>
     <hr />
     <v-row>
-      <v-col cols="12" md="2">
+      <v-col cols="12" md="1">
         <p class="caption font-weight-medium">Total</p>
+      </v-col>
+      <v-col cols="12" md="2">
+        <p class="caption font-weight-medium text-right">
+        </p>
       </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">
@@ -104,7 +113,7 @@
           {{ formatBalance(totalExpenses) }}
         </p>
       </v-col>
-      <v-col cols="12" md="2">
+      <v-col cols="12" md="1">
         <p class="caption font-weight-medium text-right">
           {{ formatBalance(totalOthers) }}
         </p>

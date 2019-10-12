@@ -17,16 +17,16 @@
     </div>
     <v-row>
       <v-col cols="12" md="2">
+        <p class="caption font-weight-medium">TransId</p>
+      </v-col>
+      <v-col cols="12" md="2">
         <p class="caption font-weight-medium">Account Credited</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">Cash Received</p>
+        <p class="caption font-weight-medium text-right">Cash Debit</p>
       </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">Sales Credit</p>
-      </v-col>
-      <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">L/R Credit</p>
       </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">A/R Credit</p>
@@ -36,31 +36,23 @@
       </v-col>
     </v-row>
     <hr/>
-    <div v-for="(item, index) in filterCredits" :key="item.trans_id">
+    <div v-for="item in filterCredits" :key="item.trans_id">
       <v-row>
         <v-col cols="12" md="2">
-          <p v-if="(index + 1) % 9 === 0" class="html2pdf__page-break">
+          <p>
             <span class="caption font-weight-medium">{{
-              item.accountname
+              item.trans_id
             }}</span>
           </p>
-          <p v-else>
-            <span class="caption font-weight-medium">{{
-              item.accountname
-            }}</span>
-          </p>
+        </v-col>
+        <v-col cols="12" md="2">
+          <p class="caption font-weight-medium">{{ item.accountname }}</p>
         </v-col>
         <v-col cols="12" md="2">
           <p class="caption font-weight-medium text-right">{{ item.credit }}</p>
         </v-col>
         <v-col cols="12" md="2">
           <p v-if="item.tags !== 'sales'"></p>
-          <p v-else class="caption font-weight-medium text-right">
-            {{ item.credit }}
-          </p>
-        </v-col>
-        <v-col cols="12" md="2">
-          <p v-if="item.tags !== 'loans'"></p>
           <p v-else class="caption font-weight-medium text-right">
             {{ item.credit }}
           </p>
@@ -85,6 +77,9 @@
         <p class="caption font-weight-medium">Total</p>
       </v-col>
       <v-col cols="12" md="2">
+        <p class="caption font-weight-medium"></p>
+      </v-col>
+      <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">
           {{ formatBalance(totalCash) }}
         </p>
@@ -92,11 +87,6 @@
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">
           {{ formatBalance(totalSales) }}
-        </p>
-      </v-col>
-      <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">
-          {{ formatBalance(totalLoans) }}
         </p>
       </v-col>
       <v-col cols="12" md="2">
@@ -134,9 +124,7 @@ export default {
       const tags = credits.map(credit => {
         if (credit.account_id >= 40300 && credit.account_id <= 40390) {
           credit.tags = 'sales'
-        } else if (credit.account_id >= 11210 && credit.account_id <= 11240) {
-          credit.tags = 'loans'
-        } else if (credit.account_id >= 11250 && credit.account_id <= 11280) {
+        } else if (credit.account_id >= 11200 && credit.account_id <= 11280) {
           credit.tags = 'a/r'
         } else {
           credit.tags = 'others'
@@ -159,18 +147,6 @@ export default {
         return credit.tags === 'sales'
       })
       let balances = sales.map(item => {
-        let balance = parseFloat(item.credit)
-        return parseFloat(this.formatBalance(balance))
-      })
-      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
-      const sum = arrSum(balances)
-      return sum
-    },
-    totalLoans () {
-      const loans = this.filterCredits.filter(credit => {
-        return credit.tags === 'loans'
-      })
-      let balances = loans.map(item => {
         let balance = parseFloat(item.credit)
         return parseFloat(this.formatBalance(balance))
       })
