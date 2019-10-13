@@ -174,7 +174,7 @@ export default {
         }
       }
       try {
-        const response = await axios.delete(
+        const response = await axios.put(
           `/api/bookkeepers/${this.userToDelete.id}`, config
         )
         this.items.splice(index, 1)

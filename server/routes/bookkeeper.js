@@ -11,6 +11,7 @@ const loginMiddleware = require('../middleware/loginMiddleware')
 // Register Bookkeeper
 router.post("/", auth, (req, res) => {
   const { userName, password, account, BranchId } = req.body;
+  const status = 'active'
 
   Bookkeeper.findOne({ where: { userName: userName } })
     .then(user => {
@@ -28,6 +29,7 @@ router.post("/", auth, (req, res) => {
             userName,
             password: newPassword,
             account: account,
+            status,
             BranchId
           };
           Bookkeeper.create(newUser)
@@ -44,7 +46,8 @@ router.post("/login", loginMiddleware, async (req, res) => {
   try {
     const user = await Bookkeeper.findOne({
       where: {
-        userName
+        userName,
+        status: 'active'
       },
       include: [
         { model: db.Branch }
@@ -92,6 +95,7 @@ router.get("/", auth, async (req, res) => {
 router.get("/all-bookkeepers", auth, (req, res) => {
   db.sequelize.query("select b.id as id, b.\"userName\" as name, br.id as branchId, br.\"branchName\" as branch\n" +
     "from \"Bookkeepers\" b inner join \"Branches\" br on b.\"BranchId\"=br.id\n" +
+    "where b.status in ('active', 'inactive') \n" +
     "order by b.id", {
     model: db.Bookkeeper
   }).then(bookkeepers => res.json(bookkeepers))
@@ -106,6 +110,18 @@ router.delete("/:id", auth, (req, res) => {
       id: id
     }
   }).then(res.json({ msg: `Deleted` }))
+    .catch(err => res.status(400).json({ msg: 'not deleted', err }))
+})
+
+//Delete bookkeeper through delete
+router.put("/:id", (req, res) => {
+  const { id } = req.params
+  db.sequelize.query("update \"Bookkeepers\" \n" +
+  "set status='deleted' \n" +
+  "where id=:id", {
+    model: db.Bookkeeper,
+    replacements: { id }
+  }).then(() => res.json({ msg: 'Deleted' }))
     .catch(err => res.status(400).json({ msg: 'not deleted', err }))
 })
 

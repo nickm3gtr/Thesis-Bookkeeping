@@ -7,6 +7,7 @@ module.exports = {
       userName: 'DARBMUPCO-A',
       password: '$2a$10$e3jxrDRbzZh4bd2fEMKiW.FJK24h80hwrGKgF4OOOnXwTdY7xoHZK',
       account: 'bookkeeper',
+      status: 'active',
       BranchId: 1
     }], {});
   },
