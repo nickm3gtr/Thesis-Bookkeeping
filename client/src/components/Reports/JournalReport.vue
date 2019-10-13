@@ -1,7 +1,7 @@
 <template>
   <div id="journal" class="journal-report">
     <v-layout>
-      <v-flex sm12 md10 offset-md1>
+      <v-flex sm12 md12>
         <v-card outlined elevation="10" class="mb-10" min-height="400">
           <v-toolbar color="light-blue darken-3" dark>
             <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>

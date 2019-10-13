@@ -221,6 +221,11 @@ module.exports = [
     TypeId: 70000
   },
   {
+    id: 74000,
+    name: "Other Expenses",
+    TypeId: 70000
+  },
+  {
     id: 80100,
     name: "Project",
     TypeId: 80000

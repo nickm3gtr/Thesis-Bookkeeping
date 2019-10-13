@@ -119,7 +119,7 @@ export default {
     ...mapState(['auth']),
     filterCredits () {
       const credits = this.formatItems.filter(item => {
-        return item.debit === null
+        return item.debit === null || item.debit === 0
       })
       const tags = credits.map(credit => {
         if (credit.account_id >= 40300 && credit.account_id <= 40390) {

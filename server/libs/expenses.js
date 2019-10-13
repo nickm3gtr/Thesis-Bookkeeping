@@ -338,5 +338,10 @@ module.exports = [
     id: 73650,
     name: "73650-Provision for CGF(KBGF)",
     SubTypeId: 73000
+  },
+  {
+    id: 74100,
+    name: "74100-Depreciation Expense",
+    SubTypeId: 74000
   }
 ]

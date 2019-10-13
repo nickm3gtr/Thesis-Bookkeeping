@@ -10,12 +10,13 @@ router.get("/journal/:id/:bookId/:start/:end", auth, (req, res) => {
   const end = req.params.end;
   const id = req.params.id;
   if (id == 0) {
-    db.sequelize.query("select tr.id as trans_id, t.id as id, t.\"date\" as \"date\", t.num as num, t.memo as memo,\n" +
+    db.sequelize.query("select t.id as trans_id, t.id as id, t.\"date\" as \"date\", t.num as num, t.memo as memo,\n" +
           "tr.\"AccountId\" as account_id, a.\"name\" as AccountName, tr.debit as debit,\n" +
           "tr.credit as credit, tr.tags as tags\n" +
       "from \"Transactions\" t inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\"\n" +
           "inner join \"Accounts\" a on tr.\"AccountId\"=a.id\n" +
-      "where t.date between :start and :end and t.\"BookId\"=:bookId", {
+      "where t.date between :start and :end and t.\"BookId\"=:bookId\n" +
+      "order by t.date asc", {
             model: db.TransactionRecord,
             replacements: { id, start, end, bookId }
     })
@@ -24,12 +25,13 @@ router.get("/journal/:id/:bookId/:start/:end", auth, (req, res) => {
         res.status(400).json({ msg: "Error fetching journals", err })
       );
   } else {
-    db.sequelize.query("select tr.id as trans_id, t.id as id, t.\"date\" as \"date\", t.num as num, t.memo as memo,\n" +
+    db.sequelize.query("select t.id as trans_id, t.id as id, t.\"date\" as \"date\", t.num as num, t.memo as memo,\n" +
           "tr.\"AccountId\" as account_id, a.\"name\" as AccountName, tr.debit as debit,\n" +
           "tr.credit as credit, tr.tags as tags\n" +
       "from \"Bookkeepers\" b inner join \"Transactions\" t on b.id=t.\"BookkeeperId\" inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\"\n" +
           "inner join \"Accounts\" a on tr.\"AccountId\"=a.id\n" +
-      "where t.date between :start and :end and t.\"BookId\"=:bookId and b.\"BranchId\"=:id", {
+      "where t.date between :start and :end and t.\"BookId\"=:bookId and b.\"BranchId\"=:id \n" +
+      "order by t.date asc", {
       model: db.TransactionRecord,
       replacements: { id, start, end, bookId }
     })

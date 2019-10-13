@@ -213,8 +213,10 @@ export default {
         // eslint-disable-next-line eqeqeq
         if (transaction.credit == null || transaction.credit == 0) {
           transaction.debit = parseInt(transaction.debit)
+          transaction.credit = null
         } else {
           transaction.credit = parseInt(transaction.credit)
+          transaction.debit = null
         }
         return transaction
       })
