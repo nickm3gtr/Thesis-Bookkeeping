@@ -332,4 +332,7 @@ export default {
     text-decoration-line: underline;
     text-decoration-style: double;
   }
+ .text-center {
+   text-align: center !important;
+ }
 </style>

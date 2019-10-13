@@ -282,4 +282,7 @@ export default {
     color: black;
     font-family: "Roboto", sans-serif;
   }
+ .text-center {
+   text-align: center !important;
+ }
 </style>
