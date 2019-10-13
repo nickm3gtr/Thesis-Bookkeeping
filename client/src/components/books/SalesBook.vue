@@ -74,18 +74,18 @@
                       <template v-slot:activator="{ on: tooltip }">
                         <v-btn color="red" v-on="{ ...deleteDialog, ...tooltip }"
                                dark fab small class="mt-4" :class="{'disable-events': deleteItems}">
-                          <v-icon>delete</v-icon>
+                          <v-icon>remove</v-icon>
                         </v-btn>
                       </template>
-                      <span>Delete</span>
+                      <span>Remove</span>
                     </v-tooltip>
                   </template>
                   <v-card>
                     <v-toolbar color="red lighten-1" dark>
-                      <v-toolbar-title>Delete</v-toolbar-title>
+                      <v-toolbar-title>Remove</v-toolbar-title>
                     </v-toolbar>
                     <v-card-text>
-                      <p class="subtitle-1 mt-5">Are you sure you want to delete?</p>
+                      <p class="subtitle-1 mt-5">Are you sure you want to remove?</p>
                     </v-card-text>
                     <v-card-actions>
                       <div class="flex-grow-1"></div>
@@ -93,7 +93,7 @@
                         Cancel
                       </v-btn>
                       <v-btn color="red" text @click="clear">
-                        Delete
+                        Remove
                       </v-btn>
                     </v-card-actions>
                   </v-card>
