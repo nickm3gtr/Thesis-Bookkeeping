@@ -53,7 +53,7 @@ router.get("/transactions/book/:branchId/:bookId", auth, (req, res) => {
 router.get("/transactions/trans_id/:transId", (req, res) => {
   const transId = req.params.transId
 
-  db.sequelize.query("select *\n" +
+  db.sequelize.query("select t.date as date, t.num as num, t.memo as memo, t.status as status, t.\"createdAt\", t.\"updatedAt\", b.\"userName\" as userName \n" +
     "from \"Transactions\" t inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
     "where t.id = :transId", {
     model: db.Transaction,
