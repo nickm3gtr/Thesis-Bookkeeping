@@ -32,7 +32,7 @@
       </v-col>
     </v-row>
     <hr>
-    <div v-for="item in formatItems" :key="item.trans_id">
+    <div v-for="item in formatItems" :key="item.id">
       <v-row>
         <v-col cols="12" md="1">
           <span v-if="item.debit === null || item.debit == 0"></span>

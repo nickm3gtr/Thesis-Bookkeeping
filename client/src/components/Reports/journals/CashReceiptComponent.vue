@@ -36,7 +36,7 @@
       </v-col>
     </v-row>
     <hr/>
-    <div v-for="item in filterCredits" :key="item.trans_id">
+    <div v-for="item in filterCredits" :key="item.id">
       <v-row>
         <v-col cols="12" md="2">
           <p>
