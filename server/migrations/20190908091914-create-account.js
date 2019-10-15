@@ -10,8 +10,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      subAccount: {
-        type: Sequelize.JSONB
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       SubTypeId: {
         type: Sequelize.INTEGER,

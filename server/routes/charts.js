@@ -11,7 +11,10 @@ router.get('/', auth, (req, res) => {
       include: [{
         model: db.Type
       }]
-    }]
+    }],
+    order: [
+      ['id', 'ASC']
+    ]
   })
     .then(accounts => res.json(accounts))
     // eslint-disable-next-line no-unused-vars

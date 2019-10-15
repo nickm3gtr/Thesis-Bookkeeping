@@ -1,12 +1,49 @@
-const currentAssets = require('../libs/currentAssets')
-const nonCurrentAssets = require('../libs/nonCurrentAssets')
-const currentLiabilities = require('../libs/currentLiabilities')
-const nonCurrentLiabilities = require('../libs/nonCurrentLiabilities')
-const equity = require('../libs/equity')
-const revenue = require('../libs/revenue')
-const costOfGoods = require('../libs/costOfGoods')
-const costOfServices = require('../libs/costOfServices')
-const expenses = require('../libs/expenses')
+let currentAssets = require('../libs/currentAssets')
+let nonCurrentAssets = require('../libs/nonCurrentAssets')
+let currentLiabilities = require('../libs/currentLiabilities')
+let nonCurrentLiabilities = require('../libs/nonCurrentLiabilities')
+let equity = require('../libs/equity')
+let revenue = require('../libs/revenue')
+let costOfGoods = require('../libs/costOfGoods')
+let costOfServices = require('../libs/costOfServices')
+let expenses = require('../libs/expenses')
+
+currentAssets = currentAssets.map(item => {
+  item.status = 'active'
+  return item
+})
+nonCurrentAssets = nonCurrentAssets.map(item => {
+  item.status = 'active'
+  return item
+})
+currentLiabilities = currentLiabilities.map(item => {
+  item.status = 'active'
+  return item
+})
+nonCurrentLiabilities = nonCurrentLiabilities.map(item => {
+  item.status = 'active'
+  return item
+})
+equity = equity.map(item => {
+  item.status = 'active'
+  return item
+})
+revenue = revenue.map(item => {
+  item.status = 'active'
+  return item
+})
+costOfGoods = costOfGoods.map(item => {
+  item.status = 'active'
+  return item
+})
+costOfServices = costOfServices.map(item => {
+  item.status = 'active'
+  return item
+})
+expenses = expenses.map(item => {
+  item.status = 'active'
+  return item
+})
 
 'use strict';
 

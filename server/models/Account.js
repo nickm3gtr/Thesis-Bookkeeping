@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Account = sequelize.define('Account', {
     name: DataTypes.STRING,
-    subAccount: DataTypes.JSONB
+    status: DataTypes.STRING
   }, { timestamps: false });
   Account.associate = function(models) {
     Account.belongsTo(models.SubType, { foreignKey: 'SubTypeId' })
