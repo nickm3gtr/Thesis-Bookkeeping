@@ -139,7 +139,7 @@ router.get("/income-statement/:id/:start/:end", (req, res) => {
                       "where a.id in (\n" +
                         "select tr.\"AccountId\"\n" +
                         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-                          "where tr.\"AccountId\" >=40000 and tr.\"AccountId\" <= 80000 and t.\"date\" between :start and :end\n" +
+                          "where ty.id >=40000 and ty.id <= 80000 and t.\"date\" between :start and :end\n" +
                       ")", {
       model: db.TransactionRecord,
       replacements: { id, start, end }
@@ -157,7 +157,7 @@ router.get("/income-statement/:id/:start/:end", (req, res) => {
                         "where a.id in (\n" +
                           "select tr.\"AccountId\"\n" +
                           "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-                            "where tr.\"AccountId\" >=40000 and tr.\"AccountId\" <= 80000 and t.\"date\" between :start and :end and b.\"BranchId\"=:id\n" +
+                            "where ty.id >=40000 and ty.id <= 80000 and t.\"date\" between :start and :end and b.\"BranchId\"=:id\n" +
                         ")", {
       model: db.TransactionRecord,
       replacements: { id, start, end }
@@ -181,7 +181,7 @@ router.get("/balance-sheet/:id/:date", (req, res) => {
                         "where a.id in (\n" +
                           "select tr.\"AccountId\"\n" +
                           "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-                            "where tr.\"AccountId\" >=10000 and tr.\"AccountId\" < 40000 and t.\"date\" <= :date\n" +
+                            "where ty.id>=10000 and ty.id < 40000 and t.\"date\" <= :date\n" +
                         ")", {
       model: db.TransactionRecord,
       replacements: { id, date }
@@ -198,7 +198,7 @@ router.get("/balance-sheet/:id/:date", (req, res) => {
                         "where a.id in (\n" +
                           "select tr.\"AccountId\"\n" +
                           "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-                            "where tr.\"AccountId\" >=10000 and tr.\"AccountId\" < 40000 and t.\"date\" <= :date and b.\"BranchId\"=:id\n" +
+                            "where ty.id >=10000 and ty.id < 40000 and t.\"date\" <= :date and b.\"BranchId\"=:id\n" +
                         ")", {
       model: db.TransactionRecord,
       replacements: { id, date }
@@ -222,7 +222,7 @@ router.get("/net-profit/:id/:date", (req, res) => {
                         "where a.id in (\n" +
                           "select tr.\"AccountId\"\n" +
                           "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-                            "where tr.\"AccountId\" >=40000 and tr.\"AccountId\" < 80000 and t.\"date\" <= :date\n" +
+                            "where ty.id >=40000 and ty.id < 80000 and t.\"date\" <= :date\n" +
                         ")", {
       model: db.TransactionRecord,
       replacements: { id, date }
@@ -239,7 +239,7 @@ router.get("/net-profit/:id/:date", (req, res) => {
                         "where a.id in (\n" +
                           "select tr.\"AccountId\"\n" +
                           "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-                            "where tr.\"AccountId\" >=40000 and tr.\"AccountId\" < 80000 and t.\"date\" <= :date and b.\"BranchId\"=:id\n" +
+                            "where ty.id >=40000 and ty.id < 80000 and t.\"date\" <= :date and b.\"BranchId\"=:id\n" +
                         ")", {
       model: db.TransactionRecord,
       replacements: { id, date }
