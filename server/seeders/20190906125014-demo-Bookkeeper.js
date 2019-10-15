@@ -6,6 +6,8 @@ module.exports = {
     return queryInterface.bulkInsert('Bookkeepers', [{
       userName: 'bookkeeper1',
       password: '$2a$10$e3jxrDRbzZh4bd2fEMKiW.FJK24h80hwrGKgF4OOOnXwTdY7xoHZK',
+      firstName: 'John',
+      lastName: 'Doe',
       account: 'bookkeeper',
       status: 'active',
       BranchId: 1

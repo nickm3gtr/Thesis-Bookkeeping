@@ -1,0 +1,129 @@
+<template>
+  <div>
+    <v-layout>
+      <v-flex sm12 md8 offset-md2>
+        <v-card outlined elevation="5">
+          <v-toolbar color="light-blue darken-3" dark>
+            <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
+          </v-toolbar>
+          <v-card-text>
+            <div class="text-center">
+              <v-dialog v-model="passwordDialog" max-width="500" persistent>
+                <v-card>
+                  <v-card-title>Change Password</v-card-title>
+                  <v-card-text>
+                    <v-text-field v-model="currentPassword" label="Current Password" type="password"></v-text-field>
+                    <v-text-field v-model="newPassword" label="New Password" type="password"></v-text-field>
+                    <v-text-field v-model="retypePassword" label="Retype-Password" type="password"></v-text-field>
+                  </v-card-text>
+                  <v-card-actions>
+                    <div class="flex-grow-1"></div>
+                    <v-btn color="blue darken-1" @click="passwordDialog = false" text>Close</v-btn>
+                    <v-btn color="blue darken-1" text @click="changePassword">Save</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </div>
+            <v-row>
+              <v-col cols="12" md="9"></v-col>
+              <v-col cols="12" md="3">
+                <v-btn small text color="primary">
+                  Edit Account
+                </v-btn>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" md="9">
+                <p>ID: {{bookkeeper.id}}</p>
+                <p>Username: {{bookkeeper.userName}}</p>
+                <p>Fullname: {{bookkeeper.firstName}} {{bookkeeper.lastName}}</p>
+                <p>Branch: {{bookkeeper.branchName}}</p>
+              </v-col>
+              <v-col cols="12" md="3">
+                <v-btn small text color="primary"
+                  @click="passwordDialog=true"
+                >
+                  Change Password
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    <div class="text-center">
+      <v-snackbar
+        v-model="snackbar"
+        bottom="bottom"
+        color="green"
+        :timeout="timeout"
+      >
+        {{changePasswordMessage}}
+      </v-snackbar>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapState, mapActions } from 'vuex'
+import axios from 'axios'
+
+export default {
+  name: 'BookkeeperProfileComponent',
+  data () {
+    return {
+      bookkeeper: '',
+      passwordDialog: false,
+      currentPassword: '',
+      newPassword: '',
+      retypePassword: '',
+      changePasswordMessage: '',
+      snackbar: false,
+      timeout: 2000
+    }
+  },
+  methods: {
+    ...mapActions('errors', ['getError']),
+    clearDialog () {
+      this.currentPassword = ''
+      this.newPassword = ''
+      this.retypePassword = ''
+    },
+    async changePassword () {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
+      const changePasswordValue = JSON.stringify({
+        currentPassword: this.currentPassword,
+        newPassword: this.newPassword,
+        retypePassword: this.retypePassword
+      })
+      try {
+        const response = await axios.post(`/api/bookkeepers/change-password/${this.auth.user.id}`,
+          changePasswordValue, config)
+        this.passwordDialog = false
+        this.changePasswordMessage = response.data.msg
+        this.snackbar = true
+        this.clearDialog()
+      } catch (e) {
+        this.passwordDialog = false
+        this.getError(e.response.data)
+      }
+    }
+  },
+  computed: {
+    ...mapState(['auth'])
+  },
+  async mounted () {
+    try {
+      const response = await axios.get(`/api/bookkeepers/profile/${this.auth.user.id}`)
+      this.bookkeeper = response.data[0]
+    } catch (e) {
+      this.getError(e.response.data)
+    }
+  }
+}
+</script>

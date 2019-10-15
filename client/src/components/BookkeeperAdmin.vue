@@ -24,6 +24,8 @@
                     <v-card-text>
                       <v-col cols="12" md="12">
                         <v-text-field v-model="name" label="Username"></v-text-field>
+                        <v-text-field v-model="firstName" label="First name"></v-text-field>
+                        <v-text-field v-model="lastName" label="Last name"></v-text-field>
                         <v-text-field v-model="password" label="Password" type="password"></v-text-field>
                       </v-col>
                       <v-col cols="12" md="6">
@@ -112,6 +114,8 @@ export default {
   name: 'BookkeeperAdmin',
   data () {
     return {
+      firstName: '',
+      lastName: '',
       name: '',
       password: '',
       branchId: '',
@@ -145,6 +149,8 @@ export default {
       }
       const newUser = JSON.stringify({
         userName: this.name,
+        firstName: this.firstName,
+        lastName: this.lastName,
         password: this.password,
         account: 'bookkeeper',
         BranchId: this.select.id

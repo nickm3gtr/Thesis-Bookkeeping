@@ -3,6 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   const Bookkeeper = sequelize.define('Bookkeeper', {
     userName: DataTypes.STRING,
     password: DataTypes.STRING,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
     account: DataTypes.STRING,
     status: DataTypes.STRING
   }, { timestamps: false });

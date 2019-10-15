@@ -39,6 +39,13 @@
           </template>
           <v-list>
             <v-list-item
+              v-if="auth.user.account == 'bookkeeper'"
+              @click="$router.push('/bookkeeper/profile', () => {})"
+            >
+              <v-list-item-title class="subtitle-2 font-weight-light">Profile</v-list-item-title>
+            </v-list-item>
+            <v-list-item
+              v-if="auth.user.account == 'admin'"
             >
               <v-list-item-title class="subtitle-2 font-weight-light">Profile</v-list-item-title>
             </v-list-item>
@@ -129,7 +136,7 @@ export default {
     },
     logout () {
       this.logoutUser()
-      this.$router.push('/')
+      this.$router.push('/', () => {})
     }
   }
 }
@@ -137,6 +144,6 @@ export default {
 
 <style scoped>
   .nav-color {
-    background-color: #e5e5e5;
+    background-color:#f4f5f8;
   }
 </style>

@@ -10,7 +10,14 @@ const loginMiddleware = require('../middleware/loginMiddleware')
 
 // Register Bookkeeper
 router.post("/", auth, (req, res) => {
-  const { userName, password, account, BranchId } = req.body;
+  const {
+    userName,
+    password,
+    firstName,
+    lastName,
+    account,
+    BranchId
+  } = req.body;
   const status = 'active'
 
   Bookkeeper.findOne({ where: { userName: userName } })
@@ -28,6 +35,8 @@ router.post("/", auth, (req, res) => {
           const newUser = {
             userName,
             password: newPassword,
+            firstName,
+            lastName,
             account: account,
             status,
             BranchId
@@ -123,6 +132,61 @@ router.put("/:id", (req, res) => {
     replacements: { id }
   }).then(() => res.json({ msg: 'Deleted' }))
     .catch(err => res.status(400).json({ msg: 'not deleted', err }))
+})
+
+
+// Get bookkeeper details -- BOOKKEEPER PROFILE
+router.get("/profile/:id", (req, res) => {
+  const { id } = req.params
+  db.sequelize.query("select b.id, b.\"userName\", b.\"firstName\", b.\"lastName\", br.\"branchName\" \n" +
+  "from \"Bookkeepers\" b inner join \"Branches\" br on b.\"BranchId\"=br.id \n" +
+  "where b.id=:id \n" +
+  "limit 1", {
+    model: db.Bookkeeper,
+    replacements: { id }
+  }).then(bookkeeper => res.json(bookkeeper))
+    .catch(err => res.status(400).json({ msg: 'Error', err }))
+})
+
+// Bookkeeper Update PASSWORD
+router.post("/change-password/:id", (req, res) => {
+  const { id } = req.params
+  // eslint-disable-next-line no-unused-vars
+  const { currentPassword, newPassword, retypePassword } = req.body
+  // Get account details of bookkeeper
+  db.Bookkeeper.findOne({
+    where: {
+      id: id
+    }
+  }).then(bookkeeper => {
+    // Compare if current password is correct
+    bcrypt.compare(currentPassword, bookkeeper.password, (err, response) => {
+      // eslint-disable-next-line no-console
+      if (err) console.log('wrong current password') 
+      if (response) {
+        if (newPassword !== retypePassword) {
+          res.status(400).json({msg: 'new password and confirm password is not the same', err})
+        } else {
+          bcrypt.genSalt(10, (err, salt) => {
+            if (err) throw res.status(400).json({msg: 'Error', err})
+            bcrypt.hash(newPassword, salt, (err, hash) => {
+              if (err) throw res.status(400).json({msg: 'Error', err})
+              const hashPassword = hash
+              db.sequelize.query("update \"Bookkeepers\" \n" +
+              "set \"password\"=:hashPassword \n" +
+              "where id=:id", {
+                model: db.Bookkeeper,
+                replacements: {id, hashPassword}
+              }).then(() => res.json({msg: 'Changed password!'}))
+                .catch(err => res.status(400).json({msg: 'Err', err}))
+            })
+          })
+        }
+      } else {
+        res.status(400).json({msg: 'Wrong current password'})
+      }
+    })
+  }).catch(err => res.status(400).json({msg: 'Error', err}))
 })
 
 module.exports = router;
