@@ -94,22 +94,22 @@
                 <v-row class="ml-4 mt-4">
                   <span class="subtitle-1 font-weight-bold">Revenues</span>
                 </v-row>
-                <ItemComponent :accounts="filterItems(40000, 50000)"
-                                  :total="totalBalance(40000, 50000)"
+                <ItemComponent :accounts="filterItems(40000)"
+                                  :total="totalBalance(40000)"
                                   :msg="totalMsg('Total Revenue')"
                 />
                 <v-row class="ml-4 mt-4">
                   <span class="subtitle-1 font-weight-bold">Cost of Goods Sold</span>
                 </v-row>
-                <ItemComponent :accounts="filterItems(50000, 60000)"
-                               :total="totalBalance(50000, 60000)"
+                <ItemComponent :accounts="filterItems(50000)"
+                               :total="totalBalance(50000)"
                                :msg="totalMsg('Total Cost of Goods Sold')"
                 />
                 <v-row class="ml-4 mt-4">
                   <span class="subtitle-1 font-weight-bold">Cost of Services</span>
                 </v-row>
-                <ItemComponent :accounts="filterItems(60000, 70000)"
-                               :total="totalBalance(60000, 70000)"
+                <ItemComponent :accounts="filterItems(60000)"
+                               :total="totalBalance(60000)"
                                :msg="totalMsg('Total Cost of Services')"
                 />
                 <v-row class="ml-4 mb-4">
@@ -124,8 +124,8 @@
                 <v-row class="ml-4 mt-4">
                   <span class="subtitle-1 font-weight-bold">Operating Expenses</span>
                 </v-row>
-                <ItemComponent :accounts="filterItems(70000, 80000)"
-                               :total="totalBalance(70000, 80000)"
+                <ItemComponent :accounts="filterItems(70000)"
+                               :total="totalBalance(70000)"
                                :msg="totalMsg('Total Expenses')"
                 />
                 <hr>
@@ -178,9 +178,9 @@ export default {
       const num = Math.abs(value)
       return parseFloat(Math.round(num * 100) / 100).toFixed(2)
     },
-    totalBalance (min, max) {
+    totalBalance (typeId) {
       let filterItem = this.items.filter(item => {
-        return item.id >= min && item.id <= max
+        return item.id === typeId
       })
       let balances = filterItem.map(item => {
         let balance = parseFloat(item.balance)
@@ -193,9 +193,9 @@ export default {
     totalMsg (msg) {
       return msg
     },
-    filterItems (min, max) {
+    filterItems (typeId) {
       const revenues = this.items.filter(item => {
-        return item.id >= min && item.id <= max
+        return item.id === typeId
       })
       return revenues
     },

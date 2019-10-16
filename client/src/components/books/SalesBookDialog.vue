@@ -44,7 +44,7 @@ export default {
       loading: false,
       selected: '',
       amount: '',
-      AccountId: 40310,
+      AccountId: 160,
       AccountName: '40310-Sales'
     }
   },

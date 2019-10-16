@@ -9,38 +9,47 @@ let costOfServices = require('../libs/costOfServices')
 let expenses = require('../libs/expenses')
 
 currentAssets = currentAssets.map(item => {
+  delete item.id
   item.status = 'active'
   return item
 })
 nonCurrentAssets = nonCurrentAssets.map(item => {
+  delete item.id
   item.status = 'active'
   return item
 })
 currentLiabilities = currentLiabilities.map(item => {
+  delete item.id
   item.status = 'active'
   return item
 })
 nonCurrentLiabilities = nonCurrentLiabilities.map(item => {
+  delete item.id
   item.status = 'active'
   return item
 })
 equity = equity.map(item => {
+  delete item.id
   item.status = 'active'
   return item
 })
 revenue = revenue.map(item => {
+  delete item.id
   item.status = 'active'
   return item
 })
 costOfGoods = costOfGoods.map(item => {
+  delete item.id
   item.status = 'active'
   return item
 })
 costOfServices = costOfServices.map(item => {
+  delete item.id
   item.status = 'active'
   return item
 })
 expenses = expenses.map(item => {
+  delete item.id
   item.status = 'active'
   return item
 })

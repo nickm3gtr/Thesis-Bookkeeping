@@ -201,7 +201,7 @@ export default {
       }
       try {
         const cashItem = {
-          AccountId: 21210,
+          AccountId: 105,
           debit: null,
           credit: this.totalCash
         }

@@ -81,15 +81,15 @@
               <v-row class="ml-4 mt-4">
                 <span class="subtitle-1 font-weight-bold">Current Assets</span>
               </v-row>
-              <BalanceSheetComponent :accounts="filterItems(11000, 12999)"
-                             :total="totalBalance(11000, 12999)"
+              <BalanceSheetComponent :accounts="filterItems(11000)"
+                             :total="totalBalance(11000)"
                              :msg="totalMsg('Total Current Assets')"
               />
               <v-row class="ml-4 mt-4">
                 <span class="subtitle-1 font-weight-bold">Non Current Assets</span>
               </v-row>
-              <BalanceSheetComponent :accounts="filterItems(13000, 19999)"
-                             :total="totalBalance(13000, 20999)"
+              <BalanceSheetComponent :accounts="filterItems(13000)"
+                             :total="totalBalance(13000)"
                              :msg="totalMsg('Total Non Current Assets')"
               />
               <v-row class="ml-4 mb-4">
@@ -122,22 +122,22 @@
               <v-row class="ml-4 mt-4">
                 <span class="subtitle-1 font-weight-bold">Current Liabilities</span>
               </v-row>
-              <LiabilityComponent :accounts="filterItems(21000, 21999)"
-                                     :total="totalBalance(21000, 21999)"
+              <LiabilityComponent :accounts="filterItems(21000)"
+                                     :total="totalBalance(21000)"
                                      :msg="totalMsg('Total Current Liabilities')"
               />
               <v-row class="ml-4 mt-4">
                 <span class="subtitle-1 font-weight-bold">Non Current Liabilities</span>
               </v-row>
-              <LiabilityComponent :accounts="filterItems(22000, 29999)"
-                                  :total="totalBalance(22000, 29999)"
+              <LiabilityComponent :accounts="filterItems(22000)"
+                                  :total="totalBalance(22000)"
                                   :msg="totalMsg('Total Non Current Liabilities')"
               />
               <v-row class="ml-4 mt-4">
                 <span class="subtitle-1 font-weight-bold">Equity</span>
               </v-row>
-              <LiabilityComponent :accounts="filterItems(30000, 39999)"
-                                     :total="totalBalance(30000, 39999)"
+              <LiabilityComponent :accounts="filterItems(30000)"
+                                     :total="totalBalance(30000)"
                                      :msg="totalMsg('Total Equity')"
               />
               <v-row class="ml-4 mb-4">
@@ -213,9 +213,9 @@ export default {
       const num = Math.abs(value)
       return parseFloat(Math.round(num * 100) / 100).toFixed(2)
     },
-    totalBalance (min, max) {
+    totalBalance (typeId) {
       let filterItem = this.items.filter(item => {
-        return item.id >= min && item.id <= max
+        return item.id === typeId
       })
       let balances = filterItem.map(item => {
         let balance = parseFloat(item.balance)
@@ -225,9 +225,9 @@ export default {
       const sum = arrSum(balances)
       return parseFloat(sum).toFixed(2)
     },
-    totalProfit (min, max) {
+    totalProfit (typeId) {
       let filterItem = this.profits.filter(item => {
-        return item.id >= min && item.id <= max
+        return item.id === typeId
       })
       let balances = filterItem.map(item => {
         let balance = parseFloat(item.balance)
@@ -240,9 +240,9 @@ export default {
     totalMsg (msg) {
       return msg
     },
-    filterItems (min, max) {
+    filterItems (typeId) {
       const revenues = this.items.filter(item => {
-        return item.id >= min && item.id <= max
+        return item.id === typeId
       })
       return revenues
     },
@@ -283,26 +283,26 @@ export default {
       return moment(this.date).format('MMMM DD YYYY')
     },
     totalAssets () {
-      const current = parseFloat(this.totalBalance(11000, 12999))
-      const nonCurrent = parseFloat(this.totalBalance(13000, 20999))
+      const current = parseFloat(this.totalBalance(11000))
+      const nonCurrent = parseFloat(this.totalBalance(13000))
       return parseFloat(current + nonCurrent).toFixed(2)
     },
     totalLiabilities () {
-      const currentLiability = (parseFloat(this.totalBalance(21000, 21999)) * (-1))
-      const nonCurrentLiability = (parseFloat(this.totalBalance(22000, 29999)) * (-1))
-      const equity = (parseFloat(this.totalBalance(30000, 39999)) * (-1))
+      const currentLiability = (parseFloat(this.totalBalance(21000)) * (-1))
+      const nonCurrentLiability = (parseFloat(this.totalBalance(22000)) * (-1))
+      const equity = (parseFloat(this.totalBalance(30000)) * (-1))
       const netProfit = parseFloat(this.netProfit)
       return parseFloat(currentLiability + nonCurrentLiability + equity + netProfit).toFixed(2)
     },
     grossProfit () {
-      const revenue = this.formatBalance(this.totalProfit(40000, 50000))
-      const costOfGoods = this.formatBalance(this.totalProfit(50000, 60000))
-      const costOfServices = this.formatBalance(this.totalProfit(60000, 70000))
+      const revenue = this.formatBalance(this.totalProfit(40000))
+      const costOfGoods = this.formatBalance(this.totalProfit(50000))
+      const costOfServices = this.formatBalance(this.totalProfit(60000))
       const answer = parseFloat(revenue) - (parseFloat(costOfGoods) + parseFloat(costOfServices))
       return parseFloat(answer).toFixed(2)
     },
     netProfit () {
-      const netProfit = parseFloat(this.grossProfit) - parseFloat(this.formatBalance(this.totalProfit(70000, 80000)))
+      const netProfit = parseFloat(this.grossProfit) - parseFloat(this.formatBalance(this.totalProfit(70000)))
       return parseFloat(netProfit).toFixed(2)
     }
   },
