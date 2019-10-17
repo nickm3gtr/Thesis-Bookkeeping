@@ -84,12 +84,12 @@
               <v-row class="ml-4 mb-4">
                 <v-col cols="12" md="5">
                   <div v-if="totalAssets <= 0">
-                    <span class="font-weight-bold red--text text--darken-3">
+                    <span class="font-weight-medium red--text text--darken-3">
                       Total Assets
                     </span>
                   </div>
                   <div v-else>
-                    <span class="font-weight-bold blue--text text--darken-3">
+                    <span class="font-weight-medium blue--text text--darken-4">
                       Total Assets
                     </span>
                   </div>
@@ -97,12 +97,12 @@
                 <v-col cols="12" md="4"></v-col>
                 <v-col cols="12" md="3">
                   <div v-if="totalAssets <= 0">
-                    <p class="text-right font-weight-bold underlined red--text text--darken-3">
+                    <p class="text-right font-weight-medium underlined red--text text--darken-3">
                       <span>{{ totalAssets }}</span>
                     </p>
                   </div>
                   <div v-else>
-                    <p class="text-right font-weight-bold underlined blue--text text--darken-3">
+                    <p class="text-right font-weight-medium underlined blue--text text--darken-3">
                       <span>{{ totalAssets }}</span>
                     </p>
                   </div>
@@ -141,12 +141,12 @@
               <v-row class="ml-4 mb-4">
                 <v-col cols="12" md="5">
                   <div v-if="totalLiabilities <= 0">
-                    <span class="font-weight-bold red--text text--darken-3">
+                    <span class="font-weight-medium red--text text--darken-3">
                       Total Liabilities and Equity
                     </span>
                   </div>
                   <div v-else>
-                    <span class="font-weight-bold blue--text text--darken-3">
+                    <span class="font-weight-medium blue--text text--darken-3">
                       Total Liabilities and Equity
                     </span>
                   </div>
@@ -154,12 +154,12 @@
                 <v-col cols="12" md="4"></v-col>
                 <v-col cols="12" md="3">
                   <div v-if="totalLiabilities <= 0">
-                    <p class="text-right font-weight-bold red--text text--darken-3 underlined">
+                    <p class="text-right font-weight-medium red--text text--darken-3 underlined">
                       <span>{{ totalLiabilities }}</span>
                     </p>
                   </div>
                   <div v-else>
-                    <p class="text-right font-weight-bold blue--text text--darken-3 underlined">
+                    <p class="text-right font-weight-medium blue--text text--darken-3 underlined">
                       <span>{{ totalLiabilities }}</span>
                     </p>
                   </div>
@@ -306,5 +306,12 @@ export default {
   }
  .text-center {
    text-align: center !important;
+ }
+ .font-weight-medium {
+   font-size: 12px;
+   color: black;
+ }
+ .text-right {
+   text-align: right;
  }
 </style>

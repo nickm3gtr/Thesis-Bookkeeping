@@ -91,4 +91,21 @@ router.get("/admin/expenses/:month", (req, res) => {
     .catch(err => res.status(400).json({ msg: 'Error', err }))
 })
 
+// Get all sales grouped by branches
+router.get("/admin/sales/by-branch/:month", (req, res) => {
+  const { month } = req.params
+  db.sequelize.query("select extract(month from t.date) as trans_date, br.\"branchName\", sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)) as balance \n" +
+  "from \"Branches\" as br inner join \"Bookkeepers\" b on br.id=b.\"BranchId\" inner join \"Transactions\" t on b.id=t.\"BookkeeperId\" inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" \n" +
+  "inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
+  "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
+  "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
+  "where ty.id = 40000 \n" +
+  "group by trans_date, br.\"branchName\" \n" +
+  "having extract(month from t.date) = :month", {
+    model: db.Transaction,
+    replacements: { month }
+  }).then(sales => res.json(sales))
+    .catch(err => res.status(400).json({msg: err}))
+})
+
 module.exports = router

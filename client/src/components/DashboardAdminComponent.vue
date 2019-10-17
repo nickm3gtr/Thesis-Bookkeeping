@@ -14,6 +14,15 @@
           </v-col>
         </v-row>
         <v-row>
+          <v-col cols="12" md="12">
+            <v-card>
+              <v-card-text>
+                <AdminDoughnutChart />
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row>
           <v-col cols="12" md="6">
             <v-card>
               <v-card-text>
@@ -40,6 +49,7 @@ import AdminExpenseBarChart from './charts/AdminExpenseBarChart'
 import AdminSalesThisMonth from './dashboard/AdminSalesThisMonth'
 import AdminExpensesThisMonth from './dashboard/AdminExpensesThisMonth'
 import AdminTransactionsRecorded from './dashboard/AdminTransactionsRecorded'
+import AdminDoughnutChart from './charts/AdminDoughnutChart'
 
 export default {
   name: 'DashboardAdminComponent',
@@ -48,7 +58,8 @@ export default {
     AdminExpenseBarChart,
     AdminSalesThisMonth,
     AdminExpensesThisMonth,
-    AdminTransactionsRecorded
+    AdminTransactionsRecorded,
+    AdminDoughnutChart
   }
 }
 </script>

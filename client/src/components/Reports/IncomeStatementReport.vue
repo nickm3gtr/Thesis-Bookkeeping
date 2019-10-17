@@ -114,11 +114,11 @@
                 />
                 <v-row class="ml-4 mb-4">
                   <v-col cols="12" md="5">
-                    <span class="font-weight-bold">Gross Profit</span>
+                    <span class="font-weight-medium">Gross Profit</span>
                   </v-col>
                   <v-col cols="12" md="4"></v-col>
                   <v-col cols="12" md="3">
-                    <p class="text-right font-weight-bold"><span>{{ grossProfit }}</span></p>
+                    <p class="text-right font-weight-medium"><span>{{ grossProfit }}</span></p>
                   </v-col>
                 </v-row>
                 <v-row class="ml-4 mt-4">
@@ -137,8 +137,8 @@
                   <v-col cols="12" md="4"></v-col>
                   <v-col cols="12" md="3">
                     <p v-if="netProfit < 0"
-                      class="text-right font-weight-bold red--text"><span>{{ formatBalance(netProfit) }}</span></p>
-                    <p v-else class="text-right font-weight-bold"><span>{{ formatBalance(netProfit) }}</span></p>
+                      class="text-right font-weight-bold red--text text--darken-2"><span>{{ formatBalance(netProfit) }}</span></p>
+                    <p v-else class="text-right font-weight-bold blue--text text--darken-2"><span>{{ formatBalance(netProfit) }}</span></p>
                   </v-col>
                 </v-row>
               </v-flex>
@@ -255,5 +255,9 @@ export default {
   }
  .text-center {
    text-align: center !important;
+ }
+ .font-weight-medium {
+   font-size: 12px;
+   color: black;
  }
 </style>

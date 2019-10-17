@@ -45,4 +45,7 @@ export default {
    font-size: 12px;
    color: black;
  }
+ .text-right {
+   text-align: right;
+ }
 </style>
