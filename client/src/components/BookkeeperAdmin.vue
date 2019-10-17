@@ -8,14 +8,11 @@
           </v-toolbar>
           <v-card-title>
             <v-row>
-              <v-col cols="12" md="9">
-              </v-col>
+              <v-col cols="12" md="9"></v-col>
               <v-col cols="12" md="3">
                 <v-dialog persistent v-model="dialog" max-width="600px">
                   <template v-slot:activator="{ on }">
-                    <v-btn depressed dark class="mr-2" color="primary"
-                      v-on="on"
-                    >Add Account</v-btn>
+                    <v-btn depressed dark class="mr-2" color="primary" v-on="on">Add Account</v-btn>
                   </template>
                   <v-card>
                     <v-card-title>
@@ -49,10 +46,7 @@
             </v-row>
           </v-card-title>
           <v-card-text>
-            <v-dialog
-              v-model="deleteDialog"
-              width="500"
-            >
+            <v-dialog v-model="deleteDialog" width="500">
               <v-card>
                 <v-toolbar color="red lighten-1" dark>
                   <v-toolbar-title>Delete</v-toolbar-title>
@@ -62,20 +56,12 @@
                 </v-card-text>
                 <v-card-actions>
                   <div class="flex-grow-1"></div>
-                  <v-btn color="primary" text @click="deleteDialog = false">
-                    Cancel
-                  </v-btn>
-                  <v-btn color="red" text @click="deleteItem">
-                    Delete
-                  </v-btn>
+                  <v-btn color="primary" text @click="deleteDialog = false">Cancel</v-btn>
+                  <v-btn color="red" text @click="deleteItem">Delete</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
-            <v-data-table
-              :headers="headers"
-              :items="items"
-              :loading="loading"
-            >
+            <v-data-table :headers="headers" :items="items" :loading="loading">
               <template v-slot:item.action="{ item }">
                 <v-btn dark small color="red" class="mx-1" @click="prepareDelete(item)">
                   <v-icon small>delete</v-icon>
@@ -87,20 +73,9 @@
       </v-flex>
     </v-layout>
     <div class="text-center">
-      <v-snackbar
-        v-model="snackbar"
-        bottom="bottom"
-        color="green"
-        :timeout="timeout"
-      >
+      <v-snackbar v-model="snackbar" bottom="bottom" color="green" :timeout="timeout">
         {{ msg }}
-        <v-btn
-          color="white"
-          text
-          @click="closeSnackBar"
-        >
-          Close
-        </v-btn>
+        <v-btn color="white" text @click="closeSnackBar">Close</v-btn>
       </v-snackbar>
     </div>
   </div>
@@ -181,7 +156,8 @@ export default {
       }
       try {
         const response = await axios.put(
-          `/api/bookkeepers/${this.userToDelete.id}`, config
+          `/api/bookkeepers/${this.userToDelete.id}`,
+          config
         )
         this.items.splice(index, 1)
         this.deleteDialog = false
@@ -211,7 +187,10 @@ export default {
       }
     }
     try {
-      const response = await axios.get('/api/bookkeepers/all-bookkeepers', config)
+      const response = await axios.get(
+        '/api/bookkeepers/all-bookkeepers',
+        config
+      )
       const branches = await axios.get('/api/admin/branches', config)
       this.loading = false
       this.branches = branches.data
@@ -231,7 +210,10 @@ export default {
       }
       try {
         this.loading = true
-        const response = await axios.get('/api/bookkeepers/all-bookkeepers', config)
+        const response = await axios.get(
+          '/api/bookkeepers/all-bookkeepers',
+          config
+        )
         this.loading = false
         this.items = response.data
       } catch (e) {
@@ -244,5 +226,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
