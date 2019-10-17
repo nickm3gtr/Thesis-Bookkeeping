@@ -59,14 +59,6 @@
                     </v-row>
                     <v-row>
                       <v-col cols="12" md="6">
-                        <v-text-field v-model="accountId" label="Account ID"></v-text-field>
-                        <p class="red--text text--darken-1" v-if="isIdExisting">
-                          Account ID already exists!
-                        </p>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col cols="12" md="6">
                         <v-text-field v-model="accountName" label="Account Name"></v-text-field>
                       </v-col>
                     </v-row>
@@ -76,7 +68,6 @@
                       <v-btn color="blue darken-1" @click="addDialog=false" text>Close</v-btn>
                       <v-btn color="blue darken-1"
                       text
-                      :disabled="isIdExisting"
                       @click="addAccount">Add</v-btn>
                   </v-card-actions>
                 </v-card>
@@ -127,7 +118,6 @@ export default {
       accounts: [],
       selectedType: '',
       selectedSubType: '',
-      accountId: '',
       accountName: '',
       loading: false,
       headers: [
@@ -150,7 +140,6 @@ export default {
         }
       }
       const newAccount = JSON.stringify({
-        id: this.accountId,
         name: this.accountName,
         SubTypeId: this.selectedSubType.id
       })
@@ -173,16 +162,6 @@ export default {
         return this.subType.filter(item => {
           return item.TypeId === this.selectedType.id
         })
-      }
-    },
-    isIdExisting () {
-      const filterID = this.accounts.filter(account => {
-        return account.id === parseInt(this.accountId)
-      })
-      if (filterID.length > 0) {
-        return true
-      } else {
-        return false
       }
     }
   },

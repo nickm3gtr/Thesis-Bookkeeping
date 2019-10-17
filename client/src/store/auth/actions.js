@@ -39,7 +39,7 @@ export default {
     axios.post('/api/bookkeepers/login', user, config)
       .then(response => {
         commit('AUTH_USER', response.data)
-        router.push('/bookkeeper/dashboard')
+        router.push('/bookkeeper/dashboard', () => {})
       })
       .catch(err => {
         commit('LOGOUT_USER')
@@ -61,7 +61,7 @@ export default {
     axios.post('/api/admin/login', user, config)
       .then(response => {
         commit('AUTH_USER', response.data)
-        router.push('/admin/dashboard')
+        router.push('/admin/dashboard', () => {})
       })
       .catch(err => {
         commit('LOGOUT_USER')

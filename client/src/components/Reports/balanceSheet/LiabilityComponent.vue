@@ -1,6 +1,6 @@
 <template>
   <div class="ml-12">
-    <div v-for="item in accounts" :key="item.id">
+    <div v-for="item in accounts" :key="item.account_id">
       <v-row>
         <v-col cols="12" md="5">
           <span class="font-weight-medium">{{ item.subtype }}</span>

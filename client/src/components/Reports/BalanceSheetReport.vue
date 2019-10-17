@@ -125,8 +125,8 @@
               <v-row class="ml-4 mt-4">
                 <span class="subtitle-1 font-weight-bold">Equity</span>
               </v-row>
-              <LiabilityComponent :accounts="filterItems(30000)"
-                                     :total="totalBalance(30000)"
+              <LiabilityComponent :accounts="filterItems(30100)"
+                                     :total="totalBalance(30100)"
                                      :msg="totalMsg('Total Equity')"
               />
               <v-row class="ml-4 mb-4">
@@ -276,7 +276,7 @@ export default {
     totalLiabilities () {
       const currentLiability = (parseFloat(this.totalBalance(21000)) * (-1))
       const nonCurrentLiability = (parseFloat(this.totalBalance(22000)) * (-1))
-      const equity = (parseFloat(this.totalBalance(30000)) * (-1))
+      const equity = (parseFloat(this.totalBalance(30100)) * (-1))
       const netProfit = parseFloat(this.netProfit)
       return parseFloat(currentLiability + nonCurrentLiability + equity + netProfit).toFixed(2)
     },

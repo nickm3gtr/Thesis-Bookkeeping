@@ -13,7 +13,7 @@ router.get('/', auth, (req, res) => {
       }]
     }],
     order: [
-      ['id', 'ASC']
+      ['SubTypeId', 'ASC']
     ]
   })
     .then(accounts => res.json(accounts))
