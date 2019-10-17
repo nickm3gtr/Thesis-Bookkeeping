@@ -290,7 +290,7 @@ export default {
         this.status = trans.data[0].status
         this.createdAt = moment(trans.data[0].createdAt).format('LLLL')
         this.updatedAt = moment(trans.data[0].updatedAt).format('LLLL')
-        this.userName = trans.data[0].userName
+        this.userName = trans.data[0].username
       } catch (e) {
         this.getError(e.response.data)
       }
