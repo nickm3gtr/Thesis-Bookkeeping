@@ -12,12 +12,27 @@
                 <v-card>
                   <v-card-title>Change Password</v-card-title>
                   <v-card-text>
-                    <v-text-field v-model="$v.currentPassword.$model" label="Current Password" type="password"></v-text-field>
-                    <v-text-field v-model="$v.newPassword.$model" label="New Password" type="password"></v-text-field>
+                    <v-text-field
+                      v-model="$v.currentPassword.$model"
+                      :append-icon="showCurrentPassword ? 'visibility' : 'visibility_off'"
+                      :type="showCurrentPassword ? 'text' : 'password'"
+                      @click:append="showCurrentPassword = !showCurrentPassword"
+                      label="Current Password"></v-text-field>
+                    <v-text-field
+                      :error="!$v.newPassword.minLength"
+                      :append-icon="showNewPassword ? 'visibility' : 'visibility_off'"
+                      :type="showNewPassword ? 'text' : 'password'"
+                      @click:append="showNewPassword = !showNewPassword"
+                      v-model="$v.newPassword.$model" label="New Password"></v-text-field>
                     <p class="error--text" v-if="!$v.newPassword.minLength">
                       password must be at least {{$v.newPassword.$params.minLength.min}} letters
                     </p>
-                    <v-text-field v-model="$v.retypePassword.$model" label="Confirm Password" type="password"></v-text-field>
+                    <v-text-field
+                      :error="retypePassword.length>0 && !$v.retypePassword.sameAsPassword"
+                      :append-icon="showRetypePassword ? 'visibility' : 'visibility_off'"
+                      :type="showRetypePassword ? 'text' : 'password'"
+                      @click:append="showRetypePassword = !showRetypePassword"
+                      v-model="$v.retypePassword.$model" label="Confirm Password"></v-text-field>
                     <p class="error--text" v-if="retypePassword.length>0 && !$v.retypePassword.sameAsPassword">
                       password must be the same
                     </p>
@@ -26,7 +41,7 @@
                     <div class="flex-grow-1"></div>
                     <v-btn color="blue darken-1" @click="passwordDialog = false" text>Close</v-btn>
                     <v-btn color="blue darken-1" text @click="changePassword"
-                      :disabled="$v.$invalid">Save</v-btn>
+                    >Save</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -87,7 +102,10 @@ export default {
       retypePassword: '',
       changePasswordMessage: '',
       snackbar: false,
-      timeout: 2000
+      timeout: 2000,
+      showCurrentPassword: false,
+      showNewPassword: false,
+      showRetypePassword: false
     }
   },
   methods: {
