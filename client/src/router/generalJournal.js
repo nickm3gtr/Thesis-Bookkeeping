@@ -5,6 +5,8 @@ import SalesBookPage from '@/views/Books/SalesBookPage'
 import PurchaseBookPage from '@/views/Books/PurchaseBookPage'
 import TransactionListPage from '@/views/Books/TransactionListPage'
 import TransactionFilterPage from '@/views/Books/TransactionFilterPage'
+import AdminTransactionListPage from '@/views/Books/AdminTransactionListPage'
+import AdminTransactionFilterPage from '@/views/Books/AdminTransactionFilterPage'
 
 export default [
   {
@@ -59,6 +61,22 @@ export default [
     path: '/bookkeeper/transactions/:transId',
     name: 'transactions-filter',
     component: TransactionFilterPage,
+    meta: {
+      title: 'Transactions'
+    }
+  },
+  {
+    path: '/admin/transactions',
+    name: 'transactions-admin',
+    component: AdminTransactionListPage,
+    meta: {
+      title: 'Transactions'
+    }
+  },
+  {
+    path: '/admin/transactions/:transId',
+    name: 'transactions-filter-admin',
+    component: AdminTransactionFilterPage,
     meta: {
       title: 'Transactions'
     }

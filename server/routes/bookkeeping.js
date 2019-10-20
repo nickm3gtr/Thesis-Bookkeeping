@@ -28,7 +28,7 @@ router.get("/transactions/branch/:branchId", auth, (req, res) => {
   db.sequelize.query("select tr.id, tr.memo, tr.num, tr.date\n" +
       "from \"Transactions\" tr inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id\n" +
       "where b.\"BranchId\"=:branchId\n" +
-      "order by tr.id desc, tr.\"date\" desc", {
+      "order by tr.\"date\" desc, tr.id desc", {
     model: db.Transaction,
     replacements: { branchId }
   }).then(transactions => res.json(transactions))
@@ -42,7 +42,7 @@ router.get("/transactions/book/:branchId/:bookId", auth, (req, res) => {
   db.sequelize.query("select tr.id, tr.memo, tr.num, tr.date\n" +
   "from \"Transactions\" tr inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id\n" +
   "where b.\"BranchId\"=:branchId and tr.\"BookId\"=:bookId\n" +
-  "order by id desc, tr.\"date\" desc", {
+  "order by tr.\"date\" desc, tr.id desc", {
     model: db.Transaction,
     replacements: { branchId, bookId }
   }).then(transactions => res.json(transactions))

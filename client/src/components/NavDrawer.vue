@@ -132,6 +132,11 @@ export default {
           route: '/admin/chart_of_account'
         },
         {
+          action: 'local_atm',
+          title: 'Transactions',
+          route: '/admin/transactions'
+        },
+        {
           action: 'bar_chart',
           title: 'Reports',
           items: [
