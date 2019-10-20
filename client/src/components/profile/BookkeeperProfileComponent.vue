@@ -12,14 +12,21 @@
                 <v-card>
                   <v-card-title>Change Password</v-card-title>
                   <v-card-text>
-                    <v-text-field v-model="currentPassword" label="Current Password" type="password"></v-text-field>
-                    <v-text-field v-model="newPassword" label="New Password" type="password"></v-text-field>
-                    <v-text-field v-model="retypePassword" label="Retype-Password" type="password"></v-text-field>
+                    <v-text-field v-model="$v.currentPassword.$model" label="Current Password" type="password"></v-text-field>
+                    <v-text-field v-model="$v.newPassword.$model" label="New Password" type="password"></v-text-field>
+                    <p class="error--text" v-if="!$v.newPassword.minLength">
+                      password must be at least {{$v.newPassword.$params.minLength.min}} letters
+                    </p>
+                    <v-text-field v-model="$v.retypePassword.$model" label="Confirm Password" type="password"></v-text-field>
+                    <p class="error--text" v-if="retypePassword.length>0 && !$v.retypePassword.sameAsPassword">
+                      password must be the same
+                    </p>
                   </v-card-text>
                   <v-card-actions>
                     <div class="flex-grow-1"></div>
                     <v-btn color="blue darken-1" @click="passwordDialog = false" text>Close</v-btn>
-                    <v-btn color="blue darken-1" text @click="changePassword">Save</v-btn>
+                    <v-btn color="blue darken-1" text @click="changePassword"
+                      :disabled="$v.$invalid">Save</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -67,6 +74,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
+import { required, minLength, sameAs } from 'vuelidate/lib/validators'
 
 export default {
   name: 'BookkeeperProfileComponent',
@@ -123,6 +131,18 @@ export default {
       this.bookkeeper = response.data[0]
     } catch (e) {
       this.getError(e.response.data)
+    }
+  },
+  validations: {
+    currentPassword: {
+      required
+    },
+    newPassword: {
+      required,
+      minLength: minLength(5)
+    },
+    retypePassword: {
+      sameAsPassword: sameAs('newPassword')
     }
   }
 }

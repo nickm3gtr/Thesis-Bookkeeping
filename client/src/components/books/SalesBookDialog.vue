@@ -20,7 +20,10 @@
           </v-row>
           <v-row>
             <v-col cols="12" md="12">
-              <v-text-field v-model="amount" label="Amount"></v-text-field>
+              <v-text-field v-model="$v.amount.$model" label="Amount"></v-text-field>
+              <p class="error--text" v-if="!$v.amount.decimal">
+                Please input a number
+              </p>
             </v-col>
           </v-row>
         </v-container>
@@ -28,7 +31,7 @@
       <v-card-actions>
         <div class="flex-grow-1"></div>
         <v-btn color="blue darken-1" @click="$emit('close-dialog')" text>Close</v-btn>
-        <v-btn color="blue darken-1" text @click="add" :disabled="isIncomplete">Add</v-btn>
+        <v-btn color="blue darken-1" text @click="add" :disabled="isIncomplete || $v.$invalid">Add</v-btn>
       </v-card-actions>
     </v-form>
   </v-card>
@@ -36,6 +39,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import { decimal } from 'vuelidate/lib/validators'
 
 export default {
   name: 'SalesBookDialog',
@@ -67,6 +71,11 @@ export default {
     ...mapState(['auth']),
     isIncomplete () {
       return this.amount === ''
+    }
+  },
+  validations: {
+    amount: {
+      decimal
     }
   }
 }
