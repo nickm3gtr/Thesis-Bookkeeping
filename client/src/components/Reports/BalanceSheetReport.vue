@@ -62,7 +62,7 @@
                     <span v-if="auth.user === null" class="headline">DARBMUPCO</span>
                     <span v-else class="headline">{{ auth.user.Branch.branchName }}</span>
                   </p>
-                  <p><span class="subtitle-1">Balance Sheet</span></p>
+                  <p><span class="subtitle-1">Statement of Financial Condition</span></p>
                   <p><span class="subtitle-2">As of {{ formatDate }}</span></p>
                 </div>
               </v-flex>
@@ -94,16 +94,16 @@
                     </span>
                   </div>
                 </v-col>
-                <v-col cols="12" md="4"></v-col>
+                <v-col cols="12" md="3"></v-col>
                 <v-col cols="12" md="3">
                   <div v-if="totalAssets <= 0">
                     <p class="text-right font-weight-medium underlined red--text text--darken-3">
-                      <span>{{ totalAssets }}</span>
+                      <span>&#8369;{{ totalAssets }}</span>
                     </p>
                   </div>
                   <div v-else>
                     <p class="text-right font-weight-medium underlined blue--text text--darken-3">
-                      <span>{{ totalAssets }}</span>
+                      <span>&#8369;{{ totalAssets }}</span>
                     </p>
                   </div>
                 </v-col>
@@ -129,13 +129,13 @@
                                      :total="totalBalance(30100)"
                                      :msg="totalMsg('Total Equity')"
               />
-              <v-row class="ml-4 mb-4">
-                <v-col cols="12" md="5">
-                  <span class="font-weight-medium">Net Income</span>
+              <v-row class="mx-10 mb-4">
+                <v-col cols="12" md="4">
+                  <span>Add: Net Income</span>
                 </v-col>
-                <v-col cols="12" md="4"></v-col>
+                <v-col cols="12" md="3"></v-col>
                 <v-col cols="12" md="3">
-                  <p class="text-right font-weight-medium"><span>{{ netProfit }}</span></p>
+                  <p class="text-right underlined"><span>{{ netProfit }}</span></p>
                 </v-col>
               </v-row>
               <v-row class="ml-4 mb-4">
@@ -151,16 +151,16 @@
                     </span>
                   </div>
                 </v-col>
-                <v-col cols="12" md="4"></v-col>
+                <v-col cols="12" md="3"></v-col>
                 <v-col cols="12" md="3">
                   <div v-if="totalLiabilities <= 0">
                     <p class="text-right font-weight-medium red--text text--darken-3 underlined">
-                      <span>{{ totalLiabilities }}</span>
+                      <span>&#8369;{{ totalLiabilities }}</span>
                     </p>
                   </div>
                   <div v-else>
                     <p class="text-right font-weight-medium blue--text text--darken-3 underlined">
-                      <span>{{ totalLiabilities }}</span>
+                      <span>&#8369;{{ totalLiabilities }}</span>
                     </p>
                   </div>
                 </v-col>
@@ -304,13 +304,16 @@ export default {
     text-decoration-line: underline;
     text-decoration-style: double;
   }
+  .underline-single {
+    text-decoration-line: underline;
+  }
  .text-center {
    text-align: center !important;
  }
- .font-weight-medium {
+ /* .font-weight-medium {
    font-size: 12px;
    color: black;
- }
+ } */
  .text-right {
    text-align: right;
  }
