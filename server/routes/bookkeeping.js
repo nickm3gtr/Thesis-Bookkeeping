@@ -25,8 +25,8 @@ router.post("/general-journal", (req, res) => {
 // Fetch all transaction records
 router.get("/transactions/branch/:branchId", auth, (req, res) => {
   const { branchId } = req.params
-  db.sequelize.query("select tr.id, tr.memo, tr.num, tr.date\n" +
-      "from \"Transactions\" tr inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id\n" +
+  db.sequelize.query("select tr.id, bo.name, tr.memo, tr.num, tr.date\n" +
+      "from \"Books\" bo inner join \"Transactions\" tr on bo.id=tr.\"BookId\" inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id\n" +
       "where b.\"BranchId\"=:branchId\n" +
       "order by tr.\"date\" desc, tr.id desc", {
     model: db.Transaction,
