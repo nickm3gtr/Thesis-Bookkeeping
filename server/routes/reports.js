@@ -129,7 +129,7 @@ router.get("/income-statement/:id/:start/:end", (req, res) => {
   const { id, start, end } = req.params
 
   if (id == 0) {
-    db.sequelize.query("select ty.name as type, s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, (\n" +
+    db.sequelize.query("select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, (\n" +
                         "select sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0))\n" +
                         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
                         "where tr.\"AccountId\"=a.id and t.\"date\" between :start and :end\n" +
@@ -147,7 +147,7 @@ router.get("/income-statement/:id/:start/:end", (req, res) => {
       .catch(err => res.status(400).json({ msg: err }))
 
   } else {
-    db.sequelize.query("select ty.name as type, s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, (\n" +
+    db.sequelize.query("select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, (\n" +
                           "select sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0))\n" +
                           "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
                           "where tr.\"AccountId\"=a.id and t.\"date\" between :start and :end and b.\"BranchId\"=:id\n" +

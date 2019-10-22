@@ -19,7 +19,7 @@
         <span>{{ msg }}</span>
       </v-col>
       <v-col cols="12" md="3">
-        <p class="text-right"><span class="type-total">{{ formatBalance(total) }}</span></p>
+        <p class="text-right type-total"><span>{{ formatBalance(total) }}</span></p>
       </v-col>
     </v-row>
   </div>
@@ -27,11 +27,12 @@
 
 <script>
 export default {
-  name: 'LiabilityComponent',
+  name: 'ExpenseComponent',
   props: ['accounts', 'total', 'msg'],
   methods: {
-    formatBalance (val) {
-      return parseFloat(val * (-1)).toFixed(2)
+    formatBalance (value) {
+      const num = Math.abs(value)
+      return parseFloat(Math.round(num * 100) / 100).toFixed(2)
     },
     sum (subType) {
       const subtypes = this.accounts.filter(account => {
@@ -42,8 +43,7 @@ export default {
       })
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)
       const sum = arrSum(subtypeBalance)
-      const answer = parseFloat(sum) * (-1)
-      return parseFloat(answer).toFixed(2)
+      return parseFloat(sum).toFixed(2)
     }
   },
   computed: {
@@ -64,15 +64,5 @@ export default {
  .font-weight-medium {
    font-size: 12px;
    color: black;
- }
- .text-right {
-   text-align: right;
- }
- .total {
-   text-decoration-line: underline;
- }
- .type-total {
-   text-decoration-line: underline;
-   text-decoration-style: double;
  }
 </style>

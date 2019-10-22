@@ -106,21 +106,21 @@
                 <v-row class="ml-4 mt-4">
                   <span class="subtitle-1 font-weight-bold">Revenues</span>
                 </v-row>
-                <ItemComponent :accounts="filterItems(40000)"
+                <IncomeComponent :accounts="filterItems(40000)"
                                   :total="totalBalance(40000)"
                                   :msg="totalMsg('Total Revenue')"
                 />
                 <v-row class="ml-4 mt-4">
                   <span class="subtitle-1 font-weight-bold">Cost of Goods Sold</span>
                 </v-row>
-                <ItemComponent :accounts="filterItems(50000)"
+                <ExpenseComponent :accounts="filterItems(50000)"
                                :total="totalBalance(50000)"
                                :msg="totalMsg('Total Cost of Goods Sold')"
                 />
                 <v-row class="ml-4 mt-4">
                   <span class="subtitle-1 font-weight-bold">Cost of Services</span>
                 </v-row>
-                <ItemComponent :accounts="filterItems(60000)"
+                <ExpenseComponent :accounts="filterItems(60000)"
                                :total="totalBalance(60000)"
                                :msg="totalMsg('Total Cost of Services')"
                 />
@@ -128,17 +128,17 @@
                   <v-col cols="12" md="5">
                     <span class="font-weight-bold">Gross Profit</span>
                   </v-col>
-                  <v-col cols="12" md="4"></v-col>
+                  <v-col cols="12" md="3"></v-col>
                   <v-col cols="12" md="3">
-                    <p class="text-right font-weight-bold"><span>{{ grossProfit }}</span></p>
+                    <p class="text-right font-weight-bold underlined"><span>&#8369;{{ grossProfit }}</span></p>
                   </v-col>
                 </v-row>
                 <v-row class="ml-4 mt-4">
                   <span class="subtitle-1 font-weight-bold">Operating Expenses</span>
                 </v-row>
-                <ItemComponent :accounts="filterItems(70000)"
+                <ExpenseComponent :accounts="filterItems(70000)"
                                :total="totalBalance(70000)"
-                               :msg="totalMsg('Total Expenses')"
+                               :msg="totalMsg('Less: Total Expenses')"
                 />
                 <hr>
                 <v-row class="ml-4 mb-4">
@@ -146,11 +146,11 @@
                     <span v-if="netProfit < 0" class="font-weight-bold red--text">Net Loss</span>
                     <span v-else class="font-weight-bold">Net Income</span>
                   </v-col>
-                  <v-col cols="12" md="4"></v-col>
+                  <v-col cols="12" md="3"></v-col>
                   <v-col cols="12" md="3">
                     <p v-if="netProfit < 0"
-                      class="text-right font-weight-bold red--text"><span>{{ formatBalance(netProfit) }}</span></p>
-                    <p v-else class="text-right font-weight-bold"><span>{{ formatBalance(netProfit) }}</span></p>
+                      class="text-right font-weight-bold red--text underlined"><span>&#8369;{{ formatBalance(netProfit) }}</span></p>
+                    <p v-else class="text-right font-weight-bold blue--text underlined"><span>&#8369;{{ formatBalance(netProfit) }}</span></p>
                   </v-col>
                 </v-row>
               </v-flex>
@@ -167,12 +167,14 @@ import { mapState, mapActions } from 'vuex'
 import moment from 'moment'
 import html2pdf from 'html2pdf.js'
 import axios from 'axios'
-import ItemComponent from './incomeStatement/ItemComponent'
+import ExpenseComponent from './incomeStatement/ExpenseComponent'
+import IncomeComponent from './incomeStatement/IncomeComponent'
 
 export default {
   name: 'AdminIncomeStatementReport',
   components: {
-    ItemComponent
+    ExpenseComponent,
+    IncomeComponent
   },
   data () {
     return {
@@ -285,4 +287,8 @@ export default {
  .text-center {
    text-align: center !important;
  }
+  .underlined {
+    text-decoration-line: underline;
+    text-decoration-style: double;
+  }
 </style>

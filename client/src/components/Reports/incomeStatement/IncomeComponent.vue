@@ -27,11 +27,12 @@
 
 <script>
 export default {
-  name: 'LiabilityComponent',
+  name: 'IncomeComponent',
   props: ['accounts', 'total', 'msg'],
   methods: {
-    formatBalance (val) {
-      return parseFloat(val * (-1)).toFixed(2)
+    formatBalance (value) {
+      const num = Math.abs(value)
+      return parseFloat(Math.round(num * 100) / 100).toFixed(2)
     },
     sum (subType) {
       const subtypes = this.accounts.filter(account => {
@@ -64,15 +65,5 @@ export default {
  .font-weight-medium {
    font-size: 12px;
    color: black;
- }
- .text-right {
-   text-align: right;
- }
- .total {
-   text-decoration-line: underline;
- }
- .type-total {
-   text-decoration-line: underline;
-   text-decoration-style: double;
  }
 </style>
