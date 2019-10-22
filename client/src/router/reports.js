@@ -8,6 +8,7 @@ import AdminLedgerPage from '@/views/AdminReports/AdminLedgerPage'
 import AdminTrialBalancePage from '@/views/AdminReports/AdminTrialBalancePage'
 import AdminBalanceSheetPage from '@/views/AdminReports/AdminBalanceSheetPage'
 import AdminIncomeStatementPage from '@/views/AdminReports/AdminIncomeStatementPage'
+import AdminNotesPage from '@/views/AdminReports/AdminNotesPage'
 
 export default [
   {
@@ -88,6 +89,14 @@ export default [
     component: AdminIncomeStatementPage,
     meta: {
       title: 'Income Statement'
+    }
+  },
+  {
+    path: '/admin/reports/summary',
+    name: 'reports-notes-admin',
+    component: AdminNotesPage,
+    meta: {
+      title: 'Summary Report'
     }
   }
 ]

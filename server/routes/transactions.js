@@ -26,5 +26,14 @@ router.get("/admin-transactions/book/:bookId", (req, res) => {
     .catch(err => res.status(400).json({ msg: "Can't fetch transactions", err }))
 })
 
+// Fetch years that occurs in a transaction "ADMIN"
+router.get("/admin-years", (req, res) => {
+  db.sequelize.query("select extract(year from t.\"date\") \n" +
+  "from \"Transactions\" t \n" +
+  "group by date_part", {
+    model: db.Transaction
+  }).then(years => res.json(years))
+    .catch(err => res.status(400).json({msg: 'Error', err}))
+})
 
 module.exports = router

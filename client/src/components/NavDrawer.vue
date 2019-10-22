@@ -144,7 +144,8 @@ export default {
             { title: 'Ledger', route: '/admin/reports/ledger' },
             { title: 'Trial Balance', route: '/admin/reports/trial-balance' },
             { title: 'Balance Sheet', route: '/admin/reports/balance-sheet' },
-            { title: 'Income Statement', route: '/admin/reports/income-statement' }
+            { title: 'Income Statement', route: '/admin/reports/income-statement' },
+            { title: 'Notes and Summary', route: '/admin/reports/summary' }
           ]
         }
       ]
