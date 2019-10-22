@@ -125,19 +125,11 @@
               <v-row class="ml-4 mt-4">
                 <span class="subtitle-1 font-weight-bold">Equity</span>
               </v-row>
-              <LiabilityComponent :accounts="filterItems(30100)"
+              <EquityComponent :accounts="filterItems(30100)"
                                      :total="totalBalance(30100)"
                                      :msg="totalMsg('Total Equity')"
+                                     :netIncome="netProfit"
               />
-              <v-row class="mx-10 mb-4">
-                <v-col cols="12" md="4">
-                  <span>Add: Net Income</span>
-                </v-col>
-                <v-col cols="12" md="3"></v-col>
-                <v-col cols="12" md="3">
-                  <p class="text-right underlined"><span>{{ netProfit }}</span></p>
-                </v-col>
-              </v-row>
               <v-row class="ml-4 mb-4">
                 <v-col cols="12" md="5">
                   <div v-if="totalLiabilities <= 0">
@@ -180,10 +172,11 @@ import html2pdf from 'html2pdf.js'
 import axios from 'axios'
 import BalanceSheetComponent from './balanceSheet/BalanceSheetComponent'
 import LiabilityComponent from './balanceSheet/LiabilityComponent'
+import EquityComponent from './balanceSheet/EquityComponent'
 
 export default {
   name: 'BalanceSheetReport',
-  components: { BalanceSheetComponent, LiabilityComponent },
+  components: { BalanceSheetComponent, LiabilityComponent, EquityComponent },
   data () {
     return {
       menu: false,
