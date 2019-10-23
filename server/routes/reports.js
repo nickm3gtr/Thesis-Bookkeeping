@@ -248,43 +248,59 @@ router.get("/net-profit/:id/:date", (req, res) => {
   }
 })
 
-router.get('/notes/:id/:start/:end', (req, res) => {
-  const { id, start, end } = req.params
+router.get('/notes/:id/:first/:second', (req, res) => {
+  const { id, first, second } = req.params
+  let yearOneStart = 0
+  let yearOneEnd = 0
+  let yearTwoStart = 0
+  let yearTwoEnd = 0
+  if (first < second) {
+    yearOneStart = `${first}-1-1`
+    yearOneEnd = `${first}-12-31`
+    yearTwoStart = `${second}-1-1`
+    yearTwoEnd = `${second}-12-31`
+  } else {
+    yearOneStart = `${second}-1-1`
+    yearOneEnd = `${second}-12-31`
+    yearTwoStart = `${first}-1-1`
+    yearTwoEnd = `${first}-12-31`
+  }
+
   db.sequelize.query("select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, ( \n" +
     "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
     "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-    "where tr.\"AccountId\"=a.id and t.\"date\" between '2018-1-1' and '2018-10-22' \n" +
+    "where tr.\"AccountId\"=a.id and t.\"date\" <= :yearOneEnd \n" +
   ") as balance1, ( \n" +
    "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
     "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-    "where tr.\"AccountId\"=a.id and t.\"date\" between '2018-1-1' and '2019-10-22' \n" +
+    "where tr.\"AccountId\"=a.id and t.\"date\" <= :yearTwoEnd \n" +
   ") as balance2 \n" +
   "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
       "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
   "where a.id in ( \n" +
     "select tr.\"AccountId\" \n" +
     "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-    "where ty.id >=10000 and ty.id < 40000 and t.\"date\" between '2018-1-1' and '2019-10-22' \n" +
+    "where ty.id >=10000 and ty.id < 40000 and t.\"date\" <= :yearTwoEnd \n" +
   ") \n" +
   "union all \n" +
 "select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, ( \n" +
     "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
     "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-    "where tr.\"AccountId\"=a.id and t.\"date\" between '2018-1-1' and '2018-10-22' \n" +
+    "where tr.\"AccountId\"=a.id and t.\"date\" between :yearOneStart and :yearOneEnd \n" +
   ") as balance1, ( \n" +
    "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
     "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-    "where tr.\"AccountId\"=a.id and t.\"date\" between '2019-1-1' and '2019-10-22' \n" +
+    "where tr.\"AccountId\"=a.id and t.\"date\" between :yearTwoStart and :yearTwoEnd \n" +
   ") as balance2 \n" +
   "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
       "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
   "where a.id in ( \n" +
     "select tr.\"AccountId\" \n" +
     "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-    "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between '2018-1-1' and '2019-10-22' \n" +
+    "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :yearOneStart and :yearTwoEnd \n" +
   ")", {
     model: db.TransactionRecord,
-    replacements: { id, start, end }
+    replacements: { id, yearOneStart, yearOneEnd, yearTwoStart, yearTwoEnd }
   }).then(transactions => res.json(transactions))
     .catch(err => res.status(400).json({ msg: err }))
 })

@@ -26,11 +26,20 @@
                   return-object
                 ></v-combobox>
               </v-col>
+              <v-col cols="12" md="3">
+                <v-combobox
+                  v-model="selectType"
+                  :items="type"
+                  item-text="date_part"
+                  label="Select Report Type"
+                  return-object
+                ></v-combobox>
+              </v-col>
               <v-col cols="12" md="6" class="mt-3">
                 <v-btn dark color="primary" class="mx-2" @click="generate"
                 >Generate</v-btn
                 >
-                <v-btn dark color="success" class="mx-2"
+                <v-btn dark color="success" class="mx-2" @click="pdf"
                 >Download PDF</v-btn
                 >
               </v-col>
@@ -61,16 +70,25 @@
                 </div>
               </v-flex>
               <hr>
-              <div class="mx-12">
+              <div class="mx-12" v-if="selectType === 'Note'">
                 <v-row class="ml-10">
-                <v-col cols="12" md="5">Year</v-col>
-                <v-col cols="12" md="3"><p class="text-right">{{firstYear.date_part}}</p></v-col>
-                <v-col cols="12" md="3"><p class="text-right">{{secondYear.date_part}}</p></v-col>
+                <v-col cols="12" md="5"></v-col>
+                <v-col cols="12" md="3"><p class="text-right">{{bigYear}}</p></v-col>
+                <v-col cols="12" md="3"><p class="text-right">{{smallYear}}</p></v-col>
               </v-row>
               </div>
-              <AssetsNotes
-                :accounts="formatItems"
+              <div v-if="selectType === 'Note'">
+                <AssetsNotes
+                  :accounts="formatItems"
               />
+              </div>
+              <div v-else>
+                <BalanceSummary
+                  :accounts="formatItems"
+                  :bigYear="bigYear"
+                  :smallYear="smallYear"
+                />
+              </div>
             </div>
           </v-card-text>
         </v-card>
@@ -82,12 +100,15 @@
 <script>
 import axios from 'axios'
 import { mapState, mapActions } from 'vuex'
+import html2pdf from 'html2pdf.js'
 import AssetsNotes from './notes/AssetsNotes'
+import BalanceSummary from './notes/BalanceSummary'
 
 export default {
   name: 'AdminNotesReport',
   components: {
-    AssetsNotes
+    AssetsNotes,
+    BalanceSummary
   },
   data () {
     return {
@@ -96,7 +117,9 @@ export default {
       years: [],
       firstYear: { date_part: 2019 },
       secondYear: { date_part: 2019 },
-      items: []
+      items: [],
+      type: ['Summary', 'Note'],
+      selectType: 'Summary'
     }
   },
   methods: {
@@ -112,6 +135,17 @@ export default {
         this.loading = false
       }
       this.hidden = false
+    },
+    pdf () {
+      const element = document.getElementById('content')
+      const opt = {
+        margin: 0.5,
+        filename: 'BalanceSheet.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      }
+      html2pdf().from(element).set(opt).save()
     },
     filterItems (typeId) {
       const revenues = this.items.filter(item => {
@@ -134,6 +168,20 @@ export default {
         return item
       })
       return items
+    },
+    bigYear () {
+      if (this.firstYear.date_part > this.secondYear.date_part) {
+        return this.firstYear.date_part
+      } else {
+        return this.secondYear.date_part
+      }
+    },
+    smallYear () {
+      if (this.firstYear.date_part < this.secondYear.date_part) {
+        return this.firstYear.date_part
+      } else {
+        return this.secondYear.date_part
+      }
     }
   },
   async mounted () {
