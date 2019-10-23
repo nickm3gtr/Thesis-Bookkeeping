@@ -35,6 +35,16 @@
                   return-object
                 ></v-combobox>
               </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-container class="mt-0" fluid>
+                  <v-radio-group v-model="radio" row v-if="selectType === 'Summary'">
+                    <v-radio label="Balance Sheet" value="Balance Sheet"></v-radio>
+                    <v-radio label="Income Statement" value="Income Statement"></v-radio>
+                  </v-radio-group>
+                </v-container>
+              </v-col>
               <v-col cols="12" md="6" class="mt-3">
                 <v-btn dark color="primary" class="mx-2" @click="generate"
                 >Generate</v-btn
@@ -83,11 +93,20 @@
               />
               </div>
               <div v-else>
-                <BalanceSummary
-                  :accounts="formatItems"
-                  :bigYear="bigYear"
-                  :smallYear="smallYear"
-                />
+                <div v-if="radio === 'Balance Sheet'">
+                  <BalanceSummary
+                    :accounts="formatItems"
+                    :bigYear="bigYear"
+                    :smallYear="smallYear"
+                  />
+                </div>
+                <div v-else-if="radio === 'Income Statement'">
+                  <IncomeSummary
+                    :accounts="formatItems"
+                    :bigYear="bigYear"
+                    :smallYear="smallYear"
+                  />
+                </div>
               </div>
             </div>
           </v-card-text>
@@ -103,12 +122,14 @@ import { mapState, mapActions } from 'vuex'
 import html2pdf from 'html2pdf.js'
 import AssetsNotes from './notes/AssetsNotes'
 import BalanceSummary from './notes/BalanceSummary'
+import IncomeSummary from './notes/IncomeSummary'
 
 export default {
   name: 'AdminNotesReport',
   components: {
     AssetsNotes,
-    BalanceSummary
+    BalanceSummary,
+    IncomeSummary
   },
   data () {
     return {
@@ -119,7 +140,8 @@ export default {
       secondYear: { date_part: 2019 },
       items: [],
       type: ['Summary', 'Note'],
-      selectType: 'Summary'
+      selectType: 'Summary',
+      radio: 'Balance Sheet'
     }
   },
   methods: {
