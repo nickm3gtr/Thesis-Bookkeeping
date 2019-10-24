@@ -41,6 +41,7 @@
         <v-col cols="12" md="3"><p class="text-right total">{{sumAccountTypeFirstBalance(13000)}}</p></v-col>
       </v-row>
       <hr>
+      <hr>
       <v-row class="ml-10">
         <v-col cols="12" md="5">TOTAL ASSETS: </v-col>
         <v-col cols="12" md="3"><p class="text-right total">{{totalAssetsSecond}}</p></v-col>
@@ -103,6 +104,25 @@
         <v-col cols="12" md="3"><p class="text-right total">{{sumAccountTypeFirstBalance(30100)}}</p></v-col>
       </v-row>
       <hr>
+      <v-row class="ml-10">
+        <v-col cols="12" md="5">Reserves: </v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{netProfitSecond}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{netProfitFirst}}</p></v-col>
+      </v-row>
+      <hr>
+      <v-row class="ml-10">
+        <v-col cols="12" md="5">TOTAL EQUITY: </v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{totalEquitySecond}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{totalEquityFirst}}</p></v-col>
+      </v-row>
+      <hr>
+      <hr>
+      <v-row class="ml-10">
+        <v-col cols="12" md="5">TOTAL LIABILITIES, EQUITY & RESERVES: </v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{totalLiabilitiesEquitySecond}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{totalLiabilitiesEquityFirst}}</p></v-col>
+      </v-row>
+      <hr>
     </div>
   </div>
 </template>
@@ -110,7 +130,7 @@
 <script>
 export default {
   name: 'BalanceSummary',
-  props: ['accounts', 'bigYear', 'smallYear'],
+  props: ['accounts', 'profits', 'bigYear', 'smallYear'],
   methods: {
     formatBalance (val) {
       return parseFloat(val).toFixed(2)
@@ -150,6 +170,28 @@ export default {
     },
     sumAccountTypeSecondBalance (typeId) {
       const types = this.accounts.filter(account => {
+        return account.id === typeId
+      })
+      const typeBalance = types.map(type => {
+        return parseFloat(type.balance2)
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(typeBalance)
+      return parseFloat(sum).toFixed(2)
+    },
+    sumAccountTypeFirstProfit (typeId) {
+      const types = this.profits.filter(account => {
+        return account.id === typeId
+      })
+      const typeBalance = types.map(type => {
+        return parseFloat(type.balance1)
+      })
+      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
+      const sum = arrSum(typeBalance)
+      return parseFloat(sum).toFixed(2)
+    },
+    sumAccountTypeSecondProfit (typeId) {
+      const types = this.profits.filter(account => {
         return account.id === typeId
       })
       const typeBalance = types.map(type => {
@@ -232,6 +274,32 @@ export default {
     totalLiabilitiesSecond () {
       const assets = parseFloat(this.sumAccountTypeSecondBalance(21000)) + parseFloat(this.sumAccountTypeSecondBalance(22000))
       return parseFloat(assets).toFixed(2)
+    },
+    totalEquityFirst () {
+      const total = parseFloat(this.sumAccountTypeFirstBalance(30100)) + parseFloat(this.netProfitFirst)
+      return parseFloat(total).toFixed(2)
+    },
+    totalEquitySecond () {
+      const total = parseFloat(this.sumAccountTypeSecondBalance(30100)) + parseFloat(this.netProfitSecond)
+      return parseFloat(total).toFixed(2)
+    },
+    totalLiabilitiesEquityFirst () {
+      const total = parseFloat(this.totalEquityFirst) + parseFloat(this.totalLiabilitiesFirst)
+      return parseFloat(total).toFixed(2)
+    },
+    totalLiabilitiesEquitySecond () {
+      const total = parseFloat(this.totalEquitySecond) + parseFloat(this.totalLiabilitiesSecond)
+      return parseFloat(total).toFixed(2)
+    },
+    netProfitFirst () {
+      const gross = parseFloat(this.sumAccountTypeFirstProfit(40000)) - (parseFloat(this.sumAccountTypeFirstProfit(50000)) + parseFloat(this.sumAccountTypeFirstProfit(60000)))
+      const net = parseFloat(gross) - parseFloat(this.sumAccountTypeFirstProfit(70000))
+      return parseFloat(net).toFixed(2)
+    },
+    netProfitSecond () {
+      const gross = parseFloat(this.sumAccountTypeSecondProfit(40000)) - (parseFloat(this.sumAccountTypeSecondProfit(50000)) + parseFloat(this.sumAccountTypeSecondProfit(60000)))
+      const net = parseFloat(gross) - parseFloat(this.sumAccountTypeSecondProfit(70000))
+      return parseFloat(net).toFixed(2)
     }
   }
 }

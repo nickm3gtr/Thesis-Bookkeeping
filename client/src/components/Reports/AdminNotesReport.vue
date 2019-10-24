@@ -96,6 +96,7 @@
                 <div v-if="radio === 'Balance Sheet'">
                   <BalanceSummary
                     :accounts="formatItems"
+                    :profits="formatProfits"
                     :bigYear="bigYear"
                     :smallYear="smallYear"
                   />
@@ -139,6 +140,7 @@ export default {
       firstYear: { date_part: 2019 },
       secondYear: { date_part: 2019 },
       items: [],
+      profits: [],
       type: ['Summary', 'Note'],
       selectType: 'Summary',
       radio: 'Balance Sheet'
@@ -150,7 +152,9 @@ export default {
       try {
         this.loading = true
         const response = await axios.get(`/api/reports/notes/1/${this.firstYear.date_part}/${this.secondYear.date_part}`)
+        const profit = await axios.get(`/api/reports/summary/net-profit/1/${this.firstYear.date_part}/${this.secondYear.date_part}`)
         this.items = response.data
+        this.profits = profit.data
         this.loading = false
       } catch (e) {
         this.getError(e.response.data)
@@ -180,6 +184,19 @@ export default {
     ...mapState(['auth']),
     formatItems () {
       const items = this.items.map(item => {
+        if (item.id === 11000 || item.id === 13000 || item.id === 50000 || item.id === 60000 || item.id === 70000) {
+          item.balance1 = parseFloat(item.balance1)
+          item.balance2 = parseFloat(item.balance2)
+        } else {
+          item.balance1 = parseFloat(item.balance1) * (-1)
+          item.balance2 = parseFloat(item.balance2) * (-1)
+        }
+        return item
+      })
+      return items
+    },
+    formatProfits () {
+      const items = this.profits.map(item => {
         if (item.id === 11000 || item.id === 13000 || item.id === 50000 || item.id === 60000 || item.id === 70000) {
           item.balance1 = parseFloat(item.balance1)
           item.balance2 = parseFloat(item.balance2)

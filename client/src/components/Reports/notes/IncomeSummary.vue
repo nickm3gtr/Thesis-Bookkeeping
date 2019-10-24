@@ -19,7 +19,7 @@
       </div>
       <hr>
       <v-row class="ml-10">
-        <v-col cols="12" md="5">Total: </v-col>
+        <v-col cols="12" md="5">Total Revenue: </v-col>
         <v-col cols="12" md="3"><p class="text-right total">{{sumAccountTypeSecondBalance(40000)}}</p></v-col>
         <v-col cols="12" md="3"><p class="text-right total">{{sumAccountTypeFirstBalance(40000)}}</p></v-col>
       </v-row>
