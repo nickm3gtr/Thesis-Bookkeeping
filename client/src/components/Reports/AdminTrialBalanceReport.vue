@@ -182,7 +182,7 @@ export default {
   name: 'AdminTrialBalanceReport',
   data () {
     return {
-      selectedBranch: { id: 0, branchName: 'DARBMUPCO' },
+      selectedBranch: { id: 0, branchName: 'DARBMUPCO-Common' },
       fromMenu: false,
       toMenu: false,
       fromDate: new Date().toISOString().substr(0, 10),
@@ -290,7 +290,7 @@ export default {
     }
     try {
       const branches = await axios.get('/api/admin/branches', config)
-      this.branches = [{ id: 0, branchName: 'DARBMUPCO' }, ...branches.data]
+      this.branches = [{ id: 0, branchName: 'DARBMUPCO-Common' }, ...branches.data]
     } catch (e) {
       this.getError(e.response.data)
     }

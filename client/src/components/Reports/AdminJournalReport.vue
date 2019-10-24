@@ -166,7 +166,7 @@ export default {
   data () {
     return {
       selected: { id: 1, name: 'General Journal' },
-      selectedBranch: { id: 0, branchName: 'DARBMUPCO' },
+      selectedBranch: { id: 0, branchName: 'DARBMUPCO-Common' },
       books: [],
       fromMenu: false,
       toMenu: false,
@@ -247,7 +247,7 @@ export default {
       const response = await axios.get('/api/books', config)
       const branches = await axios.get('/api/admin/branches', config)
       this.books = response.data
-      this.branches = [{ id: 0, branchName: 'DARBMUPCO' }, ...branches.data]
+      this.branches = [{ id: 0, branchName: 'DARBMUPCO-Common' }, ...branches.data]
     } catch (e) {
       this.getError(e.response.data)
     }

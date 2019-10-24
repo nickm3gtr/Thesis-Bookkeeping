@@ -9,6 +9,7 @@ import AdminTrialBalancePage from '@/views/AdminReports/AdminTrialBalancePage'
 import AdminBalanceSheetPage from '@/views/AdminReports/AdminBalanceSheetPage'
 import AdminIncomeStatementPage from '@/views/AdminReports/AdminIncomeStatementPage'
 import AdminNotesPage from '@/views/AdminReports/AdminNotesPage'
+import NotesPage from '@/views/Reports/NotesPage'
 
 export default [
   {
@@ -49,6 +50,14 @@ export default [
     component: BalanceSheetPage,
     meta: {
       title: 'Balance Sheet'
+    }
+  },
+  {
+    path: '/bookkeeper/reports/summary',
+    name: 'reports-notes-bookkeeper',
+    component: NotesPage,
+    meta: {
+      title: 'Summary Report'
     }
   },
   {

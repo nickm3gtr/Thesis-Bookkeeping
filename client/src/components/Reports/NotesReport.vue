@@ -35,15 +35,6 @@
                   return-object
                 ></v-combobox>
               </v-col>
-              <v-col cols="12" md="3">
-                <v-combobox
-                  v-model="selectedBranch"
-                  :items="branches"
-                  item-text="branchName"
-                  label="Select Branch"
-                  return-object
-                ></v-combobox>
-              </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="6">
@@ -135,7 +126,7 @@ import BalanceSummary from './notes/BalanceSummary'
 import IncomeSummary from './notes/IncomeSummary'
 
 export default {
-  name: 'AdminNotesReport',
+  name: 'NotesReport',
   components: {
     AssetsNotes,
     BalanceSummary,
@@ -152,9 +143,7 @@ export default {
       profits: [],
       type: ['Summary', 'Note'],
       selectType: 'Summary',
-      radio: 'Balance Sheet',
-      branches: [],
-      selectedBranch: { id: 0, branchName: 'DARBMUPCO-Common' }
+      radio: 'Balance Sheet'
     }
   },
   methods: {
@@ -162,8 +151,8 @@ export default {
     async generate () {
       try {
         this.loading = true
-        const response = await axios.get(`/api/reports/notes/${this.selectedBranch.id}/${this.firstYear.date_part}/${this.secondYear.date_part}`)
-        const profit = await axios.get(`/api/reports/summary/net-profit/${this.selectedBranch.id}/${this.firstYear.date_part}/${this.secondYear.date_part}`)
+        const response = await axios.get(`/api/reports/notes/${this.auth.user.BranchId}/${this.firstYear.date_part}/${this.secondYear.date_part}`)
+        const profit = await axios.get(`/api/reports/summary/net-profit/${this.auth.user.BranchId}/${this.firstYear.date_part}/${this.secondYear.date_part}`)
         this.items = response.data
         this.profits = profit.data
         this.loading = false
@@ -235,17 +224,15 @@ export default {
     }
   },
   async mounted () {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token')
-      }
-    }
+    // const config = {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Authorization: localStorage.getItem('token')
+    //   }
+    // }
     try {
       const response = await axios.get('/api/transactions/admin-years')
-      const branches = await axios.get('/api/admin/branches', config)
       this.years = response.data
-      this.branches = [{ id: 0, branchName: 'DARBMUPCO-Common' }, ...branches.data]
     } catch (e) {
       this.getError(e.response.data)
     }

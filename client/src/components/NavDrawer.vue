@@ -111,7 +111,8 @@ export default {
             { title: 'Ledger', route: '/bookkeeper/reports/ledger' },
             { title: 'Trial Balance', route: '/bookkeeper/reports/trial-balance' },
             { title: 'Balance Sheet', route: '/bookkeeper/reports/balance-sheet' },
-            { title: 'Income Statement', route: '/bookkeeper/reports/income-statement' }
+            { title: 'Income Statement', route: '/bookkeeper/reports/income-statement' },
+            { title: 'Notes and Summary', route: '/bookkeeper/reports/summary' }
           ]
         }
       ],
