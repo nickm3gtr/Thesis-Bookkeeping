@@ -3,14 +3,17 @@
     <v-app-bar flat app class="nav-color">
       <v-app-bar-nav-icon v-if="isAuth" @click="toggleDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title v-if="!isAuth" class="toolbar-title">
-        <span class="title grey--text text--darken-2">DARBMUPCO</span>
-        <span class="hidden-sm-and-down font-weight-light title grey--text text--darken-2">Bookkeeping System</span>
+        <v-btn text @click="$router.push('/', () => {})">
+          <span class="title grey--text text--darken-2">DARBMUPCO </span>
+          <span class="hidden-sm-and-down font-weight-light title grey--text text--darken-2">Bookkeeping System</span>
+        </v-btn>
       </v-toolbar-title>
       <v-toolbar-title v-else class="toolbar-title">
         <span class="title font-weight-light grey--text text--darken-2"></span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="!isAuth">
+        <v-btn text class="font-weight-light">About</v-btn>
         <v-dialog v-model="loginDialog" persistent max-width="500px">
           <template v-slot:activator="{ on }">
             <v-btn text class="font-weight-light" v-on="on">Login</v-btn>
