@@ -5,7 +5,7 @@
         <v-card outlined class="mt-6">
           <v-card-title>
             <v-col cols="12" md="12">
-              <span class="title font-weight-light">Add Cash Receipt Entry</span>
+              <span class="title font-weight-light">Add Cash Receipt Book Entry</span>
             </v-col>
           </v-card-title>
           <v-card-text>

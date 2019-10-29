@@ -7,13 +7,13 @@
           <span class="font-weight-medium">{{ item.name }}</span>
         </v-col>
         <v-col cols="12" md="2">
-          <p class="text-right"><span class="font-weight-medium">{{ item.debit }}</span></p>
+          <p class="text-right"><span class="font-weight-medium">{{ currency(item.debit) }}</span></p>
         </v-col>
         <v-col cols="12" md="2">
-          <p class="text-right"><span class="font-weight-medium">{{ item.credit }}</span></p>
+          <p class="text-right"><span class="font-weight-medium">{{ currency(item.credit) }}</span></p>
         </v-col>
         <v-col cols="12" md="2">
-          <p class="text-right"><span class="font-weight-medium">{{ formatBalance(item.balance) }}</span></p>
+          <p class="text-right"><span class="font-weight-medium">{{ currency(formatBalance(item.balance)) }}</span></p>
         </v-col>
       </v-row>
     </div>
@@ -24,7 +24,7 @@
       </v-col>
       <v-col cols="12" md="2">
         <p v-if="revenue.length<1"><span></span></p>
-        <p v-else class="text-right"><span class="font-weight-medium">{{ formatBalance(balance) }}</span></p>
+        <p v-else class="text-right"><span class="font-weight-medium">{{ currency(formatBalance(balance)) }}</span></p>
       </v-col>
     </v-row>
     <br />
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import numeral from 'numeral'
+
 export default {
   name: 'Revenue',
   props: ['revenue', 'balance'],
@@ -40,6 +42,9 @@ export default {
     formatBalance (val) {
       const balance = parseFloat(val) * -1
       return parseFloat(balance).toFixed(2)
+    },
+    currency (value) {
+      return numeral(value).format('0,0.00')
     }
   }
 }

@@ -49,10 +49,10 @@
           </p>
         </v-col>
         <v-col cols="12" md="2">
-          <p class="caption font-weight-medium text-right">{{ item.debit }}</p>
+          <p class="caption font-weight-medium text-right">{{ currency(item.debit) }}</p>
         </v-col>
         <v-col cols="12" md="2">
-          <p class="caption font-weight-medium text-right">{{ item.debit }}</p>
+          <p class="caption font-weight-medium text-right">{{ currency(item.debit) }}</p>
         </v-col>
       </v-row>
     </div>
@@ -69,12 +69,12 @@
       </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">
-          {{ formatBalance(totalDebit) }}
+          {{ currency(formatBalance(totalDebit)) }}
         </p>
       </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">
-          {{ formatBalance(totalDebit) }}
+          {{ currency(formatBalance(totalDebit)) }}
         </p>
       </v-col>
     </v-row>
@@ -83,14 +83,17 @@
 
 <script>
 import { mapState } from 'vuex'
+import numeral from 'numeral'
 
 export default {
   name: 'SalesComponent',
   props: ['formatFromDate', 'formatToDate', 'formatItems', 'selectedBranch'],
   methods: {
+    currency (value) {
+      return numeral(value).format('0,0.00')
+    },
     formatBalance (value) {
-      const num = Math.abs(value)
-      return parseFloat(Math.round(num * 100) / 100).toFixed(2)
+      return parseFloat(value).toFixed(2)
     }
   },
   computed: {

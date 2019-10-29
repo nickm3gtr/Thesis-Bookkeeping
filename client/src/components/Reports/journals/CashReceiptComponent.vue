@@ -49,24 +49,24 @@
           <p class="caption font-weight-medium">{{ item.accountname }}</p>
         </v-col>
         <v-col cols="12" md="2">
-          <p class="caption font-weight-medium text-right">{{ item.credit }}</p>
+          <p class="caption font-weight-medium text-right">{{ currency(item.credit) }}</p>
         </v-col>
         <v-col cols="12" md="2">
           <p v-if="item.tags !== 'sales'"></p>
           <p v-else class="caption font-weight-medium text-right">
-            {{ item.credit }}
+            {{ currency(item.credit) }}
           </p>
         </v-col>
         <v-col cols="12" md="2">
           <p v-if="item.tags !== 'a/r'"></p>
           <p v-else class="caption font-weight-medium text-right">
-            {{ item.credit }}
+            {{ currency(item.credit) }}
           </p>
         </v-col>
         <v-col cols="12" md="2">
           <p v-if="item.tags !== 'others'"></p>
           <p v-else class="caption font-weight-medium text-right">
-            {{ item.credit }}
+            {{ currency(item.credit) }}
           </p>
         </v-col>
       </v-row>
@@ -81,22 +81,22 @@
       </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">
-          {{ formatBalance(totalCash) }}
+          {{ currency(formatBalance(totalCash)) }}
         </p>
       </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">
-          {{ formatBalance(totalSales) }}
+          {{ currency(formatBalance(totalSales)) }}
         </p>
       </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">
-          {{ formatBalance(totalAR) }}
+          {{ currency(formatBalance(totalAR)) }}
         </p>
       </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">
-          {{ formatBalance(totalOthers) }}
+          {{ currency(formatBalance(totalOthers)) }}
         </p>
       </v-col>
     </v-row>
@@ -105,14 +105,17 @@
 
 <script>
 import { mapState } from 'vuex'
+import numeral from 'numeral'
 
 export default {
   name: 'CashReceiptComponent',
   props: ['formatFromDate', 'formatToDate', 'formatItems', 'selectedBranch'],
   methods: {
+    currency (value) {
+      return numeral(value).format('0,0.00')
+    },
     formatBalance (value) {
-      const num = Math.abs(value)
-      return parseFloat(Math.round(num * 100) / 100).toFixed(2)
+      return parseFloat(value).toFixed(2)
     }
   },
   computed: {

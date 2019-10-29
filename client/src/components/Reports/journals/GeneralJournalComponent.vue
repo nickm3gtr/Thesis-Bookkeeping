@@ -51,11 +51,11 @@
         </v-col>
         <v-col cols="12" md="2">
           <p v-if="item.debit === 0" class="caption font-weight-medium text-right"></p>
-          <p v-else class="caption font-weight-medium text-right">{{ item.debit }}</p>
+          <p v-else class="caption font-weight-medium text-right">{{ currency(item.debit) }}</p>
         </v-col>
         <v-col cols="12" md="2">
           <p v-if="item.credit === 0" class="caption font-weight-medium text-right"></p>
-          <p v-else class="caption font-weight-medium text-right">{{ item.credit }}</p>
+          <p v-else class="caption font-weight-medium text-right">{{ currency(item.credit) }}</p>
         </v-col>
       </v-row>
     </div>
@@ -71,10 +71,10 @@
         <p class="caption font-weight-medium"></p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">{{ formatBalance(totalDebit) }}</p>
+        <p class="caption font-weight-medium text-right">{{ currency(formatBalance(totalDebit)) }}</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">{{ formatBalance(totalCredit) }}</p>
+        <p class="caption font-weight-medium text-right">{{ currency(formatBalance(totalCredit)) }}</p>
       </v-col>
     </v-row>
   </div>
@@ -82,14 +82,17 @@
 
 <script>
 import { mapState } from 'vuex'
+import numeral from 'numeral'
 
 export default {
   name: 'GeneralJournalComponent',
   props: [ 'formatFromDate', 'formatToDate', 'formatItems', 'selectedBranch' ],
   methods: {
+    currency (value) {
+      return numeral(value).format('0,0.00')
+    },
     formatBalance (value) {
-      const num = Math.abs(value)
-      return parseFloat(Math.round(num * 100) / 100).toFixed(2)
+      return parseFloat(value).toFixed(2)
     }
   },
   computed: {

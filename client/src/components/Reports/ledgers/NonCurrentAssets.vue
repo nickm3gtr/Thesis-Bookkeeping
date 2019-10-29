@@ -7,13 +7,13 @@
           <span class="font-weight-medium">{{ item.name }}</span>
         </v-col>
         <v-col cols="12" md="2">
-          <p class="text-right"><span class="font-weight-medium">{{ item.debit }}</span></p>
+          <p class="text-right"><span class="font-weight-medium">{{ currency(item.debit) }}</span></p>
         </v-col>
         <v-col cols="12" md="2">
-          <p class="text-right"><span class="font-weight-medium">{{ item.credit }}</span></p>
+          <p class="text-right"><span class="font-weight-medium">{{ currency(item.credit) }}</span></p>
         </v-col>
         <v-col cols="12" md="2">
-          <p class="text-right"><span class="font-weight-medium">{{ item.balance }}</span></p>
+          <p class="text-right"><span class="font-weight-medium">{{ currency(item.balance) }}</span></p>
         </v-col>
       </v-row>
     </div>
@@ -24,7 +24,7 @@
       </v-col>
       <v-col cols="12" md="2">
         <p v-if="nonCurrentAssets.length<1"><span></span></p>
-        <p v-else class="text-right"><span class="font-weight-medium">{{ balance }}</span></p>
+      <p v-else class="text-right"><span class="font-weight-medium">{{ currency(balance) }}</span></p>
       </v-col>
     </v-row>
     <br />
@@ -32,9 +32,16 @@
 </template>
 
 <script>
+import numeral from 'numeral'
+
 export default {
   name: 'NonCurrentAssets',
-  props: ['nonCurrentAssets', 'balance']
+  props: ['nonCurrentAssets', 'balance'],
+  methods: {
+    currency (value) {
+      return numeral(value).format('0,0.00')
+    }
+  }
 }
 </script>
 

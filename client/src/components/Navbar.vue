@@ -62,7 +62,6 @@
       </v-toolbar-items>
     </v-app-bar>
     <v-navigation-drawer
-      :expand-on-hover="hover"
       app
       dark
       floating
@@ -70,7 +69,7 @@
       width="260"
       v-if="isAuth"
       v-model="drawer">
-      <NavDrawer :hover="hover" />
+      <NavDrawer />
     </v-navigation-drawer>
     <ErrorSnackbar :snackbar="hasError" :text="getError" @close-snackbar="!hasError" />
   </nav>
@@ -90,7 +89,6 @@ export default {
   },
   data () {
     return {
-      hover: false,
       drawer: true,
       loginDialog: false,
       registerDialog: false,
@@ -112,7 +110,7 @@ export default {
   methods: {
     ...mapActions('auth', ['registerUser', 'loginUser', 'loginAdmin', 'logoutUser']),
     toggleDrawer () {
-      this.hover = !this.hover
+      this.drawer = !this.drawer
     },
     close (val) {
       if (val === 'register') {
