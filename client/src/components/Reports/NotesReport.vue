@@ -67,7 +67,7 @@
           <v-card-text>
             <div :hidden="hidden" id="content" v-if="loading === false">
               <v-flex sm12 md10 offset-md1>
-                <div class="text-center">
+                <div class="text-center" v-if="selectType === 'Note'">
                   <p>
                     <span
                       v-if="auth.user === null || auth.user.account == 'admin'"
@@ -75,7 +75,17 @@
                     >{{ selectedBranch.branchName }}</span>
                     <span v-else class="headline centered">{{ auth.user.Branch.branchName }}</span>
                   </p>
-                  <p><span class="subtitle-1">Statement of Financial Condition</span></p>
+                </div>
+                <div v-else-if="selectType === 'Summary'" class="text-center">
+                  <p>
+                    <span
+                      v-if="auth.user === null || auth.user.account == 'admin'"
+                      class="headline"
+                    >{{ selectedBranch.branchName }}</span>
+                    <span v-else class="headline centered">{{ auth.user.Branch.branchName }}</span>
+                  </p>
+                  <p v-if="radio === 'Balance Sheet'"><span class="subtitle-1">Statement of Financial Condition</span></p>
+                  <p v-else-if="radio === 'Income Statement'"><span class="subtitle-1">Statement of Financial Operations</span></p>
                   <p><span class="subtitle-2">As of December 31, {{firstYear.date_part}} and {{secondYear.date_part}}</span></p>
                 </div>
               </v-flex>

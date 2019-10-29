@@ -34,10 +34,6 @@
                 </v-menu>
               </v-col>
               <v-col cols="12" md="4">
-                <v-text-field
-                  label="Sales slip number"
-                  v-model="num"
-                ></v-text-field>
               </v-col>
             </v-row>
             <v-row>
@@ -185,7 +181,6 @@ export default {
       date: new Date().toISOString().substr(0, 10),
       BookId: 5,
       dialog: false,
-      num: '',
       memo: '',
       headers: [
         { text: 'AccountName', value: 'AccountName' },
@@ -220,7 +215,6 @@ export default {
           BookkeeperId: this.auth.user.id,
           BookId: this.BookId,
           memo: this.memo,
-          num: this.num,
           date: this.date,
           data: data
         })
