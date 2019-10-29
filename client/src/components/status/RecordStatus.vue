@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mt-4 mb-10" :hidden="hidden">
+  <v-card outlined class="mt-2 mb-10" :hidden="hidden">
     <v-card-title>
       <v-progress-linear
         :active="loading"

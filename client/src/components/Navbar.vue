@@ -1,15 +1,15 @@
 <template>
   <nav>
-    <v-app-bar flat app class="nav-color">
+    <v-app-bar flat app dark color="blue-grey darken-1">
       <v-app-bar-nav-icon v-if="isAuth" @click="toggleDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title v-if="!isAuth" class="toolbar-title">
         <v-btn text @click="$router.push('/', () => {})">
-          <span class="title grey--text text--darken-2">DARBMUPCO </span>
-          <span class="hidden-sm-and-down font-weight-light title grey--text text--darken-2">Bookkeeping System</span>
+          <span class="title">DARBMUPCO </span>
+          <span class="hidden-sm-and-down font-weight-light title">Bookkeeping System</span>
         </v-btn>
       </v-toolbar-title>
       <v-toolbar-title v-else class="toolbar-title">
-        <span class="title font-weight-light grey--text text--darken-2"></span>
+        <span class="title font-weight-light">{{$route.meta.title}}</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="!isAuth">
@@ -32,7 +32,7 @@
           transition="scale-transition">
           <template v-slot:activator="{ on }">
             <v-btn text v-on="on">
-              <span class="grey--text text--darken-2">
+              <span>
                 <span class="subtitle-1 font-weight-light text-capitalize">
                   {{ auth.user.userName }}
                 </span>

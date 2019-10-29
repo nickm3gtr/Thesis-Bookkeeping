@@ -2,11 +2,11 @@
   <div class="chart-of-account">
     <v-layout>
       <v-flex sm12 md10 offset-md1>
-        <v-card outlined elevation="10">
-          <v-toolbar color="light-blue darken-3" dark>
-            <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
-          </v-toolbar>
+        <v-card outlined class="my-6">
           <v-card-title>
+            <v-col cols="12" md="12">
+              <span class="title font-weight-light">Chart of Accounts List</span>
+            </v-col>
             <v-col cols="12" md="4"></v-col>
             <v-col cols="12" md="6">
               <v-text-field
@@ -210,4 +210,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+  .toolbar {
+    background-color: #ffffff;
+  }
+</style>

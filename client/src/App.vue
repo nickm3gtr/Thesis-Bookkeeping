@@ -25,6 +25,6 @@ export default {
 </script>
 <style>
 .view-container {
-  background-color: #f4f5f8;
+  background-color: #f4f3ef;
 }
 </style>
