@@ -93,6 +93,53 @@
         <v-col cols="12" md="3"><p class="text-right total">{{netProfitFirst}}</p></v-col>
       </v-row>
       <hr>
+      <br>
+      <br>
+      <p>Distribution of Net Surplus</p>
+      <v-row class="ml-10">
+        <v-col cols="12" md="3">General Reserve Fund</v-col>
+        <v-col cols="12" md="2">50.00%</v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{genReserveSecond}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{genReserveFirst}}</p></v-col>
+      </v-row>
+      <v-row class="ml-10">
+        <v-col cols="12" md="3">CETF-National</v-col>
+        <v-col cols="12" md="2">2.50%</v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{cetfNationalSecond}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{cetfNationalFirst}}</p></v-col>
+      </v-row>
+      <v-row class="ml-10">
+        <v-col cols="12" md="3">CETF-Local</v-col>
+        <v-col cols="12" md="2">2.50%</v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{cetfLocalSecond}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{cetfLocalFirst}}</p></v-col>
+      </v-row>
+      <v-row class="ml-10">
+        <v-col cols="12" md="3">Optional Fund</v-col>
+        <v-col cols="12" md="2">2.50%</v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{optionalFundSecond}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{optionalFundFirst}}</p></v-col>
+      </v-row>
+      <v-row class="ml-10">
+        <v-col cols="12" md="3">Community Development Fund</v-col>
+        <v-col cols="12" md="2">2.50%</v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{communityFundSecond}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{communityFundFirst}}</p></v-col>
+      </v-row>
+      <v-row class="ml-10">
+        <v-col cols="12" md="3">Interest on Capital & Patronage</v-col>
+        <v-col cols="12" md="2">40.00%</v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{interestSecond}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{interestFirst}}</p></v-col>
+      </v-row>
+      <hr>
+      <hr>
+      <v-row class="ml-10">
+        <v-col cols="12" md="3"></v-col>
+        <v-col cols="12" md="2">100.00%</v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{totalDistributedSecond}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{totalDistributedFirst}}</p></v-col>
+      </v-row>
     </div>
   </div>
 </template>
@@ -224,6 +271,62 @@ export default {
     netProfitSecond () {
       const netProfit = parseFloat(this.grossProfitSecond) - parseFloat(this.sumAccountTypeSecondBalance(70000))
       return parseFloat(netProfit).toFixed(2)
+    },
+    genReserveFirst () {
+      const amount = parseFloat(this.netProfitFirst) * 0.5
+      return parseFloat(amount).toFixed(2)
+    },
+    genReserveSecond () {
+      const amount = parseFloat(this.netProfitSecond) * 0.5
+      return parseFloat(amount).toFixed(2)
+    },
+    cetfNationalFirst () {
+      const amount = parseFloat(this.netProfitFirst) * 0.025
+      return parseFloat(amount).toFixed(2)
+    },
+    cetfNationalSecond () {
+      const amount = parseFloat(this.netProfitSecond) * 0.025
+      return parseFloat(amount).toFixed(2)
+    },
+    cetfLocalFirst () {
+      const amount = parseFloat(this.netProfitFirst) * 0.025
+      return parseFloat(amount).toFixed(2)
+    },
+    cetfLocalSecond () {
+      const amount = parseFloat(this.netProfitSecond) * 0.025
+      return parseFloat(amount).toFixed(2)
+    },
+    optionalFundFirst () {
+      const amount = parseFloat(this.netProfitFirst) * 0.025
+      return parseFloat(amount).toFixed(2)
+    },
+    optionalFundSecond () {
+      const amount = parseFloat(this.netProfitSecond) * 0.025
+      return parseFloat(amount).toFixed(2)
+    },
+    communityFundFirst () {
+      const amount = parseFloat(this.netProfitFirst) * 0.025
+      return parseFloat(amount).toFixed(2)
+    },
+    communityFundSecond () {
+      const amount = parseFloat(this.netProfitSecond) * 0.025
+      return parseFloat(amount).toFixed(2)
+    },
+    interestFirst () {
+      const amount = parseFloat(this.netProfitFirst) * 0.4
+      return parseFloat(amount).toFixed(2)
+    },
+    interestSecond () {
+      const amount = parseFloat(this.netProfitSecond) * 0.4
+      return parseFloat(amount).toFixed(2)
+    },
+    totalDistributedFirst () {
+      const total = parseFloat(this.genReserveFirst) + parseFloat(this.cetfNationalFirst) + parseFloat(this.cetfLocalFirst) + parseFloat(this.optionalFundFirst) + parseFloat(this.communityFundFirst) + parseFloat(this.interestFirst)
+      return parseFloat(total).toFixed(2)
+    },
+    totalDistributedSecond () {
+      const total = parseFloat(this.genReserveSecond) + parseFloat(this.cetfNationalSecond) + parseFloat(this.cetfLocalSecond) + parseFloat(this.optionalFundSecond) + parseFloat(this.communityFundSecond) + parseFloat(this.interestSecond)
+      return parseFloat(total).toFixed(2)
     }
   }
 }

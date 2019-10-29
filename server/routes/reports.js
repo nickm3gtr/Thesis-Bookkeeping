@@ -370,18 +370,18 @@ router.get('/summary/net-profit/:id/:first/:second', (req, res) => {
     db.sequelize.query("select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, ( \n" +
         "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-        "where tr.\"AccountId\"=a.id and t.\"date\" <= :yearOneEnd \n" +
+        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearOneStart and :yearOneEnd \n" +
       ") as balance1, ( \n" +
       "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-        "where tr.\"AccountId\"=a.id and t.\"date\" <= :yearTwoEnd \n" +
+        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearTwoStart and :yearTwoEnd \n" +
       ") as balance2 \n" +
       "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
           "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
       "where a.id in ( \n" +
         "select tr.\"AccountId\" \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-        "where ty.id >=40000 and ty.id < 80000 and t.\"date\" <= :yearTwoEnd \n" +
+        "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :yearOneStart and :yearTwoEnd \n" +
       ")", {
         model: db.TransactionRecord,
         replacements: { id, yearOneStart, yearOneEnd, yearTwoStart, yearTwoEnd }
@@ -391,18 +391,18 @@ router.get('/summary/net-profit/:id/:first/:second', (req, res) => {
     db.sequelize.query("select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, ( \n" +
         "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
-        "where tr.\"AccountId\"=a.id and t.\"date\" <= :yearOneEnd and b.\"BranchId\"=:id  \n" +
+        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearOneStart and :yearOneEnd and b.\"BranchId\"=:id  \n" +
       ") as balance1, ( \n" +
       "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
-        "where tr.\"AccountId\"=a.id and t.\"date\" <= :yearTwoEnd and b.\"BranchId\"=:id  \n" +
+        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearTwoStart and :yearTwoEnd and b.\"BranchId\"=:id  \n" +
       ") as balance2 \n" +
       "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
           "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
       "where a.id in ( \n" +
         "select tr.\"AccountId\" \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
-        "where ty.id >=40000 and ty.id < 80000 and t.\"date\" <= :yearTwoEnd and b.\"BranchId\"=:id  \n" +
+        "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :yearOneStart and :yearTwoEnd and b.\"BranchId\"=:id  \n" +
       ")", {
         model: db.TransactionRecord,
         replacements: { id, yearOneStart, yearOneEnd, yearTwoStart, yearTwoEnd }

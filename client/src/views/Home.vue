@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home">
     <div class="text-center">
       <v-overlay
         v-if="auth !== null && auth.isLoading"
@@ -19,13 +19,6 @@
           :key="i"
           :src="item.src"
         >
-          <v-row
-          class="fill-height"
-          align="center"
-          justify="center"
-          >
-            <div class="display-3">Slide</div>
-          </v-row>
         </v-carousel-item>
       </v-carousel>
     </div>
@@ -55,16 +48,16 @@ export default {
       overlay: false,
       items: [
         {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg'
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg'
-        },
-        {
           src: require('@/assets/slide1.jpg')
+        },
+        {
+          src: require('@/assets/slide2.jpg')
+        },
+        {
+          src: require('@/assets/slide3.jpg')
+        },
+        {
+          src: require('@/assets/slide4.jpg')
         }
       ]
     }
@@ -74,3 +67,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.home {
+  background-color: white;
+}
+</style>

@@ -105,7 +105,7 @@
       </v-row>
       <hr>
       <v-row class="ml-10">
-        <v-col cols="12" md="5">Reserves: </v-col>
+        <v-col cols="12" md="5">Undistributed Net Surplus: </v-col>
         <v-col cols="12" md="3"><p class="text-right total">{{netProfitSecond}}</p></v-col>
         <v-col cols="12" md="3"><p class="text-right total">{{netProfitFirst}}</p></v-col>
       </v-row>
