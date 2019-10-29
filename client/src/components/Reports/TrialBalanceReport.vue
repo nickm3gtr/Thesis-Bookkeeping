@@ -125,11 +125,11 @@
                       <span class="font-weight-medium x-small">{{ item.account }}</span>
                     </v-col>
                     <v-col cols="12" md="2">
-                      <p v-if="item.balance>0" class="text-right"><span class="font-weight-medium x-small">{{ formatBalance(item.balance) }}</span></p>
+                      <p v-if="item.balance>0" class="text-right"><span class="font-weight-medium x-small">{{ currency(formatBalance(item.balance)) }}</span></p>
                       <p v-else><span></span></p>
                     </v-col>
                     <v-col cols="12" md="2">
-                      <p v-if="item.balance<0" class="text-right"><span class="font-weight-medium x-small">{{ formatBalance(item.balance) }}</span></p>
+                      <p v-if="item.balance<0" class="text-right"><span class="font-weight-medium x-small">{{ currency(formatBalance(item.balance)) }}</span></p>
                       <p v-else><span></span></p>
                     </v-col>
                   </v-row>
@@ -147,11 +147,11 @@
                   </v-col>
                   <v-col cols="12" md="2">
                     <p v-if="this.items.length <= 0"></p>
-                    <p v-else class="underlined text-right"><span class="font-weight-medium">{{ this.formatBalance(this.totalDebit) }}</span></p>
+                    <p v-else class="underlined text-right"><span class="font-weight-medium">{{ currency(formatBalance(totalDebit)) }}</span></p>
                   </v-col>
                   <v-col cols="12" md="2">
                     <p v-if="this.items.length <= 0"></p>
-                    <p v-else class="underlined text-right"><span class="font-weight-medium">{{ this.formatBalance(this.totalCredit) }}</span></p>
+                    <p v-else class="underlined text-right"><span class="font-weight-medium">{{ currency(formatBalance(totalCredit)) }}</span></p>
                   </v-col>
                 </v-row>
               </v-flex>
@@ -168,6 +168,7 @@ import { mapState } from 'vuex'
 import moment from 'moment'
 import html2pdf from 'html2pdf.js'
 import axios from 'axios'
+import numeral from 'numeral'
 
 export default {
   name: 'TrialBalanceReport',
@@ -185,6 +186,9 @@ export default {
     }
   },
   methods: {
+    currency (value) {
+      return numeral(value).format('0,0.00')
+    },
     formatBalance (value) {
       const num = Math.abs(value)
       return parseFloat(Math.round(num * 100) / 100).toFixed(2)

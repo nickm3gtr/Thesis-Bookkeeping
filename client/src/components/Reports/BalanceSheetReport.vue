@@ -98,12 +98,12 @@
                 <v-col cols="12" md="3">
                   <div v-if="totalAssets <= 0">
                     <p class="text-right font-weight-medium underlined red--text text--darken-3">
-                      <span>&#8369;{{ totalAssets }}</span>
+                      <span>&#8369;{{ currency(totalAssets) }}</span>
                     </p>
                   </div>
                   <div v-else>
                     <p class="text-right font-weight-medium underlined blue--text text--darken-3">
-                      <span>&#8369;{{ totalAssets }}</span>
+                      <span>&#8369;{{ currency(totalAssets) }}</span>
                     </p>
                   </div>
                 </v-col>
@@ -147,12 +147,12 @@
                 <v-col cols="12" md="3">
                   <div v-if="totalLiabilities <= 0">
                     <p class="text-right font-weight-medium red--text text--darken-3 underlined">
-                      <span>&#8369;{{ totalLiabilities }}</span>
+                      <span>&#8369;{{ currency(totalLiabilities) }}</span>
                     </p>
                   </div>
                   <div v-else>
                     <p class="text-right font-weight-medium blue--text text--darken-3 underlined">
-                      <span>&#8369;{{ totalLiabilities }}</span>
+                      <span>&#8369;{{ currency(totalLiabilities) }}</span>
                     </p>
                   </div>
                 </v-col>
@@ -170,6 +170,7 @@ import { mapState } from 'vuex'
 import moment from 'moment'
 import html2pdf from 'html2pdf.js'
 import axios from 'axios'
+import numeral from 'numeral'
 import BalanceSheetComponent from './balanceSheet/BalanceSheetComponent'
 import LiabilityComponent from './balanceSheet/LiabilityComponent'
 import EquityComponent from './balanceSheet/EquityComponent'
@@ -188,6 +189,9 @@ export default {
     }
   },
   methods: {
+    currency (value) {
+      return numeral(value).format('0,0.00')
+    },
     formatBalance (value) {
       const num = Math.abs(value)
       return parseFloat(Math.round(num * 100) / 100).toFixed(2)

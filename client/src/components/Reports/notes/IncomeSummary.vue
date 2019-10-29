@@ -13,15 +13,15 @@
         <v-row class="ml-10">
           <v-col cols="12" md="4">{{subType.name}}</v-col>
           <v-col cols="12" md="1">{{subType.number}}</v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{sumSecondBalance(subType.name)}}</p></v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{sumFirstBalance(subType.name)}}</p></v-col>
+          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumSecondBalance(subType.name))}}</p></v-col>
+          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumFirstBalance(subType.name))}}</p></v-col>
         </v-row>
       </div>
       <hr>
       <v-row class="ml-10">
         <v-col cols="12" md="5">Total Revenue: </v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{sumAccountTypeSecondBalance(40000)}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{sumAccountTypeFirstBalance(40000)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeSecondBalance(40000))}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeFirstBalance(40000))}}</p></v-col>
       </v-row>
       <hr>
       <p class="sub-title">Cost of Goods Sold</p>
@@ -29,15 +29,15 @@
         <v-row class="ml-10">
           <v-col cols="12" md="4">{{subType.name}}</v-col>
           <v-col cols="12" md="1">{{subType.number}}</v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{sumSecondBalance(subType.name)}}</p></v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{sumFirstBalance(subType.name)}}</p></v-col>
+          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumSecondBalance(subType.name))}}</p></v-col>
+          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumFirstBalance(subType.name))}}</p></v-col>
         </v-row>
       </div>
       <hr>
       <v-row class="ml-10">
         <v-col cols="12" md="5">Total: </v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{sumAccountTypeSecondBalance(50000)}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{sumAccountTypeFirstBalance(50000)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeSecondBalance(50000))}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeFirstBalance(50000))}}</p></v-col>
       </v-row>
       <hr>
       <p class="sub-title">Cost of Services</p>
@@ -45,28 +45,28 @@
         <v-row class="ml-10">
           <v-col cols="12" md="4">{{subType.name}}</v-col>
           <v-col cols="12" md="1">{{subType.number}}</v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{sumSecondBalance(subType.name)}}</p></v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{sumFirstBalance(subType.name)}}</p></v-col>
+          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumSecondBalance(subType.name))}}</p></v-col>
+          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumFirstBalance(subType.name))}}</p></v-col>
         </v-row>
       </div>
       <hr>
       <v-row class="ml-10">
         <v-col cols="12" md="5">Total: </v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{sumAccountTypeSecondBalance(60000)}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{sumAccountTypeFirstBalance(60000)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeSecondBalance(60000))}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeFirstBalance(60000))}}</p></v-col>
       </v-row>
       <hr>
       <v-row class="ml-10">
         <v-col cols="12" md="5">Less: Total Direct Cost </v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{totalDirectCostSecond}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{totalDirectCostFirst}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(totalDirectCostSecond)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(totalDirectCostFirst)}}</p></v-col>
       </v-row>
       <hr>
       <hr>
       <v-row class="ml-10">
         <v-col cols="12" md="5">Gross Profit </v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{grossProfitSecond}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{grossProfitFirst}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(grossProfitSecond)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(grossProfitFirst)}}</p></v-col>
       </v-row>
       <hr>
       <br>
@@ -75,22 +75,22 @@
         <v-row class="ml-10">
           <v-col cols="12" md="4">{{subType.name}}</v-col>
           <v-col cols="12" md="1">{{subType.number}}</v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{sumSecondBalance(subType.name)}}</p></v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{sumFirstBalance(subType.name)}}</p></v-col>
+          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumSecondBalance(subType.name))}}</p></v-col>
+          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumFirstBalance(subType.name))}}</p></v-col>
         </v-row>
       </div>
       <hr>
       <v-row class="ml-10">
         <v-col cols="12" md="5">Less: Total Expenses: </v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{sumAccountTypeSecondBalance(70000)}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{sumAccountTypeFirstBalance(70000)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeSecondBalance(70000))}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeFirstBalance(70000))}}</p></v-col>
       </v-row>
       <hr>
       <hr>
       <v-row class="ml-10">
         <v-col cols="12" md="5">Undistributed Net Surplus </v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{netProfitSecond}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{netProfitFirst}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(netProfitSecond)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(netProfitFirst)}}</p></v-col>
       </v-row>
       <hr>
       <br>
@@ -99,56 +99,61 @@
       <v-row class="ml-10">
         <v-col cols="12" md="3">General Reserve Fund</v-col>
         <v-col cols="12" md="2">50.00%</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{genReserveSecond}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{genReserveFirst}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(genReserveSecond)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(genReserveFirst)}}</p></v-col>
       </v-row>
       <v-row class="ml-10">
         <v-col cols="12" md="3">CETF-National</v-col>
         <v-col cols="12" md="2">2.50%</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{cetfNationalSecond}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{cetfNationalFirst}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(cetfNationalSecond)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(cetfNationalFirst)}}</p></v-col>
       </v-row>
       <v-row class="ml-10">
         <v-col cols="12" md="3">CETF-Local</v-col>
         <v-col cols="12" md="2">2.50%</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{cetfLocalSecond}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{cetfLocalFirst}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(cetfLocalSecond)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(cetfLocalFirst)}}</p></v-col>
       </v-row>
       <v-row class="ml-10">
         <v-col cols="12" md="3">Optional Fund</v-col>
         <v-col cols="12" md="2">2.50%</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{optionalFundSecond}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{optionalFundFirst}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(optionalFundSecond)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(optionalFundFirst)}}</p></v-col>
       </v-row>
       <v-row class="ml-10">
         <v-col cols="12" md="3">Community Development Fund</v-col>
         <v-col cols="12" md="2">2.50%</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{communityFundSecond}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{communityFundFirst}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(communityFundSecond)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(communityFundFirst)}}</p></v-col>
       </v-row>
       <v-row class="ml-10">
         <v-col cols="12" md="3">Interest on Capital & Patronage</v-col>
         <v-col cols="12" md="2">40.00%</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{interestSecond}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{interestFirst}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(interestSecond)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(interestFirst)}}</p></v-col>
       </v-row>
       <hr>
       <hr>
       <v-row class="ml-10">
         <v-col cols="12" md="3"></v-col>
         <v-col cols="12" md="2">100.00%</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{totalDistributedSecond}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{totalDistributedFirst}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(totalDistributedSecond)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(totalDistributedFirst)}}</p></v-col>
       </v-row>
     </div>
   </div>
 </template>
 
 <script>
+import numeral from 'numeral'
+
 export default {
   name: 'IncomeSummary',
   props: ['accounts', 'bigYear', 'smallYear'],
   methods: {
+    currency (value) {
+      return numeral(value).format('0,0.00')
+    },
     formatBalance (val) {
       return parseFloat(val).toFixed(2)
     },

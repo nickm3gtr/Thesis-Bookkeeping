@@ -5,12 +5,12 @@
       <div v-for="item in accounts" :key="item.account_id">
         <v-row class="ml-10">
           <v-col cols="12" md="5" v-if="item.subtype === subType">{{item.account}}</v-col>
-          <v-col cols="12" md="3" v-if="item.subtype === subType"><p class="text-right">{{formatBalance(item.balance)}}</p></v-col>
+          <v-col cols="12" md="3" v-if="item.subtype === subType"><p class="text-right">{{currency(formatBalance(item.balance))}}</p></v-col>
         </v-row>
       </div>
       <v-row class="ml-10">
         <v-col cols="12" md="5">Total({{subType}})</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{sum(subType)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right total">{{currency(sum(subType))}}</p></v-col>
       </v-row>
       <hr />
     </div>
@@ -19,17 +19,22 @@
         <span>{{ msg }}</span>
       </v-col>
       <v-col cols="12" md="3">
-        <p class="text-right"><span class="type-total">{{ formatBalance(total) }}</span></p>
+        <p class="text-right"><span class="type-total">{{ currency(formatBalance(total)) }}</span></p>
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
+import numeral from 'numeral'
+
 export default {
   name: 'IncomeComponent',
   props: ['accounts', 'total', 'msg'],
   methods: {
+    currency (value) {
+      return numeral(value).format('0,0.00')
+    },
     formatBalance (value) {
       const num = Math.abs(value)
       return parseFloat(Math.round(num * 100) / 100).toFixed(2)

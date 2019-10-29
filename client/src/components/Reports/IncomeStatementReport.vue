@@ -118,7 +118,7 @@
                   </v-col>
                   <v-col cols="12" md="3"></v-col>
                   <v-col cols="12" md="3">
-                    <p class="text-right font-weight-medium underlined"><span>&#8369;{{ grossProfit }}</span></p>
+                    <p class="text-right font-weight-medium underlined"><span>&#8369;{{ currency(grossProfit) }}</span></p>
                   </v-col>
                 </v-row>
                 <v-row class="ml-4 mt-4">
@@ -137,8 +137,8 @@
                   <v-col cols="12" md="3"></v-col>
                   <v-col cols="12" md="3">
                     <p v-if="netProfit < 0"
-                      class="text-right font-weight-bold red--text text--darken-2 underlined"><span>&#8369;{{ formatBalance(netProfit) }}</span></p>
-                    <p v-else class="text-right font-weight-bold blue--text text--darken- underlined"><span>&#8369;{{ formatBalance(netProfit) }}</span></p>
+                      class="text-right font-weight-bold red--text text--darken-2 underlined"><span>&#8369;{{ currency(formatBalance(netProfit)) }}</span></p>
+                    <p v-else class="text-right font-weight-bold blue--text text--darken- underlined"><span>&#8369;{{ currency(formatBalance(netProfit)) }}</span></p>
                   </v-col>
                 </v-row>
               </v-flex>
@@ -151,6 +151,7 @@
 </template>
 
 <script>
+import numeral from 'numeral'
 import { mapState } from 'vuex'
 import moment from 'moment'
 import html2pdf from 'html2pdf.js'
@@ -176,6 +177,9 @@ export default {
     }
   },
   methods: {
+    currency (value) {
+      return numeral(value).format('0,0.00')
+    },
     formatBalance (value) {
       const num = Math.abs(value)
       return parseFloat(Math.round(num * 100) / 100).toFixed(2)
