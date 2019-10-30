@@ -21,8 +21,10 @@ export default new Router({
       path: '/',
       name: 'home',
       beforeEnter (to, from, next) {
-        if (store.getters['auth/isLogged']) {
+        if (store.getters['auth/isLogged'] && store.getters['auth/isBookkeeper']) {
           next('/bookkeeper/dashboard')
+        } else if (store.getters['auth/isLogged'] && store.getters['auth/isAdmin']) {
+          next('/admin/dashboard')
         } else {
           next()
         }
@@ -33,8 +35,8 @@ export default new Router({
       path: '/admin',
       name: 'homeAdmin',
       beforeEnter (to, from, next) {
-        if (store.getters['auth/isLogged']) {
-          next('/bookkeeper/dashboard')
+        if (store.getters['auth/isLogged'] && store.getters['auth/isAdmin']) {
+          next('/admin/dashboard')
         } else {
           next()
         }
