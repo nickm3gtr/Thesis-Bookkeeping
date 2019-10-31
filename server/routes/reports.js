@@ -413,4 +413,38 @@ router.get('/summary/net-profit/:id/:first/:second', (req, res) => {
   
 })
 
+router.get('/distribute/:id/:year', (req, res) => {
+  const { id, year } = req.params
+  let start = `${year}-1-1`
+  let end = `${year}-12-31`
+  db.sequelize.query("select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, (select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
+    "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
+    "where tr.\"AccountId\"=a.id and t.\"date\" between :start and :end and b.\"BranchId\"=:id \n" +
+  ") as balance \n" +
+  "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
+      "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
+  "where a.id in ( \n" +
+    "select tr.\"AccountId\" \n" +
+    "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
+    "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :start and :end and b.\"BranchId\"=:id \n" +
+  ")", {
+    model: db.TransactionRecord,
+    replacements: { id, year, start, end }
+  }).then(transactions => res.json(transactions))
+    .catch(err => res.status(400).json({ msg: err }))
+})
+
+router.get('/check-distribute/:id/:year', (req, res) => {
+  const { id, year } = req.params
+  db.sequelize.query("select t.id as id, count(tr.\"AccountId\") as count \n" +
+  "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id inner join \"Branches\" br on b.\"BranchId\"=br.id \n" +
+  "where tr.\"AccountId\" in (149,150, 151, 152, 153, 154) and br.id=:id \n" +
+  "group by t.id \n" +
+  "having extract(year from t.date) = :year", {
+    model: db.TransactionRecord,
+    replacements: { id, year }
+  }).then(transactions => res.json(transactions))
+    .catch(err => res.status(400).json({ msg: err }))
+})
+
 module.exports = router;

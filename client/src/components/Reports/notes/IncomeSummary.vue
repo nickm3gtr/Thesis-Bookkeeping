@@ -95,7 +95,11 @@
       <hr>
       <br>
       <br>
-      <p>Distribution of Net Surplus</p>
+      <v-row>
+        <v-col cols="12" md="9">
+          <p>Distribution of Net Surplus</p>
+        </v-col>
+      </v-row>
       <v-row class="ml-10">
         <v-col cols="12" md="3">General Reserve Fund</v-col>
         <v-col cols="12" md="2">50.00%</v-col>
@@ -336,3 +340,6 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+</style>

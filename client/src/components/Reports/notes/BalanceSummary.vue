@@ -132,7 +132,7 @@ import numeral from 'numeral'
 
 export default {
   name: 'BalanceSummary',
-  props: ['accounts', 'profits', 'bigYear', 'smallYear'],
+  props: ['accounts', 'profits', 'bigYear', 'smallYear', 'checkFirst', 'checkSecond'],
   methods: {
     currency (value) {
       return numeral(value).format('0,0.00')
@@ -297,14 +297,22 @@ export default {
       return parseFloat(total).toFixed(2)
     },
     netProfitFirst () {
-      const gross = parseFloat(this.sumAccountTypeFirstProfit(40000)) - (parseFloat(this.sumAccountTypeFirstProfit(50000)) + parseFloat(this.sumAccountTypeFirstProfit(60000)))
-      const net = parseFloat(gross) - parseFloat(this.sumAccountTypeFirstProfit(70000))
-      return parseFloat(net).toFixed(2)
+      if (this.checkFirst.length > 0) {
+        return parseFloat(0).toFixed(2)
+      } else {
+        const gross = parseFloat(this.sumAccountTypeFirstProfit(40000)) - (parseFloat(this.sumAccountTypeFirstProfit(50000)) + parseFloat(this.sumAccountTypeFirstProfit(60000)))
+        const net = parseFloat(gross) - parseFloat(this.sumAccountTypeFirstProfit(70000))
+        return parseFloat(net).toFixed(2)
+      }
     },
     netProfitSecond () {
-      const gross = parseFloat(this.sumAccountTypeSecondProfit(40000)) - (parseFloat(this.sumAccountTypeSecondProfit(50000)) + parseFloat(this.sumAccountTypeSecondProfit(60000)))
-      const net = parseFloat(gross) - parseFloat(this.sumAccountTypeSecondProfit(70000))
-      return parseFloat(net).toFixed(2)
+      if (this.checkSecond.length > 0) {
+        return parseFloat(0).toFixed(2)
+      } else {
+        const gross = parseFloat(this.sumAccountTypeSecondProfit(40000)) - (parseFloat(this.sumAccountTypeSecondProfit(50000)) + parseFloat(this.sumAccountTypeSecondProfit(60000)))
+        const net = parseFloat(gross) - parseFloat(this.sumAccountTypeSecondProfit(70000))
+        return parseFloat(net).toFixed(2)
+      }
     }
   }
 }

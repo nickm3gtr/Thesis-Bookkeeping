@@ -66,7 +66,12 @@ module.exports = [
   },
   {
     id: 30720,
-    name: "30720-Coop, Education & Training Fund",
+    name: "30720-Coop, Education & Training Fund-National",
+    SubTypeId: 30700
+  },
+  {
+    id: 30725,
+    name: "30725-Coop, Education & Training Fund-Local",
     SubTypeId: 30700
   },
   {
@@ -77,6 +82,11 @@ module.exports = [
   {
     id: 30740,
     name: "30740-Optional Fund",
+    SubTypeId: 30700
+  },
+  {
+    id: 30750,
+    name: "30750-Interest on Capital & Patronage",
     SubTypeId: 30700
   },
   {

@@ -46,12 +46,13 @@
                 </v-container>
               </v-col>
               <v-col cols="12" md="6" class="mt-3">
-                <v-btn dark color="primary" class="mx-2" @click="generate"
+                <v-btn small dark color="primary" class="mx-2" @click="$router.push('/bookkeeper/reports/distribute', () => {})"
+                >Distribute</v-btn>
+                <v-btn small dark color="primary" class="mx-2" @click="generate"
                 >Generate</v-btn
                 >
-                <v-btn dark color="success" class="mx-2" @click="pdf"
-                >Download PDF</v-btn
-                >
+                <v-btn small dark color="success" class="mx-2" @click="pdf"
+                >Download PDF</v-btn>
               </v-col>
             </v-row>
           </v-card-title>
@@ -109,6 +110,8 @@
                     :profits="formatProfits"
                     :bigYear="bigYear"
                     :smallYear="smallYear"
+                    :checkFirst="checkFirst"
+                    :checkSecond="checkSecond"
                   />
                 </div>
                 <div v-else-if="radio === 'Income Statement'">
@@ -153,7 +156,9 @@ export default {
       profits: [],
       type: ['Summary', 'Note'],
       selectType: 'Summary',
-      radio: 'Balance Sheet'
+      radio: 'Balance Sheet',
+      checkFirst: [],
+      checkSecond: []
     }
   },
   methods: {
@@ -161,8 +166,12 @@ export default {
     async generate () {
       try {
         this.loading = true
+        const checkFirst = await axios.get(`/api/reports/check-distribute/${this.auth.user.BranchId}/${this.smallYear}`)
+        const checkSecond = await axios.get(`/api/reports/check-distribute/${this.auth.user.BranchId}/${this.bigYear}`)
         const response = await axios.get(`/api/reports/notes/${this.auth.user.BranchId}/${this.firstYear.date_part}/${this.secondYear.date_part}`)
         const profit = await axios.get(`/api/reports/summary/net-profit/${this.auth.user.BranchId}/${this.firstYear.date_part}/${this.secondYear.date_part}`)
+        this.checkFirst = checkFirst.data
+        this.checkSecond = checkSecond.data
         this.items = response.data
         this.profits = profit.data
         this.loading = false

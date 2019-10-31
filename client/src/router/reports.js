@@ -10,6 +10,7 @@ import AdminBalanceSheetPage from '@/views/AdminReports/AdminBalanceSheetPage'
 import AdminIncomeStatementPage from '@/views/AdminReports/AdminIncomeStatementPage'
 import AdminNotesPage from '@/views/AdminReports/AdminNotesPage'
 import NotesPage from '@/views/Reports/NotesPage'
+import DistributePage from '@/views/Reports/DistributePage'
 
 export default [
   {
@@ -57,7 +58,15 @@ export default [
     name: 'reports-notes-bookkeeper',
     component: NotesPage,
     meta: {
-      title: 'Summary Report'
+      title: 'Year-End Report'
+    }
+  },
+  {
+    path: '/bookkeeper/reports/distribute',
+    name: 'reports-distribute-bookkeeper',
+    component: DistributePage,
+    meta: {
+      title: 'Year-End Report'
     }
   },
   {
