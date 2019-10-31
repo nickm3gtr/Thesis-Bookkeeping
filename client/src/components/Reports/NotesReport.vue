@@ -46,13 +46,13 @@
                 </v-container>
               </v-col>
               <v-col cols="12" md="6" class="mt-3">
-                <v-btn small dark color="primary" class="mx-2" @click="$router.push('/bookkeeper/reports/distribute', () => {})"
-                >Distribute</v-btn>
                 <v-btn small dark color="primary" class="mx-2" @click="generate"
                 >Generate</v-btn
                 >
                 <v-btn small dark color="success" class="mx-2" @click="pdf"
                 >Download PDF</v-btn>
+                <v-btn small dark color="amber darken-3" class="mx-2" @click="$router.push('/bookkeeper/reports/distribute', () => {})"
+                >Reserves</v-btn>
               </v-col>
             </v-row>
           </v-card-title>

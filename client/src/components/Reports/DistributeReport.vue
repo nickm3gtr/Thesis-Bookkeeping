@@ -20,17 +20,37 @@
                 ></v-combobox>
               </v-col>
               <v-col cols="12" md="6" class="mt-3">
-                <v-btn class="mx-1" small color="primary" @click="generate">
+                <v-btn class="mx-1" small color="success" @click="generate">
                   Generate
                 </v-btn>
                 <v-btn class="mx-1" small color="primary" @click="dialog = true">
-                  Allocate
+                  Edit Values
                 </v-btn>
-                <v-btn :hidden="hidden" class="mx-1" small color="primary" @click="post">
+                <v-btn :hidden="hidden" class="mx-1" small dark color="amber darken-3" @click="confirmDialog = true">
                   Post
                 </v-btn>
               </v-col>
             </v-row>
+            <v-dialog
+              v-model="confirmDialog"
+              width="500"
+            >
+              <v-card>
+                <v-card-title></v-card-title>
+                <v-card-text>
+                  <p class="subtitle-1">Convert undistributed net surplus with the generated allocation?</p>
+                </v-card-text>
+                <v-card-actions>
+                  <div class="flex-grow-1"></div>
+                  <v-btn color="primary" text @click="confirmDialog = false">
+                    Cancel
+                  </v-btn>
+                  <v-btn color="primary" text @click="post">
+                    Proceed
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
             <v-dialog
               v-model="dialog"
               width="500"
@@ -195,6 +215,7 @@ export default {
       selectYear: { date_part: 2019 },
       hidden: true,
       dialog: false,
+      confirmDialog: false,
       genReservePercent: 50.00,
       cetfNationalPercent: 2.50,
       cetfLocalPercent: 2.50,
@@ -245,7 +266,7 @@ export default {
         const newTransaction = JSON.stringify({
           BookkeeperId: this.auth.user.id,
           BookId: 1,
-          memo: `${this.selectYear.date_part} distribution of net surplus`,
+          memo: `${this.selectYear.date_part} distribution of net surplus (${this.auth.user.Branch.branchName})`,
           date: date,
           data: [
             {

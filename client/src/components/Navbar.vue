@@ -13,7 +13,6 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="!isAuth">
-        <v-btn text class="font-weight-light">About</v-btn>
         <v-dialog v-model="loginDialog" persistent max-width="500px">
           <template v-slot:activator="{ on }">
             <v-btn text class="font-weight-light" v-on="on">Login</v-btn>

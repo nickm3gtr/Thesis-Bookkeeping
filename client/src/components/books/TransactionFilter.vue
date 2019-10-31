@@ -88,11 +88,11 @@
                     <td>{{ item.name }}</td>
                     <td>
                       <p v-if="item.debit == 0"></p>
-                      <p v-else>{{ item.debit }}</p>
+                      <p v-else>{{ currency(item.debit) }}</p>
                     </td>
                     <td>
                       <p v-if="item.credit == 0"></p>
-                      <p v-else>{{ item.credit }}</p>
+                      <p v-else>{{ currency(item.credit) }}</p>
                     </td>
                     <td>
                       <v-btn
@@ -132,6 +132,7 @@ import axios from 'axios'
 import moment from 'moment'
 import { mapActions, mapState } from 'vuex'
 import TransactionFilterDialog from './TransactionFilterDialog'
+import numeral from 'numeral'
 
 export default {
   name: 'TransactionFilter',
@@ -164,6 +165,9 @@ export default {
   },
   methods: {
     ...mapActions('errors', ['getError']),
+    currency (value) {
+      return numeral(value).format('0,0.00')
+    },
     openUpdateDialog (index) {
       this.propTransaction = this.transactions[index]
       this.dialog = true

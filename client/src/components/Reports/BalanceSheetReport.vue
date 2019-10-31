@@ -185,7 +185,8 @@ export default {
       items: [],
       profits: [],
       hidden: true,
-      loading: false
+      loading: false,
+      checkYear: []
     }
   },
   methods: {
@@ -242,13 +243,16 @@ export default {
     },
     async generate () {
       this.loading = true
+      const year = moment(this.date).format('YYYY')
       try {
+        const checkYear = await axios.get(`/api/reports/check-distribute/${this.auth.user.BranchId}/${year}`)
         const response = await axios.get(
           `/api/reports/balance-sheet/${this.auth.user.BranchId}/${this.date}`
         )
         const profit = await axios.get(
-          `/api/reports/net-profit/${this.auth.user.BranchId}/${this.date}`
+          `/api/reports/net-profit/${this.auth.user.BranchId}/${year}/${this.date}`
         )
+        this.checkYear = checkYear.data
         this.items = response.data
         this.profits = profit.data
         this.loading = false
@@ -285,8 +289,13 @@ export default {
       return parseFloat(answer).toFixed(2)
     },
     netProfit () {
-      const netProfit = parseFloat(this.grossProfit) - parseFloat(this.formatBalance(this.totalProfit(70000)))
-      return parseFloat(netProfit).toFixed(2)
+      const year = moment(this.date).format('YYYY')
+      if (this.checkYear.length > 0 && this.date >= `${year}-12-31`) {
+        return parseFloat(0).toFixed(2)
+      } else {
+        const netProfit = parseFloat(this.grossProfit) - parseFloat(this.formatBalance(this.totalProfit(70000)))
+        return parseFloat(netProfit).toFixed(2)
+      }
     }
   }
 }

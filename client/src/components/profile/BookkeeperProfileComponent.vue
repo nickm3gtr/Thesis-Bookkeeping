@@ -2,10 +2,12 @@
   <div>
     <v-layout>
       <v-flex sm12 md8 offset-md2>
-        <v-card outlined elevation="5">
-          <v-toolbar color="light-blue darken-3" dark>
-            <v-toolbar-title>{{ $route.meta.title }}</v-toolbar-title>
-          </v-toolbar>
+        <v-card outlined class="my-6">
+          <v-card-title>
+            <v-col cols="12" md="12">
+              <span class="title font-weight-light">Profile</span>
+            </v-col>
+          </v-card-title>
           <v-card-text>
             <div class="text-center">
               <v-dialog v-model="passwordDialog" max-width="500" persistent>

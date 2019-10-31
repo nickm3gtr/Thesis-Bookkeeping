@@ -118,6 +118,8 @@
                     :profits="formatProfits"
                     :bigYear="bigYear"
                     :smallYear="smallYear"
+                    :checkFirst="checkFirst"
+                    :checkSecond="checkSecond"
                   />
                 </div>
                 <div v-else-if="radio === 'Income Statement'">
@@ -164,7 +166,9 @@ export default {
       selectType: 'Summary',
       radio: 'Balance Sheet',
       branches: [],
-      selectedBranch: { id: 0, branchName: 'DARBMUPCO-Common' }
+      selectedBranch: { id: 0, branchName: 'DARBMUPCO-Common' },
+      checkFirst: [],
+      checkSecond: []
     }
   },
   methods: {
@@ -172,8 +176,12 @@ export default {
     async generate () {
       try {
         this.loading = true
+        const checkFirst = await axios.get(`/api/reports/check-distribute/${this.selectedBranch.id}/${this.smallYear}`)
+        const checkSecond = await axios.get(`/api/reports/check-distribute/${this.selectedBranch.id}/${this.bigYear}`)
         const response = await axios.get(`/api/reports/notes/${this.selectedBranch.id}/${this.firstYear.date_part}/${this.secondYear.date_part}`)
         const profit = await axios.get(`/api/reports/summary/net-profit/${this.selectedBranch.id}/${this.firstYear.date_part}/${this.secondYear.date_part}`)
+        this.checkFirst = checkFirst.data
+        this.checkSecond = checkSecond.data
         this.items = response.data
         this.profits = profit.data
         this.loading = false
