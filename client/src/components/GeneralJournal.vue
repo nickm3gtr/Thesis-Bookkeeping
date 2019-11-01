@@ -126,6 +126,7 @@
                   <td>
                     <span class="font-weight-bold caption">Total:</span>
                   </td>
+                  <td></td>
                   <td>
                     <span v-if="sumDebit === 0"></span>
                     <span v-else :class="{ 'red--text': isNotTheSame }">{{ sumDebit }}</span>
@@ -187,6 +188,7 @@ export default {
       date: new Date().toISOString().substr(0, 10),
       headers: [
         { text: 'AccountName', value: 'AccountName' },
+        { text: 'Sub-Account', value: 'sub.name.name' },
         { text: 'Debit', value: 'debit' },
         { text: 'Credit', value: 'credit' }
       ],

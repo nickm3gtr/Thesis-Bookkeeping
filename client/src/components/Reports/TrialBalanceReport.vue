@@ -122,15 +122,18 @@
                       <span class="font-weight-medium x-small">{{ item.subtype }}</span>
                     </v-col>
                     <v-col cols="12" md="3">
-                      <span class="font-weight-medium x-small">{{ item.account }}</span>
+                      <span v-if="!item.sub" class="font-weight-medium x-small">{{ item.account }}</span>
+                      <span v-else class="font-weight-medium x-small">{{ item.account }}:{{item.sub.name}}</span>
                     </v-col>
                     <v-col cols="12" md="2">
-                      <p v-if="item.balance>0" class="text-right"><span class="font-weight-medium x-small">{{ currency(formatBalance(item.balance)) }}</span></p>
-                      <p v-else><span></span></p>
+                      <p v-if="item.balance>0" class="text-right">
+                        <span class="font-weight-medium x-small">{{ currency(formatBalance(item.balance)) }}</span>
+                      </p>
+                      <p v-else class="text-right"><span class="font-weight-medium x-small">0.00</span></p>
                     </v-col>
                     <v-col cols="12" md="2">
                       <p v-if="item.balance<0" class="text-right"><span class="font-weight-medium x-small">{{ currency(formatBalance(item.balance)) }}</span></p>
-                      <p v-else><span></span></p>
+                      <p v-else class="text-right"><span class="font-weight-medium x-small">0.00</span></p>
                     </v-col>
                   </v-row>
                 </div>
@@ -147,11 +150,11 @@
                   </v-col>
                   <v-col cols="12" md="2">
                     <p v-if="this.items.length <= 0"></p>
-                    <p v-else class="underlined text-right"><span class="font-weight-medium">{{ currency(formatBalance(totalDebit)) }}</span></p>
+                    <p v-else class="underlined text-right"><span class="font-weight-medium x-small">{{ currency(formatBalance(totalDebit)) }}</span></p>
                   </v-col>
                   <v-col cols="12" md="2">
                     <p v-if="this.items.length <= 0"></p>
-                    <p v-else class="underlined text-right"><span class="font-weight-medium">{{ currency(formatBalance(totalCredit)) }}</span></p>
+                    <p v-else class="underlined text-right"><span class="font-weight-medium x-small">{{ currency(formatBalance(totalCredit)) }}</span></p>
                   </v-col>
                 </v-row>
               </v-flex>

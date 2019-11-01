@@ -1,10 +1,11 @@
 <template>
   <div class="ledger">
     <p><span class="subtitle-2">Non Current Assets</span></p>
-    <div v-for="item in nonCurrentAssets" :key="item.AccountId">
+    <div v-for="(item, index) in nonCurrentAssets" :key="index">
       <v-row class="ml-12">
         <v-col cols="12" md="4">
-          <span class="font-weight-medium">{{ item.name }}</span>
+          <span v-if="!item.sub" class="font-weight-medium">{{ item.name }}</span>
+          <span v-else class="font-weight-medium">{{ item.name }}:{{item.sub.name}}</span>
         </v-col>
         <v-col cols="12" md="2">
           <p class="text-right"><span class="font-weight-medium">{{ currency(item.debit) }}</span></p>

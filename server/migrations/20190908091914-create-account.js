@@ -15,6 +15,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      sub: {
+        type: Sequelize.JSONB
+      },
       SubTypeId: {
         type: Sequelize.INTEGER,
         allowNull: false,

@@ -46,6 +46,7 @@
               </v-col>
               <v-col cols="12" md="2">
                 <v-btn color="primary"
+                  :hidden="!editable"
                   class="mt-2"
                   :disabled="!editable"
                   @click="transactionUpdated"
@@ -80,12 +81,15 @@
                     <th class="text-left">Account</th>
                     <th class="text-left">Debit</th>
                     <th class="text-left">Credit</th>
-                    <th class="text-left">Action</th>
+                    <th v-if="editable" class="text-left">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="(item, index) in transactions" :key="item.id">
-                    <td>{{ item.name }}</td>
+                    <td>
+                      <span v-if="!item.sub">{{ item.name }}</span>
+                      <span v-else>{{ item.name }}:{{item.sub.name}}</span>
+                    </td>
                     <td>
                       <p v-if="item.debit == 0"></p>
                       <p v-else>{{ currency(item.debit) }}</p>
@@ -94,7 +98,7 @@
                       <p v-if="item.credit == 0"></p>
                       <p v-else>{{ currency(item.credit) }}</p>
                     </td>
-                    <td>
+                    <td v-if="editable">
                       <v-btn
                         class="mt-0"
                         dark
@@ -220,9 +224,19 @@ export default {
         if (transaction.credit == null || transaction.credit == 0) {
           transaction.debit = parseInt(transaction.debit)
           transaction.credit = null
+          if (!transaction.sub) {
+            transaction.sub = null
+          } else {
+            transaction.sub = { name: transaction.sub }
+          }
         } else {
           transaction.credit = parseInt(transaction.credit)
           transaction.debit = null
+          if (!transaction.sub) {
+            transaction.sub = null
+          } else {
+            transaction.sub = { name: transaction.sub }
+          }
         }
         return transaction
       })

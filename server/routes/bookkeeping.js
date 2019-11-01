@@ -66,7 +66,7 @@ router.get("/transactions/trans_id/:transId", (req, res) => {
 router.get("/transaction-records/trans_id/:transId", (req, res) => {
   const transId = req.params.transId
 
-  db.sequelize.query("select tr.id, tr.\"TransId\", tr.\"AccountId\" as account_id, a.name as name, coalesce(tr.debit, 0) as debit, coalesce(tr.credit, 0) as credit\n" +
+  db.sequelize.query("select tr.id, tr.\"TransId\", tr.\"AccountId\" as account_id, a.name as name, tr.sub->'name' as sub, coalesce(tr.debit, 0) as debit, coalesce(tr.credit, 0) as credit\n" +
   "from \"TransactionRecords\" tr inner join \"Accounts\" a on tr.\"AccountId\"=a.id\n" +
   "where \"TransId\" = :transId\n" +
   "order by tr.id asc", {
@@ -133,7 +133,8 @@ router.put("/transactions/transaction/:id", (req, res) => {
         transPromise.push(db.TransactionRecord.update({
           AccountId: transRecord[i].account_id,
           debit: transRecord[i].debit,
-          credit: transRecord[i].credit
+          credit: transRecord[i].credit,
+          sub: transRecord[i].sub
         }, {
           where: {
             id: transRecord[i].id

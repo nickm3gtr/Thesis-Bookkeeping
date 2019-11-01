@@ -32,6 +32,9 @@ module.exports = {
       },
       tags: {
         type: Sequelize.STRING
+      },
+      sub: {
+        type: Sequelize.JSONB
       }
     });
   },

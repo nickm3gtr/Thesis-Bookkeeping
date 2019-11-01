@@ -72,7 +72,17 @@ module.exports = [
   {
     id: 11250,
     name: "11250-Accounts Receivables Trade-Current",
-    SubTypeId: 11200
+    SubTypeId: 11200,
+    sub: JSON.stringify({
+      subaccounts: [
+        {
+          name: "DOLE"
+        },
+        {
+          name: "A/R-Members"
+        }
+      ]
+    })
   },
   {
     id: 11260,

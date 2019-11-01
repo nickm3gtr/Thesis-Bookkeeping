@@ -21,12 +21,21 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col cols="12" md="12">
+              <v-col cols="12" md="6">
                 <v-combobox
                   v-model="selected"
                   :items="accounts"
                   item-text="name"
                   label="Select Account Name"
+                  return-object
+                ></v-combobox>
+              </v-col>
+              <v-col :hidden="hideSubAccount" cols="12" md="6">
+                <v-combobox
+                  v-model="sub"
+                  :items="subAccount"
+                  item-text="name"
+                  label="Select Sub-Account"
                   return-object
                 ></v-combobox>
               </v-col>
@@ -70,17 +79,23 @@ export default {
       selected: '',
       debit: '',
       credit: '',
-      accounts: []
+      accounts: [],
+      sub: ''
     }
   },
   methods: {
     ...mapActions('errors', ['getError']),
     add () {
+      let sub = null
+      if (this.sub !== '') {
+        sub = { name: this.sub }
+      }
       const transaction = {
         AccountId: this.selected.id,
         AccountName: this.selected.name,
         debit: this.debit,
-        credit: this.credit
+        credit: this.credit,
+        sub: sub
       }
       this.$emit('add-transaction', transaction)
       this.$emit('close-dialog')
@@ -116,6 +131,27 @@ export default {
     },
     isIncomplete () {
       return this.selected === '' || (this.debit === '' && this.credit === '')
+    },
+    subAccount () {
+      if (!this.selected.sub) {
+        return []
+      } else {
+        return this.selected.sub.subaccounts
+      }
+    },
+    hideSubAccount () {
+      if (this.selected === '') {
+        return true
+      } else if (!this.selected.sub) {
+        return true
+      } else {
+        return false
+      }
+    }
+  },
+  watch: {
+    selected () {
+      this.sub = ''
     }
   },
   validations: {

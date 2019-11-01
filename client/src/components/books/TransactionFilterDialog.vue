@@ -21,12 +21,21 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col cols="12" md="12">
+              <v-col cols="12" md="6">
                 <v-combobox
                   v-model="selected"
                   :items="accounts"
                   item-text="name"
                   label="Select Account Name"
+                  return-object
+                ></v-combobox>
+              </v-col>
+              <v-col :hidden="hideSubAccount" cols="12" md="6">
+                <v-combobox
+                  v-model="sub"
+                  :items="subAccount"
+                  item-text="name"
+                  label="Select Sub-Account"
                   return-object
                 ></v-combobox>
               </v-col>
@@ -61,7 +70,8 @@ export default {
     return {
       loading: false,
       selected: '',
-      accounts: []
+      accounts: [],
+      sub: ''
     }
   },
   methods: {
@@ -73,11 +83,28 @@ export default {
     updateTransaction () {
       this.transaction.account_id = this.selected.id
       this.transaction.name = this.selected.name
+      this.transaction.sub = this.sub
       this.closeDialog()
     }
   },
   computed: {
-    ...mapState(['auth'])
+    ...mapState(['auth']),
+    subAccount () {
+      if (!this.selected.sub) {
+        return []
+      } else {
+        return this.selected.sub.subaccounts
+      }
+    },
+    hideSubAccount () {
+      if (this.selected === '') {
+        return true
+      } else if (!this.selected.sub) {
+        return true
+      } else {
+        return false
+      }
+    }
   },
   async mounted () {
     this.selected = {
@@ -104,7 +131,8 @@ export default {
     transaction () {
       this.selected = {
         id: this.transaction.account_id,
-        name: this.transaction.name
+        name: this.transaction.name,
+        sub: { name: this.sub }
       }
     }
   }
