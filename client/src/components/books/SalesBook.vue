@@ -184,7 +184,7 @@ export default {
       memo: '',
       headers: [
         { text: 'AccountName', value: 'AccountName' },
-        { text: 'Amount', value: 'credit' }
+        { text: 'Amount', value: 'debit' }
       ],
       items: [],
       hidden: true,
@@ -205,12 +205,12 @@ export default {
       }
       try {
         const cashItem = {
-          AccountId: 15,
-          debit: this.totalCash,
-          credit: null,
+          AccountId: 162,
+          debit: null,
+          credit: this.totalCash,
           date: this.date
         }
-        const data = [ cashItem, ...this.items ]
+        const data = [ ...this.items, cashItem ]
         const newTransaction = JSON.stringify({
           BookkeeperId: this.auth.user.id,
           BookId: this.BookId,
@@ -251,7 +251,7 @@ export default {
     ...mapState(['auth']),
     totalCash () {
       let balances = this.items.map(item => {
-        let balance = parseFloat(item.credit)
+        let balance = parseFloat(item.debit)
         return balance
       })
       const arrSum = balances => balances.reduce((a, b) => a + b, 0)

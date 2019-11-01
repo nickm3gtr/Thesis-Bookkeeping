@@ -131,6 +131,7 @@
                   <td>
                     <span class="font-weight-bold">Total:</span>
                   </td>
+                  <td></td>
                   <td>
                     <span v-if="totalCash === 0"></span>
                     <span v-else>{{ totalCash }}</span>
@@ -189,6 +190,7 @@ export default {
       memo: '',
       headers: [
         { text: 'AccountName', value: 'AccountName' },
+        { text: 'Sub-Account', value: 'sub.name.name' },
         { text: 'Amount', value: 'debit' }
       ],
       items: [],

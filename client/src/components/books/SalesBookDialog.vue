@@ -17,6 +17,24 @@
       <v-card-text>
         <v-container>
           <v-row>
+            <v-col cols="12" md="6">
+              <v-combobox
+                v-model="selected"
+                :items="accounts"
+                item-text="name"
+                label="Select Account Name"
+                return-object
+              ></v-combobox>
+            </v-col>
+            <v-col :hidden="hideSubAccount" cols="12" md="6">
+              <v-combobox
+                v-model="sub"
+                :items="subAccount"
+                item-text="name"
+                label="Select Sub-Account"
+                return-object
+              ></v-combobox>
+            </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" md="12">
@@ -40,6 +58,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import { decimal } from 'vuelidate/lib/validators'
+import axios from 'axios'
 
 export default {
   name: 'SalesBookDialog',
@@ -48,18 +67,23 @@ export default {
       loading: false,
       selected: '',
       amount: '',
-      AccountId: 160,
-      AccountName: '40310-Sales'
+      accounts: [],
+      sub: ''
     }
   },
   methods: {
     ...mapActions('errors', ['getError']),
     add () {
+      let sub = null
+      if (this.sub !== '') {
+        sub = { name: this.sub }
+      }
       const transaction = {
-        AccountId: this.AccountId,
-        AccountName: this.AccountName,
-        debit: null,
-        credit: this.amount
+        AccountId: this.selected.id,
+        AccountName: this.selected.name,
+        debit: this.amount,
+        credit: null,
+        sub: sub
       }
       this.$emit('add-transaction', transaction)
       this.$emit('close-dialog')
@@ -67,10 +91,48 @@ export default {
       this.amount = ''
     }
   },
+  async mounted () {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
+      this.loading = true
+      const response = await axios.get('/api/accounts', config)
+      this.accounts = response.data
+      this.loading = false
+    } catch (e) {
+      this.getError(e.response.data)
+      this.loading = false
+    }
+  },
   computed: {
     ...mapState(['auth']),
     isIncomplete () {
-      return this.amount === ''
+      return this.selected === '' || (this.amount === '')
+    },
+    subAccount () {
+      if (!this.selected.sub) {
+        return []
+      } else {
+        return this.selected.sub.subaccounts
+      }
+    },
+    hideSubAccount () {
+      if (this.selected === '') {
+        return true
+      } else if (!this.selected.sub) {
+        return true
+      } else {
+        return false
+      }
+    }
+  },
+  watch: {
+    selected () {
+      this.sub = ''
     }
   },
   validations: {
