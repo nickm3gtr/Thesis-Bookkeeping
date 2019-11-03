@@ -23,13 +23,13 @@
         <p class="caption font-weight-medium">TransId</p>
       </v-col>
       <v-col cols="12" md="3">
-        <p class="caption font-weight-medium">Description</p>
+        <p class="caption font-weight-medium">Debit Account</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">A/R Debit</p>
+        <p class="caption font-weight-medium text-right">Debit(A/R)</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">Sales Credit</p>
+        <p class="caption font-weight-medium text-right">Credit(Sales)</p>
       </v-col>
     </v-row>
     <hr/>
@@ -42,11 +42,9 @@
           <p class="caption font-weight-medium">{{ item.trans_id }}</p>
         </v-col>
         <v-col cols="12" md="3">
-          <p>
-            <span class="caption font-weight-medium">{{
-              item.memo
-            }}</span>
-          </p>
+          <p v-if="!item.sub" class="caption font-weight-medium">{{ item.accountname }}</p>
+          <p v-else-if="!item.sub.sub" class="caption font-weight-medium">{{ item.accountname }}:{{item.sub.name}}</p>
+          <p v-else-if="item.sub.sub" class="caption font-weight-medium">{{ item.accountname }}:{{item.sub.name}}:{{item.sub.sub}}</p>
         </v-col>
         <v-col cols="12" md="2">
           <p class="caption font-weight-medium text-right">{{ currency(item.debit) }}</p>

@@ -119,36 +119,28 @@ router.get("/income-statement/:id/:start/:end", (req, res) => {
   const { id, start, end } = req.params
 
   if (id == 0) {
-    db.sequelize.query("select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, (\n" +
-                        "select sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0))\n" +
-                        "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-                        "where tr.\"AccountId\"=a.id and t.\"date\" between :start and :end\n" +
-                      ") as balance\n" +
-                      "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id\n" +
-                          "inner join \"Types\" ty on s.\"TypeId\"=ty.id\n" +
-                      "where a.id in (\n" +
-                        "select tr.\"AccountId\"\n" +
-                        "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-                          "where ty.id >=40000 and ty.id <= 80000 and t.\"date\" between :start and :end\n" +
-                      ")", {
+    db.sequelize.query("select ty.id as id, s.id as \"subtypeId\", s.\"name\" as subtype, a.\"name\" as account, tr.sub->'name' as sub, sum(coalesce(tr.debit, 0))- sum(coalesce(tr.credit, 0)) as balance \n" +
+      "from \"Branches\" as br inner join \"Bookkeepers\" b on br.id=b.\"BranchId\" inner join \"Transactions\" t on b.id=t.\"BookkeeperId\" \n" +
+        "inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
+        "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id  \n" +
+        "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
+      "where t.\"date\" between :start and :end and ty.id>=40000 and ty.id<=80000 \n" +
+      "group by tr.sub, a.\"name\", s.\"name\", ty.\"name\", a.id, ty.id, s.id \n" +
+      "order by a.id", {
       model: db.TransactionRecord,
       replacements: { id, start, end }
     }).then(transactions => res.json(transactions))
       .catch(err => res.status(400).json({ msg: err }))
 
   } else {
-    db.sequelize.query("select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, (\n" +
-                          "select sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0))\n" +
-                          "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-                          "where tr.\"AccountId\"=a.id and t.\"date\" between :start and :end and b.\"BranchId\"=:id\n" +
-                        ") as balance\n" +
-                        "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id\n" +
-                            "inner join \"Types\" ty on s.\"TypeId\"=ty.id\n" +
-                        "where a.id in (\n" +
-                          "select tr.\"AccountId\"\n" +
-                          "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-                            "where ty.id >=40000 and ty.id <= 80000 and t.\"date\" between :start and :end and b.\"BranchId\"=:id\n" +
-                        ")", {
+    db.sequelize.query("select ty.id as id, s.id as \"subtypeId\", s.\"name\" as subtype, a.\"name\" as account, tr.sub->'name' as sub, sum(coalesce(tr.debit, 0))- sum(coalesce(tr.credit, 0)) as balance \n" +
+      "from \"Branches\" as br inner join \"Bookkeepers\" b on br.id=b.\"BranchId\" inner join \"Transactions\" t on b.id=t.\"BookkeeperId\" \n" +
+        "inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
+        "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id  \n" +
+        "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
+      "where t.\"date\" between :start and :end and br.id=:id  and ty.id>=40000 and ty.id<=80000 \n" +
+      "group by tr.sub, a.\"name\", s.\"name\", ty.\"name\", a.id, ty.id, s.id \n" +
+      "order by a.id", {
       model: db.TransactionRecord,
       replacements: { id, start, end }
     }).then(transactions => res.json(transactions))
@@ -161,35 +153,27 @@ router.get("/balance-sheet/:id/:date", (req, res) => {
   const { id, date } = req.params
 
   if (id == 0) {
-    db.sequelize.query("select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, (\n" +
-                          "select sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0))\n" +
-                          "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-                          "where tr.\"AccountId\"=a.id and t.\"date\" <= :date\n" +
-                        ") as balance\n" +
-                        "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id\n" +
-                            "inner join \"Types\" ty on s.\"TypeId\"=ty.id\n" +
-                        "where a.id in (\n" +
-                          "select tr.\"AccountId\"\n" +
-                          "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-                            "where ty.id>=10000 and ty.id < 40000 and t.\"date\" <= :date\n" +
-                        ")", {
+    db.sequelize.query("select ty.id as id, s.id as \"subtypeId\", s.\"name\" as subtype, a.\"name\" as account, tr.sub->'name' as sub, sum(coalesce(tr.debit, 0))- sum(coalesce(tr.credit, 0)) as balance \n" +
+      "from \"Branches\" as br inner join \"Bookkeepers\" b on br.id=b.\"BranchId\" inner join \"Transactions\" t on b.id=t.\"BookkeeperId\" \n" +
+        "inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
+        "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id  \n" +
+        "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
+      "where t.\"date\" <=:date and ty.id>=10000 and ty.id<40000 \n" +
+      "group by tr.sub, a.\"name\", s.\"name\", ty.\"name\", a.id, ty.id, s.id \n" +
+      "order by a.id", {
       model: db.TransactionRecord,
       replacements: { id, date }
     }).then(transactions => res.json(transactions))
       .catch(err => res.status(400).json({ msg: err }))
   } else {
-    db.sequelize.query("select ty.name as type, s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, (\n" +
-                          "select sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0))\n" +
-                          "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-                          "where tr.\"AccountId\"=a.id and t.\"date\" <= :date and b.\"BranchId\"=:id\n" +
-                        ") as balance\n" +
-                        "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id\n" +
-                            "inner join \"Types\" ty on s.\"TypeId\"=ty.id\n" +
-                        "where a.id in (\n" +
-                          "select tr.\"AccountId\"\n" +
-                          "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-                            "where ty.id >=10000 and ty.id < 40000 and t.\"date\" <= :date and b.\"BranchId\"=:id\n" +
-                        ")", {
+    db.sequelize.query("select ty.id as id, s.id as \"subtypeId\", s.\"name\" as subtype, a.\"name\" as account, tr.sub->'name' as sub, sum(coalesce(tr.debit, 0))- sum(coalesce(tr.credit, 0)) as balance \n" +
+      "from \"Branches\" as br inner join \"Bookkeepers\" b on br.id=b.\"BranchId\" inner join \"Transactions\" t on b.id=t.\"BookkeeperId\" \n" +
+        "inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
+        "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id  \n" +
+        "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
+      "where t.\"date\" <=:date and br.id=:id  and ty.id>=10000 and ty.id<40000 \n" +
+      "group by tr.sub, a.\"name\", s.\"name\", ty.\"name\", a.id, ty.id, s.id \n" +
+      "order by a.id", {
       model: db.TransactionRecord,
       replacements: { id, date }
     }).then(transactions => res.json(transactions))
@@ -202,18 +186,14 @@ router.get("/net-profit/:id/:year/:date", (req, res) => {
   const { id, date, year } = req.params
   let startDate = `${year}-1-1`
   if (id == 0) {
-    db.sequelize.query("select ty.name as type, s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, (\n" +
-                          "select sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0))\n" +
-                          "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-                          "where tr.\"AccountId\"=a.id and t.\"date\" between :startDate and :date\n" +
-                        ") as balance\n" +
-                        "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id\n" +
-                            "inner join \"Types\" ty on s.\"TypeId\"=ty.id\n" +
-                        "where a.id in (\n" +
-                          "select tr.\"AccountId\"\n" +
-                          "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id\n" +
-                            "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :startDate and :date\n" +
-                        ")", {
+    db.sequelize.query("select ty.id as id, s.id as \"subtypeId\", s.\"name\" as subtype, a.\"name\" as account, tr.sub->'name' as sub, sum(coalesce(tr.debit, 0))- sum(coalesce(tr.credit, 0)) as balance \n" +
+      "from \"Branches\" as br inner join \"Bookkeepers\" b on br.id=b.\"BranchId\" inner join \"Transactions\" t on b.id=t.\"BookkeeperId\" \n" +
+        "inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
+        "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id  \n" +
+        "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
+      "where t.\"date\" between :startDate and :date and ty.id>=40000 and ty.id<=80000 \n" +
+      "group by tr.sub, a.\"name\", s.\"name\", ty.\"name\", a.id, ty.id, s.id \n" +
+      "order by a.id", {
       model: db.TransactionRecord,
       replacements: { id, date, startDate }
     }).then(transactions => res.json(transactions))

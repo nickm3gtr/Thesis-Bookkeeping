@@ -95,55 +95,6 @@
       <hr>
       <br>
       <br>
-      <v-row>
-        <v-col cols="12" md="9">
-          <p>Distribution of Net Surplus</p>
-        </v-col>
-      </v-row>
-      <v-row class="ml-10">
-        <v-col cols="12" md="3">General Reserve Fund</v-col>
-        <v-col cols="12" md="2">50.00%</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(genReserveSecond)}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(genReserveFirst)}}</p></v-col>
-      </v-row>
-      <v-row class="ml-10">
-        <v-col cols="12" md="3">CETF-National</v-col>
-        <v-col cols="12" md="2">2.50%</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(cetfNationalSecond)}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(cetfNationalFirst)}}</p></v-col>
-      </v-row>
-      <v-row class="ml-10">
-        <v-col cols="12" md="3">CETF-Local</v-col>
-        <v-col cols="12" md="2">2.50%</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(cetfLocalSecond)}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(cetfLocalFirst)}}</p></v-col>
-      </v-row>
-      <v-row class="ml-10">
-        <v-col cols="12" md="3">Optional Fund</v-col>
-        <v-col cols="12" md="2">2.50%</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(optionalFundSecond)}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(optionalFundFirst)}}</p></v-col>
-      </v-row>
-      <v-row class="ml-10">
-        <v-col cols="12" md="3">Community Development Fund</v-col>
-        <v-col cols="12" md="2">2.50%</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(communityFundSecond)}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(communityFundFirst)}}</p></v-col>
-      </v-row>
-      <v-row class="ml-10">
-        <v-col cols="12" md="3">Interest on Capital & Patronage</v-col>
-        <v-col cols="12" md="2">40.00%</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(interestSecond)}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(interestFirst)}}</p></v-col>
-      </v-row>
-      <hr>
-      <hr>
-      <v-row class="ml-10">
-        <v-col cols="12" md="3"></v-col>
-        <v-col cols="12" md="2">100.00%</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(totalDistributedSecond)}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(totalDistributedFirst)}}</p></v-col>
-      </v-row>
     </div>
   </div>
 </template>

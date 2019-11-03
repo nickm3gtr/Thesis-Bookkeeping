@@ -20,22 +20,22 @@
         <p class="caption font-weight-medium">TransId</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium">Account Debited</p>
+        <p class="caption font-weight-medium">Debit Account</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">Cash Paid</p>
+        <p class="caption font-weight-medium text-right">Credit(Cash)</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">A/P Debit</p>
+        <p class="caption font-weight-medium text-right">Debit(A/P)</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">Salaries Debit</p>
+        <p class="caption font-weight-medium text-right">Debit(Salaries)</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">Expenses Debit</p>
+        <p class="caption font-weight-medium text-right">Debit(Expenses)</p>
       </v-col>
       <v-col cols="12" md="1">
-        <p class="caption font-weight-medium text-right">Others</p>
+        <p class="caption font-weight-medium text-right">Debit(Others)</p>
       </v-col>
     </v-row>
     <hr/>

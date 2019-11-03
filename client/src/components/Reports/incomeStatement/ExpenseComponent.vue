@@ -4,7 +4,11 @@
       <span>{{subType}}</span>
       <div v-for="item in accounts" :key="item.account_id">
         <v-row class="ml-10">
-          <v-col cols="12" md="5" v-if="item.subtype === subType">{{item.account}}</v-col>
+          <v-col cols="12" md="5" v-if="item.subtype === subType">
+            <p v-if="!item.sub">{{item.account}}</p>
+            <p v-else-if="!item.sub.sub">{{item.account}}:{{item.sub.name}}</p>
+            <p v-else-if="item.sub.sub">{{item.account}}:{{item.sub.name}}:{{item.sub.sub}}</p>
+          </v-col>
           <v-col cols="12" md="3" v-if="item.subtype === subType"><p class="text-right">{{currency(formatBalance(item.balance))}}</p></v-col>
         </v-row>
       </div>

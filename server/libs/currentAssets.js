@@ -93,49 +93,56 @@ module.exports = [
           name: "A/R-Collectibles from Mgt. B"
         },
         {
-          name: "A/R-Members:Aerial"
+          name: "A/R-Members",
+          sub: [
+            {
+              name: "Buffer Area Rental"
+            },
+            {
+              name: "Cash Advance"
+            },
+            {
+              name: "DOLE Loan"
+            },
+            {
+              name: "Hospital"
+            },
+            {
+              name: "ITR & Bookkeeping Fee"
+            },
+            {
+              name: "Light & Power"
+            },
+            {
+              name: "Materials"
+            },
+            {
+              name: "OHCP"
+            },
+            {
+              name: "Paramount Insurance"
+            },
+            {
+              name: "Spinny Bamboo"
+            }
+          ]
         },
         {
-          name: "A/R-Members:Buffer Area Rental"
-        },
-        {
-          name: "A/R-Members:Cash Advance"
-        },
-        {
-          name: "A/R-Members:DOLE Loan"
-        },
-        {
-          name: "A/R-Members:Hospital"
-        },
-        {
-          name: "A/R-Members:ITR & Bookkeeping Fee"
-        },
-        {
-          name: "A/R-Members:Light & Power"
-        },
-        {
-          name: "A/R-Members:Materials"
-        },
-        {
-          name: "A/R-Members:OHCP"
-        },
-        {
-          name: "A/R-Members:Paramount Insurance"
-        },
-        {
-          name: "A/R-Members:Spinny Bamboo"
-        },
-        {
-          name: "A/R-Mgt-B Charges(Old Acct.):Cash Advance"
-        },
-        {
-          name: "A/R-Mgt-B Charges(Old Acct.):Housing"
-        },
-        {
-          name: "A/R-Mgt-B Charges(Old Acct.):P.O."
-        },
-        {
-          name: "A/R-Mgt-B Charges(Old Acct.):Savings Loan"
+          name: "A/R-Mgt-B Charges(Old Acct.)",
+          sub: [
+            {
+              name: "A/R-Cash Advance"
+            },
+            {
+              name: "A/R-Housing"
+            },
+            {
+              name: "A/R-P.O."
+            },
+            {
+              name: "A/R-Savings Loan"
+            }
+          ]
         },
         {
           name: "A/R-Payroll/Honorarium Loan"

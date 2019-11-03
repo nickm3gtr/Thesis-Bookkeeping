@@ -252,12 +252,13 @@ export default {
     },
     async generate () {
       this.loading = true
+      const year = moment(this.date).format('YYYY')
       try {
         const response = await axios.get(
           `/api/reports/balance-sheet/${this.selectedBranch.id}/${this.date}`
         )
         const profit = await axios.get(
-          `/api/reports/net-profit/${this.selectedBranch.id}/${this.date}`
+          `/api/reports/net-profit/${this.selectedBranch.id}/${year}/${this.date}`
         )
         this.items = response.data
         this.profits = profit.data

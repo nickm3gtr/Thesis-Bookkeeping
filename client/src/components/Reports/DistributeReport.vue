@@ -189,8 +189,13 @@
               <hr>
               <v-row class="ml-10">
                 <v-col cols="12" md="3"></v-col>
-                <v-col cols="12" md="2">{{totalPercent}}%</v-col>
-                <v-col cols="12" md="3"><p class="text-right total">{{currency(totalDistributed)}}</p></v-col>
+                <v-col cols="12" md="2">
+                  <p v-if="totalPercent != 100" class="red--text">{{totalPercent}}%</p>
+                  <p v-else>{{totalPercent}}%</p>
+                </v-col>
+                <v-col cols="12" md="3">
+                  <p class="text-right total">{{currency(totalDistributed)}}</p>
+                </v-col>
               </v-row>
             </div>
           </v-card-text>

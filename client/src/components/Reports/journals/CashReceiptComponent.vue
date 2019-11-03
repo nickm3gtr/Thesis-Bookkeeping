@@ -20,19 +20,19 @@
         <p class="caption font-weight-medium">TransId</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium">Account Credited</p>
+        <p class="caption font-weight-medium">Credit Account</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">Cash Debit</p>
+        <p class="caption font-weight-medium text-right">Debit(Cash)</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">Sales Credit</p>
+        <p class="caption font-weight-medium text-right">Credit(Sales)</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">A/R Credit</p>
+        <p class="caption font-weight-medium text-right">Credit(A/R)</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">Others</p>
+        <p class="caption font-weight-medium text-right">Credit(Others)</p>
       </v-col>
     </v-row>
     <hr/>

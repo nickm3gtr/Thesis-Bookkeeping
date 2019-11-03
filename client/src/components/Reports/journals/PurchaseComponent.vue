@@ -7,7 +7,7 @@
         </span>
         <span v-else class="headline centered">{{ auth.user.Branch.branchName }}</span>
       </p>
-      <p><span class="subtitle-1">Purchases Journal</span></p>
+      <p><span class="subtitle-1">Purchase Journal</span></p>
       <p>
         <span class="subtitle-2"
         >{{ formatFromDate }} through {{ formatToDate }}</span
@@ -23,19 +23,19 @@
         <p class="caption font-weight-medium">TransId</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium">Description</p>
+        <p class="caption font-weight-medium">Debit Account</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">A/P Credit</p>
+        <p class="caption font-weight-medium text-right">Credit(A/P)</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">Inventory Debit</p>
+        <p class="caption font-weight-medium text-right">Debit(Inventory)</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">Office Supplies Debit</p>
+        <p class="caption font-weight-medium text-right">Debit(Office Supplies)</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">Others</p>
+        <p class="caption font-weight-medium text-right">Debit(Others)</p>
       </v-col>
     </v-row>
     <hr/>
@@ -48,11 +48,9 @@
           <p class="caption font-weight-medium">{{item.trans_id}}</p>
         </v-col>
         <v-col cols="12" md="2">
-          <p>
-            <span class="caption font-weight-medium">{{
-              item.memo
-            }}</span>
-          </p>
+          <p v-if="!item.sub" class="caption font-weight-medium">{{ item.accountname }}</p>
+          <p v-else-if="!item.sub.sub" class="caption font-weight-medium">{{ item.accountname }}:{{item.sub.name}}</p>
+          <p v-else-if="item.sub.sub" class="caption font-weight-medium">{{ item.accountname }}:{{item.sub.name}}:{{item.sub.sub}}</p>
         </v-col>
         <v-col cols="12" md="2">
           <p class="caption font-weight-medium text-right">{{ currency(item.debit) }}</p>

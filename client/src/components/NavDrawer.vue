@@ -111,7 +111,7 @@ export default {
             { title: 'Trial Balance', route: '/bookkeeper/reports/trial-balance' },
             { title: 'Balance Sheet', route: '/bookkeeper/reports/balance-sheet' },
             { title: 'Income Statement', route: '/bookkeeper/reports/income-statement' },
-            { title: 'Notes and Summary', route: '/bookkeeper/reports/summary' }
+            { title: 'Year-End', route: '/bookkeeper/reports/summary' }
           ]
         }
       ],
@@ -145,7 +145,7 @@ export default {
             { title: 'Trial Balance', route: '/admin/reports/trial-balance' },
             { title: 'Balance Sheet', route: '/admin/reports/balance-sheet' },
             { title: 'Income Statement', route: '/admin/reports/income-statement' },
-            { title: 'Notes and Summary', route: '/admin/reports/summary' }
+            { title: 'Year-End', route: '/admin/reports/summary' }
           ]
         }
       ]

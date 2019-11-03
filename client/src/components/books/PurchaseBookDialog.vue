@@ -12,7 +12,7 @@
     </v-card>
     <v-card v-else>
       <v-card-title>
-        <span class="title">Add Transaction</span>
+        <span class="title">Enter Purchased Account</span>
       </v-card-title>
       <v-form>
         <v-card-text>
@@ -92,7 +92,11 @@ export default {
     add () {
       let sub = null
       if (this.sub !== '') {
-        sub = { name: this.sub }
+        if (this.subSecond !== '') {
+          sub = { name: { name: this.sub.name, sub: this.subSecond.name } }
+        } else {
+          sub = { name: this.sub }
+        }
       }
       const transaction = {
         AccountId: this.selected.id,
