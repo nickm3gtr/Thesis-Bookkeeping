@@ -47,7 +47,8 @@
         </v-col>
         <v-col cols="12" md="2">
           <p v-if="!item.sub" class="caption font-weight-medium">{{ item.accountname }}</p>
-          <p v-else class="caption font-weight-medium">{{ item.accountname }}:{{item.sub.name}}</p>
+          <p v-else-if="!item.sub.sub" class="caption font-weight-medium">{{ item.accountname }}:{{item.sub.name}}</p>
+          <p v-else-if="item.sub.sub" class="caption font-weight-medium">{{ item.accountname }}:{{item.sub.name}}:{{item.sub.sub}}</p>
         </v-col>
         <v-col cols="12" md="2">
           <p class="caption font-weight-medium text-right">{{ currency(item.credit) }}</p>

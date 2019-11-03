@@ -132,7 +132,8 @@
                     </v-col>
                     <v-col cols="12" md="3">
                       <span v-if="!item.sub" class="font-weight-medium x-small">{{ item.account }}</span>
-                      <span v-else class="font-weight-medium x-small">{{ item.account }}:{{item.sub.name}}</span>
+                      <span v-else-if="!item.sub.sub" class="caption font-weight-medium">{{ item.account }}:{{item.sub.name}}</span>
+                      <span v-else-if="item.sub.sub" class="caption font-weight-medium">{{ item.account }}:{{item.sub.name}}:{{item.sub.sub}}</span>
                     </v-col>
                     <v-col cols="12" md="2">
                       <p v-if="item.balance>0" class="text-right">

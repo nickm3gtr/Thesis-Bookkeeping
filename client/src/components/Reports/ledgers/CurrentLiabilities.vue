@@ -5,7 +5,8 @@
       <v-row class="ml-12">
         <v-col cols="12" md="4">
           <span v-if="!item.sub" class="font-weight-medium">{{ item.name }}</span>
-          <span v-else class="font-weight-medium">{{ item.name }}:{{item.sub.name}}</span>
+          <span v-else-if="!item.sub.sub" class="caption font-weight-medium">{{ item.name }}:{{item.sub.name}}</span>
+          <span v-else-if="item.sub.sub" class="caption font-weight-medium">{{ item.name }}:{{item.sub.name}}:{{item.sub.sub}}</span>
         </v-col>
         <v-col cols="12" md="2">
           <p class="text-right"><span class="font-weight-medium">{{ currency(item.debit) }}</span></p>

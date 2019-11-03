@@ -17,12 +17,41 @@ module.exports = [
   {
     id: 21220,
     name: "21220-Accounts Payable-Non Trade",
-    SubTypeId: 21200
+    SubTypeId: 21200,
+    sub: JSON.stringify({
+      subaccounts: [
+        {
+          name: "A/P-DARBMUPCO Common"
+        },
+        {
+          name: "A/P-Hospital"
+        },
+        {
+          name: "A/P-Members:Annual Savings"
+        },
+        {
+          name: "A/P-Members:Capital Share Lending Mgt. E"
+        },
+        {
+          name: "A/P-Members:Fertilizers Fund"
+        },
+        {
+          name: "A/P-Members:Expansion"
+        }
+      ]
+    })
   },
   {
     id: 21230,
     name: "21230-Loans Payable-Current",
-    SubTypeId: 21200
+    SubTypeId: 21200,
+    sub: JSON.stringify({
+      subaccounts: [
+        {
+          name: "PBCC"
+        }
+      ]
+    })
   },
   {
     id: 21240,
@@ -42,7 +71,23 @@ module.exports = [
   {
     id: 21290,
     name: "21290-Other Payables",
-    SubTypeId: 21200
+    SubTypeId: 21200,
+    sub: JSON.stringify({
+      subaccounts: [
+        {
+          name: "A/P-Aerial"
+        },
+        {
+          name: "A/P-CMC"
+        },
+        {
+          name: "A/P-Packaging"
+        },
+        {
+          name: "A/P-Rice"
+        }
+      ]
+    })
   },
   {
     id: 21310,

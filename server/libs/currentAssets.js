@@ -42,7 +42,12 @@ module.exports = [
   {
     id: 11210,
     name: "11210-Loans Receivable-Current",
-    SubTypeId: 11200
+    SubTypeId: 11200,
+    sub: JSON.stringify({
+      subaccounts: [
+        { name: "L/R Lending" }
+      ]
+    })
   },
   {
     id: 11220,
@@ -76,18 +81,67 @@ module.exports = [
     sub: JSON.stringify({
       subaccounts: [
         {
-          name: "DOLE"
+          name: "DOLE Packaging"
         },
         {
-          name: "A/R-Members"
+          name: "A/R-Collectibles from Com(DL)"
+        },
+        {
+          name: "A/R-Collectibles from Common"
+        },
+        {
+          name: "A/R-Collectibles from Mgt. B"
+        },
+        {
+          name: "A/R-Members:Aerial"
+        },
+        {
+          name: "A/R-Members:Buffer Area Rental"
+        },
+        {
+          name: "A/R-Members:Cash Advance"
+        },
+        {
+          name: "A/R-Members:DOLE Loan"
+        },
+        {
+          name: "A/R-Members:Hospital"
+        },
+        {
+          name: "A/R-Members:ITR & Bookkeeping Fee"
+        },
+        {
+          name: "A/R-Members:Light & Power"
+        },
+        {
+          name: "A/R-Members:Materials"
+        },
+        {
+          name: "A/R-Members:OHCP"
+        },
+        {
+          name: "A/R-Members:Paramount Insurance"
+        },
+        {
+          name: "A/R-Members:Spinny Bamboo"
+        },
+        {
+          name: "A/R-Mgt-B Charges(Old Acct.):Cash Advance"
+        },
+        {
+          name: "A/R-Mgt-B Charges(Old Acct.):Housing"
+        },
+        {
+          name: "A/R-Mgt-B Charges(Old Acct.):P.O."
+        },
+        {
+          name: "A/R-Mgt-B Charges(Old Acct.):Savings Loan"
+        },
+        {
+          name: "A/R-Payroll/Honorarium Loan"
         }
       ]
     })
-  },
-  {
-    id: 11260,
-    name: "11260-Accounts Receivables Trade-Past Due",
-    SubTypeId: 11200
   },
   {
     id: 11270,
@@ -172,7 +226,17 @@ module.exports = [
   {
     id: 11380,
     name: "11380-Other Current Receivables",
-    SubTypeId: 11200
+    SubTypeId: 11200,
+    sub: JSON.stringify({
+      subaccounts: [
+        {
+          name: "A/R-Miscellaneous"
+        },
+        {
+          name: "A/R-Collective T-shirt"
+        }
+      ]
+    })
   },
   {
     id: 11410,

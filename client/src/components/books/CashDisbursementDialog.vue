@@ -35,6 +35,19 @@
                 return-object
               ></v-combobox>
             </v-col>
+            <div v-if="sub !== ''">
+              <div v-if="sub.sub">
+                <v-col :hidden="hideSubAccount" cols="12" md="6">
+                <v-combobox
+                  v-model="subSecond"
+                  :items="sub.sub"
+                  item-text="name"
+                  label="Select Sub-Account"
+                  return-object
+                ></v-combobox>
+              </v-col>
+              </div>
+            </div>
           </v-row>
           <v-row>
             <v-col cols="12" md="4">
@@ -68,7 +81,8 @@ export default {
       selected: '',
       amount: '',
       accounts: [],
-      sub: ''
+      sub: '',
+      subSecond: ''
     }
   },
   methods: {

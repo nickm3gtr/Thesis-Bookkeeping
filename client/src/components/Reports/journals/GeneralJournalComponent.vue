@@ -48,7 +48,8 @@
         </v-col>
         <v-col cols="12" md="2">
           <span v-if="!item.sub" class="caption font-weight-medium">{{ item.accountname }}</span>
-          <span v-else class="caption font-weight-medium">{{ item.accountname }}:{{item.sub.name}}</span>
+          <span v-else-if="!item.sub.sub" class="caption font-weight-medium">{{ item.accountname }}:{{item.sub.name}}</span>
+          <span v-else-if="item.sub.sub" class="caption font-weight-medium">{{ item.accountname }}:{{item.sub.name}}:{{item.sub.sub}}</span>
         </v-col>
         <v-col cols="12" md="2">
           <p v-if="item.debit === 0" class="caption font-weight-medium text-right"></p>
