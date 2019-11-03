@@ -63,7 +63,11 @@
                 </thead>
                 <tbody>
                   <tr v-for="item in transactions" :key="item.id">
-                    <td>{{ item.name }}</td>
+                    <td>
+                      <span v-if="!item.sub">{{ item.name }}</span>
+                      <span v-else-if="!item.sub.sub">{{ item.name }}:{{item.sub.name}}</span>
+                      <span v-else-if="item.sub.sub">{{ item.name }}:{{item.sub.name}}:{{item.sub.sub}}</span>
+                    </td>
                     <td>
                       <p v-if="item.debit == 0"></p>
                       <p v-else>{{ currency(item.debit) }}</p>

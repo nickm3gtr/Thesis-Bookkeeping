@@ -88,7 +88,8 @@
                   <tr v-for="(item, index) in transactions" :key="item.id">
                     <td>
                       <span v-if="!item.sub">{{ item.name }}</span>
-                      <span v-else>{{ item.name }}:{{item.sub.name}}</span>
+                      <span v-else-if="!item.sub.sub">{{ item.name }}:{{item.sub.name}}</span>
+                      <span v-else-if="item.sub.sub">{{ item.name }}:{{item.sub.name}}:{{item.sub.sub}}</span>
                     </td>
                     <td>
                       <p v-if="item.debit == 0"></p>

@@ -39,6 +39,19 @@
                   return-object
                 ></v-combobox>
               </v-col>
+              <div v-if="sub !== ''">
+                <div v-if="sub.sub">
+                  <v-col :hidden="hideSubAccount" cols="12" md="6">
+                  <v-combobox
+                    v-model="subSecond"
+                    :items="sub.sub"
+                    item-text="name"
+                    label="Select Sub-Account"
+                    return-object
+                  ></v-combobox>
+                </v-col>
+                </div>
+              </div>
             </v-row>
             <v-row>
               <v-col cols="12" md="4">
@@ -71,7 +84,8 @@ export default {
       loading: false,
       selected: '',
       accounts: [],
-      sub: ''
+      sub: '',
+      subSecond: ''
     }
   },
   methods: {
@@ -83,7 +97,10 @@ export default {
     updateTransaction () {
       this.transaction.account_id = this.selected.id
       this.transaction.name = this.selected.name
-      this.transaction.sub = this.sub
+      this.transaction.sub = {
+        name: this.sub.name,
+        sub: this.subSecond.name
+      }
       this.closeDialog()
     }
   },
@@ -109,8 +126,11 @@ export default {
   async mounted () {
     this.selected = {
       id: this.transaction.account_id,
-      name: this.transaction.name
+      name: this.transaction.name,
+      sub: this.transaction.sub
     }
+    this.sub = this.selected.sub
+    this.subSecond = this.selected.sub.sub
     try {
       const config = {
         headers: {

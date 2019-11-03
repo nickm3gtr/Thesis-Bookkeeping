@@ -130,17 +130,33 @@ router.put("/transactions/transaction/:id", (req, res) => {
       // For loop to iterate each transactionRecord
       let transPromise = []
       for(let i=0; i<transRecord.length; i++) {
-        transPromise.push(db.TransactionRecord.update({
-          AccountId: transRecord[i].account_id,
-          debit: transRecord[i].debit,
-          credit: transRecord[i].credit,
-          sub: transRecord[i].sub
-        }, {
-          where: {
-            id: transRecord[i].id
-          }
-        }))
+        if (!transRecord[i].sub) {
+          transPromise.push(db.TransactionRecord.update({
+            AccountId: transRecord[i].account_id,
+            debit: transRecord[i].debit,
+            credit: transRecord[i].credit,
+            sub: null
+          }, {
+            where: {
+              id: transRecord[i].id
+            }
+          }))
+        } else {
+          transPromise.push(db.TransactionRecord.update({
+            AccountId: transRecord[i].account_id,
+            debit: transRecord[i].debit,
+            credit: transRecord[i].credit,
+            sub: {
+              name: transRecord[i].sub.name
+            }
+          }, {
+            where: {
+              id: transRecord[i].id
+            }
+          }))
+        }
       }
+      console.log(transPromise)
       Promise.all(transPromise)
         .then(() => res.json({ msg: 'updated!' }))
         .catch(err => res.status(400).json({ msg: 'Error updating', err }))
