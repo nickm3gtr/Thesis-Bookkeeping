@@ -8,7 +8,7 @@
       </v-card-title>
       <v-card-text>
         <p v-if="loading === true"></p>
-        <p v-else class="text-center headline font-weight-medium">&#8369;{{formatExpenses}}</p>
+        <p v-else class="text-center headline font-weight-medium">&#8369;{{currency(formatExpenses)}}</p>
       </v-card-text>
     </v-card>
   </div>
@@ -18,6 +18,7 @@
 import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 import moment from 'moment'
+import numeral from 'numeral'
 
 export default {
   name: 'ExpensesThisMonth',
@@ -29,7 +30,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions('errors', ['getError'])
+    ...mapActions('errors', ['getError']),
+    currency (value) {
+      return numeral(value).format('0,0.00')
+    }
   },
   computed: {
     ...mapState(['auth']),
