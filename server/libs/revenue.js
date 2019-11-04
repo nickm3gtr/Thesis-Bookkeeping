@@ -72,6 +72,15 @@ module.exports = [
   {
     id: 40450,
     name: "40450-Miscellaneous Income",
-    SubTypeId: 40400
+    SubTypeId: 40400,
+    sub: JSON.stringify({
+      subaccounts: [
+        { name: "Mark-up-Cash Advance" },
+        { name: "Mark-up-Lending" },
+        { name: "Mark-up-Materials" },
+        { name: "Mark-up-Payroll/Honorarium" },
+        { name: "Mark-up-Rice" }
+      ]
+    })
   }
 ]

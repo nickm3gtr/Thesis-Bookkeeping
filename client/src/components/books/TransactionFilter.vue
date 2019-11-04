@@ -66,10 +66,21 @@
               </v-col>
             </v-row>
             <v-dialog
-              v-model="dialog"
+              persistent
+              v-model="amountDialog"
               width="500"
             >
               <TransactionFilterDialog
+                :transaction="propTransaction"
+                @close-dialog="closeUpdateDialog"
+               />
+            </v-dialog>
+            <v-dialog
+              persistent
+              v-model="accountDialog"
+              width="500"
+            >
+              <TransactionFilterAccount
                 :transaction="propTransaction"
                 @close-dialog="closeUpdateDialog"
                />
@@ -79,9 +90,10 @@
                 <thead>
                   <tr>
                     <th class="text-left">Account</th>
+                    <th v-if="editable" class="text-left"></th>
                     <th class="text-left">Debit</th>
                     <th class="text-left">Credit</th>
-                    <th v-if="editable" class="text-left">Action</th>
+                    <th v-if="editable" class="text-left"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -90,6 +102,19 @@
                       <span v-if="!item.sub">{{ item.name }}</span>
                       <span v-else-if="!item.sub.sub">{{ item.name }}:{{item.sub.name}}</span>
                       <span v-else-if="item.sub.sub">{{ item.name }}:{{item.sub.name}}:{{item.sub.sub}}</span>
+                    </td>
+                    <td v-if="editable">
+                      <v-btn
+                        icon
+                        class="mt-0"
+                        dark
+                        x-small
+                        color="primary"
+                        :disabled="!editable"
+                        @click="openAccountDialog(index)"
+                      >
+                        <v-icon small>edit</v-icon>
+                      </v-btn>
                     </td>
                     <td>
                       <p v-if="item.debit == 0"></p>
@@ -101,6 +126,7 @@
                     </td>
                     <td v-if="editable">
                       <v-btn
+                        icon
                         class="mt-0"
                         dark
                         x-small
@@ -137,15 +163,16 @@ import axios from 'axios'
 import moment from 'moment'
 import { mapActions, mapState } from 'vuex'
 import TransactionFilterDialog from './TransactionFilterDialog'
+import TransactionFilterAccount from './TransactionFilterAccount'
 import numeral from 'numeral'
-
 export default {
   name: 'TransactionFilter',
-  components: { TransactionFilterDialog },
+  components: { TransactionFilterDialog, TransactionFilterAccount },
   data () {
     return {
       menu: false,
-      dialog: false,
+      amountDialog: false,
+      accountDialog: false,
       date: '',
       num: '',
       memo: '',
@@ -175,10 +202,15 @@ export default {
     },
     openUpdateDialog (index) {
       this.propTransaction = this.transactions[index]
-      this.dialog = true
+      this.amountDialog = true
+    },
+    openAccountDialog (index) {
+      this.propTransaction = this.transactions[index]
+      this.accountDialog = true
     },
     closeUpdateDialog () {
-      this.dialog = false
+      this.amountDialog = false
+      this.accountDialog = false
       this.propTransaction = ''
     },
     async transactionUpdated () {
@@ -198,7 +230,6 @@ export default {
           Authorization: localStorage.getItem('token')
         }
       }
-
       try {
         await axios.put(`/api/bookkeeping/transactions/transaction/${this.$route.params.transId}`,
           updateData, config)
@@ -227,16 +258,12 @@ export default {
           transaction.credit = null
           if (!transaction.sub) {
             transaction.sub = null
-          } else {
-            transaction.sub = { name: transaction.sub }
           }
         } else {
           transaction.credit = parseInt(transaction.credit)
           transaction.debit = null
           if (!transaction.sub) {
             transaction.sub = null
-          } else {
-            transaction.sub = { name: transaction.sub }
           }
         }
         return transaction

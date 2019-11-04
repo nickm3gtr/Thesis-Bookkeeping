@@ -12,7 +12,14 @@ module.exports = [
   {
     id: 21210,
     name: "21210-Accounts Payable-Trade",
-    SubTypeId: 21200
+    SubTypeId: 21200,
+    sub: JSON.stringify({
+      subaccounts: [
+        {
+          name: "A/P-Materials"
+        }
+      ]
+    })
   },
   {
     id: 21220,

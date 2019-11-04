@@ -28,7 +28,7 @@ router.get("/transactions/branch/:branchId", auth, (req, res) => {
   db.sequelize.query("select tr.id, bo.name, tr.memo, tr.num, tr.date\n" +
       "from \"Books\" bo inner join \"Transactions\" tr on bo.id=tr.\"BookId\" inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id\n" +
       "where b.\"BranchId\"=:branchId\n" +
-      "order by tr.\"date\" desc, tr.id desc", {
+      "order by tr.id desc, tr.\"date\" desc", {
     model: db.Transaction,
     replacements: { branchId }
   }).then(transactions => res.json(transactions))
@@ -42,7 +42,7 @@ router.get("/transactions/book/:branchId/:bookId", auth, (req, res) => {
   db.sequelize.query("select tr.id, tr.memo, tr.num, tr.date\n" +
   "from \"Transactions\" tr inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id\n" +
   "where b.\"BranchId\"=:branchId and tr.\"BookId\"=:bookId\n" +
-  "order by tr.\"date\" desc, tr.id desc", {
+  "order by tr.id desc, tr.\"date\" desc", {
     model: db.Transaction,
     replacements: { branchId, bookId }
   }).then(transactions => res.json(transactions))
@@ -147,7 +147,7 @@ router.put("/transactions/transaction/:id", (req, res) => {
             debit: transRecord[i].debit,
             credit: transRecord[i].credit,
             sub: {
-              name: transRecord[i].sub.name
+              name: transRecord[i].sub
             }
           }, {
             where: {

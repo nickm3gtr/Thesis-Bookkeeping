@@ -6,7 +6,7 @@ const db = require('../models')
 router.get("/admin-transactions", (req, res) => {
   db.sequelize.query("select tr.id, br.\"branchName\", tr.memo, tr.num, tr.date\n" +
       "from \"Transactions\" tr inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id inner join \"Branches\" br on b.\"BranchId\"=br.id \n" +
-      "order by tr.\"date\" desc, tr.id desc", {
+      "order by tr.id desc, tr.\"date\" desc", {
     model: db.Transaction
   }).then(transactions => res.json(transactions))
     .catch(err => res.status(400).json({ msg: "Can't fetch transactions", err }))
@@ -19,7 +19,7 @@ router.get("/admin-transactions/book/:bookId", (req, res) => {
   db.sequelize.query("select tr.id, br.\"branchName\", tr.memo, tr.num, tr.date\n" +
   "from \"Transactions\" tr inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id inner join \"Branches\" br on b.\"BranchId\"=br.id\n" +
   "where tr.\"BookId\"=:bookId\n" +
-  "order by tr.\"date\" desc, tr.id desc", {
+  "order by tr.id desc, tr.\"date\" desc ", {
     model: db.Transaction,
     replacements: { bookId }
   }).then(transactions => res.json(transactions))
