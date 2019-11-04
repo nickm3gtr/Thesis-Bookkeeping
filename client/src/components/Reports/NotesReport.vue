@@ -137,6 +137,7 @@ import html2pdf from 'html2pdf.js'
 import AssetsNotes from './notes/AssetsNotes'
 import BalanceSummary from './notes/BalanceSummary'
 import IncomeSummary from './notes/IncomeSummary'
+import moment from 'moment'
 
 export default {
   name: 'NotesReport',
@@ -150,8 +151,8 @@ export default {
       loading: false,
       hidden: true,
       years: [],
-      firstYear: { date_part: 2019 },
-      secondYear: { date_part: 2019 },
+      firstYear: { date_part: moment().format('YYYY') },
+      secondYear: { date_part: moment().format('YYYY') },
       items: [],
       profits: [],
       type: ['Summary', 'Note'],

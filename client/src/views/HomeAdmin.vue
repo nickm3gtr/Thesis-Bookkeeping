@@ -74,24 +74,18 @@ export default {
       overlay: false,
       items: [
         {
-          src: require('@/assets/slide1.jpg')
+          src: require('@/assets/Slide-1.jpg')
         },
         {
-          src: require('@/assets/slide2.jpg')
+          src: require('@/assets/Slide-2.jpg')
         },
         {
-          src: require('@/assets/slide3.jpg')
-        },
-        {
-          src: require('@/assets/slide4.jpg')
+          src: require('@/assets/Slide-3.jpg')
         }
       ],
       links: [
         'Home',
         'About Us',
-        'Team',
-        'Services',
-        'Blog',
         'Contact Us'
       ]
     }

@@ -45,7 +45,7 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="1">
-                <v-dialog persistent v-model="dialog" max-width="400px">
+                <v-dialog persistent v-model="dialog" max-width="600px">
                   <template v-slot:activator="{ on: dialog }">
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on: tooltip }">
@@ -127,6 +127,7 @@
                   <td>
                     <span class="font-weight-bold">Total:</span>
                   </td>
+                  <td></td>
                   <td>
                     <span v-if="totalCash === 0"></span>
                     <span v-else>{{ totalCash }}</span>
@@ -184,6 +185,7 @@ export default {
       memo: '',
       headers: [
         { text: 'AccountName', value: 'AccountName' },
+        { text: 'Sub-Account', value: 'sub.name.name' },
         { text: 'Amount', value: 'debit' }
       ],
       items: [],

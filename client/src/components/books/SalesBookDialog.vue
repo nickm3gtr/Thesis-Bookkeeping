@@ -11,7 +11,7 @@
   </v-card>
   <v-card v-else>
     <v-card-title>
-      <span class="title">Enter Account Receivable</span>
+      <span class="title">Enter Accounts Receivable Account</span>
     </v-card-title>
     <v-form>
       <v-card-text>
@@ -20,7 +20,7 @@
             <v-col cols="12" md="6">
               <v-combobox
                 v-model="selected"
-                :items="accounts"
+                :items="filterAccounts"
                 item-text="name"
                 label="Select Account Name"
                 return-object
@@ -146,6 +146,11 @@ export default {
       } else {
         return false
       }
+    },
+    filterAccounts () {
+      return this.accounts.filter(account => {
+        return account.id === 15 || account.id === 16 || account.id === 17 || account.id === 27
+      })
     }
   },
   watch: {
