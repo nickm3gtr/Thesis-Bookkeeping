@@ -9,16 +9,6 @@
         <v-text-field v-model="user.userName" label="Username" name="username" type="text"></v-text-field>
         <v-text-field v-model="user.password" label="Password" name="password" type="password"></v-text-field>
       </v-card-text>
-      <span
-        v-if="!isAdmin"
-        @click="$emit('goto-admin')"
-        class="blue--text
-        link
-        darken-4
-        subtitle-2
-        ml-5 font-weight-light">
-        Click here to sign in as admin
-      </span>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn text @click="$emit('close-dialog')">

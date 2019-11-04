@@ -7,6 +7,8 @@ const { Bookkeeper } = require("../models");
 const db = require("../models");
 const auth = require('../middleware/auth')
 const loginMiddleware = require('../middleware/loginMiddleware')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 // Register Bookkeeper
 router.post("/", auth, (req, res) => {
@@ -18,7 +20,7 @@ router.post("/", auth, (req, res) => {
     account,
     BranchId
   } = req.body;
-  const status = 'active'
+  const status = 'created'
 
   Bookkeeper.findOne({ where: { userName: userName } })
     .then(user => {
@@ -56,7 +58,7 @@ router.post("/login", loginMiddleware, async (req, res) => {
     const user = await Bookkeeper.findOne({
       where: {
         userName,
-        status: 'active'
+        [Op.or]: [{ status: 'active' }, { status: 'created' }]
       },
       include: [
         { model: db.Branch }
@@ -104,7 +106,7 @@ router.get("/", auth, async (req, res) => {
 router.get("/all-bookkeepers", auth, (req, res) => {
   db.sequelize.query("select b.id as id, b.\"userName\" as name, br.id as branchId, br.\"branchName\" as branch\n" +
     "from \"Bookkeepers\" b inner join \"Branches\" br on b.\"BranchId\"=br.id\n" +
-    "where b.status in ('active', 'inactive') \n" +
+    "where b.status in ('active', 'inactive', 'created') \n" +
     "order by b.id", {
     model: db.Bookkeeper
   }).then(bookkeepers => res.json(bookkeepers))
@@ -173,7 +175,8 @@ router.post("/change-password/:id", (req, res) => {
               if (err) throw res.status(400).json({msg: 'Error', err})
               const hashPassword = hash
               db.sequelize.query("update \"Bookkeepers\" \n" +
-              "set \"password\"=:hashPassword \n" +
+              "set \"password\"=:hashPassword, \n" +
+              "\"status\"='active' \n" +
               "where id=:id", {
                 model: db.Bookkeeper,
                 replacements: {id, hashPassword}

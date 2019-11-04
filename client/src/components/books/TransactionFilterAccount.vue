@@ -44,7 +44,8 @@
         </v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="blue darken-1" text @click="updateTransaction">Close</v-btn>
+          <v-btn color="blue darken-1" text @click="closeDialog">Cancel</v-btn>
+          <v-btn color="blue darken-1" text @click="updateTransaction">Save</v-btn>
         </v-card-actions>
       </v-form>
     </v-card>
@@ -81,7 +82,11 @@ export default {
         } else {
           sub = { name: this.sub.name }
         }
+      } else {
+        sub = null
       }
+      this.transaction.account_id = this.selected.id
+      this.transaction.name = this.selected.name
       this.transaction.sub = sub
       this.closeDialog()
     }

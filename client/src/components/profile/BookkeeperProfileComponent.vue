@@ -112,6 +112,7 @@ export default {
   },
   methods: {
     ...mapActions('errors', ['getError']),
+    ...mapActions('auth', ['loadUser']),
     clearDialog () {
       this.currentPassword = ''
       this.newPassword = ''
@@ -136,6 +137,7 @@ export default {
         this.changePasswordMessage = response.data.msg
         this.snackbar = true
         this.clearDialog()
+        this.loadUser()
       } catch (e) {
         this.passwordDialog = false
         this.getError(e.response.data)

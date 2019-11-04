@@ -2,5 +2,6 @@ export default {
   token: localStorage.getItem('token'),
   user: null,
   isAuthenticated: false,
-  isLoading: false
+  isLoading: false,
+  isCreated: null
 }

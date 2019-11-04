@@ -24,7 +24,22 @@
             @goto-admin="gotoAdmin"/>
         </v-dialog>
       </v-toolbar-items>
-      <v-toolbar-items v-else>
+      <v-toolbar-items v-if="isAuth">
+        <v-btn v-if="auth.user.account == 'bookkeeper'"
+          icon
+          dark
+          large
+          @click="clickNotification"
+        >
+          <v-badge left overlap color="error" v-model="badge">
+            <template v-slot:badge>
+              <span>!</span>
+            </template>
+            <v-icon>notifications</v-icon>
+          </v-badge>
+        </v-btn>
+      </v-toolbar-items>
+      <v-toolbar-items v-if="isAuth">
         <v-menu
           :offset-x="true"
           :offset-y="true"
@@ -59,6 +74,24 @@
           </v-list>
         </v-menu>
       </v-toolbar-items>
+      <v-dialog
+        v-model="passwordDialog"
+        width="500"
+      >
+        <v-card>
+          <v-card-title>
+            Change Password
+          </v-card-title>
+          <v-card-text>
+            For security reasons it is required to change password immediately.
+          </v-card-text>
+          <v-card-actions>
+            <div class="flex-grow-1"></div>
+            <v-btn text color="blue darken-1" @click="passwordDialog = false">Close</v-btn>
+            <v-btn text color="blue darken-1" @click="proceedPassword">Proceed</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-app-bar>
     <v-navigation-drawer
       app
@@ -91,7 +124,8 @@ export default {
       drawer: true,
       loginDialog: false,
       registerDialog: false,
-      width: 200
+      width: 200,
+      passwordDialog: false
     }
   },
   computed: {
@@ -104,10 +138,30 @@ export default {
     },
     getError () {
       return this.errors.msg.msg
+    },
+    badge () {
+      // eslint-disable-next-line eqeqeq
+      if (this.auth.user.status == 'created') {
+        return true
+      } else {
+        return false
+      }
     }
   },
   methods: {
     ...mapActions('auth', ['registerUser', 'loginUser', 'loginAdmin', 'logoutUser']),
+    clickNotification () {
+      // eslint-disable-next-line eqeqeq
+      if (this.auth.user.status == 'created') {
+        this.passwordDialog = true
+      } else {
+        this.passwordDialog = false
+      }
+    },
+    proceedPassword () {
+      this.$router.push('/bookkeeper/profile', () => {})
+      this.passwordDialog = false
+    },
     toggleDrawer () {
       this.drawer = !this.drawer
     },
