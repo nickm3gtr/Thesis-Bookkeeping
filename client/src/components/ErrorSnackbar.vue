@@ -34,7 +34,6 @@ export default {
   methods: {
     ...mapActions('errors', ['clearError']),
     close () {
-      this.$emit('close-snackbar')
       this.clearError()
     }
   }

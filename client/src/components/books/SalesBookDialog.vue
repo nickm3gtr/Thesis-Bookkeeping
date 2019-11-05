@@ -11,7 +11,7 @@
   </v-card>
   <v-card v-else>
     <v-card-title>
-      <span class="title">Enter Accounts Receivable Account</span>
+      <span class="title">Enter Accounts Receivable (Debit)</span>
     </v-card-title>
     <v-form>
       <v-card-text>
@@ -36,21 +36,23 @@
               ></v-combobox>
             </v-col>
             <div v-if="sub !== ''">
-              <div v-if="sub.sub">
-                <v-col :hidden="hideSubAccount" cols="12" md="6">
-                <v-combobox
-                  v-model="subSecond"
-                  :items="sub.sub"
-                  item-text="name"
-                  label="Select Sub-Account"
-                  return-object
-                ></v-combobox>
-              </v-col>
+              <div v-if="sub">
+                <div v-if="sub.sub">
+                  <v-col :hidden="hideSubAccount" cols="12" md="6">
+                    <v-combobox
+                      v-model="subSecond"
+                      :items="sub.sub"
+                      item-text="name"
+                      label="Select Sub-Account"
+                      return-object
+                    ></v-combobox>
+                  </v-col>
+                </div>
               </div>
             </div>
           </v-row>
           <v-row>
-            <v-col cols="12" md="12">
+            <v-col cols="12" md="4">
               <v-text-field v-model="$v.amount.$model" label="Amount"></v-text-field>
               <p class="error--text" v-if="!$v.amount.decimal">
                 Please input a number
@@ -132,14 +134,16 @@ export default {
       return this.selected === '' || (this.amount === '')
     },
     subAccount () {
-      if (!this.selected.sub) {
+      if (!this.selected || this.selected === '') {
+        return []
+      } else if (!this.selected.sub) {
         return []
       } else {
         return this.selected.sub.subaccounts
       }
     },
     hideSubAccount () {
-      if (this.selected === '') {
+      if (this.selected === '' || this.selected === null) {
         return true
       } else if (!this.selected.sub) {
         return true

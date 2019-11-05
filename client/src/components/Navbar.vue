@@ -98,7 +98,7 @@
       v-model="drawer">
       <NavDrawer />
     </v-navigation-drawer>
-    <ErrorSnackbar :snackbar="hasError" :text="getError" @close-snackbar="!hasError" />
+    <ErrorSnackbar :snackbar="hasError" :text="getError" />
   </nav>
 </template>
 <script>

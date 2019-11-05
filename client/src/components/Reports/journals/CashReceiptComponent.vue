@@ -29,7 +29,7 @@
         <p class="caption font-weight-medium text-right">Credit(Sales)</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">Credit(A/R)</p>
+        <p class="caption font-weight-medium text-right">Credit(Receivables)</p>
       </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">Credit(Others)</p>

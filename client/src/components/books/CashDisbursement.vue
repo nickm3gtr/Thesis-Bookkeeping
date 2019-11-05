@@ -10,7 +10,7 @@
           </v-card-title>
           <v-card-text>
             <v-row>
-              <v-col cols="12" md="4">
+              <v-col cols="12" md="3">
                 <v-menu
                   ref="menu"
                   v-model="menu"
@@ -32,6 +32,14 @@
                   <v-date-picker v-model="date" no-title @input="menu = false">
                   </v-date-picker>
                 </v-menu>
+              </v-col>
+              <v-col cols="12" md="3">
+                <v-combobox
+                  v-model="selectedBank"
+                  :items="bankItems"
+                  label="Select Cash In Bank SubAccount"
+                  return-object
+                ></v-combobox>
               </v-col>
               <v-col cols="12" md="4">
                 <v-text-field
@@ -178,6 +186,8 @@ export default {
   components: { CashDisbursementDialog, RecordStatus },
   data () {
     return {
+      selectedBank: 'CIB-MetroBank',
+      bankItems: ['CIB-MetroBank', 'CIB-Eastwest Bank'],
       selected: [],
       dialogDelete: false,
       snackbar: false,
@@ -214,7 +224,12 @@ export default {
         const cashItem = {
           AccountId: 3,
           debit: null,
-          credit: this.totalCash
+          credit: this.totalCash,
+          sub: {
+            name: {
+              name: this.selectedBank
+            }
+          }
         }
         const data = [ ...this.items, cashItem ]
         const newTransaction = JSON.stringify({

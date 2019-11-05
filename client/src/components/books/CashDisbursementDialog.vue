@@ -20,7 +20,7 @@
             <v-col cols="12" md="6">
               <v-combobox
                 v-model="selected"
-                :items="accounts"
+                :items="filterAccounts"
                 item-text="name"
                 label="Select Account Name"
                 return-object
@@ -36,16 +36,18 @@
               ></v-combobox>
             </v-col>
             <div v-if="sub !== ''">
-              <div v-if="sub.sub">
-                <v-col :hidden="hideSubAccount" cols="12" md="6">
-                <v-combobox
-                  v-model="subSecond"
-                  :items="sub.sub"
-                  item-text="name"
-                  label="Select Sub-Account"
-                  return-object
-                ></v-combobox>
-              </v-col>
+              <div v-if="sub">
+                <div v-if="sub.sub">
+                  <v-col :hidden="hideSubAccount" cols="12" md="6">
+                    <v-combobox
+                      v-model="subSecond"
+                      :items="sub.sub"
+                      item-text="name"
+                      label="Select Sub-Account"
+                      return-object
+                    ></v-combobox>
+                  </v-col>
+                </div>
               </div>
             </div>
           </v-row>
@@ -132,20 +134,31 @@ export default {
       return this.selected === '' || (this.amount === '')
     },
     subAccount () {
-      if (!this.selected.sub) {
+      if (!this.selected || this.selected === '') {
+        return []
+      } else if (!this.selected.sub) {
         return []
       } else {
         return this.selected.sub.subaccounts
       }
     },
     hideSubAccount () {
-      if (this.selected === '') {
+      if (this.selected === '' || this.selected === null) {
         return true
       } else if (!this.selected.sub) {
         return true
       } else {
         return false
       }
+    },
+    filterAccounts () {
+      return this.accounts.filter(account => {
+        return account.SubTypeId === 71000 || account.SubTypeId === 72000 || account.SubTypeId === 73000 ||
+          account.SubTypeId === 74000 || account.SubTypeId === 51000 || account.SubTypeId === 61000 || account.SubTypeId === 62000 ||
+          account.SubTypeId === 63000 || account.SubTypeId === 64000 || account.SubTypeId === 21200 || account.SubTypeId === 21300 ||
+          account.SubTypeId === 21400 || account.SubTypeId === 22100 || account.SubTypeId === 22400 || account.SubTypeId === 22500 ||
+          account.SubTypeId === 23000
+      })
     }
   },
   watch: {

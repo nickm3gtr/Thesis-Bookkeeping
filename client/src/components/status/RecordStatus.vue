@@ -30,8 +30,8 @@
           <tr v-for="item in items" :key="item.id">
             <td>{{ item.name }}</td>
             <td>
-              <p v-if="!item.sub"></p>
-              <p v-else>{{ item.sub.name }}</p>
+              <span v-if="!item.sub"></span>
+              <span v-else>{{ item.sub.name }}</span>
             </td>
             <td>
               <span v-if="item.debit == 0"></span>

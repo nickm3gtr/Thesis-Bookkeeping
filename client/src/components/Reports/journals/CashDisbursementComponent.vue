@@ -26,15 +26,12 @@
         <p class="caption font-weight-medium text-right">Credit(Cash)</p>
       </v-col>
       <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">Debit(A/P)</p>
-      </v-col>
-      <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">Debit(Salaries)</p>
+        <p class="caption font-weight-medium text-right">Debit(Payables)</p>
       </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">Debit(Expenses)</p>
       </v-col>
-      <v-col cols="12" md="1">
+      <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">Debit(Others)</p>
       </v-col>
     </v-row>
@@ -65,18 +62,12 @@
           </p>
         </v-col>
         <v-col cols="12" md="2">
-          <p v-if="item.tags !== 'salaries'"></p>
-          <p v-else class="caption font-weight-medium text-right">
-            {{ currency(item.debit) }}
-          </p>
-        </v-col>
-        <v-col cols="12" md="2">
           <p v-if="item.tags !== 'expenses'"></p>
           <p v-else class="caption font-weight-medium text-right">
             {{ currency(item.debit) }}
           </p>
         </v-col>
-        <v-col cols="12" md="1">
+        <v-col cols="12" md="2">
           <p v-if="item.tags !== 'others'"></p>
           <p v-else class="caption font-weight-medium text-right">
             {{ currency(item.debit) }}
@@ -105,15 +96,10 @@
       </v-col>
       <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">
-          {{ currency(formatBalance(totalSalaries)) }}
-        </p>
-      </v-col>
-      <v-col cols="12" md="2">
-        <p class="caption font-weight-medium text-right">
           {{ currency(formatBalance(totalExpenses)) }}
         </p>
       </v-col>
-      <v-col cols="12" md="1">
+      <v-col cols="12" md="2">
         <p class="caption font-weight-medium text-right">
           {{ currency(formatBalance(totalOthers)) }}
         </p>
@@ -144,10 +130,8 @@ export default {
         return item.credit === null || item.credit === 0
       })
       const tags = debits.map(debit => {
-        if (debit.account_id >= 21210 && debit.account_id <= 21220) {
+        if (debit.account_id >= 21200 && debit.account_id <= 21220) {
           debit.tags = 'a/p'
-        } else if (debit.account_id === 61210 || debit.account_id === 62210 || debit.account_id === 72210 || debit.account_id === 73210) {
-          debit.tags = 'salaries'
         } else if (debit.account_id >= 70000 && debit.account_id < 80000) {
           debit.tags = 'expenses'
         } else {

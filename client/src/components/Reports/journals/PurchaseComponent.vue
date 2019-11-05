@@ -132,9 +132,9 @@ export default {
         return item.credit === null || item.credit === 0
       })
       const tags = debits.map(debit => {
-        if (debit.account_id >= 11510 && debit.account_id <= 11590) {
+        if (debit.account_id >= 11500 && debit.account_id <= 11590) {
           debit.tags = 'inventory'
-        } else if (debit.account_id === 73370) {
+        } else if (debit.id === 250) {
           debit.tags = 'office'
         } else {
           debit.tags = 'others'

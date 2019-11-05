@@ -33,6 +33,15 @@
                   </v-date-picker>
                 </v-menu>
               </v-col>
+              <v-col cols="12" md="4">
+                <v-combobox
+                  v-model="selectedAp"
+                  :items="apItems"
+                  item-text="name"
+                  label="Select Account Payable"
+                  return-object
+                ></v-combobox>
+              </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="9">
@@ -172,6 +181,11 @@ export default {
   components: { PurchaseBookDialog, RecordStatus },
   data () {
     return {
+      selectedAp: { id: 104, name: 'Accounts Payable-Trade' },
+      apItems: [
+        { id: 104, name: 'Accounts Payable-Trade' },
+        { id: 105, name: 'Accounts Payable-Non Trade' }
+      ],
       selected: [],
       dialogDelete: false,
       snackbar: false,
@@ -205,7 +219,7 @@ export default {
       }
       try {
         const cashItem = {
-          AccountId: 105,
+          AccountId: this.selectedAp.id,
           debit: null,
           credit: this.totalCash
         }

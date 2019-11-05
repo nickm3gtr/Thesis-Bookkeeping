@@ -12,7 +12,13 @@ module.exports = [
   {
     id: 11130,
     name: "11130-Cash in Bank",
-    SubTypeId: 11100
+    SubTypeId: 11100,
+    sub: JSON.stringify({
+      subaccounts: [
+        { name: "CIB-MetroBank" },
+        { name: "CIB-Eastwest Bank" }
+      ]
+    })
   },
   {
     id: 11140,
