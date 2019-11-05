@@ -62,11 +62,6 @@
               <v-list-item-title class="subtitle-2 font-weight-light">Profile</v-list-item-title>
             </v-list-item>
             <v-list-item
-              v-if="auth.user.account == 'admin'"
-            >
-              <v-list-item-title class="subtitle-2 font-weight-light">Profile</v-list-item-title>
-            </v-list-item>
-            <v-list-item
               @click="logout"
             >
               <v-list-item-title class="subtitle-2 font-weight-light">Logout</v-list-item-title>

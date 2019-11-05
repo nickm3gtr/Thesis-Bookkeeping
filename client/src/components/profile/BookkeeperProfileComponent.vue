@@ -5,7 +5,7 @@
         <v-card outlined class="my-6">
           <v-card-title>
             <v-col cols="12" md="12">
-              <span class="title font-weight-light">Profile</span>
+              <span class="title font-weight-light">Bookkeeper Profile</span>
             </v-col>
           </v-card-title>
           <v-card-text>
@@ -48,14 +48,6 @@
                 </v-card>
               </v-dialog>
             </div>
-            <v-row>
-              <v-col cols="12" md="9"></v-col>
-              <v-col cols="12" md="3">
-                <v-btn small text color="primary">
-                  Edit Account
-                </v-btn>
-              </v-col>
-            </v-row>
             <v-row>
               <v-col cols="12" md="9">
                 <p>ID: {{bookkeeper.id}}</p>

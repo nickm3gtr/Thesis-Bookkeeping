@@ -130,7 +130,7 @@
                   </v-col>
                   <v-col cols="12" md="3"></v-col>
                   <v-col cols="12" md="3">
-                    <p class="text-right right x-small font-weight-bold underlined"><span>&#8369;{{ grossProfit }}</span></p>
+                    <p class="text-right right x-small font-weight-bold underlined"><span>&#8369;{{ currency(grossProfit) }}</span></p>
                   </v-col>
                 </v-row>
                 <v-row class="ml-4 mt-4">
@@ -149,8 +149,8 @@
                   <v-col cols="12" md="3"></v-col>
                   <v-col cols="12" md="3">
                     <p v-if="netProfit < 0"
-                      class="text-right right x-small font-weight-bold red--text underlined"><span>&#8369;{{ formatBalance(netProfit) }}</span></p>
-                    <p v-else class="text-right right x-small font-weight-bold blue--text underlined"><span>&#8369;{{ formatBalance(netProfit) }}</span></p>
+                      class="text-right right x-small font-weight-bold red--text underlined"><span>&#8369;{{ currency(formatBalance(netProfit)) }}</span></p>
+                    <p v-else class="text-right right x-small font-weight-bold blue--text underlined"><span>&#8369;{{ currency(formatBalance(netProfit)) }}</span></p>
                   </v-col>
                 </v-row>
               </v-flex>
@@ -169,6 +169,7 @@ import html2pdf from 'html2pdf.js'
 import axios from 'axios'
 import ExpenseComponent from './incomeStatement/ExpenseComponent'
 import IncomeComponent from './incomeStatement/IncomeComponent'
+import numeral from 'numeral'
 
 export default {
   name: 'AdminIncomeStatementReport',
@@ -191,6 +192,9 @@ export default {
   },
   methods: {
     ...mapActions('errors', ['getError']),
+    currency (value) {
+      return numeral(value).format('0,0.00')
+    },
     formatBalance (value) {
       const num = Math.abs(value)
       return parseFloat(Math.round(num * 100) / 100).toFixed(2)

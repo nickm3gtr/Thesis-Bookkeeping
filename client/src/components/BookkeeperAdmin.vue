@@ -74,7 +74,7 @@
     </v-layout>
     <div class="text-center">
       <v-snackbar v-model="snackbar" bottom="bottom" color="green" :timeout="timeout">
-        {{ msg }}
+        Saved!
         <v-btn color="white" text @click="closeSnackBar">Close</v-btn>
       </v-snackbar>
     </div>
