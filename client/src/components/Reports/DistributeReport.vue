@@ -260,10 +260,16 @@ export default {
       return parseFloat(sum).toFixed(2)
     },
     async generate () {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
       try {
         this.loading = true
-        const check = await axios.get(`/api/reports/check-distribute/${this.auth.user.BranchId}/${this.selectYear.date_part}`)
-        const response = await axios.get(`/api/reports/distribute/${this.auth.user.BranchId}/${this.selectYear.date_part}`)
+        const check = await axios.get(`/api/reports/check-distribute/${this.auth.user.BranchId}/${this.selectYear.date_part}`, config)
+        const response = await axios.get(`/api/reports/distribute/${this.auth.user.BranchId}/${this.selectYear.date_part}`, config)
         this.check = check.data
         this.items = response.data
         this.loading = false
@@ -387,8 +393,14 @@ export default {
     }
   },
   async mounted () {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token')
+      }
+    }
     try {
-      const response = await axios.get('/api/transactions/admin-years')
+      const response = await axios.get('/api/transactions/admin-years', config)
       this.years = response.data
     } catch (e) {
       this.getError(e.response.data)

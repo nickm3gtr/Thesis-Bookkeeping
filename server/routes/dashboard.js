@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const db = require('../models')
+const auth = require('../middleware/auth')
 
 // Get transactions recorded by branch
-router.get("/transactions-recorded/:branchId", (req, res) => {
+router.get("/transactions-recorded/:branchId", auth, (req, res) => {
   const { branchId } = req.params
   db.sequelize.query("select count(t.id) \n" +
     "from \"Transactions\" t inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
@@ -15,7 +16,7 @@ router.get("/transactions-recorded/:branchId", (req, res) => {
 })
 
 // Get sales this month
-router.get("/sales/:branchId/:month", (req, res) => {
+router.get("/sales/:branchId/:month", auth, (req, res) => {
   const { branchId, month } = req.params
   db.sequelize.query("select extract(month from t.date) as trans_date, sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)) as balance \n" +
   "from \"Bookkeepers\" b inner join \"Transactions\" t on b.id=t.\"BookkeeperId\" inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" \n" +
@@ -32,7 +33,7 @@ router.get("/sales/:branchId/:month", (req, res) => {
 })
 
 //Get expenses this month
-router.get("/expenses/:branchId/:month", (req, res) => {
+router.get("/expenses/:branchId/:month", auth, (req, res) => {
   const { branchId, month } = req.params
   db.sequelize.query("select extract(month from t.date) as trans_date, sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)) as balance \n" +
   "from \"Bookkeepers\" b inner join \"Transactions\" t on b.id=t.\"BookkeeperId\" inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" \n" +
@@ -49,7 +50,7 @@ router.get("/expenses/:branchId/:month", (req, res) => {
 })
 
 // Get transactions recorded by all branches
-router.get("/admin/transactions-recorded", (req, res) => {
+router.get("/admin/transactions-recorded", auth, (req, res) => {
   db.sequelize.query("select count(t.id) \n" +
     "from \"Transactions\" t inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id ", {
         model: db.Transaction
@@ -58,7 +59,7 @@ router.get("/admin/transactions-recorded", (req, res) => {
 })
 
 // Get sales this month all branches
-router.get("/admin/sales/:month", (req, res) => {
+router.get("/admin/sales/:month", auth, (req, res) => {
   const {month } = req.params
   db.sequelize.query("select extract(month from t.date) as trans_date, sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)) as balance \n" +
   "from \"Bookkeepers\" b inner join \"Transactions\" t on b.id=t.\"BookkeeperId\" inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" \n" +
@@ -75,7 +76,7 @@ router.get("/admin/sales/:month", (req, res) => {
 })
 
 //Get expenses this month all branches
-router.get("/admin/expenses/:month", (req, res) => {
+router.get("/admin/expenses/:month", auth, (req, res) => {
   const { month } = req.params
   db.sequelize.query("select extract(month from t.date) as trans_date, sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)) as balance \n" +
   "from \"Bookkeepers\" b inner join \"Transactions\" t on b.id=t.\"BookkeeperId\" inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" \n" +
@@ -92,7 +93,7 @@ router.get("/admin/expenses/:month", (req, res) => {
 })
 
 // Get all sales grouped by branches
-router.get("/admin/sales/by-branch/:month", (req, res) => {
+router.get("/admin/sales/by-branch/:month", auth, (req, res) => {
   const { month } = req.params
   db.sequelize.query("select extract(month from t.date) as trans_date, br.\"branchName\", sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)) as balance \n" +
   "from \"Branches\" as br inner join \"Bookkeepers\" b on br.id=b.\"BranchId\" inner join \"Transactions\" t on b.id=t.\"BookkeeperId\" inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" \n" +

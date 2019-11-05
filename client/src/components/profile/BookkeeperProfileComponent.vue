@@ -148,8 +148,14 @@ export default {
     ...mapState(['auth'])
   },
   async mounted () {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token')
+      }
+    }
     try {
-      const response = await axios.get(`/api/bookkeepers/profile/${this.auth.user.id}`)
+      const response = await axios.get(`/api/bookkeepers/profile/${this.auth.user.id}`, config)
       this.bookkeeper = response.data[0]
     } catch (e) {
       this.getError(e.response.data)

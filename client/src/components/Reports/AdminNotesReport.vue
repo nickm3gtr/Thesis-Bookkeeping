@@ -170,12 +170,18 @@ export default {
   methods: {
     ...mapActions('errors', ['getError']),
     async generate () {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
       try {
         this.loading = true
-        const checkFirst = await axios.get(`/api/reports/check-distribute/${this.selectedBranch.id}/${this.smallYear}`)
-        const checkSecond = await axios.get(`/api/reports/check-distribute/${this.selectedBranch.id}/${this.bigYear}`)
-        const response = await axios.get(`/api/reports/notes/${this.selectedBranch.id}/${this.firstYear.date_part}/${this.secondYear.date_part}`)
-        const profit = await axios.get(`/api/reports/summary/net-profit/${this.selectedBranch.id}/${this.firstYear.date_part}/${this.secondYear.date_part}`)
+        const checkFirst = await axios.get(`/api/reports/check-distribute/${this.selectedBranch.id}/${this.smallYear}`, config)
+        const checkSecond = await axios.get(`/api/reports/check-distribute/${this.selectedBranch.id}/${this.bigYear}`, config)
+        const response = await axios.get(`/api/reports/notes/${this.selectedBranch.id}/${this.firstYear.date_part}/${this.secondYear.date_part}`, config)
+        const profit = await axios.get(`/api/reports/summary/net-profit/${this.selectedBranch.id}/${this.firstYear.date_part}/${this.secondYear.date_part}`, config)
         this.checkFirst = checkFirst.data
         this.checkSecond = checkSecond.data
         this.items = response.data
@@ -256,7 +262,7 @@ export default {
       }
     }
     try {
-      const response = await axios.get('/api/transactions/admin-years')
+      const response = await axios.get('/api/transactions/admin-years', config)
       const branches = await axios.get('/api/admin/branches', config)
       this.years = response.data
       this.branches = [{ id: 0, branchName: 'DARBMUPCO-Common' }, ...branches.data]

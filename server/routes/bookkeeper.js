@@ -138,7 +138,7 @@ router.put("/:id", (req, res) => {
 
 
 // Get bookkeeper details -- BOOKKEEPER PROFILE
-router.get("/profile/:id", (req, res) => {
+router.get("/profile/:id", auth, (req, res) => {
   const { id } = req.params
   db.sequelize.query("select b.id, b.\"userName\", b.\"firstName\", b.\"lastName\", br.\"branchName\" \n" +
   "from \"Bookkeepers\" b inner join \"Branches\" br on b.\"BranchId\"=br.id \n" +
@@ -151,7 +151,7 @@ router.get("/profile/:id", (req, res) => {
 })
 
 // Bookkeeper Update PASSWORD
-router.post("/change-password/:id", (req, res) => {
+router.post("/change-password/:id", auth, (req, res) => {
   const { id } = req.params
   // eslint-disable-next-line no-unused-vars
   const { currentPassword, newPassword, retypePassword } = req.body

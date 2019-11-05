@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
+const auth = require('../middleware/auth')
 
 // Get sales by month
-router.get("/sales/:id/:year", (req, res) => {
+router.get("/sales/:id/:year", auth, (req, res) => {
   const { id, year } = req.params
 
   db.sequelize.query("with TransactionBalance(january, february, march, april, may, june, july, august, september, october, november, december) as\n" +
@@ -62,7 +63,7 @@ router.get("/sales/:id/:year", (req, res) => {
 })
 
 // Get expenses by month
-router.get("/expenses/:id/:year", (req, res) => {
+router.get("/expenses/:id/:year", auth, (req, res) => {
   const { id, year } = req.params
 
   db.sequelize.query("with TransactionBalance(january, february, march, april, may, june, july, august, september, october, november, december) as\n" +
@@ -121,7 +122,7 @@ router.get("/expenses/:id/:year", (req, res) => {
 })
 
 // Get admin overall sales by month
-router.get("/admin/sales/:year", (req, res) => {
+router.get("/admin/sales/:year", auth, (req, res) => {
   const { year } = req.params
 
   db.sequelize.query("with TransactionBalance(january, february, march, april, may, june, july, august, september, october, november, december) as\n" +
@@ -180,7 +181,7 @@ router.get("/admin/sales/:year", (req, res) => {
 })
 
 // Get admin overall expenses by month
-router.get("/admin/expenses/:year", (req, res) => {
+router.get("/admin/expenses/:year", auth, (req, res) => {
   const { year } = req.params
 
   db.sequelize.query("with TransactionBalance(january, february, march, april, may, june, july, august, september, october, november, december) as\n" +

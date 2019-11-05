@@ -122,9 +122,16 @@ export default {
     },
     async deleteItem () {
       const index = this.transactions.indexOf(this.itemToDelete)
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
       try {
         await axios.delete(
-          `/api/bookkeeping/transactions/${this.itemToDelete.id}`
+          `/api/bookkeeping/transactions/${this.itemToDelete.id}`,
+          config
         )
         this.transactions.splice(index, 1)
         this.dialog = false

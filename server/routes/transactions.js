@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const db = require('../models')
+const auth = require('../middleware/auth')
 
 // Fetch all transaction records from admin
-router.get("/admin-transactions", (req, res) => {
+router.get("/admin-transactions", auth, (req, res) => {
   db.sequelize.query("select tr.id, br.\"branchName\", tr.memo, tr.num, tr.date\n" +
       "from \"Transactions\" tr inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id inner join \"Branches\" br on b.\"BranchId\"=br.id \n" +
       "order by tr.id desc, tr.\"date\" desc", {
@@ -13,7 +14,7 @@ router.get("/admin-transactions", (req, res) => {
 })
 
 // Fetch transaction records by bookId
-router.get("/admin-transactions/book/:bookId", (req, res) => {
+router.get("/admin-transactions/book/:bookId", auth, (req, res) => {
   const { bookId } = req.params
 
   db.sequelize.query("select tr.id, br.\"branchName\", tr.memo, tr.num, tr.date\n" +
@@ -27,7 +28,7 @@ router.get("/admin-transactions/book/:bookId", (req, res) => {
 })
 
 // Fetch years that occurs in a transaction "ADMIN"
-router.get("/admin-years", (req, res) => {
+router.get("/admin-years", auth, (req, res) => {
   db.sequelize.query("select extract(year from t.\"date\") \n" +
   "from \"Transactions\" t \n" +
   "group by date_part", {

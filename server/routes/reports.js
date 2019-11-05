@@ -115,7 +115,7 @@ router.get("/trial-balance/:id/:start/:end", auth, (req, res) => {
 });
 
 // Get Income Statement report
-router.get("/income-statement/:id/:start/:end", (req, res) => {
+router.get("/income-statement/:id/:start/:end", auth, (req, res) => {
   const { id, start, end } = req.params
 
   if (id == 0) {
@@ -149,7 +149,7 @@ router.get("/income-statement/:id/:start/:end", (req, res) => {
 })
 
 //Get Balance Sheet report
-router.get("/balance-sheet/:id/:date", (req, res) => {
+router.get("/balance-sheet/:id/:date", auth, (req, res) => {
   const { id, date } = req.params
 
   if (id == 0) {
@@ -182,7 +182,7 @@ router.get("/balance-sheet/:id/:date", (req, res) => {
 })
 
 // Get Net Profit/Loss for balance sheet
-router.get("/net-profit/:id/:year/:date", (req, res) => {
+router.get("/net-profit/:id/:year/:date", auth, (req, res) => {
   const { id, date, year } = req.params
   let startDate = `${year}-1-1`
   if (id == 0) {
@@ -218,7 +218,7 @@ router.get("/net-profit/:id/:year/:date", (req, res) => {
   }
 })
 
-router.get('/notes/:id/:first/:second', (req, res) => {
+router.get('/notes/:id/:first/:second', auth, (req, res) => {
   const { id, first, second } = req.params
   let yearOneStart = 0
   let yearOneEnd = 0
@@ -318,7 +318,7 @@ router.get('/notes/:id/:first/:second', (req, res) => {
 })
 
 // Get net profit for BALANCE SHEET summary REPORT
-router.get('/summary/net-profit/:id/:first/:second', (req, res) => {
+router.get('/summary/net-profit/:id/:first/:second', auth, (req, res) => {
   const { id, first, second } = req.params
   let yearOneStart = 0
   let yearOneEnd = 0
@@ -383,7 +383,7 @@ router.get('/summary/net-profit/:id/:first/:second', (req, res) => {
   
 })
 
-router.get('/distribute/:id/:year', (req, res) => {
+router.get('/distribute/:id/:year', auth, (req, res) => {
   const { id, year } = req.params
   let start = `${year}-1-1`
   let end = `${year}-12-31`
@@ -404,7 +404,7 @@ router.get('/distribute/:id/:year', (req, res) => {
     .catch(err => res.status(400).json({ msg: err }))
 })
 
-router.get('/check-distribute/:id/:year', (req, res) => {
+router.get('/check-distribute/:id/:year', auth, (req, res) => {
   const { id, year } = req.params
   if (id == 0) {
     db.sequelize.query("select t.id as id, count(tr.\"AccountId\") as count \n" +

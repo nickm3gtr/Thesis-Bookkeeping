@@ -96,8 +96,8 @@ export default {
     try {
       this.loading = true
       const response = await axios.get('/api/charts', config)
-      const types = await axios.get('/api/accounts/types')
-      const subType = await axios.get('/api/accounts/subtypes')
+      const types = await axios.get('/api/accounts/types', config)
+      const subType = await axios.get('/api/accounts/subtypes', config)
       this.accounts = response.data
       this.types = types.data
       this.subType = subType.data

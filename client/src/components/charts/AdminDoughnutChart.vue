@@ -38,8 +38,14 @@ export default {
     }
   },
   async mounted () {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token')
+      }
+    }
     try {
-      const response = await axios.get(`/api/dashboard/admin/sales/by-branch/${this.formatDate}`)
+      const response = await axios.get(`/api/dashboard/admin/sales/by-branch/${this.formatDate}`, config)
       this.sales = response.data
     } catch (e) {
       this.getError(e.response.data)

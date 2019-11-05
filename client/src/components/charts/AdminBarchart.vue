@@ -24,8 +24,14 @@ export default {
     ...mapState(['auth'])
   },
   async mounted () {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token')
+      }
+    }
     try {
-      const response = await axios.get(`/api/graphs/admin/sales/${this.year}`)
+      const response = await axios.get(`/api/graphs/admin/sales/${this.year}`, config)
       this.sales = response.data
     } catch (e) {
     }

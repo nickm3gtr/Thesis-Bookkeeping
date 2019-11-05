@@ -218,7 +218,7 @@ export default {
     }
     try {
       this.loading = true
-      const response = await axios.get(`/api/bookkeeping/transaction-records/trans_id/${this.$route.params.transId}`)
+      const response = await axios.get(`/api/bookkeeping/transaction-records/trans_id/${this.$route.params.transId}`, config)
       const trans = await axios.get(
         `/api/bookkeeping/transactions/trans_id/${this.$route.params.transId}`,
         config

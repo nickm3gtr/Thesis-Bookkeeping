@@ -218,9 +218,15 @@ export default {
     },
     async generate () {
       this.loading = true
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
       try {
         const response = await axios.get(
-          `/api/reports/income-statement/${this.auth.user.BranchId}/${this.fromDate}/${this.toDate}`
+          `/api/reports/income-statement/${this.auth.user.BranchId}/${this.fromDate}/${this.toDate}`, config
         )
         this.items = response.data
         this.loading = false

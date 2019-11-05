@@ -160,12 +160,18 @@ export default {
   methods: {
     ...mapActions('errors', ['getError']),
     async generate () {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
       try {
         this.loading = true
-        const checkFirst = await axios.get(`/api/reports/check-distribute/${this.auth.user.BranchId}/${this.smallYear}`)
-        const checkSecond = await axios.get(`/api/reports/check-distribute/${this.auth.user.BranchId}/${this.bigYear}`)
-        const response = await axios.get(`/api/reports/notes/${this.auth.user.BranchId}/${this.firstYear.date_part}/${this.secondYear.date_part}`)
-        const profit = await axios.get(`/api/reports/summary/net-profit/${this.auth.user.BranchId}/${this.firstYear.date_part}/${this.secondYear.date_part}`)
+        const checkFirst = await axios.get(`/api/reports/check-distribute/${this.auth.user.BranchId}/${this.smallYear}`, config)
+        const checkSecond = await axios.get(`/api/reports/check-distribute/${this.auth.user.BranchId}/${this.bigYear}`, config)
+        const response = await axios.get(`/api/reports/notes/${this.auth.user.BranchId}/${this.firstYear.date_part}/${this.secondYear.date_part}`, config)
+        const profit = await axios.get(`/api/reports/summary/net-profit/${this.auth.user.BranchId}/${this.firstYear.date_part}/${this.secondYear.date_part}`, config)
         this.checkFirst = checkFirst.data
         this.checkSecond = checkSecond.data
         this.items = response.data
@@ -239,14 +245,14 @@ export default {
     }
   },
   async mounted () {
-    // const config = {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: localStorage.getItem('token')
-    //   }
-    // }
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token')
+      }
+    }
     try {
-      const response = await axios.get('/api/transactions/admin-years')
+      const response = await axios.get('/api/transactions/admin-years', config)
       this.years = response.data
     } catch (e) {
       this.getError(e.response.data)

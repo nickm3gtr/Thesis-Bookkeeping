@@ -5,7 +5,7 @@ const router = express.Router()
 const db = require('../models')
 const auth = require('../middleware/auth')
 
-router.post("/general-journal", (req, res) => {
+router.post("/general-journal", auth, (req, res) => {
   let { BookkeeperId, BookId, num, memo, date, data } = req.body
   const status = 'created'
   db.Transaction.create({
@@ -50,7 +50,7 @@ router.get("/transactions/book/:branchId/:bookId", auth, (req, res) => {
 })
 
 // Fetch transaction by TransId
-router.get("/transactions/trans_id/:transId", (req, res) => {
+router.get("/transactions/trans_id/:transId", auth, (req, res) => {
   const transId = req.params.transId
 
   db.sequelize.query("select t.date as date, t.num as num, t.memo as memo, t.status as status, t.\"createdAt\", t.\"updatedAt\", b.\"userName\" as userName \n" +
@@ -63,7 +63,7 @@ router.get("/transactions/trans_id/:transId", (req, res) => {
 })
 
 // Fetch transaction record by TransId
-router.get("/transaction-records/trans_id/:transId", (req, res) => {
+router.get("/transaction-records/trans_id/:transId", auth, (req, res) => {
   const transId = req.params.transId
 
   db.sequelize.query("select tr.id, tr.\"TransId\", tr.\"AccountId\" as account_id, a.name as name, tr.sub->'name' as sub, coalesce(tr.debit, 0) as debit, coalesce(tr.credit, 0) as credit\n" +
@@ -77,7 +77,7 @@ router.get("/transaction-records/trans_id/:transId", (req, res) => {
 })
 
 // Delete transactions by TransId
-router.delete("/transactions/:transId", (req, res) => {
+router.delete("/transactions/:transId", auth, (req, res) => {
   const {transId} = req.params
 
   db.sequelize.query("delete from \"TransactionRecords\" where \"TransId\" = :transId", {
@@ -94,7 +94,7 @@ router.delete("/transactions/:transId", (req, res) => {
 })
 
 // Fetch latest transaction by Bookkeeper
-router.get("/transactions/latest/:id", (req, res) => {
+router.get("/transactions/latest/:id", auth, (req, res) => {
   const { id } = req.params
 
   db.sequelize.query("select tr.id\n" +
@@ -109,7 +109,7 @@ router.get("/transactions/latest/:id", (req, res) => {
 })
 
 // Update transactions with transactions table
-router.put("/transactions/transaction/:id", (req, res) => {
+router.put("/transactions/transaction/:id", auth, (req, res) => {
   const transId = req.params.id
   const status = 'updated'
   const { transaction, transRecord } = req.body

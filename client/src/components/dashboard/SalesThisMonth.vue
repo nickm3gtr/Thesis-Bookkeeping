@@ -45,9 +45,15 @@ export default {
     }
   },
   async mounted () {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token')
+      }
+    }
     try {
       this.loading = true
-      const response = await axios.get(`/api/dashboard/sales/${this.auth.user.BranchId}/${this.formatDate}`)
+      const response = await axios.get(`/api/dashboard/sales/${this.auth.user.BranchId}/${this.formatDate}`, config)
       if (response.data.length < 1) {
         this.sales = 0
       } else {

@@ -44,7 +44,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.get("/branches", (req, res) => {
+router.get("/branches", auth, (req, res) => {
   db.sequelize.query("select * from \"Branches\"", {
     model: db.Branch,
   })

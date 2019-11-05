@@ -257,12 +257,18 @@ export default {
     async generate () {
       this.loading = true
       const year = moment(this.date).format('YYYY')
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
       try {
         const response = await axios.get(
-          `/api/reports/balance-sheet/${this.selectedBranch.id}/${this.date}`
+          `/api/reports/balance-sheet/${this.selectedBranch.id}/${this.date}`, config
         )
         const profit = await axios.get(
-          `/api/reports/net-profit/${this.selectedBranch.id}/${year}/${this.date}`
+          `/api/reports/net-profit/${this.selectedBranch.id}/${year}/${this.date}`, config
         )
         this.items = response.data
         this.profits = profit.data

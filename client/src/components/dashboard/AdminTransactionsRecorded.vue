@@ -33,9 +33,15 @@ export default {
     ...mapState(['auth'])
   },
   async mounted () {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token')
+      }
+    }
     try {
       this.loading = true
-      const response = await axios.get('/api/dashboard/admin/transactions-recorded')
+      const response = await axios.get('/api/dashboard/admin/transactions-recorded', config)
       this.count = response.data[0].count
       this.loading = false
     } catch (e) {
