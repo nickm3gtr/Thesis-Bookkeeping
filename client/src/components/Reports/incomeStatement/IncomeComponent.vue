@@ -1,29 +1,29 @@
 <template>
   <div class="mx-12">
     <div v-for="(subType, index) in subTypes" :key="index">
-      <span>{{subType}}</span>
+      <span class="x-small">{{subType}}</span>
       <div v-for="item in accounts" :key="item.account_id">
         <v-row class="ml-10">
           <v-col cols="12" md="5" v-if="item.subtype === subType">
-            <p v-if="!item.sub">{{item.account}}</p>
-            <p v-else-if="!item.sub.sub">{{item.account}}:{{item.sub.name}}</p>
-            <p v-else-if="item.sub.sub">{{item.account}}:{{item.sub.name}}:{{item.sub.sub}}</p>
+            <p v-if="!item.sub" class="x-small">{{item.account}}</p>
+            <p v-else-if="!item.sub.sub" class="x-small">{{item.account}}:{{item.sub.name}}</p>
+            <p v-else-if="item.sub.sub" class="x-small">{{item.account}}:{{item.sub.name}}:{{item.sub.sub}}</p>
           </v-col>
-          <v-col cols="12" md="3" v-if="item.subtype === subType"><p class="text-right">{{currency(formatBalance(item.balance))}}</p></v-col>
+          <v-col cols="12" md="3" v-if="item.subtype === subType"><p class="text-right right x-small">{{currency(formatBalance(item.balance))}}</p></v-col>
         </v-row>
       </div>
       <v-row class="ml-10">
-        <v-col cols="12" md="5">Total({{subType}})</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(sum(subType))}}</p></v-col>
+        <v-col cols="12" md="5" class="x-small">Total({{subType}})</v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sum(subType))}}</p></v-col>
       </v-row>
       <hr />
     </div>
     <v-row>
       <v-col cols="12" md="7">
-        <span>{{ msg }}</span>
+        <span class="x-small">{{ msg }}</span>
       </v-col>
       <v-col cols="12" md="3">
-        <p class="text-right"><span class="type-total">{{ currency(formatBalance(total)) }}</span></p>
+        <p class="text-right right x-small"><span class="type-total">{{ currency(formatBalance(total)) }}</span></p>
       </v-col>
     </v-row>
   </div>
@@ -70,8 +70,24 @@ export default {
 </script>
 
 <style scoped>
-
- .font-weight-medium {
+#content {
+    color: black;
+    font-family: "Roboto", sans-serif;
+  }
+ .underlined {
+   text-decoration-line: underline;
+   text-decoration-style: double;
+ }
+ .text-center {
+   text-align: center !important;
+ }
+ .right {
+   text-align: right !important;
+ }
+ .small {
+   font-size: small;
+ }
+ .x-small {
    font-size: 12px;
    color: black;
  }

@@ -99,15 +99,10 @@
                 </div>
               </v-flex>
               <hr>
-              <div class="mx-12" v-if="selectType === 'Note'">
-                <v-row class="ml-10">
-                <v-col cols="12" md="5"></v-col>
-                <v-col cols="12" md="3"><p class="text-right">{{bigYear}}</p></v-col>
-                <v-col cols="12" md="3"><p class="text-right">{{smallYear}}</p></v-col>
-              </v-row>
-              </div>
               <div v-if="selectType === 'Note'">
                 <AssetsNotes
+                  :bigYear="bigYear"
+                  :smallYear="smallYear"
                   :accounts="formatItems"
               />
               </div>
@@ -274,6 +269,24 @@ export default {
 
 <style scoped>
 #content {
-  color: black;
-}
+    color: black;
+    font-family: "Roboto", sans-serif;
+  }
+ .underlined {
+   text-decoration-line: underline;
+   text-decoration-style: double;
+ }
+ .text-center {
+   text-align: center !important;
+ }
+ .small {
+   font-size: small;
+ }
+ .x-small {
+   font-size: 12px;
+   color: black;
+ }
+ .right {
+   text-align: right !important;
+ }
 </style>

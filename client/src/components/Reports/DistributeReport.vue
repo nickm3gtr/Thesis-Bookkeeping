@@ -202,6 +202,17 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <div class="text-center">
+      <v-snackbar
+        v-model="snackbar"
+        bottom="bottom"
+        color="success"
+        :timeout="timeout"
+      >
+        Saved!
+        <v-btn color="white" text @click="snackbar=false">Close</v-btn>
+      </v-snackbar>
+    </div>
   </div>
 </template>
 
@@ -214,6 +225,8 @@ export default {
   name: 'DistributeReport',
   data () {
     return {
+      snackbar: false,
+      timeout: 2000,
       items: [],
       years: [],
       loading: false,
@@ -306,10 +319,12 @@ export default {
             }
           ]
         })
-        const response = await axios.post('/api/bookkeeping/general-journal', newTransaction, config)
-        console.log(response)
+        await axios.post('/api/bookkeeping/general-journal', newTransaction, config)
+        this.confirmDialog = false
+        this.snackbar = true
       } catch (e) {
         this.getError(e.response.data)
+        this.confirmDialog = false
       }
     }
   },

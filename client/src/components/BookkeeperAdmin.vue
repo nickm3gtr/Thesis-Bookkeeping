@@ -138,8 +138,10 @@ export default {
         this.saved++
         this.snackbar = true
         this.dialog = false
+        this.clear()
       } catch (e) {
         this.getError(e.response.data)
+        this.dialog = false
       }
     },
     prepareDelete (item) {
@@ -173,6 +175,8 @@ export default {
     },
     clear () {
       this.name = ''
+      this.firstName = ''
+      this.lastName = ''
       this.password = ''
       this.select = ''
       this.msg = ''

@@ -4,93 +4,93 @@
       <br>
       <v-row class="ml-10">
         <v-col cols="12" md="4"></v-col>
-        <v-col cols="12" md="1">Notes</v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{bigYear}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{smallYear}}</p></v-col>
+        <v-col cols="12" md="1" class="small">Notes</v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{bigYear}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{smallYear}}</p></v-col>
       </v-row>
-      <p class="sub-title">Revenues</p>
+      <p class="sub-title small">Revenues</p>
       <div v-for="subType in filterRevenues" :key="subType.number">
         <v-row class="ml-10">
-          <v-col cols="12" md="4">{{subType.name}}</v-col>
-          <v-col cols="12" md="1">{{subType.number}}</v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumSecondBalance(subType.name))}}</p></v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumFirstBalance(subType.name))}}</p></v-col>
+          <v-col cols="12" md="4" class="x-small">{{subType.name}}</v-col>
+          <v-col cols="12" md="1" class="x-small">{{subType.number}}</v-col>
+          <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sumSecondBalance(subType.name))}}</p></v-col>
+          <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sumFirstBalance(subType.name))}}</p></v-col>
         </v-row>
       </div>
       <hr>
       <v-row class="ml-10">
-        <v-col cols="12" md="5">Total Revenue: </v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeSecondBalance(40000))}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeFirstBalance(40000))}}</p></v-col>
+        <v-col cols="12" md="5" class="x-small">Total Revenue: </v-col>
+        <v-col cols="12" md="3"><p class="text-right right total x-small">{{currency(sumAccountTypeSecondBalance(40000))}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right right total x-small">{{currency(sumAccountTypeFirstBalance(40000))}}</p></v-col>
       </v-row>
       <hr>
-      <p class="sub-title">Cost of Goods Sold</p>
+      <p class="sub-title small">Cost of Goods Sold</p>
       <div v-for="subType in filterCogs" :key="subType.number">
         <v-row class="ml-10">
-          <v-col cols="12" md="4">{{subType.name}}</v-col>
-          <v-col cols="12" md="1">{{subType.number}}</v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumSecondBalance(subType.name))}}</p></v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumFirstBalance(subType.name))}}</p></v-col>
+          <v-col cols="12" md="4" class="x-small">{{subType.name}}</v-col>
+          <v-col cols="12" md="1" class="x-small">{{subType.number}}</v-col>
+          <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sumSecondBalance(subType.name))}}</p></v-col>
+          <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sumFirstBalance(subType.name))}}</p></v-col>
         </v-row>
       </div>
       <hr>
       <v-row class="ml-10">
-        <v-col cols="12" md="5">Total: </v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeSecondBalance(50000))}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeFirstBalance(50000))}}</p></v-col>
+        <v-col cols="12" md="5" class="x-small">Total: </v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sumAccountTypeSecondBalance(50000))}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sumAccountTypeFirstBalance(50000))}}</p></v-col>
       </v-row>
       <hr>
-      <p class="sub-title">Cost of Services</p>
+      <p class="sub-title small">Cost of Services</p>
       <div v-for="subType in filterCoServices" :key="subType.number">
         <v-row class="ml-10">
-          <v-col cols="12" md="4">{{subType.name}}</v-col>
-          <v-col cols="12" md="1">{{subType.number}}</v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumSecondBalance(subType.name))}}</p></v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumFirstBalance(subType.name))}}</p></v-col>
+          <v-col cols="12" md="4" class="x-small">{{subType.name}}</v-col>
+          <v-col cols="12" md="1" class="x-small">{{subType.number}}</v-col>
+          <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sumSecondBalance(subType.name))}}</p></v-col>
+          <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sumFirstBalance(subType.name))}}</p></v-col>
         </v-row>
       </div>
       <hr>
       <v-row class="ml-10">
-        <v-col cols="12" md="5">Total: </v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeSecondBalance(60000))}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeFirstBalance(60000))}}</p></v-col>
+        <v-col cols="12" md="5" class="x-small">Total: </v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sumAccountTypeSecondBalance(60000))}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sumAccountTypeFirstBalance(60000))}}</p></v-col>
       </v-row>
       <hr>
       <v-row class="ml-10">
-        <v-col cols="12" md="5">Less: Total Direct Cost </v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(totalDirectCostSecond)}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(totalDirectCostFirst)}}</p></v-col>
+        <v-col cols="12" md="5" class="x-small">Less: Total Direct Cost </v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(totalDirectCostSecond)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(totalDirectCostFirst)}}</p></v-col>
       </v-row>
       <hr>
       <hr>
       <v-row class="ml-10">
-        <v-col cols="12" md="5">Gross Profit </v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(grossProfitSecond)}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(grossProfitFirst)}}</p></v-col>
+        <v-col cols="12" md="5" class="x-small">Gross Profit </v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(grossProfitSecond)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(grossProfitFirst)}}</p></v-col>
       </v-row>
       <hr>
       <br>
-      <p class="sub-title">Expenses</p>
+      <p class="sub-title small">Expenses</p>
       <div v-for="subType in filterExpenses" :key="subType.number">
         <v-row class="ml-10">
-          <v-col cols="12" md="4">{{subType.name}}</v-col>
-          <v-col cols="12" md="1">{{subType.number}}</v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumSecondBalance(subType.name))}}</p></v-col>
-          <v-col cols="12" md="3"><p class="text-right total">{{currency(sumFirstBalance(subType.name))}}</p></v-col>
+          <v-col cols="12" md="4" class="x-small">{{subType.name}}</v-col>
+          <v-col cols="12" md="1" class="x-small">{{subType.number}}</v-col>
+          <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sumSecondBalance(subType.name))}}</p></v-col>
+          <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sumFirstBalance(subType.name))}}</p></v-col>
         </v-row>
       </div>
       <hr>
       <v-row class="ml-10">
-        <v-col cols="12" md="5">Less: Total Expenses: </v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeSecondBalance(70000))}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(sumAccountTypeFirstBalance(70000))}}</p></v-col>
+        <v-col cols="12" md="5" class="x-small">Less: Total Expenses: </v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sumAccountTypeSecondBalance(70000))}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(sumAccountTypeFirstBalance(70000))}}</p></v-col>
       </v-row>
       <hr>
       <hr>
       <v-row class="ml-10">
-        <v-col cols="12" md="5">Undistributed Net Surplus </v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(netProfitSecond)}}</p></v-col>
-        <v-col cols="12" md="3"><p class="text-right total">{{currency(netProfitFirst)}}</p></v-col>
+        <v-col cols="12" md="5" class="x-small">Undistributed Net Surplus </v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(netProfitSecond)}}</p></v-col>
+        <v-col cols="12" md="3"><p class="text-right right x-small total">{{currency(netProfitFirst)}}</p></v-col>
       </v-row>
       <hr>
       <br>
@@ -293,4 +293,25 @@ export default {
 </script>
 
 <style scoped>
+#content {
+    color: black;
+    font-family: "Roboto", sans-serif;
+  }
+ .underlined {
+   text-decoration-line: underline;
+   text-decoration-style: double;
+ }
+ .text-center {
+   text-align: center !important;
+ }
+ .right {
+   text-align: right !important;
+ }
+ .small {
+   font-size: small;
+ }
+ .x-small {
+   font-size: 12px;
+   color: black;
+ }
 </style>

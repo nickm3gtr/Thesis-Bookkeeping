@@ -74,7 +74,7 @@
             </v-data-table>
           </v-card-text>
         </v-card>
-        <v-snackbar v-model="snackbar" bottom="bottom" color="red" :timeout="timeout">
+        <v-snackbar v-model="snackbar" bottom="bottom" color="error" :timeout="timeout">
           Deleted!
           <v-btn color="white" text @click="snackbar=false">Close</v-btn>
         </v-snackbar>
@@ -101,7 +101,6 @@ export default {
       headers: [
         { text: 'Date', value: 'date' },
         { text: 'TransactionID', value: 'id' },
-        { text: 'Book', value: 'name' },
         { text: 'Description', value: 'memo' },
         {
           text: 'Actions',
@@ -124,10 +123,9 @@ export default {
     async deleteItem () {
       const index = this.transactions.indexOf(this.itemToDelete)
       try {
-        const response = await axios.delete(
+        await axios.delete(
           `/api/bookkeeping/transactions/${this.itemToDelete.id}`
         )
-        console.log(response.data)
         this.transactions.splice(index, 1)
         this.dialog = false
         this.snackbar = true

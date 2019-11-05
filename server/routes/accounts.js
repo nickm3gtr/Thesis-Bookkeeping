@@ -10,21 +10,21 @@ router.get('/', auth, (req, res) => {
 })
 
 // Fetch all Account Types
-router.get('/types', (req, res) => {
+router.get('/types', auth, (req, res) => {
   db.Type.findAll()
     .then(types => res.json(types))
     .catch(err => res.status(400).json({msg: 'Error fetching data', err}))
 })
 
 // Fetch all Account Types
-router.get('/subtypes', (req, res) => {
+router.get('/subtypes', auth, (req, res) => {
   db.SubType.findAll()
     .then(subtypes => res.json(subtypes))
     .catch(err => res.status(400).json({msg: 'Error fetching data', err}))
 })
 
 // Create an Account
-router.post('/', (req, res) => {
+router.post('/', auth, (req, res) => {
   const { id, name, SubTypeId } = req.body
   const status = 'active'
   db.Account.create({

@@ -30,12 +30,16 @@
           <tr v-for="item in items" :key="item.id">
             <td>{{ item.name }}</td>
             <td>
+              <p v-if="!item.sub"></p>
+              <p v-else>{{ item.sub.name }}</p>
+            </td>
+            <td>
               <span v-if="item.debit == 0"></span>
-              <span v-else>{{ item.debit }}</span>
+              <span v-else>{{ currency(item.debit) }}</span>
             </td>
             <td>
               <span v-if="item.credit == 0"></span>
-              <span v-else>{{ item.credit }}</span>
+              <span v-else>{{ currency(item.credit) }}</span>
             </td>
           </tr>
           </tbody>
@@ -48,6 +52,7 @@
 <script>
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
+import numeral from 'numeral'
 
 export default {
   name: 'RecordStatus',
@@ -59,6 +64,12 @@ export default {
       headers: [
         {
           text: 'AccountName',
+          align: 'left',
+          sortable: false,
+          value: 'name'
+        },
+        {
+          text: 'Sub-Account',
           align: 'left',
           sortable: false,
           value: 'name'
@@ -79,7 +90,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions('errors', ['getError'])
+    ...mapActions('errors', ['getError']),
+    currency (value) {
+      return numeral(value).format('0,0.00')
+    }
   },
   computed: {
     ...mapState(['auth'])

@@ -50,7 +50,7 @@ export default {
         {
           label: 'Sales',
           data: this.salesData,
-          backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56']
+          backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#fe5722', '#00e578']
         }
       ]
     }

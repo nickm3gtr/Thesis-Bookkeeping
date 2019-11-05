@@ -62,20 +62,20 @@
                     <span v-if="auth.user === null" class="headline">DARBMUPCO</span>
                     <span v-else class="headline">{{ auth.user.Branch.branchName }}</span>
                   </p>
-                  <p><span class="subtitle-1">Statement of Financial Condition</span></p>
+                  <p><span class="subtitle-1">Balance Sheet</span></p>
                   <p><span class="subtitle-2">As of {{ formatDate }}</span></p>
                 </div>
               </v-flex>
               <hr>
               <v-row class="ml-4 mt-4">
-                <span class="subtitle-1 font-weight-bold">Current Assets</span>
+                <span class="subtitle-1 small font-weight-bold">Current Assets</span>
               </v-row>
               <BalanceSheetComponent :accounts="filterItems(11000)"
                              :total="totalBalance(11000)"
                              :msg="totalMsg('Total Current Assets')"
               />
               <v-row class="ml-4 mt-4">
-                <span class="subtitle-1 font-weight-bold">Non Current Assets</span>
+                <span class="subtitle-1 small font-weight-bold">Non Current Assets</span>
               </v-row>
               <BalanceSheetComponent :accounts="filterItems(13000)"
                              :total="totalBalance(13000)"
@@ -84,12 +84,12 @@
               <v-row class="ml-4 mb-4">
                 <v-col cols="12" md="5">
                   <div v-if="totalAssets <= 0">
-                    <span class="font-weight-medium red--text text--darken-3">
+                    <span class="font-weight-medium x-small red--text text--darken-3">
                       Total Assets
                     </span>
                   </div>
                   <div v-else>
-                    <span class="font-weight-medium blue--text text--darken-4">
+                    <span class="font-weight-medium x-small blue--text text--darken-4">
                       Total Assets
                     </span>
                   </div>
@@ -97,33 +97,33 @@
                 <v-col cols="12" md="3"></v-col>
                 <v-col cols="12" md="3">
                   <div v-if="totalAssets <= 0">
-                    <p class="text-right font-weight-medium underlined red--text text--darken-3">
+                    <p class="text-right right x-small font-weight-medium underlined red--text text--darken-3">
                       <span>&#8369;{{ currency(totalAssets) }}</span>
                     </p>
                   </div>
                   <div v-else>
-                    <p class="text-right font-weight-medium underlined blue--text text--darken-3">
+                    <p class="text-right right x-small font-weight-medium underlined blue--text text--darken-3">
                       <span>&#8369;{{ currency(totalAssets) }}</span>
                     </p>
                   </div>
                 </v-col>
               </v-row>
               <v-row class="ml-4 mt-4">
-                <span class="subtitle-1 font-weight-bold">Current Liabilities</span>
+                <span class="subtitle-1 small font-weight-bold">Current Liabilities</span>
               </v-row>
               <LiabilityComponent :accounts="filterItems(21000)"
                                      :total="totalBalance(21000)"
                                      :msg="totalMsg('Total Current Liabilities')"
               />
               <v-row class="ml-4 mt-4">
-                <span class="subtitle-1 font-weight-bold">Non Current Liabilities</span>
+                <span class="subtitle-1 small font-weight-bold">Non Current Liabilities</span>
               </v-row>
               <LiabilityComponent :accounts="filterItems(22000)"
                                   :total="totalBalance(22000)"
                                   :msg="totalMsg('Total Non Current Liabilities')"
               />
               <v-row class="ml-4 mt-4">
-                <span class="subtitle-1 font-weight-bold">Equity</span>
+                <span class="subtitle-1 small font-weight-bold">Equity</span>
               </v-row>
               <EquityComponent :accounts="filterItems(30100)"
                                      :total="totalBalance(30100)"
@@ -133,12 +133,12 @@
               <v-row class="ml-4 mb-4">
                 <v-col cols="12" md="5">
                   <div v-if="totalLiabilities <= 0">
-                    <span class="font-weight-medium red--text text--darken-3">
+                    <span class="font-weight-medium x-small red--text text--darken-3">
                       Total Liabilities and Equity
                     </span>
                   </div>
                   <div v-else>
-                    <span class="font-weight-medium blue--text text--darken-3">
+                    <span class="font-weight-medium x-small blue--text text--darken-3">
                       Total Liabilities and Equity
                     </span>
                   </div>
@@ -146,12 +146,12 @@
                 <v-col cols="12" md="3"></v-col>
                 <v-col cols="12" md="3">
                   <div v-if="totalLiabilities <= 0">
-                    <p class="text-right font-weight-medium red--text text--darken-3 underlined">
+                    <p class="text-right right x-small font-weight-medium red--text text--darken-3 underlined">
                       <span>&#8369;{{ currency(totalLiabilities) }}</span>
                     </p>
                   </div>
                   <div v-else>
-                    <p class="text-right font-weight-medium blue--text text--darken-3 underlined">
+                    <p class="text-right right x-small font-weight-medium blue--text text--darken-3 underlined">
                       <span>&#8369;{{ currency(totalLiabilities) }}</span>
                     </p>
                   </div>
@@ -306,21 +306,21 @@ export default {
     color: black;
     font-family: "Roboto", sans-serif;
   }
-  .underlined {
-    text-decoration-line: underline;
-    text-decoration-style: double;
-  }
-  .underline-single {
-    text-decoration-line: underline;
-  }
+ .underlined {
+   text-decoration-line: underline;
+   text-decoration-style: double;
+ }
  .text-center {
    text-align: center !important;
  }
- /* .font-weight-medium {
+ .right {
+   text-align: right !important;
+ }
+ .small {
+   font-size: small;
+ }
+ .x-small {
    font-size: 12px;
    color: black;
- } */
- .text-right {
-   text-align: right;
  }
 </style>

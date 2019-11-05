@@ -104,21 +104,21 @@
                 </div>
                 <hr>
                 <v-row class="ml-4 mt-4">
-                  <span class="subtitle-1 font-weight-bold">Revenues</span>
+                  <span class="subtitle-1 small font-weight-bold">Revenues</span>
                 </v-row>
                 <IncomeComponent :accounts="filterItems(40000)"
                                   :total="totalBalance(40000)"
                                   :msg="totalMsg('Total Revenue')"
                 />
                 <v-row class="ml-4 mt-4">
-                  <span class="subtitle-1 font-weight-bold">Cost of Goods Sold</span>
+                  <span class="subtitle-1 small font-weight-bold">Cost of Goods Sold</span>
                 </v-row>
                 <ExpenseComponent :accounts="filterItems(50000)"
                                :total="totalBalance(50000)"
                                :msg="totalMsg('Total Cost of Goods Sold')"
                 />
                 <v-row class="ml-4 mt-4">
-                  <span class="subtitle-1 font-weight-bold">Cost of Services</span>
+                  <span class="subtitle-1 small font-weight-bold">Cost of Services</span>
                 </v-row>
                 <ExpenseComponent :accounts="filterItems(60000)"
                                :total="totalBalance(60000)"
@@ -126,15 +126,15 @@
                 />
                 <v-row class="ml-4 mb-4">
                   <v-col cols="12" md="5">
-                    <span class="font-weight-bold">Gross Profit</span>
+                    <span class="font-weight-bold x-small">Gross Profit</span>
                   </v-col>
                   <v-col cols="12" md="3"></v-col>
                   <v-col cols="12" md="3">
-                    <p class="text-right font-weight-bold underlined"><span>&#8369;{{ grossProfit }}</span></p>
+                    <p class="text-right right x-small font-weight-bold underlined"><span>&#8369;{{ grossProfit }}</span></p>
                   </v-col>
                 </v-row>
                 <v-row class="ml-4 mt-4">
-                  <span class="subtitle-1 font-weight-bold">Operating Expenses</span>
+                  <span class="subtitle-1 small font-weight-bold">Operating Expenses</span>
                 </v-row>
                 <ExpenseComponent :accounts="filterItems(70000)"
                                :total="totalBalance(70000)"
@@ -144,13 +144,13 @@
                 <v-row class="ml-4 mb-4">
                   <v-col cols="12" md="5">
                     <span v-if="netProfit < 0" class="font-weight-bold red--text">Net Loss</span>
-                    <span v-else class="font-weight-bold">Net Income</span>
+                    <span v-else class="font-weight-bold x-small">Net Income</span>
                   </v-col>
                   <v-col cols="12" md="3"></v-col>
                   <v-col cols="12" md="3">
                     <p v-if="netProfit < 0"
-                      class="text-right font-weight-bold red--text underlined"><span>&#8369;{{ formatBalance(netProfit) }}</span></p>
-                    <p v-else class="text-right font-weight-bold blue--text underlined"><span>&#8369;{{ formatBalance(netProfit) }}</span></p>
+                      class="text-right right x-small font-weight-bold red--text underlined"><span>&#8369;{{ formatBalance(netProfit) }}</span></p>
+                    <p v-else class="text-right right x-small font-weight-bold blue--text underlined"><span>&#8369;{{ formatBalance(netProfit) }}</span></p>
                   </v-col>
                 </v-row>
               </v-flex>
@@ -284,11 +284,21 @@ export default {
     color: black;
     font-family: "Roboto", sans-serif;
   }
+ .underlined {
+   text-decoration-line: underline;
+   text-decoration-style: double;
+ }
  .text-center {
    text-align: center !important;
  }
-  .underlined {
-    text-decoration-line: underline;
-    text-decoration-style: double;
-  }
+ .right {
+   text-align: right !important;
+ }
+ .small {
+   font-size: small;
+ }
+ .x-small {
+   font-size: 12px;
+   color: black;
+ }
 </style>
