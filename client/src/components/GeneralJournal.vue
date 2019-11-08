@@ -3,11 +3,6 @@
     <v-layout>
       <v-flex sm12 md10 offset-md1>
         <v-card outlined class="mt-6">
-          <v-card-title>
-            <v-col cols="12" md="12">
-              <span class="title font-weight-light">Add General Journal Entry</span>
-            </v-col>
-          </v-card-title>
           <v-card-text>
             <v-row>
               <v-col cols="12" md="4">

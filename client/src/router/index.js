@@ -10,6 +10,7 @@ import charts from './charts'
 import generalJournal from './generalJournal'
 import reports from './reports'
 import bookkeeper from './bookkeeper'
+import bank from './bank'
 
 Vue.use(Router)
 
@@ -48,6 +49,7 @@ export default new Router({
     ...generalJournal,
     ...reports,
     ...bookkeeper,
+    ...bank,
     {
       path: '*',
       name: 'notFound',

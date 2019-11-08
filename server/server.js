@@ -20,6 +20,7 @@ app.use("/api/books", require("./routes/books"));
 app.use("/api/graphs", require("./routes/graphs"));
 app.use("/api/dashboard", require("./routes/dashboard"));
 app.use("/api/transactions", require("./routes/transactions"));
+app.use("/api/bank", require("./routes/bank"));
 
 
 // PRODUCTION
