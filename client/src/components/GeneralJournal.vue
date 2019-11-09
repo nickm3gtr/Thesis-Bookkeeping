@@ -39,22 +39,9 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="1">
-                <v-dialog persistent v-model="dialog" max-width="600px">
-                  <template v-slot:activator="{ on: dialog }">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on: tooltip }">
-                        <v-btn color="primary" dark fab small class="mt-4" v-on="{ ...dialog, ...tooltip }">
-                          <v-icon>note_add</v-icon>
-                        </v-btn>
-                      </template>
-                      <span>Add</span>
-                    </v-tooltip>
-                  </template>
-                  <GeneralJournalDialog
-                    @close-dialog="dialog = false"
-                    @add-transaction="add"
-                  />
-                </v-dialog>
+                <v-btn color="primary" dark fab small class="mt-4" @click="add">
+                  <v-icon>note_add</v-icon>
+                </v-btn>
               </v-col>
               <v-col cols="12" md="1">
                 <v-dialog
@@ -110,11 +97,73 @@
               hide-default-footer
               disable-sort
               :headers="headers"
-              :items="indexedItems"
-              item-key="id"
+              :items="items"
+              item-key="index"
               no-data-text="Add General Journal transactions"
               class="elevation-3"
             >
+              <template v-slot:item.AccountName="props">
+                <v-edit-dialog
+                  :return-value.sync="props.item.AccountName"
+                > {{ props.item.AccountName }}
+                  <template v-slot:input>
+                    <v-combobox
+                      v-model="props.item.Account"
+                      :items="accounts"
+                      item-text="name"
+                      label="Select Account Name"
+                      return-object
+                    ></v-combobox>
+                  </template>
+                </v-edit-dialog>
+              </template>
+              <template v-slot:item.SubAccount="props">
+                <v-edit-dialog
+                  :return-value.sync="props.item.SubAccount"
+                > {{ props.item.SubAccount }}
+                  <template v-slot:input>
+                    <v-combobox
+                      v-if="!props.item.Account.sub"
+                      v-model="props.item.SubAccount"
+                      item-text="sub.name"
+                      label="Select Account Name"
+                      return-object
+                    ></v-combobox>
+                    <v-combobox
+                      v-else-if="props.item.Account !== ''"
+                      v-model="props.item.Sub"
+                      :items="props.item.Account.sub.subaccounts"
+                      item-text="name"
+                      label="Select Account Name"
+                      return-object
+                    ></v-combobox>
+                  </template>
+                </v-edit-dialog>
+              </template>
+              <template v-slot:item.debit="props">
+                <v-edit-dialog
+                  :return-value.sync="props.item.debit"
+                > {{ props.item.debit }}
+                  <template v-slot:input>
+                    <v-text-field
+                      v-model="props.item.debit"
+                      label="Debit"
+                    ></v-text-field>
+                  </template>
+                </v-edit-dialog>
+              </template>
+              <template v-slot:item.credit="props">
+                <v-edit-dialog
+                  :return-value.sync="props.item.credit"
+                > {{ props.item.credit }}
+                  <template v-slot:input>
+                    <v-text-field
+                      v-model="props.item.credit"
+                      label="Credit"
+                    ></v-text-field>
+                  </template>
+                </v-edit-dialog>
+              </template>
               <template v-slot:body.append="{ headers }">
                 <tr>
                   <td></td>
@@ -163,16 +212,16 @@
 
 <script>
 import RecordStatus from '@/components/status/RecordStatus'
-import GeneralJournalDialog from './GeneralJournalDialog'
 import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 
 export default {
   name: 'GeneralJournal',
-  components: { GeneralJournalDialog, RecordStatus },
+  components: { RecordStatus },
   data () {
     return {
       selected: [],
+      accounts: [],
       snackbar: false,
       timeout: 2000,
       BookId: 1,
@@ -183,23 +232,29 @@ export default {
       date: new Date().toISOString().substr(0, 10),
       headers: [
         { text: 'AccountName', value: 'AccountName' },
-        { text: 'Sub-Account', value: 'sub.name.name' },
+        { text: 'SubAccount', value: 'SubAccount' },
         { text: 'Debit', value: 'debit' },
         { text: 'Credit', value: 'credit' }
       ],
-      items: [],
+      items: [
+        { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: '', index: Math.random() },
+        { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: '', index: Math.random() }
+      ],
       hidden: true,
       statusId: 0
     }
   },
   methods: {
     ...mapActions('errors', ['getError']),
-    add (transaction) {
-      this.items = [ ...this.items, transaction ]
+    add () {
+      this.items = [...this.indexedItems, { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: '', index: Math.random() }]
     },
     clearAll () {
       this.memo = ''
-      this.items = []
+      this.items = [
+        { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: '', index: Math.random() },
+        { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: '', index: Math.random() }
+      ]
     },
     clear () {
       for (let i = 0; i < this.selected.length; i++) {
@@ -249,7 +304,28 @@ export default {
   computed: {
     ...mapState(['auth']),
     formatItems () {
-      const formatItem = this.items.map(item => {
+      const item = this.items.map(item => {
+        let newItem = ''
+        if (item.SubAccount === '') {
+          newItem = {
+            AccountId: item.Account.id,
+            AccountName: item.AccountName,
+            debit: item.debit,
+            credit: item.credit,
+            sub: null
+          }
+        } else {
+          newItem = {
+            AccountId: item.Account.id,
+            AccountName: item.AccountName,
+            debit: item.debit,
+            credit: item.credit,
+            sub: { name: { id: item.Sub.id, name: item.SubAccount } }
+          }
+        }
+        return newItem
+      })
+      const formatItem = item.map(item => {
         if (item.debit.length <= 0) {
           item.debit = null
         } else if (item.credit.length <= 0) {
@@ -290,17 +366,36 @@ export default {
     isNotTheSame () {
       return this.sumDebit !== this.sumCredit
     },
-    indexedItems () {
-      return this.items.map((item, index) => ({
-        id: index,
-        ...item
-      }))
-    },
     selectedItems () {
-      return this.items <= 0
+      if (this.items.length > 0) {
+        if ((this.items[0].AccountName === '' || this.items[1].AccountName === '') || ((this.items[0].debit === '' && this.items[0].credit === '') || (this.items[1].debit === '' && this.items[1].credit === ''))) {
+          return true
+        } else {
+          return false
+        }
+      } else {
+        return true
+      }
     },
     deleteItems () {
       return this.selected <= 0
+    }
+  },
+  async mounted () {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
+      this.loading = true
+      const response = await axios.get('/api/accounts', config)
+      this.accounts = response.data
+      this.loading = false
+    } catch (e) {
+      this.getError(e.response.data)
+      this.loading = false
     }
   }
 }

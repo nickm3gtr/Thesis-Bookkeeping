@@ -82,6 +82,21 @@ export default {
           route: '/bookkeeper/dashboard'
         },
         {
+          action: 'account_balance',
+          title: 'Bank',
+          route: '/bookkeeper/banks'
+        },
+        {
+          action: 'people_alt',
+          title: 'Customers',
+          route: '/bookkeeper/customers'
+        },
+        {
+          action: 'store_mall_directory',
+          title: 'Vendors',
+          route: '/bookkeeper/vendors'
+        },
+        {
           action: 'event_note',
           title: 'Chart of Accounts',
           route: '/bookkeeper/chart_of_account'

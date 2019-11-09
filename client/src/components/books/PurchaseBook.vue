@@ -35,10 +35,10 @@
               </v-col>
               <v-col cols="12" md="4">
                 <v-combobox
-                  v-model="selectedAp"
-                  :items="apItems"
+                  v-model="selectedVendor"
+                  :items="vendorItems"
                   item-text="name"
-                  label="Select Account Payable"
+                  label="Select Vendor"
                   return-object
                 ></v-combobox>
               </v-col>
@@ -181,11 +181,8 @@ export default {
   components: { PurchaseBookDialog, RecordStatus },
   data () {
     return {
-      selectedAp: { id: 104, name: 'Accounts Payable-Trade' },
-      apItems: [
-        { id: 104, name: 'Accounts Payable-Trade' },
-        { id: 105, name: 'Accounts Payable-Non Trade' }
-      ],
+      selectedVendor: '',
+      vendorItems: [],
       selected: [],
       dialogDelete: false,
       snackbar: false,
@@ -219,9 +216,12 @@ export default {
       }
       try {
         const cashItem = {
-          AccountId: this.selectedAp.id,
+          AccountId: 105,
           debit: null,
-          credit: this.totalCash
+          credit: this.totalCash,
+          sub: {
+            name: this.selectedVendor
+          }
         }
         const data = [ ...this.items, cashItem ]
         const newTransaction = JSON.stringify({
@@ -282,6 +282,20 @@ export default {
     },
     deleteItems () {
       return this.selected <= 0
+    }
+  },
+  async mounted () {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token')
+      }
+    }
+    try {
+      const vendorNames = await axios.get('/api/vendor', config)
+      this.vendorItems = vendorNames.data
+    } catch (e) {
+      this.getError(e.response.data)
     }
   }
 }

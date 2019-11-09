@@ -10,6 +10,11 @@ module.exports = [
     SubTypeId: 21100
   },
   {
+    id: 21205,
+    name: "21205-Accounts Payable",
+    SubTypeId: 21200
+  },
+  {
     id: 21210,
     name: "21210-Accounts Payable-Trade",
     SubTypeId: 21200,
