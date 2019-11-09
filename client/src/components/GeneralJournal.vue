@@ -247,7 +247,7 @@ export default {
   methods: {
     ...mapActions('errors', ['getError']),
     add () {
-      this.items = [...this.indexedItems, { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: '', index: Math.random() }]
+      this.items = [...this.items, { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: '', index: Math.random() }]
     },
     clearAll () {
       this.memo = ''
@@ -306,7 +306,7 @@ export default {
     formatItems () {
       const item = this.items.map(item => {
         let newItem = ''
-        if (item.SubAccount === '') {
+        if (item.SubAccount === '' || item.SubAccount === null) {
           newItem = {
             AccountId: item.Account.id,
             AccountName: item.AccountName,
@@ -315,12 +315,22 @@ export default {
             sub: null
           }
         } else {
-          newItem = {
-            AccountId: item.Account.id,
-            AccountName: item.AccountName,
-            debit: item.debit,
-            credit: item.credit,
-            sub: { name: { id: item.Sub.id, name: item.SubAccount } }
+          if (item.Sub.id) {
+            newItem = {
+              AccountId: item.Account.id,
+              AccountName: item.AccountName,
+              debit: item.debit,
+              credit: item.credit,
+              sub: { name: { id: item.Sub.id, name: item.SubAccount } }
+            }
+          } else {
+            newItem = {
+              AccountId: item.Account.id,
+              AccountName: item.AccountName,
+              debit: item.debit,
+              credit: item.credit,
+              sub: { name: { name: item.SubAccount } }
+            }
           }
         }
         return newItem
