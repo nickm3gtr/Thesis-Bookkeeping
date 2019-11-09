@@ -29,4 +29,14 @@ router.get('/balances', auth, (req, res) => {
       .catch(err => res.status(400).json({ msg: 'Cant fetch bank balances', err }))
 })
 
+// Update CIB subaccount in Accounts table
+router.put('/update-account', auth, (req, res) => {
+  const { sub } = req.body
+  db.Account.update({ sub },
+    {where: {
+        id: 3
+      }
+  }).then(account => res.json(account))
+    .catch(err => res.status(400).json({ msg: 'Error updating', err }))
+})
 module.exports = router
