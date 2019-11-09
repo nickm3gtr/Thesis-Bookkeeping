@@ -5,10 +5,10 @@
         <v-dialog v-model="addDialog" max-width="400px">
           <v-card>
             <v-card-title>
-              Add Bank
+              Add Customer
             </v-card-title>
             <v-card-text>
-              <v-text-field v-model="bankName" label="Name"></v-text-field>
+              <v-text-field v-model="customerName" label="Name"></v-text-field>
             </v-card-text>
             <v-card-actions>
               <div class="flex-grow-1"></div>
@@ -19,7 +19,7 @@
                 </v-btn>
                 <v-btn
                 color="primary" text
-                @click="addBank">
+                @click="addCustomer">
                   Add
                 </v-btn>
             </v-card-actions>
@@ -42,7 +42,7 @@
             </v-row>
             <v-data-table
               :headers="headers"
-              :items="formatBankArray"
+              :items="formatCustomerArray"
               :items-per-page="5"
               class="elevation-1"
             ></v-data-table>
@@ -59,15 +59,15 @@ import { mapState, mapActions } from 'vuex'
 import numeral from 'numeral'
 
 export default {
-  name: 'BankComponent',
+  name: 'CustomerComponent',
   data () {
     return {
       addDialog: false,
-      bankName: '',
-      bankBalance: [],
-      bankNames: [],
+      customerName: '',
+      customerBalance: [],
+      customerNames: [],
       headers: [
-        { text: 'Bank', value: 'name' },
+        { text: 'Customers', value: 'name' },
         { text: 'Current Balance', align: 'right', value: 'balance' }
       ],
       updated: 0
@@ -78,24 +78,24 @@ export default {
     currency (value) {
       return numeral(value).format('0,0.00')
     },
-    async addBank () {
+    async addCustomer () {
       const config = {
         headers: {
           'Content-Type': 'application/json',
           Authorization: localStorage.getItem('token')
         }
       }
-      const newBankAccount = JSON.stringify({
-        name: this.bankName
+      const newCustomerAccount = JSON.stringify({
+        name: this.customerName
       })
       try {
-        await axios.post('/api/bank', newBankAccount, config)
-        // Get data and update CIB in accounts table
-        const response = await axios.get('/api/bank', config)
+        await axios.post('/api/customer', newCustomerAccount, config)
+        // Get data and update A/R customers in accounts table
+        const response = await axios.get('/api/customer', config)
         const sub = JSON.stringify({
           sub: { subaccounts: response.data }
         })
-        await axios.put('/api/bank/update-account', sub, config)
+        await axios.put('/api/customer/update-account', sub, config)
         this.updated++
         this.addDialog = false
       } catch (e) {
@@ -111,22 +111,22 @@ export default {
       }
     }
     try {
-      const response = await axios.get(`/api/bank/bookkeeper/balances/${this.auth.user.BranchId}`, config)
-      const bankNames = await axios.get('/api/bank', config)
-      this.bankBalance = response.data
-      this.bankNames = bankNames.data
+      const response = await axios.get(`/api/customer/bookkeeper/balances/${this.auth.user.BranchId}`, config)
+      const customerNames = await axios.get('/api/customer', config)
+      this.customerBalance = response.data
+      this.customerNames = customerNames.data
     } catch (e) {
       this.getError(e.response.data)
     }
   },
   computed: {
     ...mapState(['auth']),
-    bankArray () {
-      // Create an array combining bank name from bank table and from accounts table
-      const banks = this.bankNames.map(name => {
-        const balance = this.bankBalance.filter(bank => {
+    customerArray () {
+      // Create an array combining customer name from customer table and from accounts table
+      const customers = this.customerNames.map(name => {
+        const balance = this.customerBalance.filter(customer => {
           // eslint-disable-next-line eqeqeq
-          return bank.name.id == name.id
+          return customer.name.id == name.id
         })
         if (balance.length > 0) {
           name.balance = parseFloat(balance[0].balance)
@@ -135,22 +135,22 @@ export default {
         }
         return name
       })
-      return banks
+      return customers
     },
-    formatBankArray () {
-      return this.bankArray.map(bank => {
-        bank.balance = this.currency(parseFloat(bank.balance).toFixed(2))
-        return bank
+    formatCustomerArray () {
+      return this.customerArray.map(customer => {
+        customer.balance = this.currency(parseFloat(customer.balance).toFixed(2))
+        return customer
       })
     },
-    bankAccount () {
-      const bankNames = this.bankNames.map(bank => {
+    customerAccount () {
+      const customerNames = this.customerNames.map(customer => {
         const sub = {
-          name: bank.name
+          name: customer.name
         }
         return sub
       })
-      return bankNames
+      return customerNames
     }
   },
   watch: {
@@ -162,10 +162,10 @@ export default {
         }
       }
       try {
-        const response = await axios.get(`/api/bank/bookkeeper/balances/${this.auth.user.BranchId}`, config)
-        const bankNames = await axios.get('/api/bank', config)
-        this.bankBalance = response.data
-        this.bankNames = bankNames.data
+        const response = await axios.get(`/api/customer/bookkeeper/balances/${this.auth.user.BranchId}`, config)
+        const customerNames = await axios.get('/api/customer', config)
+        this.customerBalance = response.data
+        this.customerNames = customerNames.data
       } catch (e) {
         this.getError(e.response.data)
       }

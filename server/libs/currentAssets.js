@@ -12,13 +12,7 @@ module.exports = [
   {
     id: 11130,
     name: "11130-Cash in Bank",
-    SubTypeId: 11100,
-    sub: JSON.stringify({
-      subaccounts: [
-        { name: "CIB-MetroBank" },
-        { name: "CIB-Eastwest Bank" }
-      ]
-    })
+    SubTypeId: 11100
   },
   {
     id: 11140,
@@ -82,7 +76,12 @@ module.exports = [
   },
   {
     id: 11250,
-    name: "11250-Accounts Receivables Trade-Current",
+    name: "11250-Accounts Receivable",
+    SubTypeId: 11200
+  },
+  {
+    id: 11260,
+    name: "11250-Accounts Receivable Trade-Current",
     SubTypeId: 11200,
     sub: JSON.stringify({
       subaccounts: [
@@ -158,12 +157,12 @@ module.exports = [
   },
   {
     id: 11270,
-    name: "11270-Accounts Receivables Trade-Restructured",
+    name: "11270-Accounts Receivable Trade-Restructured",
     SubTypeId: 11200
   },
   {
     id: 11280,
-    name: "11280-Accounts Receivables Trade-in Litigation",
+    name: "11280-Accounts Receivable Trade-in Litigation",
     SubTypeId: 11200
   },
   {

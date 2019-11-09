@@ -11,6 +11,7 @@ import generalJournal from './generalJournal'
 import reports from './reports'
 import bookkeeper from './bookkeeper'
 import bank from './bank'
+import customer from './customer'
 
 Vue.use(Router)
 
@@ -50,6 +51,7 @@ export default new Router({
     ...reports,
     ...bookkeeper,
     ...bank,
+    ...customer,
     {
       path: '*',
       name: 'notFound',

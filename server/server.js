@@ -21,6 +21,7 @@ app.use("/api/graphs", require("./routes/graphs"));
 app.use("/api/dashboard", require("./routes/dashboard"));
 app.use("/api/transactions", require("./routes/transactions"));
 app.use("/api/bank", require("./routes/bank"));
+app.use("/api/customer", require("./routes/customer"));
 
 
 // PRODUCTION

@@ -22,7 +22,7 @@ export default [
     name: 'cash-receipt-bookkeeper',
     component: CashReceiptPage,
     meta: {
-      title: 'Cash Receipt Books'
+      title: 'Cash Receipt Book'
     }
   },
   {
@@ -30,7 +30,7 @@ export default [
     name: 'cash-disbursement-bookkeeper',
     component: CashDisbursementPage,
     meta: {
-      title: 'Cash Disbursement Books'
+      title: 'Cash/Check Disbursement Book'
     }
   },
   {

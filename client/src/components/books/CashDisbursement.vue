@@ -3,11 +3,6 @@
     <v-layout>
       <v-flex sm12 md10 offset-md1>
         <v-card outlined class="mt-6">
-          <v-card-title>
-            <v-col cols="12" md="12">
-              <span class="title font-weight-light">Add Cash Disbursement Book Entry</span>
-            </v-col>
-          </v-card-title>
           <v-card-text>
             <v-row>
               <v-col cols="12" md="3">
@@ -37,7 +32,8 @@
                 <v-combobox
                   v-model="selectedBank"
                   :items="bankItems"
-                  label="Select Cash In Bank SubAccount"
+                  item-text="name"
+                  label="Select Bank"
                   return-object
                 ></v-combobox>
               </v-col>
@@ -186,8 +182,8 @@ export default {
   components: { CashDisbursementDialog, RecordStatus },
   data () {
     return {
-      selectedBank: 'CIB-MetroBank',
-      bankItems: ['CIB-MetroBank', 'CIB-Eastwest Bank'],
+      selectedBank: '',
+      bankItems: [],
       selected: [],
       dialogDelete: false,
       snackbar: false,
@@ -226,9 +222,7 @@ export default {
           debit: null,
           credit: this.totalCash,
           sub: {
-            name: {
-              name: this.selectedBank
-            }
+            name: this.selectedBank
           }
         }
         const data = [ ...this.items, cashItem ]
@@ -291,6 +285,20 @@ export default {
     },
     deleteItems () {
       return this.selected <= 0
+    }
+  },
+  async mounted () {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token')
+      }
+    }
+    try {
+      const bankNames = await axios.get('/api/bank', config)
+      this.bankItems = bankNames.data
+    } catch (e) {
+      this.getError(e.response.data)
     }
   }
 }
