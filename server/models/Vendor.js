@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Vendor = sequelize.define('Vendor', {
     name: DataTypes.STRING
-  }, {});
+  }, { timestamps: false });
   // eslint-disable-next-line no-unused-vars
   Vendor.associate = function(models) {
     // associations can be defined here
