@@ -40,22 +40,9 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="1">
-                <v-dialog persistent v-model="dialog" max-width="600px">
-                  <template v-slot:activator="{ on: dialog }">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on: tooltip }">
-                        <v-btn color="primary" dark fab small class="mt-4" v-on="{ ...dialog, ...tooltip }">
-                          <v-icon>note_add</v-icon>
-                        </v-btn>
-                      </template>
-                      <span>Add</span>
-                    </v-tooltip>
-                  </template>
-                  <SalesBookDialog
-                    @add-transaction="add"
-                    @close-dialog="dialog = false"
-                  />
-                </v-dialog>
+                <v-btn color="primary" dark fab small class="mt-4" @click="add">
+                  <v-icon>note_add</v-icon>
+                </v-btn>
               </v-col>
               <v-col cols="12" md="1">
                 <v-dialog
@@ -108,14 +95,64 @@
             <v-data-table
               v-model="selected"
               show-select
-              item-key="id"
+              item-key="index"
               hide-default-footer
               disable-sort
               :headers="headers"
-              :items="indexedItems"
+              :items="items"
               no-data-text="Add Sales Book Transactions"
               class="elevation-3"
             >
+              <template v-slot:item.AccountName="props">
+                <v-edit-dialog
+                  :return-value.sync="props.item.AccountName"
+                > {{ props.item.AccountName }}
+                  <template v-slot:input>
+                    <v-combobox
+                      v-model="props.item.Account"
+                      :items="filterAccounts"
+                      item-text="name"
+                      label="Select Account Name"
+                      return-object
+                    ></v-combobox>
+                  </template>
+                </v-edit-dialog>
+              </template>
+              <template v-slot:item.SubAccount="props">
+                <v-edit-dialog
+                  :return-value.sync="props.item.SubAccount"
+                > {{ props.item.SubAccount }}
+                  <template v-slot:input>
+                    <v-combobox
+                      v-if="!props.item.Account.sub"
+                      v-model="props.item.SubAccount"
+                      item-text="sub.name"
+                      label="Select Account Name"
+                      return-object
+                    ></v-combobox>
+                    <v-combobox
+                      v-else-if="props.item.Account !== ''"
+                      v-model="props.item.Sub"
+                      :items="props.item.Account.sub.subaccounts"
+                      item-text="name"
+                      label="Select Account Name"
+                      return-object
+                    ></v-combobox>
+                  </template>
+                </v-edit-dialog>
+              </template>
+              <template v-slot:item.debit="props">
+                <v-edit-dialog
+                  :return-value.sync="props.item.debit"
+                > {{ props.item.debit }}
+                  <template v-slot:input>
+                    <v-text-field
+                      v-model="props.item.debit"
+                      label="Amount"
+                    ></v-text-field>
+                  </template>
+                </v-edit-dialog>
+              </template>
               <template v-slot:body.append="{ headers }">
                 <tr>
                   <td></td>
@@ -124,8 +161,8 @@
                   </td>
                   <td></td>
                   <td>
-                    <span v-if="totalCash === 0"></span>
-                    <span v-else>{{ totalCash }}</span>
+                    <span v-if="sumDebit === 0"></span>
+                    <span v-else>{{ sumDebit }}</span>
                   </td>
                 </tr>
               </template>
@@ -159,16 +196,16 @@
 </template>
 
 <script>
-import SalesBookDialog from '@/components/books/SalesBookDialog'
 import { mapActions, mapState } from 'vuex'
 import axios from 'axios'
 import RecordStatus from '@/components/status/RecordStatus'
 
 export default {
   name: 'SalesBook',
-  components: { SalesBookDialog, RecordStatus },
+  components: { RecordStatus },
   data () {
     return {
+      accounts: [],
       selected: [],
       dialogDelete: false,
       snackbar: false,
@@ -180,18 +217,20 @@ export default {
       memo: '',
       headers: [
         { text: 'AccountName', value: 'AccountName' },
-        { text: 'Sub-Account', value: 'sub.name.name' },
+        { text: 'SubAccount', value: 'SubAccount' },
         { text: 'Amount', value: 'debit' }
       ],
-      items: [],
+      items: [
+        { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: null, index: Math.random() }
+      ],
       hidden: true,
       statusId: 0
     }
   },
   methods: {
     ...mapActions('errors', ['getError']),
-    add (transaction) {
-      this.items = [ ...this.items, transaction ]
+    add () {
+      this.items = [...this.items, { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: null, index: Math.random() }]
     },
     async save () {
       const config = {
@@ -202,12 +241,11 @@ export default {
       }
       try {
         const cashItem = {
-          AccountId: 162,
+          AccountId: 163,
           debit: null,
-          credit: this.totalCash,
-          date: this.date
+          credit: this.sumDebit
         }
-        const data = [ ...this.items, cashItem ]
+        const data = [ ...this.formatItems, cashItem ]
         const newTransaction = JSON.stringify({
           BookkeeperId: this.auth.user.id,
           BookId: this.BookId,
@@ -229,7 +267,9 @@ export default {
     clearAll () {
       this.memo = ''
       this.num = ''
-      this.items = []
+      this.items = [
+        { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: null, index: Math.random() }
+      ]
     },
     clear () {
       for (let i = 0; i < this.selected.length; i++) {
@@ -246,26 +286,81 @@ export default {
   },
   computed: {
     ...mapState(['auth']),
-    totalCash () {
-      let balances = this.items.map(item => {
-        let balance = parseFloat(item.debit)
-        return balance
+    formatItems () {
+      const item = this.items.map(item => {
+        let newItem = ''
+        if (item.SubAccount === '' || item.SubAccount === null) {
+          newItem = {
+            AccountId: item.Account.id,
+            AccountName: item.AccountName,
+            debit: item.debit,
+            credit: null,
+            sub: null
+          }
+        } else {
+          if (item.Sub.id) {
+            newItem = {
+              AccountId: item.Account.id,
+              AccountName: item.AccountName,
+              debit: item.debit,
+              credit: null,
+              sub: { name: { id: item.Sub.id, name: item.SubAccount } }
+            }
+          } else {
+            newItem = {
+              AccountId: item.Account.id,
+              AccountName: item.AccountName,
+              debit: item.debit,
+              credit: null,
+              sub: { name: { name: item.SubAccount } }
+            }
+          }
+        }
+        return newItem
       })
-      const arrSum = balances => balances.reduce((a, b) => a + b, 0)
-      const sum = arrSum(balances)
-      return sum
+      return item
     },
-    indexedItems () {
-      return this.items.map((item, index) => ({
-        id: index,
-        ...item
-      }))
+    totalDebit () {
+      const sumDebit = this.items.map(item => {
+        return +item.debit
+      })
+      return sumDebit
+    },
+    sumDebit () {
+      let sum = 0
+      for (let i = 0; i < this.totalDebit.length; i++) {
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        sum += this.totalDebit[i]
+      }
+      return sum
     },
     selectedItems () {
       return this.items <= 0
     },
     deleteItems () {
       return this.selected <= 0
+    },
+    filterAccounts () {
+      return this.accounts.filter(account => {
+        return account.id === 15 || account.id === 16 || account.id === 17 || account.id === 27
+      })
+    }
+  },
+  async mounted () {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
+      this.loading = true
+      const response = await axios.get('/api/accounts', config)
+      this.accounts = response.data
+      this.loading = false
+    } catch (e) {
+      this.getError(e.response.data)
+      this.loading = false
     }
   }
 }

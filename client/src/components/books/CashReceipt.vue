@@ -247,7 +247,7 @@ export default {
       try {
         const cashItem = {
           AccountId: 1,
-          debit: this.totalCredit,
+          debit: this.sumCredit,
           credit: null
         }
         const data = [ cashItem, ...this.formatItems ]
@@ -273,7 +273,9 @@ export default {
     clearAll () {
       this.memo = ''
       this.num = ''
-      this.items = []
+      this.items = [
+        { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: null, credit: '', index: Math.random() }
+      ]
     },
     clear () {
       for (let i = 0; i < this.selected.length; i++) {
