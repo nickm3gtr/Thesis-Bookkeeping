@@ -208,14 +208,13 @@
 </template>
 
 <script>
-import PurchaseBookDialog from './PurchaseBookDialog'
 import axios from 'axios'
 import { mapState, mapActions } from 'vuex'
 import RecordStatus from '@/components/status/RecordStatus'
 
 export default {
   name: 'PurchaseBook',
-  components: { PurchaseBookDialog, RecordStatus },
+  components: { RecordStatus },
   data () {
     return {
       accounts: [],
