@@ -5,6 +5,9 @@ const auth = require('../middleware/auth')
 
 router.get('/', auth, (req, res) => {
   db.Account.findAll({
+    where: {
+      status: 'active'
+    },
     order: [
       ['id', 'ASC']
     ]
@@ -29,15 +32,40 @@ router.get('/subtypes', auth, (req, res) => {
 
 // Create an Account
 router.post('/', auth, (req, res) => {
-  const { id, name, SubTypeId } = req.body
-  const status = 'active'
+  const { name, SubTypeId, status } = req.body
   db.Account.create({
-    id,
     name,
     status,
     SubTypeId
   }).then(() => res.json({msg: 'Account added!'}))
     .catch(err => res.status(400).json({msg: 'Error adding account', err}))
+})
+
+// Delete Account
+router.delete('/', auth, (req, res) => {
+  const { items } = req.body
+  db.Account.destroy({
+    where: {
+      id: [...items]
+    }
+  }).then(() => res.json({ msg: "Deleted" }))
+    .catch(() => res.status(400).json({ msg: "Can't delete" }))
+})
+
+// Update account status
+router.put('/', auth, (req, res) => {
+  const { items } = req.body
+  db.Account.update(
+    {
+      status: 'inactive'
+    },
+    {
+      where: {
+        id: [...items]
+      }
+    }
+  ).then(() => res.json({ msg: "Inactive" }))
+  .catch(() => res.status(400).json({ msg: "Can't deactivate" }))
 })
 
 module.exports = router

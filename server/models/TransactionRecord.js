@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     sub: DataTypes.JSONB
   }, { timestamps: false });
   TransactionRecord.associate = function(models) {
-    TransactionRecord.belongsTo(models.Account, { foreignKey: 'AccountId' })
+    TransactionRecord.belongsTo(models.Account, { foreignKey: 'AccountId', onDelete: 'CASCADE', hooks: true })
     TransactionRecord.belongsTo(models.Transaction, { foreignKey: 'TransId' })
   };
   return TransactionRecord;

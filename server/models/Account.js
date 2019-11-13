@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }, { timestamps: false });
   Account.associate = function(models) {
     Account.belongsTo(models.SubType, { foreignKey: 'SubTypeId' })
-    Account.hasMany(models.TransactionRecord)
+    Account.hasMany(models.TransactionRecord, { onDelete: 'cascade', hooks: true, constraints: false })
   };
   return Account;
 };

@@ -12,6 +12,9 @@ router.get('/', auth, (req, res) => {
         model: db.Type
       }]
     }],
+    where: {
+      status: 'active'
+    },
     order: [
       ['SubTypeId', 'ASC']
     ]

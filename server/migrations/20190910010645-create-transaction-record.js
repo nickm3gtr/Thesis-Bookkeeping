@@ -22,7 +22,9 @@ module.exports = {
         references: {
           model: 'Accounts',
           key: 'id'
-        }
+        },
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       },
       debit: {
         type: Sequelize.DECIMAL(10, 2)
