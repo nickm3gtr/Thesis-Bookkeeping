@@ -2,7 +2,8 @@
   <v-card>
     <v-toolbar flat dark color="blue-grey darken-1">
       <v-toolbar-title v-if="isAdmin">Admin Login</v-toolbar-title>
-      <v-toolbar-title v-else>Bookkeeper Login</v-toolbar-title>
+      <v-toolbar-title v-else-if="isBookkeeper">Bookkeeper Login</v-toolbar-title>
+      <v-toolbar-title v-else>Manager Login</v-toolbar-title>
     </v-toolbar>
     <v-form @submit.prevent="submit(user)">
       <v-card-text>
@@ -38,14 +39,19 @@ export default {
   computed: {
     isAdmin () {
       return this.$route.name === 'homeAdmin'
+    },
+    isBookkeeper () {
+      return this.$route.name === 'home'
     }
   },
   methods: {
     submit (user) {
       if (this.$route.name === 'homeAdmin') {
         this.$emit('submit-loginAdmin', user)
-      } else {
+      } else if (this.$route.name === 'home') {
         this.$emit('submit-login', user)
+      } else if (this.$route.name === 'homeManager') {
+        this.$emit('submit-loginManager', user)
       }
       this.user.userName = ''
       this.user.password = ''

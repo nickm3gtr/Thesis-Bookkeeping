@@ -36,10 +36,39 @@
         </v-list-item>
       </v-list-group>
     </div>
-    <div v-else>
+    <div v-else-if="auth.user.account === 'admin'">
       <v-list-group
         color="white"
         v-for="item in adminItems"
+        :key="item.title"
+        :disabled="item.disabled"
+        v-model="item.active"
+        :prepend-icon="item.action"
+        :append-icon="!item.items ? '' : undefined"
+        no-action
+        @click="$router.push(item.route).catch(err => {})"
+      >
+        <template v-slot:activator>
+          <v-list-item-content>
+            <v-list-item-title class="subtitle-2 font-weight-light" v-text="item.title"></v-list-item-title>
+          </v-list-item-content>
+        </template>
+
+        <v-list-item
+          v-for="subItem in item.items"
+          :key="subItem.title"
+          :to="subItem.route"
+        >
+          <v-list-item-content>
+            <v-list-item-title class="subtitle-2 font-weight-light" v-text="subItem.title"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-group>
+    </div>
+    <div v-else-if="auth.user.account === 'manager'">
+      <v-list-group
+        color="white"
+        v-for="item in managerItems"
         :key="item.title"
         :disabled="item.disabled"
         v-model="item.active"
@@ -142,6 +171,11 @@ export default {
           route: '/admin/bookkeepers'
         },
         {
+          action: 'supervisor_account',
+          title: 'Managers',
+          route: '/admin/managers'
+        },
+        {
           action: 'event_note',
           title: 'Chart of Accounts',
           route: '/admin/chart_of_account'
@@ -162,6 +196,13 @@ export default {
             { title: 'Balance Sheet', route: '/admin/reports/balance-sheet' },
             { title: 'Year-End', route: '/admin/reports/summary' }
           ]
+        }
+      ],
+      managerItems: [
+        {
+          action: 'dashboard',
+          title: 'Dashboard',
+          route: '/bookkeeper/dashboard'
         }
       ]
     }

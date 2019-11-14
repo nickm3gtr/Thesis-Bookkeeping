@@ -11,6 +11,14 @@ export default [
     }
   },
   {
+    path: '/manager/dashboard',
+    name: 'dashboard-manager',
+    component: DashboardBookkeeper,
+    meta: {
+      title: 'Dashboard'
+    }
+  },
+  {
     path: '/admin/dashboard',
     name: 'dashboard-admin',
     component: DashboardAdmin,

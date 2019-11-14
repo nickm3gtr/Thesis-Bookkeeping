@@ -1,4 +1,5 @@
 import BookkeepersAdmin from '@/views/BookkeepersAdmin'
+import ManagersAdmin from '@/views/ManagersAdmin'
 import BookkeeperProfile from '@/views/BookkeeperProfile'
 
 export default [
@@ -8,6 +9,14 @@ export default [
     component: BookkeepersAdmin,
     meta: {
       title: 'Bookkeepers'
+    }
+  },
+  {
+    path: '/admin/managers',
+    name: 'admin-managers',
+    component: ManagersAdmin,
+    meta: {
+      title: 'Managers'
     }
   },
   {

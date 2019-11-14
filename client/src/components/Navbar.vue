@@ -21,6 +21,7 @@
             @close-dialog="close('login')"
             @submit-login="login"
             @submit-loginAdmin="adminLogin"
+            @submit-loginManager="managerLogin"
             @goto-admin="gotoAdmin"/>
         </v-dialog>
       </v-toolbar-items>
@@ -144,7 +145,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('auth', ['registerUser', 'loginUser', 'loginAdmin', 'logoutUser']),
+    ...mapActions('auth', ['registerUser', 'loginUser', 'loginAdmin', 'loginManager', 'logoutUser']),
     clickNotification () {
       // eslint-disable-next-line eqeqeq
       if (this.auth.user.status == 'created') {
@@ -177,6 +178,10 @@ export default {
     },
     adminLogin (user) {
       this.loginAdmin(user)
+      this.close('login')
+    },
+    managerLogin (user) {
+      this.loginManager(user)
       this.close('login')
     },
     gotoAdmin () {

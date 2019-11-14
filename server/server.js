@@ -11,6 +11,7 @@ app.use(morgan("combined"));
 
 // ROUTES
 app.use("/api/bookkeepers", require("./routes/bookkeeper"));
+app.use("/api/managers", require("./routes/manager"));
 app.use("/api/admin", require("./routes/admin"));
 app.use("/api/charts", require("./routes/charts"));
 app.use("/api/bookkeeping", require("./routes/bookkeeping"));

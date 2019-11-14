@@ -68,6 +68,28 @@ export default {
         dispatch('errors/getError', err.response.data, { root: true })
       })
   },
+  loginManager: ({ commit, dispatch }, payload) => {
+    commit('USER_LOADING')
+    const { userName, password } = payload
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    const user = JSON.stringify({
+      userName,
+      password
+    })
+    axios.post('/api/managers/login', user, config)
+      .then(response => {
+        commit('AUTH_USER', response.data)
+        router.push('/manager/dashboard', () => {})
+      })
+      .catch(err => {
+        commit('LOGOUT_USER')
+        dispatch('errors/getError', err.response.data, { root: true })
+      })
+  },
   loadUser: ({ commit, state }) => {
     commit('USER_LOADING')
     const config = {

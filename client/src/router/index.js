@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/Home'
 import HomeAdmin from '@/views/HomeAdmin'
+import HomeManager from '@/views/HomeManager'
 import PageNotFound from '@/components/PageNotFound'
 import store from '@/store/'
 
@@ -44,6 +45,11 @@ export default new Router({
         }
       },
       component: HomeAdmin
+    },
+    {
+      path: '/manager',
+      name: 'homeManager',
+      component: HomeManager
     },
     ...dashboard,
     ...charts,
