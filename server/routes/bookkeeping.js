@@ -8,8 +8,9 @@ const auth = require('../middleware/auth')
 router.post("/general-journal", auth, (req, res) => {
   let { BookkeeperId, BookId, num, memo, date, data } = req.body
   const status = 'created'
+  const validated = 'unvalidated'
   db.Transaction.create({
-    BookkeeperId, BookId, num, memo, status, date
+    BookkeeperId, BookId, num, memo, status, validated, date
   }).then(transaction => {
     let newData = data.map(data => {
       data.TransId = transaction.id
@@ -25,7 +26,7 @@ router.post("/general-journal", auth, (req, res) => {
 // Fetch all transaction records
 router.get("/transactions/branch/:branchId", auth, (req, res) => {
   const { branchId } = req.params
-  db.sequelize.query("select tr.id, bo.name, tr.memo, tr.num, tr.date\n" +
+  db.sequelize.query("select tr.id, bo.name, tr.memo, tr.num, tr.validated, tr.date\n" +
       "from \"Books\" bo inner join \"Transactions\" tr on bo.id=tr.\"BookId\" inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id\n" +
       "where b.\"BranchId\"=:branchId\n" +
       "order by tr.id desc, tr.\"date\" desc", {

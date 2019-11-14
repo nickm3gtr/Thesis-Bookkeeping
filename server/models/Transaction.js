@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     num: DataTypes.STRING,
     memo: DataTypes.STRING,
     status: DataTypes.STRING,
+    validated: DataTypes.STRING,
     date: DataTypes.DATE
   }, {});
   Transaction.associate = function(models) {

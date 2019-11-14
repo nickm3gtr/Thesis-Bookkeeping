@@ -202,7 +202,12 @@ export default {
         {
           action: 'dashboard',
           title: 'Dashboard',
-          route: '/bookkeeper/dashboard'
+          route: '/manager/dashboard'
+        },
+        {
+          action: 'local_atm',
+          title: 'Transactions',
+          route: '/manager/transactions'
         }
       ]
     }

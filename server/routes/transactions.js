@@ -37,4 +37,21 @@ router.get("/admin-years", auth, (req, res) => {
     .catch(err => res.status(400).json({msg: 'Error', err}))
 })
 
+//Update transaction status VALIDATE
+// Update account status to active
+router.put('/validated', auth, (req, res) => {
+  const { items } = req.body
+  db.Transaction.update(
+    {
+      validated: 'validated'
+    },
+    {
+      where: {
+        id: [...items]
+      }
+    }
+  ).then(() => res.json({ msg: "Validated" }))
+  .catch(() => res.status(400).json({ msg: "Can't validate" }))
+})
+
 module.exports = router

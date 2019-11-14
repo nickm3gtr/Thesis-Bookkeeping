@@ -7,6 +7,7 @@ import TransactionListPage from '@/views/Books/TransactionListPage'
 import TransactionFilterPage from '@/views/Books/TransactionFilterPage'
 import AdminTransactionListPage from '@/views/Books/AdminTransactionListPage'
 import AdminTransactionFilterPage from '@/views/Books/AdminTransactionFilterPage'
+import ManagerTransactionListPage from '@/views/Books/ManagerTransactionListPage'
 
 export default [
   {
@@ -77,6 +78,14 @@ export default [
     path: '/admin/transactions/:transId',
     name: 'transactions-filter-admin',
     component: AdminTransactionFilterPage,
+    meta: {
+      title: 'Transactions'
+    }
+  },
+  {
+    path: '/manager/transactions',
+    name: 'transactions-manager',
+    component: ManagerTransactionListPage,
     meta: {
       title: 'Transactions'
     }

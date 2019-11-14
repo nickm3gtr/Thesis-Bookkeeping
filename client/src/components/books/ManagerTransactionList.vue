@@ -14,8 +14,7 @@
                   return-object
                 ></v-combobox>
               </v-col>
-              <v-col cols="12" md="2">
-              </v-col>
+              <v-col cols="12" md="2"></v-col>
               <v-col cols="12" md="6">
                 <v-text-field
                   outlined
@@ -26,6 +25,11 @@
                   hide-details
                 ></v-text-field>
               </v-col>
+              <v-col cols="12" md="1">
+                <v-btn :hidden="!isSelected" class="mt-4" fab small color="primary" @click="validateAccount">
+                  <v-icon>check</v-icon>
+                </v-btn>
+              </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="6">
@@ -35,30 +39,10 @@
                 </v-radio-group>
               </v-col>
             </v-row>
-            <v-dialog
-              v-model="dialog"
-              width="500"
-            >
-              <v-card>
-                <v-toolbar color="red lighten-1" dark>
-                  <v-toolbar-title>Delete</v-toolbar-title>
-                </v-toolbar>
-                <v-card-text>
-                  <p class="subtitle-1 mt-5">Are you sure you want to delete?</p>
-                </v-card-text>
-                <v-card-actions>
-                  <div class="flex-grow-1"></div>
-                  <v-btn color="primary" text @click="dialog = false">
-                    Cancel
-                  </v-btn>
-                  <v-btn color="red" text @click="deleteItem">
-                    Delete
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
             <v-data-table
-              item-key="TransId"
+              v-model="selected"
+              show-select
+              item-key="id"
               :headers="headers"
               :items="filterValidated"
               :items-per-page="5"
@@ -67,12 +51,23 @@
               loading-text="Loading..."
               class="elevation-3"
             >
+              <template slot="items" slot-scope="props">
+                <tr>
+                  <td>
+                    <v-checkbox
+                      v-model="props.selected"
+                      :disabled="!props.selected && selected.length != 0"
+                      :indeterminate="!props.selected && selected.length != 0"
+                    ></v-checkbox>
+                  </td>
+                  <td>
+                    {{props.item.id}}
+                  </td>
+                </tr>
+              </template>
               <template v-slot:item.action="{ item }">
-                <v-btn dark small color="green" class="mx-1" @click="goToItem(item)">
+                <v-btn dark small color="green" class="mx-1" @click="route(item.id)">
                   <v-icon small>search</v-icon>
-                </v-btn>
-                <v-btn dark small color="red" class="mx-1" @click="prepareDelete(item)">
-                  <v-icon small>delete</v-icon>
                 </v-btn>
               </template>
             </v-data-table>
@@ -93,10 +88,11 @@ import { mapState, mapActions } from 'vuex'
 import moment from 'moment'
 
 export default {
-  name: 'TransactionList',
+  name: 'ManagerTransactionList',
   data () {
     return {
       radio: 'validated',
+      selected: [],
       select: { id: 0, name: 'All' },
       books: [],
       search: '',
@@ -109,44 +105,45 @@ export default {
         { text: 'Description', value: 'memo' },
         {
           text: 'Actions',
-          value: 'action',
           align: 'center',
-          sortable: false
+          sortable: false,
+          value: 'action'
         }
       ],
       timeout: 2000,
       snackbar: false,
-      itemToDelete: ''
+      itemToDelete: '',
+      update: 0
     }
   },
   methods: {
     ...mapActions('errors', ['getError']),
+    route (id) {
+      this.$router.push(`/admin/transactions/${id}`)
+    },
     prepareDelete (item) {
       this.itemToDelete = item
       this.dialog = true
     },
-    async deleteItem () {
-      const index = this.transactions.indexOf(this.itemToDelete)
+    goToItem (item) {
+      this.$router.push(`/bookkeeper/transactions/${item.id}`, () => {})
+    },
+    async validateAccount () {
       const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: localStorage.getItem('token')
         }
       }
+      const items = {
+        items: [...this.selectedId]
+      }
       try {
-        await axios.delete(
-          `/api/bookkeeping/transactions/${this.itemToDelete.id}`,
-          config
-        )
-        this.transactions.splice(index, 1)
-        this.dialog = false
-        this.snackbar = true
+        await axios.put('/api/transactions/validated', items, config)
+        this.update++
+        this.selected = []
       } catch (e) {
         this.getError(e.response.data)
       }
-    },
-    goToItem (item) {
-      this.$router.push(`/bookkeeper/transactions/${item.id}`)
     }
   },
   computed: {
@@ -168,8 +165,14 @@ export default {
         return this.formatTransactions.filter(transaction => transaction.validated === 'unvalidated')
       }
     },
-    deleteItems () {
-      return this.selected <= 0
+    isSelected () {
+      return this.selected.length > 0
+    },
+    selectedId () {
+      return this.selected.map(item => {
+        const id = item.id
+        return id
+      })
     }
   },
   watch: {
@@ -212,6 +215,25 @@ export default {
           this.loading = false
           this.getError(e.response.data)
         }
+      }
+    },
+    async update () {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token')
+        }
+      }
+      try {
+        this.loading = true
+        const transactions = await axios.get(
+          `/api/bookkeeping/transactions/branch/${this.auth.user.BranchId}`,
+          config
+        )
+        this.loading = false
+        this.transactions = transactions.data
+      } catch (e) {
+        this.getError(e.response.data)
       }
     }
   },

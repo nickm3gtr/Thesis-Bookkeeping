@@ -15,7 +15,7 @@ router.get("/journal/:id/:bookId/:start/:end", auth, (req, res) => {
           "tr.credit as credit, tr.tags as tags, tr.sub->'name' as sub \n" +
       "from \"Transactions\" t inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\"\n" +
       "inner join \"Accounts\" a on tr.\"AccountId\"=a.id inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
-      "where t.date between :start and :end and t.\"BookId\"=:bookId\n" +
+      "where t.date between :start and :end and t.\"BookId\"=:bookId and t.validated='validated' \n" +
       "order by t.date asc", {
             model: db.TransactionRecord,
             replacements: { id, start, end, bookId }
@@ -30,7 +30,7 @@ router.get("/journal/:id/:bookId/:start/:end", auth, (req, res) => {
           "tr.credit as credit, tr.tags as tags, tr.sub->'name' as sub \n" +
       "from \"Bookkeepers\" b inner join \"Transactions\" t on b.id=t.\"BookkeeperId\" inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" \n" +
       "inner join \"Accounts\" a on tr.\"AccountId\"=a.id inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
-      "where t.date between :start and :end and t.\"BookId\"=:bookId and b.\"BranchId\"=:id \n" +
+      "where t.date between :start and :end and t.\"BookId\"=:bookId and b.\"BranchId\"=:id and t.validated='validated'  \n" +
       "order by t.date asc", {
       model: db.TransactionRecord,
       replacements: { id, start, end, bookId }
@@ -53,7 +53,7 @@ router.get("/ledger/:id/:start/:end", auth, (req, res) => {
                   "inner join \"Accounts\" a on tr.\"AccountId\"=a.id\n" +
                   "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id\n" +
                   "inner join \"Types\" ty on s.\"TypeId\"=ty.id\n" +
-              "where t.\"date\" between :start and :end\n" +
+              "where t.\"date\" between :start and :end and t.validated='validated' \n" +
               "group by tr.sub, a.name, tr.\"AccountId\", ty.id\n" +
               "order by tr.\"AccountId\" asc", {
         model: db.TransactionRecord,
@@ -69,7 +69,7 @@ router.get("/ledger/:id/:start/:end", auth, (req, res) => {
                   "inner join \"Accounts\" a on tr.\"AccountId\"=a.id\n" +
                   "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id\n" +
                   "inner join \"Types\" ty on s.\"TypeId\"=ty.id\n" +
-              "where t.\"date\" between :start and :end and b.\"BranchId\"=:id\n" +
+              "where t.\"date\" between :start and :end and b.\"BranchId\"=:id and t.validated='validated' \n" +
               "group by tr.sub, a.name, tr.\"AccountId\", ty.id\n" +
               "order by tr.\"AccountId\" asc", {
         model: db.TransactionRecord,
@@ -89,7 +89,7 @@ router.get("/trial-balance/:id/:start/:end", auth, (req, res) => {
         "inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
         "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id  \n" +
         "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
-      "where t.\"date\" between :start and :end \n" +
+      "where t.\"date\" between :start and :end and t.validated='validated' \n" +
       "group by tr.sub, a.\"name\", s.\"name\", ty.\"name\", a.id \n" +
       "order by a.id", {
       model: db.TransactionRecord,
@@ -103,7 +103,7 @@ router.get("/trial-balance/:id/:start/:end", auth, (req, res) => {
         "inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
         "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id  \n" +
         "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
-      "where t.\"date\" between :start and :end and br.id=:id \n" +
+      "where t.\"date\" between :start and :end and br.id=:id and t.validated='validated' \n" +
       "group by tr.sub, a.\"name\", s.\"name\", ty.\"name\", a.id \n" +
       "order by a.id", {
       model: db.TransactionRecord,
@@ -124,7 +124,7 @@ router.get("/income-statement/:id/:start/:end", auth, (req, res) => {
         "inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
         "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id  \n" +
         "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
-      "where t.\"date\" between :start and :end and ty.id>=40000 and ty.id<=80000 \n" +
+      "where t.\"date\" between :start and :end and ty.id>=40000 and ty.id<=80000 and t.validated='validated' \n" +
       "group by tr.sub, a.\"name\", s.\"name\", ty.\"name\", a.id, ty.id, s.id \n" +
       "order by a.id", {
       model: db.TransactionRecord,
@@ -138,7 +138,7 @@ router.get("/income-statement/:id/:start/:end", auth, (req, res) => {
         "inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
         "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id  \n" +
         "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
-      "where t.\"date\" between :start and :end and br.id=:id  and ty.id>=40000 and ty.id<=80000 \n" +
+      "where t.\"date\" between :start and :end and br.id=:id  and ty.id>=40000 and ty.id<=80000 and t.validated='validated' \n" +
       "group by tr.sub, a.\"name\", s.\"name\", ty.\"name\", a.id, ty.id, s.id \n" +
       "order by a.id", {
       model: db.TransactionRecord,
@@ -158,7 +158,7 @@ router.get("/balance-sheet/:id/:date", auth, (req, res) => {
         "inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
         "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id  \n" +
         "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
-      "where t.\"date\" <=:date and ty.id>=10000 and ty.id<40000 \n" +
+      "where t.\"date\" <=:date and ty.id>=10000 and ty.id<40000 and t.validated='validated' \n" +
       "group by tr.sub, a.\"name\", s.\"name\", ty.\"name\", a.id, ty.id, s.id \n" +
       "order by a.id", {
       model: db.TransactionRecord,
@@ -171,7 +171,7 @@ router.get("/balance-sheet/:id/:date", auth, (req, res) => {
         "inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
         "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id  \n" +
         "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
-      "where t.\"date\" <=:date and br.id=:id  and ty.id>=10000 and ty.id<40000 \n" +
+      "where t.\"date\" <=:date and br.id=:id  and ty.id>=10000 and ty.id<40000 and t.validated='validated' \n" +
       "group by tr.sub, a.\"name\", s.\"name\", ty.\"name\", a.id, ty.id, s.id \n" +
       "order by a.id", {
       model: db.TransactionRecord,
@@ -191,7 +191,7 @@ router.get("/net-profit/:id/:year/:date", auth, (req, res) => {
         "inner join \"TransactionRecords\" tr on t.id=tr.\"TransId\" inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
         "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id  \n" +
         "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
-      "where t.\"date\" between :startDate and :date and ty.id>=40000 and ty.id<=80000 \n" +
+      "where t.\"date\" between :startDate and :date and ty.id>=40000 and ty.id<=80000 and t.validated='validated' \n" +
       "group by tr.sub, a.\"name\", s.\"name\", ty.\"name\", a.id, ty.id, s.id \n" +
       "order by a.id", {
       model: db.TransactionRecord,
@@ -209,7 +209,7 @@ router.get("/net-profit/:id/:year/:date", auth, (req, res) => {
                         "where a.id in (\n" +
                           "select tr.\"AccountId\"\n" +
                           "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-                            "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :startDate and :date and b.\"BranchId\"=:id\n" +
+                            "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :startDate and :date and b.\"BranchId\"=:id and t.validated='validated' \n" +
                         ")", {
       model: db.TransactionRecord,
       replacements: { id, date, startDate }
@@ -240,35 +240,35 @@ router.get('/notes/:id/:first/:second', auth, (req, res) => {
     db.sequelize.query("select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, ( \n" +
         "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-        "where tr.\"AccountId\"=a.id and t.\"date\" <= :yearOneEnd \n" +
+        "where tr.\"AccountId\"=a.id and t.\"date\" <= :yearOneEnd and t.validated='validated' \n" +
       ") as balance1, ( \n" +
       "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-        "where tr.\"AccountId\"=a.id and t.\"date\" <= :yearTwoEnd \n" +
+        "where tr.\"AccountId\"=a.id and t.\"date\" <= :yearTwoEnd and t.validated='validated' \n" +
       ") as balance2 \n" +
       "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
           "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
       "where a.id in ( \n" +
         "select tr.\"AccountId\" \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-        "where ty.id >=10000 and ty.id < 40000 and t.\"date\" <= :yearTwoEnd \n" +
+        "where ty.id >=10000 and ty.id < 40000 and t.\"date\" <= :yearTwoEnd and t.validated='validated' \n" +
       ") \n" +
       "union all \n" +
     "select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, ( \n" +
         "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearOneStart and :yearOneEnd \n" +
+        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearOneStart and :yearOneEnd and t.validated='validated' \n" +
       ") as balance1, ( \n" +
       "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearTwoStart and :yearTwoEnd \n" +
+        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearTwoStart and :yearTwoEnd and t.validated='validated' \n" +
       ") as balance2 \n" +
       "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
           "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
       "where a.id in ( \n" +
         "select tr.\"AccountId\" \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-        "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :yearOneStart and :yearTwoEnd \n" +
+        "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :yearOneStart and :yearTwoEnd and t.validated='validated' \n" +
       ")", {
         model: db.TransactionRecord,
         replacements: { id, yearOneStart, yearOneEnd, yearTwoStart, yearTwoEnd }
@@ -278,35 +278,35 @@ router.get('/notes/:id/:first/:second', auth, (req, res) => {
       db.sequelize.query("select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, ( \n" +
       "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
       "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-      "where tr.\"AccountId\"=a.id and t.\"date\" <= :yearOneEnd and b.\"BranchId\"=:id \n" +
+      "where tr.\"AccountId\"=a.id and t.\"date\" <= :yearOneEnd and b.\"BranchId\"=:id and t.validated='validated' \n" +
     ") as balance1, ( \n" +
     "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
       "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
-      "where tr.\"AccountId\"=a.id and t.\"date\" <= :yearTwoEnd and b.\"BranchId\"=:id \n" +
+      "where tr.\"AccountId\"=a.id and t.\"date\" <= :yearTwoEnd and b.\"BranchId\"=:id and t.validated='validated' \n" +
     ") as balance2 \n" +
     "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
         "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
     "where a.id in ( \n" +
       "select tr.\"AccountId\" \n" +
       "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
-      "where ty.id >=10000 and ty.id < 40000 and t.\"date\" <= :yearTwoEnd and b.\"BranchId\"=:id \n" +
+      "where ty.id >=10000 and ty.id < 40000 and t.\"date\" <= :yearTwoEnd and b.\"BranchId\"=:id and t.validated='validated' \n" +
     ") \n" +
     "union all \n" +
   "select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, ( \n" +
       "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
       "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
-      "where tr.\"AccountId\"=a.id and t.\"date\" between :yearOneStart and :yearOneEnd and b.\"BranchId\"=:id \n" +
+      "where tr.\"AccountId\"=a.id and t.\"date\" between :yearOneStart and :yearOneEnd and b.\"BranchId\"=:id and t.validated='validated' \n" +
     ") as balance1, ( \n" +
     "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
       "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
-      "where tr.\"AccountId\"=a.id and t.\"date\" between :yearTwoStart and :yearTwoEnd and b.\"BranchId\"=:id \n" +
+      "where tr.\"AccountId\"=a.id and t.\"date\" between :yearTwoStart and :yearTwoEnd and b.\"BranchId\"=:id and t.validated='validated' \n" +
     ") as balance2 \n" +
     "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
         "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
     "where a.id in ( \n" +
       "select tr.\"AccountId\" \n" +
       "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
-      "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :yearOneStart and :yearTwoEnd and b.\"BranchId\"=:id \n" +
+      "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :yearOneStart and :yearTwoEnd and b.\"BranchId\"=:id and t.validated='validated' \n" +
     ")", {
       model: db.TransactionRecord,
       replacements: { id, yearOneStart, yearOneEnd, yearTwoStart, yearTwoEnd }
@@ -340,18 +340,18 @@ router.get('/summary/net-profit/:id/:first/:second', auth, (req, res) => {
     db.sequelize.query("select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, ( \n" +
         "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearOneStart and :yearOneEnd \n" +
+        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearOneStart and :yearOneEnd and t.validated='validated' \n" +
       ") as balance1, ( \n" +
       "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearTwoStart and :yearTwoEnd \n" +
+        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearTwoStart and :yearTwoEnd and t.validated='validated' \n" +
       ") as balance2 \n" +
       "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
           "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
       "where a.id in ( \n" +
         "select tr.\"AccountId\" \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id \n" +
-        "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :yearOneStart and :yearTwoEnd \n" +
+        "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :yearOneStart and :yearTwoEnd and t.validated='validated' \n" +
       ")", {
         model: db.TransactionRecord,
         replacements: { id, yearOneStart, yearOneEnd, yearTwoStart, yearTwoEnd }
@@ -361,18 +361,18 @@ router.get('/summary/net-profit/:id/:first/:second', auth, (req, res) => {
     db.sequelize.query("select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, ( \n" +
         "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
-        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearOneStart and :yearOneEnd and b.\"BranchId\"=:id  \n" +
+        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearOneStart and :yearOneEnd and b.\"BranchId\"=:id and t.validated='validated'  \n" +
       ") as balance1, ( \n" +
       "select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
-        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearTwoStart and :yearTwoEnd and b.\"BranchId\"=:id  \n" +
+        "where tr.\"AccountId\"=a.id and t.\"date\" between :yearTwoStart and :yearTwoEnd and b.\"BranchId\"=:id and t.validated='validated'   \n" +
       ") as balance2 \n" +
       "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
           "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
       "where a.id in ( \n" +
         "select tr.\"AccountId\" \n" +
         "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
-        "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :yearOneStart and :yearTwoEnd and b.\"BranchId\"=:id  \n" +
+        "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :yearOneStart and :yearTwoEnd and b.\"BranchId\"=:id and t.validated='validated'  \n" +
       ")", {
         model: db.TransactionRecord,
         replacements: { id, yearOneStart, yearOneEnd, yearTwoStart, yearTwoEnd }
@@ -389,14 +389,14 @@ router.get('/distribute/:id/:year', auth, (req, res) => {
   let end = `${year}-12-31`
   db.sequelize.query("select ty.name as type, s.id as \"subtypeId\", s.\"name\" as subtype, ty.id as id, a.id as \"account_id\", a.\"name\" as account, (select coalesce(sum(coalesce(tr.debit, 0)) - sum(coalesce(tr.credit, 0)), 0) \n" +
     "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
-    "where tr.\"AccountId\"=a.id and t.\"date\" between :start and :end and b.\"BranchId\"=:id \n" +
+    "where tr.\"AccountId\"=a.id and t.\"date\" between :start and :end and b.\"BranchId\"=:id and t.validated='validated' \n" +
   ") as balance \n" +
   "from \"Accounts\" a inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
       "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
   "where a.id in ( \n" +
     "select tr.\"AccountId\" \n" +
     "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id  \n" +
-    "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :start and :end and b.\"BranchId\"=:id \n" +
+    "where ty.id >=40000 and ty.id < 80000 and t.\"date\" between :start and :end and b.\"BranchId\"=:id and t.validated='validated' \n" +
   ")", {
     model: db.TransactionRecord,
     replacements: { id, year, start, end }
