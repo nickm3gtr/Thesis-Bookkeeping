@@ -52,8 +52,8 @@ router.delete('/', auth, (req, res) => {
     .catch(() => res.status(400).json({ msg: "Can't delete" }))
 })
 
-// Update account status
-router.put('/', auth, (req, res) => {
+// Update account status to inactive
+router.put('/inactive', auth, (req, res) => {
   const { items } = req.body
   db.Account.update(
     {
@@ -66,6 +66,22 @@ router.put('/', auth, (req, res) => {
     }
   ).then(() => res.json({ msg: "Inactive" }))
   .catch(() => res.status(400).json({ msg: "Can't deactivate" }))
+})
+
+// Update account status to active
+router.put('/active', auth, (req, res) => {
+  const { items } = req.body
+  db.Account.update(
+    {
+      status: 'active'
+    },
+    {
+      where: {
+        id: [...items]
+      }
+    }
+  ).then(() => res.json({ msg: "Active" }))
+  .catch(() => res.status(400).json({ msg: "Can't activate" }))
 })
 
 module.exports = router

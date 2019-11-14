@@ -4,7 +4,7 @@
       <RestrictedResource />
     </div>
     <div v-else>
-      <ChartOfAccount />
+      <AdminChartofAccount />
     </div>
   </div>
 </template>
@@ -12,11 +12,11 @@
 <script>
 import RestrictedResource from '@/components/RestrictedResource'
 
-import ChartOfAccount from '@/components/ChartOfAccount'
+import AdminChartofAccount from '@/components/AdminChartofAccount'
 
 export default {
   name: 'ChartofAccountAdmin',
-  components: { ChartOfAccount, RestrictedResource }
+  components: { AdminChartofAccount, RestrictedResource }
 }
 </script>
 
