@@ -28,7 +28,7 @@ import { mapState, mapActions } from 'vuex'
 import numeral from 'numeral'
 
 export default {
-  name: 'VendorComponent',
+  name: 'AdminVendorComponent',
   data () {
     return {
       vendorName: '',
@@ -55,7 +55,7 @@ export default {
       }
     }
     try {
-      const response = await axios.get(`/api/vendor/bookkeeper/balances/${this.auth.user.BranchId}`, config)
+      const response = await axios.get(`/api/vendor/bookkeeper/balances/0`, config)
       const vendorNames = await axios.get('/api/vendor', config)
       this.vendorBalance = response.data
       this.vendorNames = vendorNames.data

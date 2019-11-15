@@ -18,10 +18,32 @@ router.get('/', auth, (req, res) => {
     .catch(err => res.status(400).json({ msg: 'Error fetching banks', err }))
 })
 
+//Delete Bank
+router.delete('/', auth, (req, res) => {
+  const { items } = req.body
+  db.Bank.destroy({
+    where: {
+      id: [...items]
+    }
+  }).then(() => res.json({ msg: "Deleted" }))
+    .catch(() => res.status(400).json({ msg: "Can't delete" }))
+})
+
 // Bank balance
 router.get('/bookkeeper/balances/:id', auth, (req, res) => {
   const { id } = req.params
-  db.sequelize.query("select coalesce(sum(tr.debit),0) - coalesce(sum(tr.credit), 0) as balance, tr.sub->'name' as name \n" + 
+
+  if (id == 0) {
+    db.sequelize.query("select coalesce(sum(tr.debit),0) - coalesce(sum(tr.credit), 0) as balance, tr.sub->'name' as name \n" + 
+    "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
+    "where \"AccountId\"=3 \n" +
+    "group by name", {
+      model: db.Bank,
+      replacements: { id }
+    }).then(balances => res.json(balances))
+      .catch(err => res.status(400).json({ msg: 'Cant fetch bank balances', err }))
+  } else {
+    db.sequelize.query("select coalesce(sum(tr.debit),0) - coalesce(sum(tr.credit), 0) as balance, tr.sub->'name' as name \n" + 
     "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
     "where \"AccountId\"=3 and b.\"BranchId\"=:id \n" +
     "group by name", {
@@ -29,6 +51,7 @@ router.get('/bookkeeper/balances/:id', auth, (req, res) => {
       replacements: { id }
     }).then(balances => res.json(balances))
       .catch(err => res.status(400).json({ msg: 'Cant fetch bank balances', err }))
+  }
 })
 
 // Update CIB subaccount in Accounts table

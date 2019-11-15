@@ -2,42 +2,11 @@
   <div>
     <v-layout>
       <v-flex sm12 md8 offset-md2>
-        <v-dialog v-model="addDialog" max-width="400px">
-          <v-card>
-            <v-card-title>
-              Add Bank
-            </v-card-title>
-            <v-card-text>
-              <v-text-field v-model="bankName" label="Name"></v-text-field>
-            </v-card-text>
-            <v-card-actions>
-              <div class="flex-grow-1"></div>
-                <v-btn
-                color="primary" text
-                @click="addDialog = false">
-                  Close
-                </v-btn>
-                <v-btn
-                color="primary" text
-                @click="addBank">
-                  Add
-                </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
         <v-card outlined class="my-6">
           <v-card-text>
             <v-row>
               <v-col cols="12" md="10"></v-col>
               <v-col cols="12" md="2">
-                <v-btn
-                  small
-                  dark
-                  color="primary"
-                  @click="addDialog = true"
-                >
-                  Add
-                </v-btn>
               </v-col>
             </v-row>
             <v-data-table
@@ -62,7 +31,6 @@ export default {
   name: 'BankComponent',
   data () {
     return {
-      addDialog: false,
       bankName: '',
       bankBalance: [],
       bankNames: [],
@@ -77,30 +45,6 @@ export default {
     ...mapActions('errors', ['getError']),
     currency (value) {
       return numeral(value).format('0,0.00')
-    },
-    async addBank () {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: localStorage.getItem('token')
-        }
-      }
-      const newBankAccount = JSON.stringify({
-        name: this.bankName
-      })
-      try {
-        await axios.post('/api/bank', newBankAccount, config)
-        // Get data and update CIB in accounts table
-        const response = await axios.get('/api/bank', config)
-        const sub = JSON.stringify({
-          sub: { subaccounts: response.data }
-        })
-        await axios.put('/api/bank/update-account', sub, config)
-        this.updated++
-        this.addDialog = false
-      } catch (e) {
-        this.getError(e.response.data)
-      }
     }
   },
   async mounted () {

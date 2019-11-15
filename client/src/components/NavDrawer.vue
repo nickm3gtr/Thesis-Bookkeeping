@@ -176,6 +176,21 @@ export default {
           route: '/admin/managers'
         },
         {
+          action: 'account_balance',
+          title: 'Bank',
+          route: '/admin/banks'
+        },
+        {
+          action: 'people_alt',
+          title: 'Customers',
+          route: '/admin/customers'
+        },
+        {
+          action: 'store_mall_directory',
+          title: 'Vendors',
+          route: '/admin/vendors'
+        },
+        {
           action: 'event_note',
           title: 'Chart of Accounts',
           route: '/admin/chart_of_account'
@@ -208,6 +223,21 @@ export default {
           action: 'local_atm',
           title: 'Transactions',
           route: '/manager/transactions'
+        },
+        {
+          action: 'account_balance',
+          title: 'Bank',
+          route: '/manager/banks'
+        },
+        {
+          action: 'people_alt',
+          title: 'Customers',
+          route: '/manager/customers'
+        },
+        {
+          action: 'store_mall_directory',
+          title: 'Vendors',
+          route: '/manager/vendors'
         }
       ]
     }

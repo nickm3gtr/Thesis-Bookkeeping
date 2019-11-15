@@ -28,7 +28,7 @@ import { mapState, mapActions } from 'vuex'
 import numeral from 'numeral'
 
 export default {
-  name: 'CustomerComponent',
+  name: 'AdminCustomerComponent',
   data () {
     return {
       customerName: '',
@@ -55,7 +55,7 @@ export default {
       }
     }
     try {
-      const response = await axios.get(`/api/customer/bookkeeper/balances/${this.auth.user.BranchId}`, config)
+      const response = await axios.get(`/api/customer/bookkeeper/balances/0`, config)
       const customerNames = await axios.get('/api/customer', config)
       this.customerBalance = response.data
       this.customerNames = customerNames.data
@@ -106,7 +106,7 @@ export default {
         }
       }
       try {
-        const response = await axios.get(`/api/customer/bookkeeper/balances/${this.auth.user.BranchId}`, config)
+        const response = await axios.get(`/api/customer/bookkeeper/balances/0`, config)
         const customerNames = await axios.get('/api/customer', config)
         this.customerBalance = response.data
         this.customerNames = customerNames.data

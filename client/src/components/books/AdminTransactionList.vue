@@ -34,7 +34,7 @@
             <v-data-table
               item-key="TransId"
               :headers="headers"
-              :items="formatTransactions"
+              :items="filterTransactions"
               :items-per-page="5"
               :search="search"
               :loading="loading"
@@ -102,6 +102,9 @@ export default {
     },
     deleteItems () {
       return this.selected <= 0
+    },
+    filterTransactions () {
+      return this.formatTransactions.filter(transaction => transaction.validated === 'validated')
     }
   },
   watch: {
