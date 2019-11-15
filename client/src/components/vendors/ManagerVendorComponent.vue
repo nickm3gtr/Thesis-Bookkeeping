@@ -20,7 +20,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-dialog v-model="addDialog" max-width="400px">
+        <v-dialog persistent v-model="addDialog" max-width="400px">
           <v-card>
             <v-card-title>
               Add Vendor
@@ -131,6 +131,7 @@ export default {
         await axios.put('/api/vendor/update-account', sub, config)
         this.updated++
         this.addDialog = false
+        this.vendorName = ''
       } catch (e) {
         this.getError(e.response.data)
       }

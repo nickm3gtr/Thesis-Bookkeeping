@@ -2,7 +2,7 @@
   <div>
     <v-layout>
       <v-flex sm12 md10 offset-md1>
-        <v-dialog v-model="addDialog" max-width="400px">
+        <v-dialog persistent v-model="addDialog" max-width="400px">
           <v-card>
             <v-card-title>
               Add Bank
@@ -131,6 +131,7 @@ export default {
         await axios.put('/api/bank/update-account', sub, config)
         this.updated++
         this.addDialog = false
+        this.bankName = ''
       } catch (e) {
         this.getError(e.response.data)
       }
