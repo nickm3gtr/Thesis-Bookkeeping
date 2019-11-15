@@ -6,7 +6,7 @@
           <v-card-title>
             <v-row>
               <v-col cols="12" md="12">
-                <span class="title font-weight-light">Bookkeepers List</span>
+                <span class="title font-weight-light">Managers List</span>
               </v-col>
               <v-col cols="12" md="9"></v-col>
               <v-col cols="12" md="3">
@@ -16,7 +16,7 @@
                   </template>
                   <v-card>
                     <v-card-title>
-                      <span class="title">Add Bookkeeper</span>
+                      <span class="title">Add Manager</span>
                     </v-card-title>
                     <v-card-text>
                       <v-col cols="12" md="12">
