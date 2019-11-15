@@ -37,6 +37,12 @@
                   return-object
                 ></v-combobox>
               </v-col>
+              <v-col cols="12" md="4">
+                <v-text-field
+                  label="Invoice number"
+                  v-model="num"
+                ></v-text-field>
+              </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="9">
@@ -224,6 +230,7 @@ export default {
       BookId: 4,
       dialog: false,
       memo: '',
+      num: '',
       headers: [
         { text: 'AccountName', value: 'AccountName' },
         { text: 'SubAccount', value: 'SubAccount' },

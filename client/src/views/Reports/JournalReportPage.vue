@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="$store.state.auth.isAuthenticated == false ||
-    $store.state.auth.user.account !== 'bookkeeper'">
+    $store.state.auth.user.account === 'admin'">
       <RestrictedResource />
     </div>
     <div v-else>

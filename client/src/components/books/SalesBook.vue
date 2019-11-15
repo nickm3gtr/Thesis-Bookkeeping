@@ -29,6 +29,10 @@
                 </v-menu>
               </v-col>
               <v-col cols="12" md="4">
+                <v-text-field
+                  label="Invoice number"
+                  v-model="num"
+                ></v-text-field>
               </v-col>
             </v-row>
             <v-row>
@@ -214,6 +218,7 @@ export default {
       date: new Date().toISOString().substr(0, 10),
       BookId: 5,
       dialog: false,
+      num: '',
       memo: '',
       headers: [
         { text: 'AccountName', value: 'AccountName' },
@@ -249,6 +254,7 @@ export default {
         const newTransaction = JSON.stringify({
           BookkeeperId: this.auth.user.id,
           BookId: this.BookId,
+          num: this.num,
           memo: this.memo,
           date: this.date,
           data: data

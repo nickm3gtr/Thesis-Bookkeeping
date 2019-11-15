@@ -71,6 +71,7 @@ export default {
       headers: [
         { text: 'Date', value: 'date' },
         { text: 'TransactionID', value: 'id' },
+        { text: 'Number', value: 'num' },
         { text: 'Branch', value: 'branchName' },
         { text: 'Description', value: 'memo' },
         {

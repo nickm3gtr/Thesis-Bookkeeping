@@ -238,6 +238,17 @@ export default {
           action: 'store_mall_directory',
           title: 'Vendors',
           route: '/manager/vendors'
+        },
+        {
+          action: 'bar_chart',
+          title: 'Reports',
+          items: [
+            { title: 'Journal', route: '/manager/reports/journal' },
+            { title: 'Ledger', route: '/manager/reports/ledger' },
+            { title: 'Trial Balance', route: '/manager/reports/trial-balance' },
+            { title: 'Income Statement', route: '/manager/reports/income-statement' },
+            { title: 'Balance Sheet', route: '/manager/reports/balance-sheet' }
+          ]
         }
       ]
     }

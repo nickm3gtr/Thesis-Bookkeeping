@@ -40,7 +40,7 @@ router.get("/transactions/branch/:branchId", auth, (req, res) => {
 router.get("/transactions/book/:branchId/:bookId", auth, (req, res) => {
   const { branchId, bookId } = req.params
 
-  db.sequelize.query("select tr.id, tr.memo, tr.num, tr.date\n" +
+  db.sequelize.query("select tr.id, tr.memo, tr.num, tr.date, tr.validated \n" +
   "from \"Transactions\" tr inner join \"Bookkeepers\" b on tr.\"BookkeeperId\"=b.id\n" +
   "where b.\"BranchId\"=:branchId and tr.\"BookId\"=:bookId\n" +
   "order by tr.id desc, tr.\"date\" desc", {

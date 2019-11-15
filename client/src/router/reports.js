@@ -69,6 +69,47 @@ export default [
       title: 'Year-End Report'
     }
   },
+  // Manager
+  {
+    path: '/manager/reports/journal',
+    name: 'reports-journal-manager',
+    component: JournalReportPage,
+    meta: {
+      title: 'Journal'
+    }
+  },
+  {
+    path: '/manager/reports/ledger',
+    name: 'reports-ledger-manager',
+    component: LedgerReportPage,
+    meta: {
+      title: 'Ledger'
+    }
+  },
+  {
+    path: '/manager/reports/trial-balance',
+    name: 'reports-trialBalance-manager',
+    component: TrialBalanceReportPage,
+    meta: {
+      title: 'Trial Balance'
+    }
+  },
+  {
+    path: '/manager/reports/income-statement',
+    name: 'reports-incomeStatement-manager',
+    component: IncomeStatementPage,
+    meta: {
+      title: 'Income Statement'
+    }
+  },
+  {
+    path: '/manager/reports/balance-sheet',
+    name: 'reports-balanceSheet-manager',
+    component: BalanceSheetPage,
+    meta: {
+      title: 'Balance Sheet'
+    }
+  },
   {
     path: '/admin/reports/journal',
     name: 'reports-journal-admin',

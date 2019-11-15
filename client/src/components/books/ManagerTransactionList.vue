@@ -102,6 +102,7 @@ export default {
       headers: [
         { text: 'Date', value: 'date' },
         { text: 'TransactionID', value: 'id' },
+        { text: 'Number', value: 'num' },
         { text: 'Description', value: 'memo' },
         {
           text: 'Actions',
