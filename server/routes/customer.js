@@ -36,7 +36,7 @@ router.get('/bookkeeper/balances/:id', auth, (req, res) => {
   if (id == 0) {
     db.sequelize.query("select coalesce(sum(tr.debit),0) - coalesce(sum(tr.credit), 0) as balance, tr.sub->'name' as name \n" + 
     "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-    "where \"AccountId\"=15 \n" +
+    "where \"AccountId\"=15 and t.validated='validated' \n" +
     "group by name", {
       model: db.Customer,
       replacements: { id }
@@ -45,7 +45,7 @@ router.get('/bookkeeper/balances/:id', auth, (req, res) => {
   } else {
     db.sequelize.query("select coalesce(sum(tr.debit),0) - coalesce(sum(tr.credit), 0) as balance, tr.sub->'name' as name \n" + 
     "from \"TransactionRecords\" tr inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-    "where \"AccountId\"=15 and b.\"BranchId\"=:id \n" +
+    "where \"AccountId\"=15 and b.\"BranchId\"=:id and t.validated='validated' \n" +
     "group by name", {
       model: db.Customer,
       replacements: { id }

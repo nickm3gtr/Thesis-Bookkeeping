@@ -170,6 +170,12 @@ export default {
     try {
       const response = await axios.get(`/api/bank/bookkeeper/balances/0`, config)
       const bankNames = await axios.get('/api/bank', config)
+      // Get data and update A/R customers in accounts table
+      const response2 = await axios.get('/api/bank', config)
+      const sub = JSON.stringify({
+        sub: { subaccounts: response2.data }
+      })
+      await axios.put('/api/bank/update-account', sub, config)
       this.bankBalance = response.data
       this.bankNames = bankNames.data
     } catch (e) {
@@ -230,6 +236,12 @@ export default {
       try {
         const response = await axios.get(`/api/bank/bookkeeper/balances/0`, config)
         const bankNames = await axios.get('/api/bank', config)
+        // Get data and update A/R customers in accounts table
+        const response2 = await axios.get('/api/bank', config)
+        const sub = JSON.stringify({
+          sub: { subaccounts: response2.data }
+        })
+        await axios.put('/api/bank/update-account', sub, config)
         this.bankBalance = response.data
         this.bankNames = bankNames.data
       } catch (e) {
