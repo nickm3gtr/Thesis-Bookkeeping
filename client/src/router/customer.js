@@ -7,7 +7,7 @@ export default [
   {
     path: '/bookkeeper/customers',
     name: 'customer-bookkeeper',
-    component: CustomerPage,
+    component: ManagerCustomerPage,
     meta: {
       title: 'Customers'
     }
@@ -23,7 +23,7 @@ export default [
   {
     path: '/manager/customers',
     name: 'customer-manager',
-    component: ManagerCustomerPage,
+    component: CustomerPage,
     meta: {
       title: 'Customers'
     }
@@ -31,7 +31,7 @@ export default [
   {
     path: '/bookkeeper/vendors',
     name: 'vendor-bookkeeper',
-    component: VendorPage,
+    component: ManagerVendorPage,
     meta: {
       title: 'Vendors'
     }
@@ -47,7 +47,7 @@ export default [
   {
     path: '/manager/vendors',
     name: 'vendor-manager',
-    component: ManagerVendorPage,
+    component: VendorPage,
     meta: {
       title: 'Vendors'
     }
