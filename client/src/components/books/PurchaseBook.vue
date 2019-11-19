@@ -261,7 +261,7 @@ export default {
           debit: null,
           credit: this.sumDebit,
           sub: {
-            name: this.selectedVendor
+            name: this.selectedVendor.name
           }
         }
         const data = [ ...this.formatItems, cashItem ]

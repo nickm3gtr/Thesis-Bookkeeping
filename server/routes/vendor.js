@@ -5,8 +5,8 @@ const auth = require('../middleware/auth')
 
 // Add vendor
 router.post('/', auth, (req, res) => {
-  const { name } = req.body
-  db.Vendor.create({ name })
+  const { name, contactPerson, address, email, number } = req.body
+  db.Vendor.create({ name, contactPerson, address, email, number })
     .then(vendor => res.json(vendor))
     .catch(err => res.status(400).json({ msg: 'Error adding vendor', err }))
 })

@@ -5,8 +5,8 @@ const auth = require('../middleware/auth')
 
 // Add Customer
 router.post('/', auth, (req, res) => {
-  const { name } = req.body
-  db.Customer.create({ name })
+  const { name, contactPerson, address, email, number } = req.body
+  db.Customer.create({ name, contactPerson, address, email, number })
     .then(customer => res.json(customer))
     .catch(err => res.status(400).json({ msg: 'Error adding customer', err }))
 })

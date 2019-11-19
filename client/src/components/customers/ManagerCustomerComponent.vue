@@ -20,13 +20,17 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-dialog persistent v-model="addDialog" max-width="400px">
+        <v-dialog persistent v-model="addDialog" max-width="600px">
           <v-card>
             <v-card-title>
               Add Customer
             </v-card-title>
             <v-card-text>
-              <v-text-field v-model="customerName" label="Name"></v-text-field>
+              <v-text-field v-model="customerName" label="Company Name"></v-text-field>
+              <v-text-field v-model="contactPerson" label="Contact Person"></v-text-field>
+              <v-text-field v-model="address" label="Address"></v-text-field>
+              <v-text-field v-model="email" label="Email"></v-text-field>
+              <v-text-field v-model="number" label="Contact Number"></v-text-field>
             </v-card-text>
             <v-card-actions>
               <div class="flex-grow-1"></div>
@@ -100,6 +104,10 @@ export default {
       deleteDialog: false,
       addDialog: false,
       customerName: '',
+      contactPerson: '',
+      address: '',
+      email: '',
+      number: '',
       customerBalance: [],
       customerNames: [],
       headers: [
@@ -122,7 +130,11 @@ export default {
         }
       }
       const newCustomerAccount = JSON.stringify({
-        name: this.customerName
+        name: this.customerName,
+        contactPerson: this.contactPerson,
+        address: this.address,
+        email: this.email,
+        number: this.number
       })
       try {
         await axios.post('/api/customer', newCustomerAccount, config)

@@ -131,17 +131,17 @@ export default {
         BranchId: this.select.id
       })
       try {
+        this.dialog = false
         const response = await axios.post('/api/managers', newUser, config)
         const savedTransaction = response.data
         if (!savedTransaction) this.getError('Failed')
         this.msg = 'Saved!'
         this.saved++
         this.snackbar = true
-        this.dialog = false
         this.clear()
       } catch (e) {
-        this.getError(e.response.data)
         this.dialog = false
+        this.getError(e.response.data)
       }
     },
     prepareDelete (item) {
