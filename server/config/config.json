@@ -1,14 +1,11 @@
 {
   "development": {
-    "username": "luxdnimzvtxylb",
-    "password": "0f09d01a9f8df3e198dedca15f184ccff22458c4bc73b9aae007a6ad182c8c84",
-    "database": "d6j4mat6ijori4",
-    "host": "ec2-23-21-160-38.compute-1.amazonaws.com",
+    "username": "nick",
+    "password": "nick",
+    "database": "thesis",
+    "host": "127.0.0.1",
     "dialect": "postgres",
-    "operatorsAliases": false,
-    "dialectOptions": {
-      "ssl": true
-    }
+    "operatorsAliases": false
   },
   "test": {
     "username": "root",
