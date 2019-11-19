@@ -76,6 +76,8 @@
               :items="formatBankArray"
               :items-per-page="5"
               class="elevation-1"
+              :loading="loading"
+              loading-text="Loading..."
             ></v-data-table>
           </v-card-text>
         </v-card>
@@ -93,6 +95,7 @@ export default {
   name: 'AdminBankComponent',
   data () {
     return {
+      loading: false,
       deleteDialog: false,
       selected: [],
       addDialog: false,
@@ -168,6 +171,7 @@ export default {
         Authorization: localStorage.getItem('token')
       }
     }
+    this.loading = true
     try {
       const response = await axios.get(`/api/bank/bookkeeper/balances/0`, config)
       const bankNames = await axios.get('/api/bank', config)
@@ -182,6 +186,7 @@ export default {
     } catch (e) {
       this.getError(e.response.data)
     }
+    this.loading = false
   },
   computed: {
     ...mapState(['auth']),
@@ -235,6 +240,7 @@ export default {
         }
       }
       try {
+        this.loading = true
         const response = await axios.get(`/api/bank/bookkeeper/balances/0`, config)
         const bankNames = await axios.get('/api/bank', config)
         // Get data and update A/R customers in accounts table
@@ -248,6 +254,7 @@ export default {
       } catch (e) {
         this.getError(e.response.data)
       }
+      this.loading = false
     }
   }
 }

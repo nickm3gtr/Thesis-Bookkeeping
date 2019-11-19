@@ -14,6 +14,8 @@
               :items="formatVendorArray"
               :items-per-page="5"
               class="elevation-1"
+              :loading="loading"
+              loading-text="Loading..."
             ></v-data-table>
           </v-card-text>
         </v-card>
@@ -31,6 +33,7 @@ export default {
   name: 'VendorComponent',
   data () {
     return {
+      loading: false,
       vendorName: '',
       vendorBalance: [],
       vendorNames: [],
@@ -54,6 +57,7 @@ export default {
         Authorization: localStorage.getItem('token')
       }
     }
+    this.loading = true
     try {
       const response = await axios.get(`/api/vendor/bookkeeper/balances/${this.auth.user.BranchId}`, config)
       const vendorNames = await axios.get('/api/vendor', config)
@@ -62,6 +66,7 @@ export default {
     } catch (e) {
       this.getError(e.response.data)
     }
+    this.loading = false
   },
   computed: {
     ...mapState(['auth']),
