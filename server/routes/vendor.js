@@ -18,6 +18,19 @@ router.get('/', auth, (req, res) => {
     .catch(err => res.status(400).json({ msg: 'Error fetching vendors', err }))
 })
 
+// Show Vendor by ID
+router.get('/:id', auth, (req, res) => {
+  const { id } = req.params
+
+  db.sequelize.query("select * \n" +
+    "from \"Vendors\" \n"+
+    "where id=:id", {
+      model: db.Vendor,
+      replacements: { id }
+  }).then(vendor => res.json(vendor))
+    .catch(err => res.status(400).json({ msg: 'Error fetching vendor data', err }))
+})
+
 //Delete Vendor
 router.delete('/', auth, (req, res) => {
   const { items } = req.body

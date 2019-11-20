@@ -18,6 +18,19 @@ router.get('/', auth, (req, res) => {
     .catch(err => res.status(400).json({ msg: 'Error fetching customers', err }))
 })
 
+// Show Customer by ID
+router.get('/:id', auth, (req, res) => {
+  const { id } = req.params
+
+  db.sequelize.query("select * \n" +
+    "from \"Customers\" \n"+
+    "where id=:id", {
+      model: db.Customer,
+      replacements: { id }
+  }).then(customer => res.json(customer))
+    .catch(err => res.status(400).json({ msg: 'Error fetching customer data', err }))
+})
+
 //Delete Customer
 router.delete('/', auth, (req, res) => {
   const { items } = req.body

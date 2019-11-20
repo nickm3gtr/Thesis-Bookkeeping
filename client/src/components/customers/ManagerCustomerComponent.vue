@@ -82,7 +82,13 @@
               class="elevation-1"
               :loading="loading"
               loading-text="Loading..."
-            ></v-data-table>
+            >
+              <template v-slot:item.action="{ item }">
+                <v-btn dark small color="green" class="mx-1" @click="goToItem(item)">
+                  <v-icon small>search</v-icon>
+                </v-btn>
+              </template>
+            </v-data-table>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -112,7 +118,13 @@ export default {
       customerNames: [],
       headers: [
         { text: 'Customers', value: 'name' },
-        { text: 'Current Receivable', align: 'right', value: 'balance' }
+        { text: 'Current Receivable', align: 'right', value: 'balance' },
+        {
+          text: 'Actions',
+          value: 'action',
+          align: 'center',
+          sortable: false
+        }
       ],
       updated: 0
     }
@@ -121,6 +133,9 @@ export default {
     ...mapActions('errors', ['getError']),
     currency (value) {
       return numeral(value).format('0,0.00')
+    },
+    goToItem (item) {
+      this.$router.push(`/bookkeeper/customer/${item.id}`)
     },
     async addCustomer () {
       const config = {
