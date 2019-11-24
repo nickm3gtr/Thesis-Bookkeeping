@@ -49,7 +49,7 @@ router.get("/sales/:id/:year", auth, (req, res) => {
     "\tfrom \"Types\" ty inner join \"SubTypes\" s on ty.id=s.\"TypeId\" \n" +
     "\t\t inner join \"Accounts\" a on s.id=a.\"SubTypeId\" \n" +
     "\t\t inner join \"TransactionRecords\" tr on a.id=tr.\"AccountId\" inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-    "\twhere ty.id = 40000 and extract(year from t.date) = :year and b.\"BranchId\"=:id\n" +
+    "\twhere ty.id = 40000 and extract(year from t.date) = :year and b.\"BranchId\"=:id and t.validated='validated' \n" +
     "\tgroup by t.date, credit, debit\n" +
     ")\n" +
     "select sum(january) as january, sum(february) as february, sum(march) as march, sum(april) as april,\n" +
@@ -108,7 +108,7 @@ router.get("/expenses/:id/:year", auth, (req, res) => {
     "\tfrom \"Types\" ty inner join \"SubTypes\" s on ty.id=s.\"TypeId\" \n" +
     "\t\t inner join \"Accounts\" a on s.id=a.\"SubTypeId\" \n" +
     "\t\t inner join \"TransactionRecords\" tr on a.id=tr.\"AccountId\" inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-    "\twhere ty.id = 70000 and extract(year from t.date) = :year and b.\"BranchId\"=:id\n" +
+    "\twhere ty.id = 70000 and extract(year from t.date) = :year and b.\"BranchId\"=:id and t.validated='validated' \n" +
     "\tgroup by t.date, credit, debit\n" +
     ")\n" +
     "select sum(january) as january, sum(february) as february, sum(march) as march, sum(april) as april,\n" +
@@ -167,7 +167,7 @@ router.get("/admin/sales/:year", auth, (req, res) => {
     "\tfrom \"Types\" ty inner join \"SubTypes\" s on ty.id=s.\"TypeId\" \n" +
     "\t\t inner join \"Accounts\" a on s.id=a.\"SubTypeId\" \n" +
     "\t\t inner join \"TransactionRecords\" tr on a.id=tr.\"AccountId\" inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-    "\twhere ty.id = 40000 and extract(year from t.date) = :year\n" +
+    "\twhere ty.id = 40000 and extract(year from t.date) = :year and t.validated='validated' \n" +
     "\tgroup by t.date, credit, debit\n" +
     ")\n" +
     "select sum(january) as january, sum(february) as february, sum(march) as march, sum(april) as april,\n" +
@@ -226,7 +226,7 @@ router.get("/admin/expenses/:year", auth, (req, res) => {
     "\tfrom \"Types\" ty inner join \"SubTypes\" s on ty.id=s.\"TypeId\" \n" +
     "\t\t inner join \"Accounts\" a on s.id=a.\"SubTypeId\" \n" +
     "\t\t inner join \"TransactionRecords\" tr on a.id=tr.\"AccountId\" inner join \"Transactions\" t on tr.\"TransId\"=t.id inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
-    "\twhere ty.id = 70000 and extract(year from t.date) = :year\n" +
+    "\twhere ty.id = 70000 and extract(year from t.date) = :year and t.validated='validated' \n" +
     "\tgroup by t.date, credit, debit\n" +
     ")\n" +
     "select sum(january) as january, sum(february) as february, sum(march) as march, sum(april) as april,\n" +

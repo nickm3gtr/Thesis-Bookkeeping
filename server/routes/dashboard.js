@@ -23,7 +23,7 @@ router.get("/sales/:branchId/:month", auth, (req, res) => {
   "inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
   "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
   "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
-  "where ty.id = 40000 and b.\"BranchId\"=:branchId \n" +
+  "where ty.id = 40000 and b.\"BranchId\"=:branchId and t.validated='validated' \n" +
   "group by trans_date \n" +
   "having extract(month from t.date) = :month", {
     model: db.Transaction,
@@ -40,7 +40,7 @@ router.get("/expenses/:branchId/:month", auth, (req, res) => {
   "inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
   "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
   "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
-  "where ty.id = 70000 and b.\"BranchId\"=:branchId \n" +
+  "where ty.id = 70000 and b.\"BranchId\"=:branchId and t.validated='validated' \n" +
   "group by trans_date \n" +
   "having extract(month from t.date) = :month", {
     model: db.Transaction,
@@ -66,7 +66,7 @@ router.get("/admin/sales/:month", auth, (req, res) => {
   "inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
   "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
   "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
-  "where ty.id = 40000 \n" +
+  "where ty.id = 40000 and t.validated='validated' \n" +
   "group by trans_date \n" +
   "having extract(month from t.date) = :month", {
     model: db.Transaction,
@@ -83,7 +83,7 @@ router.get("/admin/expenses/:month", auth, (req, res) => {
   "inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
   "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
   "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
-  "where ty.id = 70000 \n" +
+  "where ty.id = 70000 and t.validated='validated' \n" +
   "group by trans_date \n" +
   "having extract(month from t.date) = :month", {
     model: db.Transaction,
@@ -100,7 +100,7 @@ router.get("/admin/sales/by-branch/:month", auth, (req, res) => {
   "inner join \"Accounts\" a on tr.\"AccountId\"=a.id \n" +
   "inner join \"SubTypes\" s on a.\"SubTypeId\"=s.id \n" +
   "inner join \"Types\" ty on s.\"TypeId\"=ty.id \n" +
-  "where ty.id = 40000 \n" +
+  "where ty.id = 40000 and t.validated='validated' \n" +
   "group by trans_date, br.\"branchName\" \n" +
   "having extract(month from t.date) = :month", {
     model: db.Transaction,
