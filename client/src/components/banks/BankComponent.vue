@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout>
-      <v-flex sm12 md8 offset-md2>
+      <v-flex sm12 md10 offset-md1>
         <v-card outlined class="my-6">
           <v-card-text>
             <v-row>

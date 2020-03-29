@@ -28,11 +28,11 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" md="6">
-                <v-radio-group dense row class="mt-4" v-model="radio">
-                  <v-radio value="validated" label="validated"></v-radio>
-                  <v-radio value="unvalidated" label="unvalidated"></v-radio>
-                </v-radio-group>
+              <v-col cols="6" md="3">
+                <v-checkbox v-model="validated" class="mx-2" label="validated"></v-checkbox>
+              </v-col>
+              <v-col cols="6" md="3">
+                <v-checkbox v-model="unvalidated" class="mx-2" label="unvalidated"></v-checkbox>
               </v-col>
             </v-row>
             <v-dialog
@@ -96,7 +96,8 @@ export default {
   name: 'TransactionList',
   data () {
     return {
-      radio: 'validated',
+      validated: true,
+      unvalidated: false,
       select: { id: 0, name: 'All' },
       books: [],
       search: '',
@@ -163,10 +164,14 @@ export default {
       })
     },
     filterValidated () {
-      if (this.radio === 'validated') {
+      if (this.validated && !this.unvalidated) {
         return this.formatTransactions.filter(transaction => transaction.validated === 'validated')
-      } else {
+      } else if (!this.validated && this.unvalidated) {
         return this.formatTransactions.filter(transaction => transaction.validated === 'unvalidated')
+      } else if (this.validated && this.unvalidated) {
+        return this.formatTransactions
+      } else {
+        return []
       }
     },
     deleteItems () {

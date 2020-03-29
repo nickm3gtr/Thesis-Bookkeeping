@@ -9,7 +9,6 @@
 
 <script>
 import Navbar from '@/components/Navbar'
-// import RestrictedResource from "@/components/RestrictedResource"
 import { mapState } from 'vuex'
 
 export default {

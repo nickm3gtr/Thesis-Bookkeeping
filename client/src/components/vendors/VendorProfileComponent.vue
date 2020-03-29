@@ -2,10 +2,19 @@
   <div>
     <v-layout>
       <v-flex sm12 md8 offset-md2>
-        <v-card outlined class="my-6">
+        <v-card outlined class="my-6 pb-12">
           <v-card-title>
           </v-card-title>
-          <v-card-text>
+          <div class="text-center">
+            <v-progress-circular
+              v-if="loading === true"
+              size="90"
+              width="10"
+              indeterminate
+              color="primary"
+            ></v-progress-circular>
+          </div>
+          <v-card-text v-if="loading === false">
             <v-row>
               <v-col cols="12" md="8">
                 <p>Company Name: {{name}}</p>
@@ -34,13 +43,15 @@ export default {
       contactPerson: '',
       address: '',
       email: '',
-      number: ''
+      number: '',
+      loading: false
     }
   },
   methods: {
     ...mapActions('errors', ['getError'])
   },
   async mounted () {
+    this.loading = true
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -55,8 +66,10 @@ export default {
       this.address = customer[0].address
       this.email = customer[0].email
       this.number = customer[0].number
+      this.loading = false
     } catch (e) {
       this.getError(e.response.data)
+      this.loading = false
     }
   }
 }

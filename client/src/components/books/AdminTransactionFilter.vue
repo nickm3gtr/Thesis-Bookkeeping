@@ -8,7 +8,16 @@
               <span class="title font-weight-light">Transaction #{{$route.params.transId}}</span>
             </v-col>
           </v-card-title>
-          <v-card-text>
+          <div class="text-center">
+            <v-progress-circular
+              v-if="loading === true"
+              size="90"
+              width="10"
+              indeterminate
+              color="primary"
+            ></v-progress-circular>
+          </div>
+          <v-card-text v-if="loading === false">
             <v-row>
               <v-col cols="12" md="4">
                 <v-menu
@@ -223,7 +232,6 @@ export default {
         `/api/bookkeeping/transactions/trans_id/${this.$route.params.transId}`,
         config
       )
-      this.loading = false
       this.transactions = response.data
       this.date = this.formatDate(trans.data[0].date)
       this.num = trans.data[0].num
@@ -232,8 +240,10 @@ export default {
       this.createdAt = moment(trans.data[0].createdAt).format('LLLL')
       this.updatedAt = moment(trans.data[0].updatedAt).format('LLLL')
       this.userName = trans.data[0].username
+      this.loading = false
     } catch (e) {
       this.getError(e.response.data)
+      this.loading = false
     }
   }
 }

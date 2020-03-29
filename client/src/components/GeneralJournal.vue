@@ -103,6 +103,9 @@
               class="elevation-3"
             >
               <template v-slot:item.AccountName="props">
+                {{ props.index }}
+              </template>
+              <template v-slot:item.AccountName="props">
                 <v-edit-dialog
                   :return-value.sync="props.item.AccountName"
                 > {{ props.item.AccountName }}
@@ -166,6 +169,7 @@
               </template>
               <template v-slot:body.append="{ headers }">
                 <tr>
+                  <td></td>
                   <td></td>
                   <td>
                     <span class="font-weight-bold caption">Total:</span>
@@ -231,14 +235,15 @@ export default {
       menu: false,
       date: new Date().toISOString().substr(0, 10),
       headers: [
+        { text: '#', value: 'row' },
         { text: 'AccountName', value: 'AccountName' },
         { text: 'SubAccount', value: 'SubAccount' },
         { text: 'Debit', value: 'debit' },
         { text: 'Credit', value: 'credit' }
       ],
       items: [
-        { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: '', index: Math.random() },
-        { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: '', index: Math.random() }
+        { row: 1, Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: '', index: Math.random() },
+        { row: 2, Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: '', index: Math.random() }
       ],
       hidden: true,
       statusId: 0
@@ -247,7 +252,7 @@ export default {
   methods: {
     ...mapActions('errors', ['getError']),
     add () {
-      this.items = [...this.items, { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: '', index: Math.random() }]
+      this.items = [...this.items, { row: this.computeRow, Account: '', AccountName: '', Sub: '', SubAccount: '', debit: '', credit: '', index: Math.random() }]
     },
     clearAll () {
       this.memo = ''
@@ -389,6 +394,15 @@ export default {
     },
     deleteItems () {
       return this.selected <= 0
+    },
+    computeRow () {
+      const index = this.items.length
+      if (index < 1) {
+        return 1
+      } else {
+        const row = this.items[index - 1].row
+        return row + 1
+      }
     }
   },
   async mounted () {

@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard">
+  <div class="dashboard mb-12">
     <div v-if="auth === null || auth.isAuthenticated === false || auth.user.account === 'admin'">
       <RestrictedResource />
     </div>

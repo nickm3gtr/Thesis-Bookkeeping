@@ -52,7 +52,8 @@ router.get("/expenses/:branchId/:month", auth, (req, res) => {
 // Get transactions recorded by all branches
 router.get("/admin/transactions-recorded", auth, (req, res) => {
   db.sequelize.query("select count(t.id) \n" +
-    "from \"Transactions\" t inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id ", {
+    "from \"Transactions\" t inner join \"Bookkeepers\" b on t.\"BookkeeperId\"=b.id \n" +
+    "where t.validated='validated'", {
         model: db.Transaction
       }).then(count => res.json(count))
         .catch(err => res.status(400).json({ msg: 'Error', err }))

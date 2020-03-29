@@ -1,5 +1,5 @@
 <template>
-  <div class="general-journal">
+  <div class="general-journal mb-12">
     <div class="text-center">
       <p>
         <span v-if="auth.user === null || auth.user.account == 'admin'" class="headline">

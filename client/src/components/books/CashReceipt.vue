@@ -221,12 +221,13 @@ export default {
       num: '',
       memo: '',
       headers: [
+        { text: '#', value: 'row' },
         { text: 'AccountName', value: 'AccountName' },
         { text: 'SubAccount', value: 'SubAccount' },
         { text: 'Amount', value: 'credit' }
       ],
       items: [
-        { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: null, credit: '', index: Math.random() }
+        { row: 1, Account: '', AccountName: '', Sub: '', SubAccount: '', debit: null, credit: '', index: Math.random() }
       ],
       hidden: true,
       statusId: 0
@@ -235,7 +236,7 @@ export default {
   methods: {
     ...mapActions('errors', ['getError']),
     add () {
-      this.items = [...this.items, { Account: '', AccountName: '', Sub: '', SubAccount: '', debit: null, credit: '', index: Math.random() }]
+      this.items = [...this.items, { row: this.computeRow, Account: '', AccountName: '', Sub: '', SubAccount: '', debit: null, credit: '', index: Math.random() }]
     },
     async save () {
       const config = {
@@ -350,6 +351,15 @@ export default {
       return this.accounts.filter(account => {
         return account.SubTypeId === 11200 || account.SubTypeId === 40100 || account.SubTypeId === 40200 || account.SubTypeId === 40300 || account.SubTypeId === 40400
       })
+    },
+    computeRow () {
+      const index = this.items.length
+      if (index < 1) {
+        return 1
+      } else {
+        const row = this.items[index - 1].row
+        return row + 1
+      }
     }
   },
   async mounted () {
